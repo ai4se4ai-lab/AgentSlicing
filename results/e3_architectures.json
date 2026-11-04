@@ -1,0 +1,6118 @@
+{
+ "env": {
+  "commit": "80e77a2ebf68b6c2930da2be5da030a024eddf67",
+  "dirty_worktree": true,
+  "python": "3.13.14",
+  "platform": "Windows-11-10.0.26100-SP0",
+  "numpy": "2.2.5",
+  "scipy": "1.16.2",
+  "z3": "5.3.3",
+  "cpus": 22,
+  "started": "2026-11-04T16:20:10"
+ },
+ "seconds": 0.6219782829284668,
+ "rows": [
+  {
+   "design": "MetaGPT",
+   "source": "hong2024metagpt",
+   "note": "PM -> Architect -> ProjectMgr -> Engineer -> QA (writes tests) -> test run",
+   "variant": "documented",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "tests_pass"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "QA",
+       "TestRun"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 8,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "implemented",
+     "tests_pass"
+    ],
+    "critical": [
+     "tests_pass"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "PM",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "prd"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Architect",
+      "kind": "agent",
+      "req": [
+       "prd"
+      ],
+      "gua": [
+       "design"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "ProjMgr",
+      "kind": "agent",
+      "req": [
+       "design"
+      ],
+      "gua": [
+       "tasks"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Engineer",
+      "kind": "agent",
+      "req": [
+       "design",
+       "tasks"
+      ],
+      "gua": [
+       "code",
+       "implemented"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "QA",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "unit_tests"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "TestRun",
+      "kind": "gate",
+      "req": [
+       "unit_tests"
+      ],
+      "gua": [
+       "tests_pass"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "implemented",
+       "tests_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "PM"
+     ],
+     [
+      "PM",
+      "Architect"
+     ],
+     [
+      "Architect",
+      "ProjMgr"
+     ],
+     [
+      "ProjMgr",
+      "Engineer"
+     ],
+     [
+      "Engineer",
+      "QA"
+     ],
+     [
+      "QA",
+      "TestRun"
+     ],
+     [
+      "TestRun",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MetaGPT",
+   "source": "hong2024metagpt",
+   "note": "PM -> Architect -> ProjectMgr -> Engineer -> QA (writes tests) -> test run",
+   "variant": "distinct",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "tests_pass"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "QA",
+       "TestRun"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 8,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "implemented",
+     "tests_pass"
+    ],
+    "critical": [
+     "tests_pass"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "PM",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "prd"
+      ],
+      "oracle": "PM"
+     },
+     {
+      "id": "Architect",
+      "kind": "agent",
+      "req": [
+       "prd"
+      ],
+      "gua": [
+       "design"
+      ],
+      "oracle": "Architect"
+     },
+     {
+      "id": "ProjMgr",
+      "kind": "agent",
+      "req": [
+       "design"
+      ],
+      "gua": [
+       "tasks"
+      ],
+      "oracle": "ProjMgr"
+     },
+     {
+      "id": "Engineer",
+      "kind": "agent",
+      "req": [
+       "design",
+       "tasks"
+      ],
+      "gua": [
+       "code",
+       "implemented"
+      ],
+      "oracle": "Engineer"
+     },
+     {
+      "id": "QA",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "unit_tests"
+      ],
+      "oracle": "QA"
+     },
+     {
+      "id": "TestRun",
+      "kind": "gate",
+      "req": [
+       "unit_tests"
+      ],
+      "gua": [
+       "tests_pass"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "implemented",
+       "tests_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "PM"
+     ],
+     [
+      "PM",
+      "Architect"
+     ],
+     [
+      "Architect",
+      "ProjMgr"
+     ],
+     [
+      "ProjMgr",
+      "Engineer"
+     ],
+     [
+      "Engineer",
+      "QA"
+     ],
+     [
+      "QA",
+      "TestRun"
+     ],
+     [
+      "TestRun",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MetaGPT",
+   "source": "hong2024metagpt",
+   "note": "PM -> Architect -> ProjectMgr -> Engineer -> QA (writes tests) -> test run",
+   "variant": "shared",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "tests_pass"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "QA",
+       "TestRun"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 8,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "implemented",
+     "tests_pass"
+    ],
+    "critical": [
+     "tests_pass"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "PM",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "prd"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Architect",
+      "kind": "agent",
+      "req": [
+       "prd"
+      ],
+      "gua": [
+       "design"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "ProjMgr",
+      "kind": "agent",
+      "req": [
+       "design"
+      ],
+      "gua": [
+       "tasks"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Engineer",
+      "kind": "agent",
+      "req": [
+       "design",
+       "tasks"
+      ],
+      "gua": [
+       "code",
+       "implemented"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "QA",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "unit_tests"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "TestRun",
+      "kind": "gate",
+      "req": [
+       "unit_tests"
+      ],
+      "gua": [
+       "tests_pass"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "implemented",
+       "tests_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "PM"
+     ],
+     [
+      "PM",
+      "Architect"
+     ],
+     [
+      "Architect",
+      "ProjMgr"
+     ],
+     [
+      "ProjMgr",
+      "Engineer"
+     ],
+     [
+      "Engineer",
+      "QA"
+     ],
+     [
+      "QA",
+      "TestRun"
+     ],
+     [
+      "TestRun",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MetaGPT",
+   "source": "hong2024metagpt",
+   "note": "PM -> Architect -> ProjectMgr -> Engineer -> QA (writes tests) -> test run",
+   "variant": "f0",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 8,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "implemented",
+     "tests_pass"
+    ],
+    "critical": [
+     "tests_pass"
+    ],
+    "fault_budget": 0,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "PM",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "prd"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Architect",
+      "kind": "agent",
+      "req": [
+       "prd"
+      ],
+      "gua": [
+       "design"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "ProjMgr",
+      "kind": "agent",
+      "req": [
+       "design"
+      ],
+      "gua": [
+       "tasks"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Engineer",
+      "kind": "agent",
+      "req": [
+       "design",
+       "tasks"
+      ],
+      "gua": [
+       "code",
+       "implemented"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "QA",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "unit_tests"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "TestRun",
+      "kind": "gate",
+      "req": [
+       "unit_tests"
+      ],
+      "gua": [
+       "tests_pass"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "implemented",
+       "tests_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "PM"
+     ],
+     [
+      "PM",
+      "Architect"
+     ],
+     [
+      "Architect",
+      "ProjMgr"
+     ],
+     [
+      "ProjMgr",
+      "Engineer"
+     ],
+     [
+      "Engineer",
+      "QA"
+     ],
+     [
+      "QA",
+      "TestRun"
+     ],
+     [
+      "TestRun",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "ChatDev",
+   "source": "qian2024chatdev",
+   "note": "design -> coding -> code complete -> review -> execution -> testing",
+   "variant": "documented",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "correct"
+     ],
+     "depth": 3,
+     "class": "S4",
+     "minimal": [
+      [
+       "Review",
+       "Execute",
+       "Testing"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 8,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "code_complete",
+     "correct",
+     "runs"
+    ],
+    "critical": [
+     "correct"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Design",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "spec"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Coding",
+      "kind": "agent",
+      "req": [
+       "spec"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Complete",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "code_complete"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Review",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "correct"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Execute",
+      "kind": "gate",
+      "req": [],
+      "gua": [
+       "runs"
+      ]
+     },
+     {
+      "id": "Testing",
+      "kind": "agent",
+      "req": [
+       "runs"
+      ],
+      "gua": [
+       "correct"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "code_complete",
+       "correct",
+       "runs"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Design"
+     ],
+     [
+      "Design",
+      "Coding"
+     ],
+     [
+      "Coding",
+      "Complete"
+     ],
+     [
+      "Complete",
+      "Review"
+     ],
+     [
+      "Review",
+      "Execute"
+     ],
+     [
+      "Execute",
+      "Testing"
+     ],
+     [
+      "Testing",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "ChatDev",
+   "source": "qian2024chatdev",
+   "note": "design -> coding -> code complete -> review -> execution -> testing",
+   "variant": "distinct",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 8,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "code_complete",
+     "correct",
+     "runs"
+    ],
+    "critical": [
+     "correct"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Design",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "spec"
+      ],
+      "oracle": "Design"
+     },
+     {
+      "id": "Coding",
+      "kind": "agent",
+      "req": [
+       "spec"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "Coding"
+     },
+     {
+      "id": "Complete",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "code_complete"
+      ],
+      "oracle": "Complete"
+     },
+     {
+      "id": "Review",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "correct"
+      ],
+      "oracle": "Review"
+     },
+     {
+      "id": "Execute",
+      "kind": "gate",
+      "req": [],
+      "gua": [
+       "runs"
+      ]
+     },
+     {
+      "id": "Testing",
+      "kind": "agent",
+      "req": [
+       "runs"
+      ],
+      "gua": [
+       "correct"
+      ],
+      "oracle": "Testing"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "code_complete",
+       "correct",
+       "runs"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Design"
+     ],
+     [
+      "Design",
+      "Coding"
+     ],
+     [
+      "Coding",
+      "Complete"
+     ],
+     [
+      "Complete",
+      "Review"
+     ],
+     [
+      "Review",
+      "Execute"
+     ],
+     [
+      "Execute",
+      "Testing"
+     ],
+     [
+      "Testing",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "ChatDev",
+   "source": "qian2024chatdev",
+   "note": "design -> coding -> code complete -> review -> execution -> testing",
+   "variant": "shared",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "correct"
+     ],
+     "depth": 3,
+     "class": "S4",
+     "minimal": [
+      [
+       "Review",
+       "Execute",
+       "Testing"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 8,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "code_complete",
+     "correct",
+     "runs"
+    ],
+    "critical": [
+     "correct"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Design",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "spec"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Coding",
+      "kind": "agent",
+      "req": [
+       "spec"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Complete",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "code_complete"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Review",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "correct"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Execute",
+      "kind": "gate",
+      "req": [],
+      "gua": [
+       "runs"
+      ]
+     },
+     {
+      "id": "Testing",
+      "kind": "agent",
+      "req": [
+       "runs"
+      ],
+      "gua": [
+       "correct"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "code_complete",
+       "correct",
+       "runs"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Design"
+     ],
+     [
+      "Design",
+      "Coding"
+     ],
+     [
+      "Coding",
+      "Complete"
+     ],
+     [
+      "Complete",
+      "Review"
+     ],
+     [
+      "Review",
+      "Execute"
+     ],
+     [
+      "Execute",
+      "Testing"
+     ],
+     [
+      "Testing",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "ChatDev",
+   "source": "qian2024chatdev",
+   "note": "design -> coding -> code complete -> review -> execution -> testing",
+   "variant": "f0",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 8,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "code_complete",
+     "correct",
+     "runs"
+    ],
+    "critical": [
+     "correct"
+    ],
+    "fault_budget": 0,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Design",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "spec"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Coding",
+      "kind": "agent",
+      "req": [
+       "spec"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Complete",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "code_complete"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Review",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "correct"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Execute",
+      "kind": "gate",
+      "req": [],
+      "gua": [
+       "runs"
+      ]
+     },
+     {
+      "id": "Testing",
+      "kind": "agent",
+      "req": [
+       "runs"
+      ],
+      "gua": [
+       "correct"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "code_complete",
+       "correct",
+       "runs"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Design"
+     ],
+     [
+      "Design",
+      "Coding"
+     ],
+     [
+      "Coding",
+      "Complete"
+     ],
+     [
+      "Complete",
+      "Review"
+     ],
+     [
+      "Review",
+      "Execute"
+     ],
+     [
+      "Execute",
+      "Testing"
+     ],
+     [
+      "Testing",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "AgentCoder",
+   "source": "huang2023agentcoder",
+   "note": "programmer || test designer -> test executor (script)",
+   "variant": "documented",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "tests_pass"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "TestDesigner",
+       "Executor"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 5,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "tests_pass"
+    ],
+    "critical": [
+     "tests_pass"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Programmer",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "TestDesigner",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "tests"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Executor",
+      "kind": "gate",
+      "req": [
+       "tests"
+      ],
+      "gua": [
+       "tests_pass"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "tests_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Programmer"
+     ],
+     [
+      "IN",
+      "TestDesigner"
+     ],
+     [
+      "Programmer",
+      "Executor"
+     ],
+     [
+      "TestDesigner",
+      "Executor"
+     ],
+     [
+      "Executor",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "AgentCoder",
+   "source": "huang2023agentcoder",
+   "note": "programmer || test designer -> test executor (script)",
+   "variant": "distinct",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "tests_pass"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "TestDesigner",
+       "Executor"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 5,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "tests_pass"
+    ],
+    "critical": [
+     "tests_pass"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Programmer",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "code"
+      ],
+      "oracle": "Programmer"
+     },
+     {
+      "id": "TestDesigner",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "tests"
+      ],
+      "oracle": "TestDesigner"
+     },
+     {
+      "id": "Executor",
+      "kind": "gate",
+      "req": [
+       "tests"
+      ],
+      "gua": [
+       "tests_pass"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "tests_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Programmer"
+     ],
+     [
+      "IN",
+      "TestDesigner"
+     ],
+     [
+      "Programmer",
+      "Executor"
+     ],
+     [
+      "TestDesigner",
+      "Executor"
+     ],
+     [
+      "Executor",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "AgentCoder",
+   "source": "huang2023agentcoder",
+   "note": "programmer || test designer -> test executor (script)",
+   "variant": "shared",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "tests_pass"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "TestDesigner",
+       "Executor"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 5,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "tests_pass"
+    ],
+    "critical": [
+     "tests_pass"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Programmer",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "TestDesigner",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "tests"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Executor",
+      "kind": "gate",
+      "req": [
+       "tests"
+      ],
+      "gua": [
+       "tests_pass"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "tests_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Programmer"
+     ],
+     [
+      "IN",
+      "TestDesigner"
+     ],
+     [
+      "Programmer",
+      "Executor"
+     ],
+     [
+      "TestDesigner",
+      "Executor"
+     ],
+     [
+      "Executor",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "AgentCoder",
+   "source": "huang2023agentcoder",
+   "note": "programmer || test designer -> test executor (script)",
+   "variant": "f0",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 5,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "tests_pass"
+    ],
+    "critical": [
+     "tests_pass"
+    ],
+    "fault_budget": 0,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Programmer",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "TestDesigner",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "tests"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Executor",
+      "kind": "gate",
+      "req": [
+       "tests"
+      ],
+      "gua": [
+       "tests_pass"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "tests_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Programmer"
+     ],
+     [
+      "IN",
+      "TestDesigner"
+     ],
+     [
+      "Programmer",
+      "Executor"
+     ],
+     [
+      "TestDesigner",
+      "Executor"
+     ],
+     [
+      "Executor",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "AgentCoder",
+   "source": "huang2023agentcoder",
+   "note": "programmer || test designer -> test executor (script)",
+   "variant": "alt_join",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "assume",
+      "Executor",
+      "tests"
+     ],
+     "depth": 2,
+     "class": "S3",
+     "minimal": [
+      [
+       "Programmer",
+       "Executor"
+      ],
+      [
+       "TestDesigner",
+       "Executor"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "goal",
+      "OUT",
+      "tests_pass"
+     ],
+     "depth": 2,
+     "class": "S6b",
+     "minimal": [
+      [
+       "Programmer",
+       "Executor"
+      ],
+      [
+       "TestDesigner",
+       "Executor"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 5,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "tests_pass"
+    ],
+    "critical": [
+     "tests_pass"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Programmer",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "TestDesigner",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "tests"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Executor",
+      "kind": "gate",
+      "req": [
+       "tests"
+      ],
+      "gua": [
+       "tests_pass"
+      ],
+      "join": "any"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "tests_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Programmer"
+     ],
+     [
+      "IN",
+      "TestDesigner"
+     ],
+     [
+      "Programmer",
+      "Executor"
+     ],
+     [
+      "TestDesigner",
+      "Executor"
+     ],
+     [
+      "Executor",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MapCoder",
+   "source": "islam2024mapcoder",
+   "note": "retrieval -> planning -> coding -> sample I/O check -> debugging",
+   "variant": "documented",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 7,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "debugged",
+     "samples_pass"
+    ],
+    "critical": [
+     "samples_pass"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Retrieval",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "examples"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Planning",
+      "kind": "agent",
+      "req": [
+       "examples"
+      ],
+      "gua": [
+       "plan"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Coding",
+      "kind": "agent",
+      "req": [
+       "plan"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "SampleIO",
+      "kind": "gate",
+      "req": [],
+      "gua": [
+       "samples_pass"
+      ]
+     },
+     {
+      "id": "Debugging",
+      "kind": "agent",
+      "req": [
+       "samples_pass"
+      ],
+      "gua": [
+       "debugged"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "debugged",
+       "samples_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Retrieval"
+     ],
+     [
+      "Retrieval",
+      "Planning"
+     ],
+     [
+      "Planning",
+      "Coding"
+     ],
+     [
+      "Coding",
+      "SampleIO"
+     ],
+     [
+      "SampleIO",
+      "Debugging"
+     ],
+     [
+      "Debugging",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MapCoder",
+   "source": "islam2024mapcoder",
+   "note": "retrieval -> planning -> coding -> sample I/O check -> debugging",
+   "variant": "distinct",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 7,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "debugged",
+     "samples_pass"
+    ],
+    "critical": [
+     "samples_pass"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Retrieval",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "examples"
+      ],
+      "oracle": "Retrieval"
+     },
+     {
+      "id": "Planning",
+      "kind": "agent",
+      "req": [
+       "examples"
+      ],
+      "gua": [
+       "plan"
+      ],
+      "oracle": "Planning"
+     },
+     {
+      "id": "Coding",
+      "kind": "agent",
+      "req": [
+       "plan"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "Coding"
+     },
+     {
+      "id": "SampleIO",
+      "kind": "gate",
+      "req": [],
+      "gua": [
+       "samples_pass"
+      ]
+     },
+     {
+      "id": "Debugging",
+      "kind": "agent",
+      "req": [
+       "samples_pass"
+      ],
+      "gua": [
+       "debugged"
+      ],
+      "oracle": "Debugging"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "debugged",
+       "samples_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Retrieval"
+     ],
+     [
+      "Retrieval",
+      "Planning"
+     ],
+     [
+      "Planning",
+      "Coding"
+     ],
+     [
+      "Coding",
+      "SampleIO"
+     ],
+     [
+      "SampleIO",
+      "Debugging"
+     ],
+     [
+      "Debugging",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MapCoder",
+   "source": "islam2024mapcoder",
+   "note": "retrieval -> planning -> coding -> sample I/O check -> debugging",
+   "variant": "shared",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 7,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "debugged",
+     "samples_pass"
+    ],
+    "critical": [
+     "samples_pass"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Retrieval",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "examples"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Planning",
+      "kind": "agent",
+      "req": [
+       "examples"
+      ],
+      "gua": [
+       "plan"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Coding",
+      "kind": "agent",
+      "req": [
+       "plan"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "SampleIO",
+      "kind": "gate",
+      "req": [],
+      "gua": [
+       "samples_pass"
+      ]
+     },
+     {
+      "id": "Debugging",
+      "kind": "agent",
+      "req": [
+       "samples_pass"
+      ],
+      "gua": [
+       "debugged"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "debugged",
+       "samples_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Retrieval"
+     ],
+     [
+      "Retrieval",
+      "Planning"
+     ],
+     [
+      "Planning",
+      "Coding"
+     ],
+     [
+      "Coding",
+      "SampleIO"
+     ],
+     [
+      "SampleIO",
+      "Debugging"
+     ],
+     [
+      "Debugging",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MapCoder",
+   "source": "islam2024mapcoder",
+   "note": "retrieval -> planning -> coding -> sample I/O check -> debugging",
+   "variant": "f0",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 7,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "debugged",
+     "samples_pass"
+    ],
+    "critical": [
+     "samples_pass"
+    ],
+    "fault_budget": 0,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Retrieval",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "examples"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Planning",
+      "kind": "agent",
+      "req": [
+       "examples"
+      ],
+      "gua": [
+       "plan"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Coding",
+      "kind": "agent",
+      "req": [
+       "plan"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "SampleIO",
+      "kind": "gate",
+      "req": [],
+      "gua": [
+       "samples_pass"
+      ]
+     },
+     {
+      "id": "Debugging",
+      "kind": "agent",
+      "req": [
+       "samples_pass"
+      ],
+      "gua": [
+       "debugged"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "debugged",
+       "samples_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Retrieval"
+     ],
+     [
+      "Retrieval",
+      "Planning"
+     ],
+     [
+      "Planning",
+      "Coding"
+     ],
+     [
+      "Coding",
+      "SampleIO"
+     ],
+     [
+      "SampleIO",
+      "Debugging"
+     ],
+     [
+      "Debugging",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "SelfCollab",
+   "source": "dong2024selfcollab",
+   "note": "analyst -> coder -> tester (LLM-simulated testing)",
+   "variant": "documented",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "tested"
+     ],
+     "depth": 1,
+     "class": "A4",
+     "minimal": [
+      [
+       "Tester"
+      ]
+     ],
+     "agent_level": true,
+     "lint": true,
+     "smell": false
+    }
+   ],
+   "nodes": 5,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "tested"
+    ],
+    "critical": [
+     "tested"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Analyst",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "analysis"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Coder",
+      "kind": "agent",
+      "req": [
+       "analysis"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Tester",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "tested"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "tested"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Analyst"
+     ],
+     [
+      "Analyst",
+      "Coder"
+     ],
+     [
+      "Coder",
+      "Tester"
+     ],
+     [
+      "Tester",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "SelfCollab",
+   "source": "dong2024selfcollab",
+   "note": "analyst -> coder -> tester (LLM-simulated testing)",
+   "variant": "distinct",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "tested"
+     ],
+     "depth": 1,
+     "class": "A4",
+     "minimal": [
+      [
+       "Tester"
+      ]
+     ],
+     "agent_level": true,
+     "lint": true,
+     "smell": false
+    }
+   ],
+   "nodes": 5,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "tested"
+    ],
+    "critical": [
+     "tested"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Analyst",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "analysis"
+      ],
+      "oracle": "Analyst"
+     },
+     {
+      "id": "Coder",
+      "kind": "agent",
+      "req": [
+       "analysis"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "Coder"
+     },
+     {
+      "id": "Tester",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "tested"
+      ],
+      "oracle": "Tester"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "tested"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Analyst"
+     ],
+     [
+      "Analyst",
+      "Coder"
+     ],
+     [
+      "Coder",
+      "Tester"
+     ],
+     [
+      "Tester",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "SelfCollab",
+   "source": "dong2024selfcollab",
+   "note": "analyst -> coder -> tester (LLM-simulated testing)",
+   "variant": "shared",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "tested"
+     ],
+     "depth": 1,
+     "class": "A4",
+     "minimal": [
+      [
+       "Tester"
+      ]
+     ],
+     "agent_level": true,
+     "lint": true,
+     "smell": false
+    }
+   ],
+   "nodes": 5,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "tested"
+    ],
+    "critical": [
+     "tested"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Analyst",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "analysis"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Coder",
+      "kind": "agent",
+      "req": [
+       "analysis"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Tester",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "tested"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "tested"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Analyst"
+     ],
+     [
+      "Analyst",
+      "Coder"
+     ],
+     [
+      "Coder",
+      "Tester"
+     ],
+     [
+      "Tester",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "SelfCollab",
+   "source": "dong2024selfcollab",
+   "note": "analyst -> coder -> tester (LLM-simulated testing)",
+   "variant": "f0",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 5,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "tested"
+    ],
+    "critical": [
+     "tested"
+    ],
+    "fault_budget": 0,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Analyst",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "analysis"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Coder",
+      "kind": "agent",
+      "req": [
+       "analysis"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Tester",
+      "kind": "agent",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "tested"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "tested"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Analyst"
+     ],
+     [
+      "Analyst",
+      "Coder"
+     ],
+     [
+      "Coder",
+      "Tester"
+     ],
+     [
+      "Tester",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "Debate",
+   "source": "du2024debate",
+   "note": "three agents answer in parallel -> majority vote",
+   "variant": "documented",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "answer_ok"
+     ],
+     "depth": 3,
+     "class": "S4",
+     "minimal": [
+      [
+       "A1",
+       "A2",
+       "A3"
+      ],
+      [
+       "A1",
+       "A2",
+       "Vote"
+      ],
+      [
+       "A1",
+       "A3",
+       "Vote"
+      ],
+      [
+       "A2",
+       "A3",
+       "Vote"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 6,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "answer_ok"
+    ],
+    "critical": [
+     "answer_ok"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "A1",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "A2",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "A3",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Vote",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "quorum:2"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "answer_ok"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "A1"
+     ],
+     [
+      "IN",
+      "A2"
+     ],
+     [
+      "IN",
+      "A3"
+     ],
+     [
+      "A1",
+      "Vote"
+     ],
+     [
+      "A2",
+      "Vote"
+     ],
+     [
+      "A3",
+      "Vote"
+     ],
+     [
+      "Vote",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "Debate",
+   "source": "du2024debate",
+   "note": "three agents answer in parallel -> majority vote",
+   "variant": "distinct",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 6,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "answer_ok"
+    ],
+    "critical": [
+     "answer_ok"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "A1",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "A1"
+     },
+     {
+      "id": "A2",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "A2"
+     },
+     {
+      "id": "A3",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "A3"
+     },
+     {
+      "id": "Vote",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "quorum:2"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "answer_ok"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "A1"
+     ],
+     [
+      "IN",
+      "A2"
+     ],
+     [
+      "IN",
+      "A3"
+     ],
+     [
+      "A1",
+      "Vote"
+     ],
+     [
+      "A2",
+      "Vote"
+     ],
+     [
+      "A3",
+      "Vote"
+     ],
+     [
+      "Vote",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "Debate",
+   "source": "du2024debate",
+   "note": "three agents answer in parallel -> majority vote",
+   "variant": "shared",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "answer_ok"
+     ],
+     "depth": 3,
+     "class": "S4",
+     "minimal": [
+      [
+       "A1",
+       "A2",
+       "A3"
+      ],
+      [
+       "A1",
+       "A2",
+       "Vote"
+      ],
+      [
+       "A1",
+       "A3",
+       "Vote"
+      ],
+      [
+       "A2",
+       "A3",
+       "Vote"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 6,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "answer_ok"
+    ],
+    "critical": [
+     "answer_ok"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "A1",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "A2",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "A3",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Vote",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "quorum:2"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "answer_ok"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "A1"
+     ],
+     [
+      "IN",
+      "A2"
+     ],
+     [
+      "IN",
+      "A3"
+     ],
+     [
+      "A1",
+      "Vote"
+     ],
+     [
+      "A2",
+      "Vote"
+     ],
+     [
+      "A3",
+      "Vote"
+     ],
+     [
+      "Vote",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "Debate",
+   "source": "du2024debate",
+   "note": "three agents answer in parallel -> majority vote",
+   "variant": "f0",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 6,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "answer_ok"
+    ],
+    "critical": [
+     "answer_ok"
+    ],
+    "fault_budget": 0,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "A1",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "A2",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "A3",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Vote",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "quorum:2"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "answer_ok"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "A1"
+     ],
+     [
+      "IN",
+      "A2"
+     ],
+     [
+      "IN",
+      "A3"
+     ],
+     [
+      "A1",
+      "Vote"
+     ],
+     [
+      "A2",
+      "Vote"
+     ],
+     [
+      "A3",
+      "Vote"
+     ],
+     [
+      "Vote",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "Debate",
+   "source": "du2024debate",
+   "note": "three agents answer in parallel -> majority vote",
+   "variant": "alt_join",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "answer_ok"
+     ],
+     "depth": 2,
+     "class": "S2",
+     "minimal": [
+      [
+       "A1",
+       "Vote"
+      ],
+      [
+       "A2",
+       "Vote"
+      ],
+      [
+       "A3",
+       "Vote"
+      ],
+      [
+       "A1",
+       "A2",
+       "A3"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 6,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "answer_ok"
+    ],
+    "critical": [
+     "answer_ok"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "A1",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "A2",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "A3",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Vote",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "answer_ok"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "A1"
+     ],
+     [
+      "IN",
+      "A2"
+     ],
+     [
+      "IN",
+      "A3"
+     ],
+     [
+      "A1",
+      "Vote"
+     ],
+     [
+      "A2",
+      "Vote"
+     ],
+     [
+      "A3",
+      "Vote"
+     ],
+     [
+      "Vote",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MoA",
+   "source": "wang2024moa",
+   "note": "two proposer layers (different LLMs) -> aggregator",
+   "variant": "documented",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "answer_ok"
+     ],
+     "depth": 1,
+     "class": "A4",
+     "minimal": [
+      [
+       "Aggregator"
+      ]
+     ],
+     "agent_level": true,
+     "lint": true,
+     "smell": false
+    }
+   ],
+   "nodes": 9,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "answer_ok"
+    ],
+    "critical": [
+     "answer_ok"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "P0",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand0"
+      ],
+      "oracle": "llm0"
+     },
+     {
+      "id": "P1",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand1"
+      ],
+      "oracle": "llm1"
+     },
+     {
+      "id": "P2",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand2"
+      ],
+      "oracle": "llm2"
+     },
+     {
+      "id": "Q0",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined0"
+      ],
+      "oracle": "llm0"
+     },
+     {
+      "id": "Q1",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined1"
+      ],
+      "oracle": "llm1"
+     },
+     {
+      "id": "Q2",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined2"
+      ],
+      "oracle": "llm2"
+     },
+     {
+      "id": "Aggregator",
+      "kind": "agent",
+      "req": [
+       "refined0",
+       "refined1",
+       "refined2"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "llm0"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "answer_ok"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "P0"
+     ],
+     [
+      "IN",
+      "P1"
+     ],
+     [
+      "IN",
+      "P2"
+     ],
+     [
+      "P0",
+      "Q0"
+     ],
+     [
+      "P0",
+      "Q1"
+     ],
+     [
+      "P0",
+      "Q2"
+     ],
+     [
+      "P1",
+      "Q0"
+     ],
+     [
+      "P1",
+      "Q1"
+     ],
+     [
+      "P1",
+      "Q2"
+     ],
+     [
+      "P2",
+      "Q0"
+     ],
+     [
+      "P2",
+      "Q1"
+     ],
+     [
+      "P2",
+      "Q2"
+     ],
+     [
+      "Q0",
+      "Aggregator"
+     ],
+     [
+      "Q1",
+      "Aggregator"
+     ],
+     [
+      "Q2",
+      "Aggregator"
+     ],
+     [
+      "Aggregator",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MoA",
+   "source": "wang2024moa",
+   "note": "two proposer layers (different LLMs) -> aggregator",
+   "variant": "distinct",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "answer_ok"
+     ],
+     "depth": 1,
+     "class": "A4",
+     "minimal": [
+      [
+       "Aggregator"
+      ]
+     ],
+     "agent_level": true,
+     "lint": true,
+     "smell": false
+    }
+   ],
+   "nodes": 9,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "answer_ok"
+    ],
+    "critical": [
+     "answer_ok"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "P0",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand0"
+      ],
+      "oracle": "P0"
+     },
+     {
+      "id": "P1",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand1"
+      ],
+      "oracle": "P1"
+     },
+     {
+      "id": "P2",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand2"
+      ],
+      "oracle": "P2"
+     },
+     {
+      "id": "Q0",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined0"
+      ],
+      "oracle": "Q0"
+     },
+     {
+      "id": "Q1",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined1"
+      ],
+      "oracle": "Q1"
+     },
+     {
+      "id": "Q2",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined2"
+      ],
+      "oracle": "Q2"
+     },
+     {
+      "id": "Aggregator",
+      "kind": "agent",
+      "req": [
+       "refined0",
+       "refined1",
+       "refined2"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "Aggregator"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "answer_ok"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "P0"
+     ],
+     [
+      "IN",
+      "P1"
+     ],
+     [
+      "IN",
+      "P2"
+     ],
+     [
+      "P0",
+      "Q0"
+     ],
+     [
+      "P0",
+      "Q1"
+     ],
+     [
+      "P0",
+      "Q2"
+     ],
+     [
+      "P1",
+      "Q0"
+     ],
+     [
+      "P1",
+      "Q1"
+     ],
+     [
+      "P1",
+      "Q2"
+     ],
+     [
+      "P2",
+      "Q0"
+     ],
+     [
+      "P2",
+      "Q1"
+     ],
+     [
+      "P2",
+      "Q2"
+     ],
+     [
+      "Q0",
+      "Aggregator"
+     ],
+     [
+      "Q1",
+      "Aggregator"
+     ],
+     [
+      "Q2",
+      "Aggregator"
+     ],
+     [
+      "Aggregator",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MoA",
+   "source": "wang2024moa",
+   "note": "two proposer layers (different LLMs) -> aggregator",
+   "variant": "shared",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "answer_ok"
+     ],
+     "depth": 1,
+     "class": "A4",
+     "minimal": [
+      [
+       "Aggregator"
+      ]
+     ],
+     "agent_level": true,
+     "lint": true,
+     "smell": false
+    }
+   ],
+   "nodes": 9,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "answer_ok"
+    ],
+    "critical": [
+     "answer_ok"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "P0",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand0"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "P1",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand1"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "P2",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand2"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Q0",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined0"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Q1",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined1"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Q2",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined2"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Aggregator",
+      "kind": "agent",
+      "req": [
+       "refined0",
+       "refined1",
+       "refined2"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "answer_ok"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "P0"
+     ],
+     [
+      "IN",
+      "P1"
+     ],
+     [
+      "IN",
+      "P2"
+     ],
+     [
+      "P0",
+      "Q0"
+     ],
+     [
+      "P0",
+      "Q1"
+     ],
+     [
+      "P0",
+      "Q2"
+     ],
+     [
+      "P1",
+      "Q0"
+     ],
+     [
+      "P1",
+      "Q1"
+     ],
+     [
+      "P1",
+      "Q2"
+     ],
+     [
+      "P2",
+      "Q0"
+     ],
+     [
+      "P2",
+      "Q1"
+     ],
+     [
+      "P2",
+      "Q2"
+     ],
+     [
+      "Q0",
+      "Aggregator"
+     ],
+     [
+      "Q1",
+      "Aggregator"
+     ],
+     [
+      "Q2",
+      "Aggregator"
+     ],
+     [
+      "Aggregator",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MoA",
+   "source": "wang2024moa",
+   "note": "two proposer layers (different LLMs) -> aggregator",
+   "variant": "f0",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 9,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "answer_ok"
+    ],
+    "critical": [
+     "answer_ok"
+    ],
+    "fault_budget": 0,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "P0",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand0"
+      ],
+      "oracle": "llm0"
+     },
+     {
+      "id": "P1",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand1"
+      ],
+      "oracle": "llm1"
+     },
+     {
+      "id": "P2",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand2"
+      ],
+      "oracle": "llm2"
+     },
+     {
+      "id": "Q0",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined0"
+      ],
+      "oracle": "llm0"
+     },
+     {
+      "id": "Q1",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined1"
+      ],
+      "oracle": "llm1"
+     },
+     {
+      "id": "Q2",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined2"
+      ],
+      "oracle": "llm2"
+     },
+     {
+      "id": "Aggregator",
+      "kind": "agent",
+      "req": [
+       "refined0",
+       "refined1",
+       "refined2"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "llm0"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "answer_ok"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "P0"
+     ],
+     [
+      "IN",
+      "P1"
+     ],
+     [
+      "IN",
+      "P2"
+     ],
+     [
+      "P0",
+      "Q0"
+     ],
+     [
+      "P0",
+      "Q1"
+     ],
+     [
+      "P0",
+      "Q2"
+     ],
+     [
+      "P1",
+      "Q0"
+     ],
+     [
+      "P1",
+      "Q1"
+     ],
+     [
+      "P1",
+      "Q2"
+     ],
+     [
+      "P2",
+      "Q0"
+     ],
+     [
+      "P2",
+      "Q1"
+     ],
+     [
+      "P2",
+      "Q2"
+     ],
+     [
+      "Q0",
+      "Aggregator"
+     ],
+     [
+      "Q1",
+      "Aggregator"
+     ],
+     [
+      "Q2",
+      "Aggregator"
+     ],
+     [
+      "Aggregator",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "MoA",
+   "source": "wang2024moa",
+   "note": "two proposer layers (different LLMs) -> aggregator",
+   "variant": "alt_join",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "assume",
+      "Aggregator",
+      "refined0"
+     ],
+     "depth": 2,
+     "class": "S6b",
+     "minimal": [
+      [
+       "P0",
+       "Q0"
+      ],
+      [
+       "P1",
+       "Q0"
+      ],
+      [
+       "P2",
+       "Q0"
+      ],
+      [
+       "Q0",
+       "Aggregator"
+      ],
+      [
+       "Q1",
+       "Aggregator"
+      ],
+      [
+       "Q2",
+       "Aggregator"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "assume",
+      "Aggregator",
+      "refined1"
+     ],
+     "depth": 2,
+     "class": "S6b",
+     "minimal": [
+      [
+       "P0",
+       "Q1"
+      ],
+      [
+       "P1",
+       "Q1"
+      ],
+      [
+       "P2",
+       "Q1"
+      ],
+      [
+       "Q0",
+       "Aggregator"
+      ],
+      [
+       "Q1",
+       "Aggregator"
+      ],
+      [
+       "Q2",
+       "Aggregator"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "assume",
+      "Aggregator",
+      "refined2"
+     ],
+     "depth": 2,
+     "class": "S6b",
+     "minimal": [
+      [
+       "P0",
+       "Q2"
+      ],
+      [
+       "P1",
+       "Q2"
+      ],
+      [
+       "P2",
+       "Q2"
+      ],
+      [
+       "Q0",
+       "Aggregator"
+      ],
+      [
+       "Q1",
+       "Aggregator"
+      ],
+      [
+       "Q2",
+       "Aggregator"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "assume",
+      "Q0",
+      "cand0"
+     ],
+     "depth": 2,
+     "class": "S3",
+     "minimal": [
+      [
+       "P0",
+       "Q0"
+      ],
+      [
+       "P1",
+       "Q0"
+      ],
+      [
+       "P2",
+       "Q0"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "assume",
+      "Q0",
+      "cand1"
+     ],
+     "depth": 2,
+     "class": "S3",
+     "minimal": [
+      [
+       "P0",
+       "Q0"
+      ],
+      [
+       "P1",
+       "Q0"
+      ],
+      [
+       "P2",
+       "Q0"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "assume",
+      "Q0",
+      "cand2"
+     ],
+     "depth": 2,
+     "class": "S3",
+     "minimal": [
+      [
+       "P0",
+       "Q0"
+      ],
+      [
+       "P1",
+       "Q0"
+      ],
+      [
+       "P2",
+       "Q0"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "assume",
+      "Q1",
+      "cand0"
+     ],
+     "depth": 2,
+     "class": "S3",
+     "minimal": [
+      [
+       "P0",
+       "Q1"
+      ],
+      [
+       "P1",
+       "Q1"
+      ],
+      [
+       "P2",
+       "Q1"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "assume",
+      "Q1",
+      "cand1"
+     ],
+     "depth": 2,
+     "class": "S3",
+     "minimal": [
+      [
+       "P0",
+       "Q1"
+      ],
+      [
+       "P1",
+       "Q1"
+      ],
+      [
+       "P2",
+       "Q1"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "assume",
+      "Q1",
+      "cand2"
+     ],
+     "depth": 2,
+     "class": "S3",
+     "minimal": [
+      [
+       "P0",
+       "Q1"
+      ],
+      [
+       "P1",
+       "Q1"
+      ],
+      [
+       "P2",
+       "Q1"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "assume",
+      "Q2",
+      "cand0"
+     ],
+     "depth": 2,
+     "class": "S3",
+     "minimal": [
+      [
+       "P0",
+       "Q2"
+      ],
+      [
+       "P1",
+       "Q2"
+      ],
+      [
+       "P2",
+       "Q2"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "assume",
+      "Q2",
+      "cand1"
+     ],
+     "depth": 2,
+     "class": "S3",
+     "minimal": [
+      [
+       "P0",
+       "Q2"
+      ],
+      [
+       "P1",
+       "Q2"
+      ],
+      [
+       "P2",
+       "Q2"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "assume",
+      "Q2",
+      "cand2"
+     ],
+     "depth": 2,
+     "class": "S3",
+     "minimal": [
+      [
+       "P0",
+       "Q2"
+      ],
+      [
+       "P1",
+       "Q2"
+      ],
+      [
+       "P2",
+       "Q2"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "goal",
+      "OUT",
+      "answer_ok"
+     ],
+     "depth": 2,
+     "class": "S6b",
+     "minimal": [
+      [
+       "Q0",
+       "Aggregator"
+      ],
+      [
+       "Q1",
+       "Aggregator"
+      ],
+      [
+       "Q2",
+       "Aggregator"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 9,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "answer_ok"
+    ],
+    "critical": [
+     "answer_ok"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "P0",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand0"
+      ],
+      "oracle": "llm0"
+     },
+     {
+      "id": "P1",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand1"
+      ],
+      "oracle": "llm1"
+     },
+     {
+      "id": "P2",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "cand2"
+      ],
+      "oracle": "llm2"
+     },
+     {
+      "id": "Q0",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined0"
+      ],
+      "oracle": "llm0",
+      "join": "any"
+     },
+     {
+      "id": "Q1",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined1"
+      ],
+      "oracle": "llm1",
+      "join": "any"
+     },
+     {
+      "id": "Q2",
+      "kind": "agent",
+      "req": [
+       "cand0",
+       "cand1",
+       "cand2"
+      ],
+      "gua": [
+       "refined2"
+      ],
+      "oracle": "llm2",
+      "join": "any"
+     },
+     {
+      "id": "Aggregator",
+      "kind": "agent",
+      "req": [
+       "refined0",
+       "refined1",
+       "refined2"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "llm0",
+      "join": "any"
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "answer_ok"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "P0"
+     ],
+     [
+      "IN",
+      "P1"
+     ],
+     [
+      "IN",
+      "P2"
+     ],
+     [
+      "P0",
+      "Q0"
+     ],
+     [
+      "P0",
+      "Q1"
+     ],
+     [
+      "P0",
+      "Q2"
+     ],
+     [
+      "P1",
+      "Q0"
+     ],
+     [
+      "P1",
+      "Q1"
+     ],
+     [
+      "P1",
+      "Q2"
+     ],
+     [
+      "P2",
+      "Q0"
+     ],
+     [
+      "P2",
+      "Q1"
+     ],
+     [
+      "P2",
+      "Q2"
+     ],
+     [
+      "Q0",
+      "Aggregator"
+     ],
+     [
+      "Q1",
+      "Aggregator"
+     ],
+     [
+      "Q2",
+      "Aggregator"
+     ],
+     [
+      "Aggregator",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "AutoGenGroup",
+   "source": "wu2024autogen",
+   "note": "manager selects coder or critic -> merge -> code executor",
+   "variant": "documented",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "assume",
+      "Executor",
+      "code"
+     ],
+     "depth": 1,
+     "class": "S5",
+     "minimal": [
+      [
+       "Manager"
+      ],
+      [
+       "Coder",
+       "Merge"
+      ],
+      [
+       "Critic",
+       "Merge"
+      ]
+     ],
+     "agent_level": true,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "goal",
+      "OUT",
+      "reviewed"
+     ],
+     "depth": 1,
+     "class": "S5",
+     "minimal": [
+      [
+       "Manager"
+      ],
+      [
+       "Coder",
+       "Merge"
+      ],
+      [
+       "Critic",
+       "Merge"
+      ]
+     ],
+     "agent_level": true,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "goal",
+      "OUT",
+      "runs"
+     ],
+     "depth": 3,
+     "class": "S6b",
+     "minimal": [
+      [
+       "Coder",
+       "Merge",
+       "Executor"
+      ],
+      [
+       "Critic",
+       "Merge",
+       "Executor"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": false
+    }
+   ],
+   "nodes": 7,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "reviewed",
+     "runs"
+    ],
+    "critical": [
+     "runs"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Manager",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "task"
+      ],
+      "oracle": "backbone",
+      "route": "switch"
+     },
+     {
+      "id": "Coder",
+      "kind": "agent",
+      "req": [
+       "task"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Critic",
+      "kind": "agent",
+      "req": [
+       "task"
+      ],
+      "gua": [
+       "reviewed"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Merge",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
+     },
+     {
+      "id": "Executor",
+      "kind": "gate",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "runs"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "reviewed",
+       "runs"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Manager"
+     ],
+     [
+      "Manager",
+      "Coder"
+     ],
+     [
+      "Manager",
+      "Critic"
+     ],
+     [
+      "Coder",
+      "Merge"
+     ],
+     [
+      "Critic",
+      "Merge"
+     ],
+     [
+      "Merge",
+      "Executor"
+     ],
+     [
+      "Executor",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "AutoGenGroup",
+   "source": "wu2024autogen",
+   "note": "manager selects coder or critic -> merge -> code executor",
+   "variant": "distinct",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "assume",
+      "Executor",
+      "code"
+     ],
+     "depth": 1,
+     "class": "S5",
+     "minimal": [
+      [
+       "Manager"
+      ],
+      [
+       "Coder",
+       "Merge"
+      ],
+      [
+       "Critic",
+       "Merge"
+      ]
+     ],
+     "agent_level": true,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "goal",
+      "OUT",
+      "reviewed"
+     ],
+     "depth": 1,
+     "class": "S5",
+     "minimal": [
+      [
+       "Manager"
+      ],
+      [
+       "Coder",
+       "Merge"
+      ],
+      [
+       "Critic",
+       "Merge"
+      ]
+     ],
+     "agent_level": true,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "goal",
+      "OUT",
+      "runs"
+     ],
+     "depth": 3,
+     "class": "S6b",
+     "minimal": [
+      [
+       "Coder",
+       "Merge",
+       "Executor"
+      ],
+      [
+       "Critic",
+       "Merge",
+       "Executor"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": false
+    }
+   ],
+   "nodes": 7,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "reviewed",
+     "runs"
+    ],
+    "critical": [
+     "runs"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Manager",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "task"
+      ],
+      "oracle": "Manager",
+      "route": "switch"
+     },
+     {
+      "id": "Coder",
+      "kind": "agent",
+      "req": [
+       "task"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "Coder"
+     },
+     {
+      "id": "Critic",
+      "kind": "agent",
+      "req": [
+       "task"
+      ],
+      "gua": [
+       "reviewed"
+      ],
+      "oracle": "Critic"
+     },
+     {
+      "id": "Merge",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
+     },
+     {
+      "id": "Executor",
+      "kind": "gate",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "runs"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "reviewed",
+       "runs"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Manager"
+     ],
+     [
+      "Manager",
+      "Coder"
+     ],
+     [
+      "Manager",
+      "Critic"
+     ],
+     [
+      "Coder",
+      "Merge"
+     ],
+     [
+      "Critic",
+      "Merge"
+     ],
+     [
+      "Merge",
+      "Executor"
+     ],
+     [
+      "Executor",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "AutoGenGroup",
+   "source": "wu2024autogen",
+   "note": "manager selects coder or critic -> merge -> code executor",
+   "variant": "shared",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "assume",
+      "Executor",
+      "code"
+     ],
+     "depth": 1,
+     "class": "S5",
+     "minimal": [
+      [
+       "Manager"
+      ],
+      [
+       "Coder",
+       "Merge"
+      ],
+      [
+       "Critic",
+       "Merge"
+      ]
+     ],
+     "agent_level": true,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "goal",
+      "OUT",
+      "reviewed"
+     ],
+     "depth": 1,
+     "class": "S5",
+     "minimal": [
+      [
+       "Manager"
+      ],
+      [
+       "Coder",
+       "Merge"
+      ],
+      [
+       "Critic",
+       "Merge"
+      ]
+     ],
+     "agent_level": true,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "goal",
+      "OUT",
+      "runs"
+     ],
+     "depth": 3,
+     "class": "S6b",
+     "minimal": [
+      [
+       "Coder",
+       "Merge",
+       "Executor"
+      ],
+      [
+       "Critic",
+       "Merge",
+       "Executor"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": false
+    }
+   ],
+   "nodes": 7,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "reviewed",
+     "runs"
+    ],
+    "critical": [
+     "runs"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Manager",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "task"
+      ],
+      "oracle": "backbone",
+      "route": "switch"
+     },
+     {
+      "id": "Coder",
+      "kind": "agent",
+      "req": [
+       "task"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Critic",
+      "kind": "agent",
+      "req": [
+       "task"
+      ],
+      "gua": [
+       "reviewed"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Merge",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
+     },
+     {
+      "id": "Executor",
+      "kind": "gate",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "runs"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "reviewed",
+       "runs"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Manager"
+     ],
+     [
+      "Manager",
+      "Coder"
+     ],
+     [
+      "Manager",
+      "Critic"
+     ],
+     [
+      "Coder",
+      "Merge"
+     ],
+     [
+      "Critic",
+      "Merge"
+     ],
+     [
+      "Merge",
+      "Executor"
+     ],
+     [
+      "Executor",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "AutoGenGroup",
+   "source": "wu2024autogen",
+   "note": "manager selects coder or critic -> merge -> code executor",
+   "variant": "f0",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "assume",
+      "Executor",
+      "code"
+     ],
+     "depth": 1,
+     "class": "S5",
+     "minimal": [
+      [
+       "Manager"
+      ],
+      [
+       "Coder",
+       "Merge"
+      ],
+      [
+       "Critic",
+       "Merge"
+      ]
+     ],
+     "agent_level": true,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "goal",
+      "OUT",
+      "reviewed"
+     ],
+     "depth": 1,
+     "class": "S5",
+     "minimal": [
+      [
+       "Manager"
+      ],
+      [
+       "Coder",
+       "Merge"
+      ],
+      [
+       "Critic",
+       "Merge"
+      ]
+     ],
+     "agent_level": true,
+     "lint": false,
+     "smell": true
+    },
+    {
+     "key": [
+      "goal",
+      "OUT",
+      "runs"
+     ],
+     "depth": 3,
+     "class": "S6b",
+     "minimal": [
+      [
+       "Coder",
+       "Merge",
+       "Executor"
+      ],
+      [
+       "Critic",
+       "Merge",
+       "Executor"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": false
+    }
+   ],
+   "nodes": 7,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "reviewed",
+     "runs"
+    ],
+    "critical": [
+     "runs"
+    ],
+    "fault_budget": 0,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Manager",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "task"
+      ],
+      "oracle": "backbone",
+      "route": "switch"
+     },
+     {
+      "id": "Coder",
+      "kind": "agent",
+      "req": [
+       "task"
+      ],
+      "gua": [
+       "code"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Critic",
+      "kind": "agent",
+      "req": [
+       "task"
+      ],
+      "gua": [
+       "reviewed"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Merge",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
+     },
+     {
+      "id": "Executor",
+      "kind": "gate",
+      "req": [
+       "code"
+      ],
+      "gua": [
+       "runs"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "reviewed",
+       "runs"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Manager"
+     ],
+     [
+      "Manager",
+      "Coder"
+     ],
+     [
+      "Manager",
+      "Critic"
+     ],
+     [
+      "Coder",
+      "Merge"
+     ],
+     [
+      "Critic",
+      "Merge"
+     ],
+     [
+      "Merge",
+      "Executor"
+     ],
+     [
+      "Executor",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "Agentless",
+   "source": "xia2025agentless",
+   "note": "localize -> sampled repairs || reproduction-test generation -> regression and reproduction runs -> select",
+   "variant": "documented",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "issue_fixed"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "ReproGen",
+       "ReproRun"
+      ],
+      [
+       "Repair1",
+       "Select",
+       "Regression",
+       "ReproRun"
+      ],
+      [
+       "Repair2",
+       "Select",
+       "Regression",
+       "ReproRun"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 9,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "issue_fixed",
+     "regression_pass"
+    ],
+    "critical": [
+     "issue_fixed"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Localize",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "locations"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Repair1",
+      "kind": "agent",
+      "req": [
+       "locations"
+      ],
+      "gua": [
+       "patch"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Repair2",
+      "kind": "agent",
+      "req": [
+       "locations"
+      ],
+      "gua": [
+       "patch"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "ReproGen",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "repro_test"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Select",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
+     },
+     {
+      "id": "Regression",
+      "kind": "gate",
+      "req": [
+       "patch"
+      ],
+      "gua": [
+       "regression_pass"
+      ]
+     },
+     {
+      "id": "ReproRun",
+      "kind": "gate",
+      "req": [
+       "patch",
+       "repro_test"
+      ],
+      "gua": [
+       "issue_fixed"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "issue_fixed",
+       "regression_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Localize"
+     ],
+     [
+      "IN",
+      "ReproGen"
+     ],
+     [
+      "Localize",
+      "Repair1"
+     ],
+     [
+      "Localize",
+      "Repair2"
+     ],
+     [
+      "Repair1",
+      "Select"
+     ],
+     [
+      "Repair2",
+      "Select"
+     ],
+     [
+      "Select",
+      "Regression"
+     ],
+     [
+      "Regression",
+      "ReproRun"
+     ],
+     [
+      "ReproGen",
+      "ReproRun"
+     ],
+     [
+      "ReproRun",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "Agentless",
+   "source": "xia2025agentless",
+   "note": "localize -> sampled repairs || reproduction-test generation -> regression and reproduction runs -> select",
+   "variant": "distinct",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "issue_fixed"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "ReproGen",
+       "ReproRun"
+      ],
+      [
+       "Repair1",
+       "Select",
+       "Regression",
+       "ReproRun"
+      ],
+      [
+       "Repair2",
+       "Select",
+       "Regression",
+       "ReproRun"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 9,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "issue_fixed",
+     "regression_pass"
+    ],
+    "critical": [
+     "issue_fixed"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Localize",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "locations"
+      ],
+      "oracle": "Localize"
+     },
+     {
+      "id": "Repair1",
+      "kind": "agent",
+      "req": [
+       "locations"
+      ],
+      "gua": [
+       "patch"
+      ],
+      "oracle": "Repair1"
+     },
+     {
+      "id": "Repair2",
+      "kind": "agent",
+      "req": [
+       "locations"
+      ],
+      "gua": [
+       "patch"
+      ],
+      "oracle": "Repair2"
+     },
+     {
+      "id": "ReproGen",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "repro_test"
+      ],
+      "oracle": "ReproGen"
+     },
+     {
+      "id": "Select",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
+     },
+     {
+      "id": "Regression",
+      "kind": "gate",
+      "req": [
+       "patch"
+      ],
+      "gua": [
+       "regression_pass"
+      ]
+     },
+     {
+      "id": "ReproRun",
+      "kind": "gate",
+      "req": [
+       "patch",
+       "repro_test"
+      ],
+      "gua": [
+       "issue_fixed"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "issue_fixed",
+       "regression_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Localize"
+     ],
+     [
+      "IN",
+      "ReproGen"
+     ],
+     [
+      "Localize",
+      "Repair1"
+     ],
+     [
+      "Localize",
+      "Repair2"
+     ],
+     [
+      "Repair1",
+      "Select"
+     ],
+     [
+      "Repair2",
+      "Select"
+     ],
+     [
+      "Select",
+      "Regression"
+     ],
+     [
+      "Regression",
+      "ReproRun"
+     ],
+     [
+      "ReproGen",
+      "ReproRun"
+     ],
+     [
+      "ReproRun",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "Agentless",
+   "source": "xia2025agentless",
+   "note": "localize -> sampled repairs || reproduction-test generation -> regression and reproduction runs -> select",
+   "variant": "shared",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "issue_fixed"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "ReproGen",
+       "ReproRun"
+      ],
+      [
+       "Repair1",
+       "Select",
+       "Regression",
+       "ReproRun"
+      ],
+      [
+       "Repair2",
+       "Select",
+       "Regression",
+       "ReproRun"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 9,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "issue_fixed",
+     "regression_pass"
+    ],
+    "critical": [
+     "issue_fixed"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Localize",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "locations"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Repair1",
+      "kind": "agent",
+      "req": [
+       "locations"
+      ],
+      "gua": [
+       "patch"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Repair2",
+      "kind": "agent",
+      "req": [
+       "locations"
+      ],
+      "gua": [
+       "patch"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "ReproGen",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "repro_test"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Select",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
+     },
+     {
+      "id": "Regression",
+      "kind": "gate",
+      "req": [
+       "patch"
+      ],
+      "gua": [
+       "regression_pass"
+      ]
+     },
+     {
+      "id": "ReproRun",
+      "kind": "gate",
+      "req": [
+       "patch",
+       "repro_test"
+      ],
+      "gua": [
+       "issue_fixed"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "issue_fixed",
+       "regression_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Localize"
+     ],
+     [
+      "IN",
+      "ReproGen"
+     ],
+     [
+      "Localize",
+      "Repair1"
+     ],
+     [
+      "Localize",
+      "Repair2"
+     ],
+     [
+      "Repair1",
+      "Select"
+     ],
+     [
+      "Repair2",
+      "Select"
+     ],
+     [
+      "Select",
+      "Regression"
+     ],
+     [
+      "Regression",
+      "ReproRun"
+     ],
+     [
+      "ReproGen",
+      "ReproRun"
+     ],
+     [
+      "ReproRun",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "Agentless",
+   "source": "xia2025agentless",
+   "note": "localize -> sampled repairs || reproduction-test generation -> regression and reproduction runs -> select",
+   "variant": "f0",
+   "safe": true,
+   "clean": true,
+   "symptoms": [],
+   "nodes": 9,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "issue_fixed",
+     "regression_pass"
+    ],
+    "critical": [
+     "issue_fixed"
+    ],
+    "fault_budget": 0,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Localize",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "locations"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Repair1",
+      "kind": "agent",
+      "req": [
+       "locations"
+      ],
+      "gua": [
+       "patch"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Repair2",
+      "kind": "agent",
+      "req": [
+       "locations"
+      ],
+      "gua": [
+       "patch"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "ReproGen",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "repro_test"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Select",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
+     },
+     {
+      "id": "Regression",
+      "kind": "gate",
+      "req": [
+       "patch"
+      ],
+      "gua": [
+       "regression_pass"
+      ]
+     },
+     {
+      "id": "ReproRun",
+      "kind": "gate",
+      "req": [
+       "patch",
+       "repro_test"
+      ],
+      "gua": [
+       "issue_fixed"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "issue_fixed",
+       "regression_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Localize"
+     ],
+     [
+      "IN",
+      "ReproGen"
+     ],
+     [
+      "Localize",
+      "Repair1"
+     ],
+     [
+      "Localize",
+      "Repair2"
+     ],
+     [
+      "Repair1",
+      "Select"
+     ],
+     [
+      "Repair2",
+      "Select"
+     ],
+     [
+      "Select",
+      "Regression"
+     ],
+     [
+      "Regression",
+      "ReproRun"
+     ],
+     [
+      "ReproGen",
+      "ReproRun"
+     ],
+     [
+      "ReproRun",
+      "OUT"
+     ]
+    ]
+   }
+  },
+  {
+   "design": "Agentless",
+   "source": "xia2025agentless",
+   "note": "localize -> sampled repairs || reproduction-test generation -> regression and reproduction runs -> select",
+   "variant": "alt_join",
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "issue_fixed"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "ReproGen",
+       "ReproRun"
+      ],
+      [
+       "Repair1",
+       "Repair2",
+       "Select",
+       "Regression",
+       "ReproRun"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true
+    }
+   ],
+   "nodes": 9,
+   "spec": {
+    "name": "team",
+    "goals": [
+     "issue_fixed",
+     "regression_pass"
+    ],
+    "critical": [
+     "issue_fixed"
+    ],
+    "fault_budget": 1,
+    "nodes": [
+     {
+      "id": "IN",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Localize",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "locations"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Repair1",
+      "kind": "agent",
+      "req": [
+       "locations"
+      ],
+      "gua": [
+       "patch"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Repair2",
+      "kind": "agent",
+      "req": [
+       "locations"
+      ],
+      "gua": [
+       "patch"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "ReproGen",
+      "kind": "agent",
+      "req": [],
+      "gua": [
+       "repro_test"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "Select",
+      "kind": "gate",
+      "req": [],
+      "gua": []
+     },
+     {
+      "id": "Regression",
+      "kind": "gate",
+      "req": [
+       "patch"
+      ],
+      "gua": [
+       "regression_pass"
+      ]
+     },
+     {
+      "id": "ReproRun",
+      "kind": "gate",
+      "req": [
+       "patch",
+       "repro_test"
+      ],
+      "gua": [
+       "issue_fixed"
+      ]
+     },
+     {
+      "id": "OUT",
+      "kind": "gate",
+      "req": [
+       "issue_fixed",
+       "regression_pass"
+      ],
+      "gua": []
+     }
+    ],
+    "edges": [
+     [
+      "IN",
+      "Localize"
+     ],
+     [
+      "IN",
+      "ReproGen"
+     ],
+     [
+      "Localize",
+      "Repair1"
+     ],
+     [
+      "Localize",
+      "Repair2"
+     ],
+     [
+      "Repair1",
+      "Select"
+     ],
+     [
+      "Repair2",
+      "Select"
+     ],
+     [
+      "Select",
+      "Regression"
+     ],
+     [
+      "Regression",
+      "ReproRun"
+     ],
+     [
+      "ReproGen",
+      "ReproRun"
+     ],
+     [
+      "ReproRun",
+      "OUT"
+     ]
+    ]
+   }
+  }
+ ]
+}

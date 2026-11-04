@@ -1,0 +1,126 @@
+{
+ "solver": "z3 5.3.3",
+ "mutant": null,
+ "obligations": [
+  {
+   "obligation": "L1-transfer-monotone",
+   "theorem": "Lemma A, M",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0037
+  },
+  {
+   "obligation": "L2-face-value-dominates",
+   "theorem": "Lemma A",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0025
+  },
+  {
+   "obligation": "L3-join-subset",
+   "theorem": "Lemma A, M",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0021
+  },
+  {
+   "obligation": "L4-missing-antitone",
+   "theorem": "T4c, T5d, Lemma M",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0018
+  },
+  {
+   "obligation": "L5-evidence-monotone",
+   "theorem": "Lemma W",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.002
+  },
+  {
+   "obligation": "L6-halt-is-exclusion",
+   "theorem": "Lemma H",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0003
+  },
+  {
+   "obligation": "L7-env-uniform",
+   "theorem": "T1",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0008
+  },
+  {
+   "obligation": "L8-must-sound",
+   "theorem": "Generator",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0021
+  },
+  {
+   "obligation": "L9-meet-below-choice",
+   "theorem": "Generator",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0007
+  },
+  {
+   "obligation": "L10-fault-antitone",
+   "theorem": "Def. 3",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0026
+  },
+  {
+   "obligation": "L11-failed-provides-nothing",
+   "theorem": "Def. 2",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0001
+  },
+  {
+   "obligation": "L12-decl-enables",
+   "theorem": "Def. 2",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.002
+  },
+  {
+   "obligation": "L13-decl-local",
+   "theorem": "Def. 2",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0018
+  },
+  {
+   "obligation": "C1-non-distributive",
+   "theorem": "T7 / must-analysis",
+   "expect": "sat",
+   "z3": "sat",
+   "ok": true,
+   "seconds": 0.0157
+  },
+  {
+   "obligation": "C2-single-pair-inexact",
+   "theorem": "T2(c)",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0002
+  }
+ ]
+}
