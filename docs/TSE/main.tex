@@ -994,7 +994,7 @@ Consider a release gate that ships a change when either the code reviewer or the
 
 Assume-guarantee reasoning gives the vocabulary: each component assumes something about its inputs and guarantees something about its outputs, and a composition is justified when every assumption is discharged~\cite{misra1981proofs,jones1983tentative,abadi1993composing,benveniste2018contracts}. Applied to one agent at a time, with every other agent assumed to keep its contract, the check is not path-sensitive. It credits a fact to a consumer if some upstream agent claims it, even if a join may drop that branch, and it never sees two agents fail together. Classical whole-program analyses fix part of this: we show that a must-analysis in the style of monotone data-flow frameworks~\cite{kildall1973unified,kam1977monotone}, run once per failure set, detects most such defects. But it over-approximates, so it raises false alarms, and it names only the node where the symptom appears.
 
-\textbf{This paper.} We propose \emph{agent slicing}: analyze \emph{parts of a team} exactly and the rest at face value. A slice is a set of agents that is convex in the team graph (every path between two members stays inside); it need not be connected. Within a slice, joins, routing choices and model failures are explored exactly; outside, every component is assumed to keep its contract. Face value is an approximation in both directions, so a slice can report a defect the team does not have. We therefore \emph{confirm} each slice finding by lifting its witness to a run of the whole team. The size of the smallest slice that confirms a defect is its \emph{depth}: depth one means the defect is visible to an agent-by-agent check, depth two or more means it is hidden. The smallest confirming slices \emph{localize} the defect: they name the agents whose relationship is wrong. Fig.~\ref{fig:overview} shows the idea.
+\textbf{This paper.} We propose \emph{agent slicing}: analyze \emph{parts of a team} exactly and the rest at face value. A slice is a set of agents that is convex in the team graph (every path between two members stays inside); it need not be connected. Within a slice, joins, routing choices and model failures are explored exactly; outside, every component is assumed to keep its contract. Face value is an approximation in both directions, so a slice can report a defect the team does not have. We therefore \emph{confirm} each slice finding by lifting its witness to a run of the whole team. The size of the smallest slice that confirms a defect is its \emph{depth}: depth one means the defect is visible to an agent-by-agent check, depth two or more means it is hidden. The smallest confirming slices \emph{localize} the defect: they name the agents whose relationship is wrong. Fig.~\ref{fig:overview} shows the idea. It is not limited to a sequence of agents: the left side slices a chain, while the right side slices a team graph with a fork and a join, where a slice can follow a branch, cut across parallel branches, or wrap a fork or join, so that the same definitions cover branching teams.
 
 \begin{figure*}[!t]
 \centering
@@ -1043,23 +1043,41 @@ Assume-guarantee reasoning gives the vocabulary: each component assumes somethin
 \node[font=\scriptsize,above=0.5mm of d1.north east,anchor=south west] {(d) singletons = agent level};
 \end{scope}
 \end{scope}
-\begin{scope}[xshift=10.2cm,yshift=-0.9cm]
-\node[io] (fi) {Input};
-\node[ag,right=5mm of fi] (f1) {A1};
-\node[ag,above right=4mm and 9mm of f1] (f3) {A3};
-\node[ag,below right=4mm and 9mm of f1] (f2) {A2};
-\node[ag,right=11mm of f3] (f4) {A4};
-\node[ag,right=11mm of f2] (f5) {A5};
-\node[io,below right=4mm and 6mm of f4] (fo) {Output};
-\foreach \u/\v in {fi/f1,f1/f3,f1/f2,f3/f4,f2/f5,f4/fo,f5/fo} \draw[fl] (\u)--(\v);
+\def\fjteam#1{%
+\node[io] (#1i) at (0,0) {Input};
+\node[ag] (#1a1) at (1.15,0) {A1};
+\node[ag] (#1a2) at (2.4,0.42) {A2};
+\node[ag] (#1a3) at (2.4,-0.42) {A3};
+\node[ag] (#1a4) at (3.65,0.42) {A4};
+\node[ag] (#1a5) at (3.65,-0.42) {A5};
+\node[ag] (#1a6) at (4.9,0) {A6};
+\node[io] (#1o) at (6.05,0) {Output};
+\foreach \u/\v in {i/a1,a1/a2,a1/a3,a2/a4,a3/a5,a4/a6,a5/a6,a6/o} \draw[fl] (#1\u)--(#1\v);}
+\begin{scope}[xshift=10.6cm,yshift=0.2cm]
+\fjteam{e}
 \begin{scope}[on background layer]
-\node[slc,fit=(f3)(f2),label={[font=\scriptsize,align=center]below:{\{A2,A3\}}}] {};
-\node[slc,fit=(f4)(f5),label={[font=\scriptsize,align=center]below:{\{A4,A5\}}}] {};
+\node[slc,fit=(ea2)(ea3)] {};
+\node[slc,fit=(ea4)(ea5)] {};
 \end{scope}
-\node[font=\scriptsize,align=center,below=12mm of f1,anchor=north west,xshift=-6mm] {(e) two band slices of a fork-join team;\\ each slice is convex but not connected};
+\node[font=\scriptsize,anchor=south] at (3.05,0.88) {(e) band slices: one cross-section of parallel branches each};
+\end{scope}
+\begin{scope}[xshift=10.6cm,yshift=-2.3cm]
+\fjteam{f}
+\begin{scope}[on background layer]
+\node[slc,fit=(fa1)(fa2)(fa3)] {};
+\node[slc,fit=(fa4)(fa5)(fa6)] {};
+\end{scope}
+\node[font=\scriptsize,anchor=south] at (3.05,0.88) {(f) region slices: a fork with its branch heads, a join with its predecessors};
+\end{scope}
+\begin{scope}[xshift=10.6cm,yshift=-4.8cm]
+\fjteam{g}
+\begin{scope}[on background layer]
+\node[slc,fit=(ga2)(ga4)] {};
+\end{scope}
+\node[font=\scriptsize,anchor=south] at (3.05,0.88) {(g) window across a hand-off on one branch; A3, A5 at face value};
 \end{scope}
 \end{tikzpicture}
-\caption{Slices of a chain (a--d) and of a fork-join team (e). A slice is a convex set of agents analyzed exactly while the rest of the team is taken at face value. Singleton slices (d) give agent-level analysis; the whole team (a) gives exact monolithic analysis. Slices in between expose and localize defects that live in hand-offs, joins and shared models.}
+\caption{Slices of a chain (a--d, left) and of a team with a fork and a join (e--g, right). Slicing is defined on the team graph, not on a sequence: the same notions apply when agents branch and re-merge. A slice is a convex set of agents analyzed exactly while the rest of the team is taken at face value. Singleton slices (d) give agent-level analysis; the whole team (a) gives exact monolithic analysis. Slices in between expose and localize defects that live in hand-offs, joins and shared models. On the graph, slices may follow a cross-section of parallel branches (e), wrap a fork or a join (f), or follow one branch (g); a slice such as those in (e) need not be connected.}
 \label{fig:overview}
 \end{figure*}
 
