@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{67}
+\begin{thebibliography}{65}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -390,23 +390,6 @@
 \newblock \showarticletitle{Empirical evaluation of the tarantula automatic fault-localization technique}. In \bibinfo{booktitle}{\emph{Proceedings of the 20th IEEE/ACM International Conference on Automated Software Engineering}}. \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{273--282}.
 \newblock
 \href{https://doi.org/10.1145/1101908.1101949}{doi:\nolinkurl{10.1145/1101908.1101949}}
-
-
-\bibitem[Kam and Ullman(1977)]%
-        {kam1977monotone}
-\bibfield{author}{\bibinfo{person}{John~B. Kam} {and} \bibinfo{person}{Jeffrey~D. Ullman}.} \bibinfo{year}{1977}\natexlab{}.
-\newblock \showarticletitle{Monotone data flow analysis frameworks}.
-\newblock \bibinfo{journal}{\emph{Acta Informatica}} \bibinfo{volume}{7}, \bibinfo{number}{3} (\bibinfo{year}{1977}), \bibinfo{pages}{305--317}.
-\newblock
-\href{https://doi.org/10.1007/bf00290339}{doi:\nolinkurl{10.1007/bf00290339}}
-
-
-\bibitem[Kildall(1973)]%
-        {kildall1973unified}
-\bibfield{author}{\bibinfo{person}{Gary~A. Kildall}.} \bibinfo{year}{1973}\natexlab{}.
-\newblock \showarticletitle{A unified approach to global program optimization}. In \bibinfo{booktitle}{\emph{Proceedings of the 1st annual ACM SIGACT-SIGPLAN symposium on Principles of programming languages - POPL '73}}. \bibinfo{publisher}{ACM Press}, \bibinfo{address}{New York, New York, USA}, \bibinfo{pages}{194--206}.
-\newblock
-\href{https://doi.org/10.1145/512927.512945}{doi:\nolinkurl{10.1145/512927.512945}}
 
 
 \bibitem[Knight and Leveson(1986)]%
