@@ -1,0 +1,682 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{67}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter does
+%%% not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+\makeatletter
+\@ifundefined{NAT@parse@date}{}{\let\NAT@parse@date@orig\NAT@parse@date}
+\@ifundefined{NAT@parse@date}{}{\def\NAT@parse@date#1#2#3#4#5#6@@{\NAT@parse@date@orig#1#2#3#4#5#6@@\def\NAT@tempyear{0000}\def\NAT@tempexlab{{?}}\ifx\NAT@year\NAT@tempyear\ifx\NAT@exlab\NAT@tempexlab\def\NAT@date{[n.\,d.]}\else\edef\NAT@date{[n.\,d.]\NAT@exlab}\fi\fi}}
+\makeatother
+
+\bibitem[Abadi and Lamport(1993)]%
+        {abadi1993composing}
+\bibfield{author}{\bibinfo{person}{Martín Abadi} {and} \bibinfo{person}{Leslie Lamport}.} \bibinfo{year}{1993}\natexlab{}.
+\newblock \showarticletitle{Composing specifications}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Programming Languages and Systems}} \bibinfo{volume}{15}, \bibinfo{number}{1} (\bibinfo{year}{1993}), \bibinfo{pages}{73--132}.
+\newblock
+\href{https://doi.org/10.1145/151646.151649}{doi:\nolinkurl{10.1145/151646.151649}}
+
+
+\bibitem[Arcuri and Briand(2011)]%
+        {arcuri2011practical}
+\bibfield{author}{\bibinfo{person}{Andrea Arcuri} {and} \bibinfo{person}{Lionel Briand}.} \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{A practical guide for using statistical tests to assess randomized algorithms in software engineering}. In \bibinfo{booktitle}{\emph{Proceedings of the 33rd International Conference on Software Engineering}}. \bibinfo{pages}{1--10}.
+\newblock
+\href{https://doi.org/10.1145/1985793.1985795}{doi:\nolinkurl{10.1145/1985793.1985795}}
+
+
+\bibitem[Avizienis(1985)]%
+        {avizienis1985nversion}
+\bibfield{author}{\bibinfo{person}{A. Avizienis}.} \bibinfo{year}{1985}\natexlab{}.
+\newblock \showarticletitle{The N-Version Approach to Fault-Tolerant Software}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Software Engineering}} \bibinfo{volume}{SE--11}, \bibinfo{number}{12} (\bibinfo{year}{1985}), \bibinfo{pages}{1491--1501}.
+\newblock
+\href{https://doi.org/10.1109/tse.1985.231893}{doi:\nolinkurl{10.1109/tse.1985.231893}}
+
+
+\bibitem[Ball et~al\mbox{.}(2003)]%
+        {ball2003symptom}
+\bibfield{author}{\bibinfo{person}{Thomas Ball}, \bibinfo{person}{Mayur Naik}, {and} \bibinfo{person}{Sriram~K. Rajamani}.} \bibinfo{year}{2003}\natexlab{}.
+\newblock \showarticletitle{From symptom to cause: localizing errors in counterexample traces}. In \bibinfo{booktitle}{\emph{Proceedings of the 30th ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages (POPL)}}. \bibinfo{pages}{97--105}.
+\newblock
+\href{https://doi.org/10.1145/604131.604140}{doi:\nolinkurl{10.1145/604131.604140}}
+
+
+\bibitem[Benveniste et~al\mbox{.}(2018)]%
+        {benveniste2018contracts}
+\bibfield{author}{\bibinfo{person}{Albert Benveniste}, \bibinfo{person}{Benoît Caillaud}, \bibinfo{person}{Dejan Nickovic}, \bibinfo{person}{Roberto Passerone}, \bibinfo{person}{Jean-Baptiste Raclet}, \bibinfo{person}{Philipp Reinkemeier}, \bibinfo{person}{Alberto Sangiovanni-Vincentelli}, \bibinfo{person}{Werner Damm}, \bibinfo{person}{Thomas~A. Henzinger}, {and} \bibinfo{person}{Kim~G. Larsen}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Contracts for System Design}}.
+\newblock \bibinfo{publisher}{now Publishers Inc}.
+\newblock
+\href{https://doi.org/10.1561/9781680834031}{doi:\nolinkurl{10.1561/9781680834031}}
+
+
+\bibitem[Bozzano et~al\mbox{.}(2014)]%
+        {bozzano2014formal}
+\bibfield{author}{\bibinfo{person}{Marco Bozzano}, \bibinfo{person}{Alessandro Cimatti}, \bibinfo{person}{Cristian Mattarei}, {and} \bibinfo{person}{Stefano Tonetta}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Formal Safety Assessment via Contract-Based Design}.
+\newblock In \bibinfo{booktitle}{\emph{Automated Technology for Verification and Analysis (ATVA 2014), Lecture Notes in Computer Science}}. Vol.~\bibinfo{volume}{8837}. \bibinfo{pages}{81--97}.
+\newblock
+\href{https://doi.org/10.1007/978-3-319-11936-6_7}{doi:\nolinkurl{10.1007/978-3-319-11936-6_7}}
+
+
+\bibitem[Calder et~al\mbox{.}(2003)]%
+        {calder2003feature}
+\bibfield{author}{\bibinfo{person}{Muffy Calder}, \bibinfo{person}{Mario Kolberg}, \bibinfo{person}{Evan~H. Magill}, {and} \bibinfo{person}{Stephan Reiff-Marganiec}.} \bibinfo{year}{2003}\natexlab{}.
+\newblock \showarticletitle{Feature interaction: a critical review and considered forecast}.
+\newblock \bibinfo{journal}{\emph{Computer Networks}} \bibinfo{volume}{41}, \bibinfo{number}{1} (\bibinfo{year}{2003}), \bibinfo{pages}{115--141}.
+\newblock
+\href{https://doi.org/10.1016/s1389-1286(02)00352-3}{doi:\nolinkurl{10.1016/s1389-1286(02)00352-3}}
+
+
+\bibitem[Cemri et~al\mbox{.}(2025)]%
+        {cemri2025why}
+\bibfield{author}{\bibinfo{person}{Mert Cemri}, \bibinfo{person}{Melissa~Z. Pan}, \bibinfo{person}{Shuyi Yang}, \bibinfo{person}{Lakshya~A. Agrawal}, \bibinfo{person}{Bhavya Chopra}, \bibinfo{person}{Rishabh Tiwari}, \bibinfo{person}{Kurt Keutzer}, \bibinfo{person}{Aditya Parameswaran}, \bibinfo{person}{Dan Klein}, \bibinfo{person}{Kannan Ramchandran}, \bibinfo{person}{Matei Zaharia}, \bibinfo{person}{Joseph~E. Gonzalez}, {and} \bibinfo{person}{Ion Stoica}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{Why Do Multi-Agent {LLM} Systems Fail?}
+\newblock \bibinfo{howpublished}{arXiv:2503.13657}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2503.13657}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Cimatti and Tonetta(2015)]%
+        {cimatti2015contracts}
+\bibfield{author}{\bibinfo{person}{Alessandro Cimatti} {and} \bibinfo{person}{Stefano Tonetta}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Contracts-refinement proof system for component-based embedded systems}.
+\newblock \bibinfo{journal}{\emph{Science of Computer Programming}}  \bibinfo{volume}{97} (\bibinfo{year}{2015}), \bibinfo{pages}{333--348}.
+\newblock
+\href{https://doi.org/10.1016/j.scico.2014.06.011}{doi:\nolinkurl{10.1016/j.scico.2014.06.011}}
+
+
+\bibitem[Clarke et~al\mbox{.}(2003)]%
+        {clarke2003cegar}
+\bibfield{author}{\bibinfo{person}{Edmund Clarke}, \bibinfo{person}{Orna Grumberg}, \bibinfo{person}{Somesh Jha}, \bibinfo{person}{Yuan Lu}, {and} \bibinfo{person}{Helmut Veith}.} \bibinfo{year}{2003}\natexlab{}.
+\newblock \showarticletitle{Counterexample-guided abstraction refinement for symbolic model checking}.
+\newblock \bibinfo{journal}{\emph{J. ACM}} \bibinfo{volume}{50}, \bibinfo{number}{5} (\bibinfo{year}{2003}), \bibinfo{pages}{752--794}.
+\newblock
+\href{https://doi.org/10.1145/876638.876643}{doi:\nolinkurl{10.1145/876638.876643}}
+
+
+\bibitem[Cobleigh et~al\mbox{.}(2003)]%
+        {cobleigh2003learning}
+\bibfield{author}{\bibinfo{person}{Jamieson~M. Cobleigh}, \bibinfo{person}{Dimitra Giannakopoulou}, {and} \bibinfo{person}{Corina~S. P{\u{a}}s{\u{a}}reanu}.} \bibinfo{year}{2003}\natexlab{}.
+\newblock \showarticletitle{Learning Assumptions for Compositional Verification}.
+\newblock In \bibinfo{booktitle}{\emph{Lecture Notes in Computer Science}}. \bibinfo{pages}{331--346}.
+\newblock
+\href{https://doi.org/10.1007/3-540-36577-x_24}{doi:\nolinkurl{10.1007/3-540-36577-x_24}}
+
+
+\bibitem[Cofer et~al\mbox{.}(2012)]%
+        {cofer2012compositional}
+\bibfield{author}{\bibinfo{person}{Darren Cofer}, \bibinfo{person}{Andrew Gacek}, \bibinfo{person}{Steven Miller}, \bibinfo{person}{Michael~W. Whalen}, \bibinfo{person}{Brian LaValley}, {and} \bibinfo{person}{Lui Sha}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Compositional Verification of Architectural Models}.
+\newblock In \bibinfo{booktitle}{\emph{NASA Formal Methods (NFM 2012), Lecture Notes in Computer Science}}. Vol.~\bibinfo{volume}{7226}. \bibinfo{pages}{126--140}.
+\newblock
+\href{https://doi.org/10.1007/978-3-642-28891-3_13}{doi:\nolinkurl{10.1007/978-3-642-28891-3_13}}
+
+
+\bibitem[Cook(1971)]%
+        {cook1971complexity}
+\bibfield{author}{\bibinfo{person}{Stephen~A. Cook}.} \bibinfo{year}{1971}\natexlab{}.
+\newblock \showarticletitle{The complexity of theorem-proving procedures}. In \bibinfo{booktitle}{\emph{Proceedings of the third annual ACM symposium on Theory of computing - STOC '71}}. \bibinfo{pages}{151--158}.
+\newblock
+\href{https://doi.org/10.1145/800157.805047}{doi:\nolinkurl{10.1145/800157.805047}}
+
+
+\bibitem[de~Alfaro and Henzinger(2001)]%
+        {dealfaro2001interface}
+\bibfield{author}{\bibinfo{person}{Luca de Alfaro} {and} \bibinfo{person}{Thomas~A. Henzinger}.} \bibinfo{year}{2001}\natexlab{}.
+\newblock \showarticletitle{Interface automata}.
+\newblock \bibinfo{journal}{\emph{ACM SIGSOFT Software Engineering Notes}} \bibinfo{volume}{26}, \bibinfo{number}{5} (\bibinfo{year}{2001}), \bibinfo{pages}{109--120}.
+\newblock
+\href{https://doi.org/10.1145/503271.503226}{doi:\nolinkurl{10.1145/503271.503226}}
+
+
+\bibitem[de~Moura and Bjørner(2008)]%
+        {demoura2008z3}
+\bibfield{author}{\bibinfo{person}{Leonardo de Moura} {and} \bibinfo{person}{Nikolaj Bjørner}.} \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{Z3: An Efficient {SMT} Solver}.
+\newblock In \bibinfo{booktitle}{\emph{Lecture Notes in Computer Science}}. \bibinfo{pages}{337--340}.
+\newblock
+\href{https://doi.org/10.1007/978-3-540-78800-3_24}{doi:\nolinkurl{10.1007/978-3-540-78800-3_24}}
+
+
+\bibitem[Debenedetti et~al\mbox{.}(2024)]%
+        {debenedetti2024agentdojo}
+\bibfield{author}{\bibinfo{person}{Edoardo Debenedetti}, \bibinfo{person}{Jie Zhang}, \bibinfo{person}{Mislav Balunović}, \bibinfo{person}{Luca Beurer-Kellner}, \bibinfo{person}{Marc Fischer}, {and} \bibinfo{person}{Florian Tramèr}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \bibinfo{title}{{AgentDojo}: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for {LLM} Agents}.
+\newblock \bibinfo{howpublished}{arXiv:2406.13352}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2406.13352}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Dong et~al\mbox{.}(2024)]%
+        {dong2024selfcollab}
+\bibfield{author}{\bibinfo{person}{Yihong Dong}, \bibinfo{person}{Xue Jiang}, \bibinfo{person}{Zhi Jin}, {and} \bibinfo{person}{Ge Li}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Self-Collaboration Code Generation via {ChatGPT}}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Software Engineering and Methodology}} \bibinfo{volume}{33}, \bibinfo{number}{7} (\bibinfo{year}{2024}), \bibinfo{pages}{1--38}.
+\newblock
+\href{https://doi.org/10.1145/3672459}{doi:\nolinkurl{10.1145/3672459}}
+
+
+\bibitem[Du et~al\mbox{.}(2023)]%
+        {du2024debate}
+\bibfield{author}{\bibinfo{person}{Yilun Du}, \bibinfo{person}{Shuang Li}, \bibinfo{person}{Antonio Torralba}, \bibinfo{person}{Joshua~B. Tenenbaum}, {and} \bibinfo{person}{Igor Mordatch}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{Improving Factuality and Reasoning in Language Models through Multiagent Debate}.
+\newblock \bibinfo{howpublished}{arXiv:2305.14325}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2305.14325}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Efron and Tibshirani(1994)]%
+        {efron1993introduction}
+\bibfield{author}{\bibinfo{person}{Bradley Efron} {and} \bibinfo{person}{R.J. Tibshirani}.} \bibinfo{year}{1994}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{An Introduction to the Bootstrap}}.
+\newblock \bibinfo{publisher}{Chapman and Hall/CRC}.
+\newblock
+\href{https://doi.org/10.1201/9780429246593}{doi:\nolinkurl{10.1201/9780429246593}}
+
+
+\bibitem[Fan et~al\mbox{.}(2023)]%
+        {fan2023llmse}
+\bibfield{author}{\bibinfo{person}{Angela Fan}, \bibinfo{person}{Beliz Gokkaya}, \bibinfo{person}{Mark Harman}, \bibinfo{person}{Mitya Lyubarskiy}, \bibinfo{person}{Shubho Sengupta}, \bibinfo{person}{Shin Yoo}, {and} \bibinfo{person}{Jie~M. Zhang}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Large Language Models for Software Engineering: Survey and Open Problems}. In \bibinfo{booktitle}{\emph{2023 IEEE/ACM International Conference on Software Engineering: Future of Software Engineering (ICSE-FoSE)}}. \bibinfo{pages}{31--53}.
+\newblock
+\href{https://doi.org/10.1109/icse-fose59343.2023.00008}{doi:\nolinkurl{10.1109/icse-fose59343.2023.00008}}
+
+
+\bibitem[Ferrante et~al\mbox{.}(1987)]%
+        {ferrante1987program}
+\bibfield{author}{\bibinfo{person}{Jeanne Ferrante}, \bibinfo{person}{Karl~J. Ottenstein}, {and} \bibinfo{person}{Joe~D. Warren}.} \bibinfo{year}{1987}\natexlab{}.
+\newblock \showarticletitle{The program dependence graph and its use in optimization}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Programming Languages and Systems}} \bibinfo{volume}{9}, \bibinfo{number}{3} (\bibinfo{year}{1987}), \bibinfo{pages}{319--349}.
+\newblock
+\href{https://doi.org/10.1145/24039.24041}{doi:\nolinkurl{10.1145/24039.24041}}
+
+
+\bibitem[Greshake et~al\mbox{.}(2023)]%
+        {greshake2023not}
+\bibfield{author}{\bibinfo{person}{Kai Greshake}, \bibinfo{person}{Sahar Abdelnabi}, \bibinfo{person}{Shailesh Mishra}, \bibinfo{person}{Christoph Endres}, \bibinfo{person}{Thorsten Holz}, {and} \bibinfo{person}{Mario Fritz}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Not What You've Signed Up For: Compromising Real-World {LLM}-Integrated Applications with Indirect Prompt Injection}. In \bibinfo{booktitle}{\emph{Proceedings of the 16th ACM Workshop on Artificial Intelligence and Security}}. \bibinfo{pages}{79--90}.
+\newblock
+\href{https://doi.org/10.1145/3605764.3623985}{doi:\nolinkurl{10.1145/3605764.3623985}}
+
+
+\bibitem[Groce et~al\mbox{.}(2006)]%
+        {groce2006error}
+\bibfield{author}{\bibinfo{person}{Alex Groce}, \bibinfo{person}{Sagar Chaki}, \bibinfo{person}{Daniel Kroening}, {and} \bibinfo{person}{Ofer Strichman}.} \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{Error explanation with distance metrics}.
+\newblock \bibinfo{journal}{\emph{International Journal on Software Tools for Technology Transfer}} \bibinfo{volume}{8}, \bibinfo{number}{3} (\bibinfo{year}{2006}), \bibinfo{pages}{229--247}.
+\newblock
+\href{https://doi.org/10.1007/s10009-005-0202-0}{doi:\nolinkurl{10.1007/s10009-005-0202-0}}
+
+
+\bibitem[He et~al\mbox{.}(2025)]%
+        {he2025llmmas}
+\bibfield{author}{\bibinfo{person}{Junda He}, \bibinfo{person}{Christoph Treude}, {and} \bibinfo{person}{David Lo}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{LLM}-Based Multi-Agent Systems for Software Engineering: Literature Review, Vision, and the Road Ahead}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Software Engineering and Methodology}} \bibinfo{volume}{34}, \bibinfo{number}{5} (\bibinfo{year}{2025}), \bibinfo{pages}{1--30}.
+\newblock
+\href{https://doi.org/10.1145/3712003}{doi:\nolinkurl{10.1145/3712003}}
+
+
+\bibitem[Holm(1979)]%
+        {holm1979simple}
+\bibfield{author}{\bibinfo{person}{Sture Holm}.} \bibinfo{year}{1979}\natexlab{}.
+\newblock \showarticletitle{A Simple Sequentially Rejective Multiple Test Procedure}.
+\newblock \bibinfo{journal}{\emph{Scandinavian Journal of Statistics}} \bibinfo{volume}{6}, \bibinfo{number}{2} (\bibinfo{year}{1979}), \bibinfo{pages}{65--70}.
+\newblock
+\urldef\tempurl%
+\url{https://www.jstor.org/stable/4615733}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Hong et~al\mbox{.}(2023)]%
+        {hong2024metagpt}
+\bibfield{author}{\bibinfo{person}{Sirui Hong}, \bibinfo{person}{Mingchen Zhuge}, \bibinfo{person}{Jiaqi Chen}, \bibinfo{person}{Xiawu Zheng}, \bibinfo{person}{Yuheng Cheng}, \bibinfo{person}{Ceyao Zhang}, \bibinfo{person}{Jinlin Wang}, \bibinfo{person}{Zili Wang}, \bibinfo{person}{Steven Ka~Shing Yau}, \bibinfo{person}{Zijuan Lin}, \bibinfo{person}{Liyang Zhou}, \bibinfo{person}{Chenyu Ran}, \bibinfo{person}{Lingfeng Xiao}, \bibinfo{person}{Chenglin Wu}, {and} \bibinfo{person}{Jürgen Schmidhuber}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{{MetaGPT}: Meta Programming for A Multi-Agent Collaborative Framework}.
+\newblock \bibinfo{howpublished}{arXiv:2308.00352}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2308.00352}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Horwitz et~al\mbox{.}(1988)]%
+        {horwitz1990interprocedural}
+\bibfield{author}{\bibinfo{person}{S. Horwitz}, \bibinfo{person}{T. Reps}, {and} \bibinfo{person}{D. Binkley}.} \bibinfo{year}{1988}\natexlab{}.
+\newblock \showarticletitle{Interprocedural slicing using dependence graphs}.
+\newblock \bibinfo{journal}{\emph{ACM SIGPLAN Notices}} \bibinfo{volume}{23}, \bibinfo{number}{7} (\bibinfo{year}{1988}), \bibinfo{pages}{35--46}.
+\newblock
+\href{https://doi.org/10.1145/960116.53994}{doi:\nolinkurl{10.1145/960116.53994}}
+
+
+\bibitem[Hou et~al\mbox{.}(2024)]%
+        {hou2024llm4se}
+\bibfield{author}{\bibinfo{person}{Xinyi Hou}, \bibinfo{person}{Yanjie Zhao}, \bibinfo{person}{Yue Liu}, \bibinfo{person}{Zhou Yang}, \bibinfo{person}{Kailong Wang}, \bibinfo{person}{Li Li}, \bibinfo{person}{Xiapu Luo}, \bibinfo{person}{David Lo}, \bibinfo{person}{John Grundy}, {and} \bibinfo{person}{Haoyu Wang}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Large Language Models for Software Engineering: A Systematic Literature Review}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Software Engineering and Methodology}} \bibinfo{volume}{33}, \bibinfo{number}{8} (\bibinfo{year}{2024}), \bibinfo{pages}{1--79}.
+\newblock
+\href{https://doi.org/10.1145/3695988}{doi:\nolinkurl{10.1145/3695988}}
+
+
+\bibitem[Huang et~al\mbox{.}(2023)]%
+        {huang2023agentcoder}
+\bibfield{author}{\bibinfo{person}{Dong Huang}, \bibinfo{person}{Jie~M. Zhang}, \bibinfo{person}{Michael Luck}, \bibinfo{person}{Qingwen Bu}, \bibinfo{person}{Yuhao Qing}, {and} \bibinfo{person}{Heming Cui}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{{AgentCoder}: Multi-Agent-based Code Generation with Iterative Testing and Optimisation}.
+\newblock \bibinfo{howpublished}{arXiv:2312.13010}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2312.13010}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Inan et~al\mbox{.}(2023)]%
+        {inan2023llamaguard}
+\bibfield{author}{\bibinfo{person}{Hakan Inan}, \bibinfo{person}{Kartikeya Upasani}, \bibinfo{person}{Jianfeng Chi}, \bibinfo{person}{Rashi Rungta}, \bibinfo{person}{Krithika Iyer}, \bibinfo{person}{Yuning Mao}, \bibinfo{person}{Michael Tontchev}, \bibinfo{person}{Qing Hu}, \bibinfo{person}{Brian Fuller}, \bibinfo{person}{Davide Testuggine}, {and} \bibinfo{person}{Madian Khabsa}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{Llama Guard: {LLM}-based Input-Output Safeguard for Human-{AI} Conversations}.
+\newblock \bibinfo{howpublished}{arXiv:2312.06674}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2312.06674}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Islam et~al\mbox{.}(2024)]%
+        {islam2024mapcoder}
+\bibfield{author}{\bibinfo{person}{Md.~Ashraful Islam}, \bibinfo{person}{Mohammed~Eunus Ali}, {and} \bibinfo{person}{Md~Rizwan Parvez}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{MapCoder}: Multi-Agent Code Generation for Competitive Problem Solving}. In \bibinfo{booktitle}{\emph{Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (ACL)}}. \bibinfo{pages}{4912--4944}.
+\newblock
+\href{https://doi.org/10.18653/v1/2024.acl-long.269}{doi:\nolinkurl{10.18653/v1/2024.acl-long.269}}
+
+
+\bibitem[Jimenez et~al\mbox{.}(2023)]%
+        {jimenez2024swebench}
+\bibfield{author}{\bibinfo{person}{Carlos~E. Jimenez}, \bibinfo{person}{John Yang}, \bibinfo{person}{Alexander Wettig}, \bibinfo{person}{Shunyu Yao}, \bibinfo{person}{Kexin Pei}, \bibinfo{person}{Ofir Press}, {and} \bibinfo{person}{Karthik Narasimhan}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{{SWE}-bench: Can Language Models Resolve Real-World {GitHub} Issues?}
+\newblock \bibinfo{howpublished}{arXiv:2310.06770}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2310.06770}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Johnson et~al\mbox{.}(1994)]%
+        {johnson1994program}
+\bibfield{author}{\bibinfo{person}{Richard Johnson}, \bibinfo{person}{David Pearson}, {and} \bibinfo{person}{Keshav Pingali}.} \bibinfo{year}{1994}\natexlab{}.
+\newblock \showarticletitle{The Program Structure Tree: Computing Control Regions in Linear Time}. In \bibinfo{booktitle}{\emph{Proceedings of the ACM SIGPLAN 1994 Conference on Programming Language Design and Implementation (PLDI)}}. \bibinfo{pages}{171--185}.
+\newblock
+\href{https://doi.org/10.1145/178243.178258}{doi:\nolinkurl{10.1145/178243.178258}}
+
+
+\bibitem[Jones(1983)]%
+        {jones1983tentative}
+\bibfield{author}{\bibinfo{person}{C.~B. Jones}.} \bibinfo{year}{1983}\natexlab{}.
+\newblock \showarticletitle{Tentative steps toward a development method for interfering programs}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Programming Languages and Systems}} \bibinfo{volume}{5}, \bibinfo{number}{4} (\bibinfo{year}{1983}), \bibinfo{pages}{596--619}.
+\newblock
+\href{https://doi.org/10.1145/69575.69577}{doi:\nolinkurl{10.1145/69575.69577}}
+
+
+\bibitem[Jones and Harrold(2005)]%
+        {jones2005empirical}
+\bibfield{author}{\bibinfo{person}{James~A. Jones} {and} \bibinfo{person}{Mary~Jean Harrold}.} \bibinfo{year}{2005}\natexlab{}.
+\newblock \showarticletitle{Empirical evaluation of the tarantula automatic fault-localization technique}. In \bibinfo{booktitle}{\emph{Proceedings of the 20th IEEE/ACM International Conference on Automated Software Engineering}}. \bibinfo{pages}{273--282}.
+\newblock
+\href{https://doi.org/10.1145/1101908.1101949}{doi:\nolinkurl{10.1145/1101908.1101949}}
+
+
+\bibitem[Kam and Ullman(1977)]%
+        {kam1977monotone}
+\bibfield{author}{\bibinfo{person}{John~B. Kam} {and} \bibinfo{person}{Jeffrey~D. Ullman}.} \bibinfo{year}{1977}\natexlab{}.
+\newblock \showarticletitle{Monotone data flow analysis frameworks}.
+\newblock \bibinfo{journal}{\emph{Acta Informatica}} \bibinfo{volume}{7}, \bibinfo{number}{3} (\bibinfo{year}{1977}), \bibinfo{pages}{305--317}.
+\newblock
+\href{https://doi.org/10.1007/bf00290339}{doi:\nolinkurl{10.1007/bf00290339}}
+
+
+\bibitem[Kildall(1973)]%
+        {kildall1973unified}
+\bibfield{author}{\bibinfo{person}{Gary~A. Kildall}.} \bibinfo{year}{1973}\natexlab{}.
+\newblock \showarticletitle{A unified approach to global program optimization}. In \bibinfo{booktitle}{\emph{Proceedings of the 1st annual ACM SIGACT-SIGPLAN symposium on Principles of programming languages - POPL '73}}. \bibinfo{pages}{194--206}.
+\newblock
+\href{https://doi.org/10.1145/512927.512945}{doi:\nolinkurl{10.1145/512927.512945}}
+
+
+\bibitem[Knight and Leveson(1986)]%
+        {knight1986experimental}
+\bibfield{author}{\bibinfo{person}{John~C. Knight} {and} \bibinfo{person}{Nancy~G. Leveson}.} \bibinfo{year}{1986}\natexlab{}.
+\newblock \showarticletitle{An experimental evaluation of the assumption of independence in multiversion programming}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Software Engineering}} \bibinfo{volume}{SE--12}, \bibinfo{number}{1} (\bibinfo{year}{1986}), \bibinfo{pages}{96--109}.
+\newblock
+\href{https://doi.org/10.1109/tse.1986.6312924}{doi:\nolinkurl{10.1109/tse.1986.6312924}}
+
+
+\bibitem[Lengauer and Tarjan(1979)]%
+        {lengauer1979fast}
+\bibfield{author}{\bibinfo{person}{Thomas Lengauer} {and} \bibinfo{person}{Robert~Endre Tarjan}.} \bibinfo{year}{1979}\natexlab{}.
+\newblock \showarticletitle{A fast algorithm for finding dominators in a flowgraph}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Programming Languages and Systems}} \bibinfo{volume}{1}, \bibinfo{number}{1} (\bibinfo{year}{1979}), \bibinfo{pages}{121--141}.
+\newblock
+\href{https://doi.org/10.1145/357062.357071}{doi:\nolinkurl{10.1145/357062.357071}}
+
+
+\bibitem[Leveson(2012)]%
+        {leveson2011engineering}
+\bibfield{author}{\bibinfo{person}{Nancy~G. Leveson}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Engineering a Safer World: Systems Thinking Applied to Safety}}.
+\newblock \bibinfo{publisher}{MIT Press}.
+\newblock
+\href{https://doi.org/10.7551/mitpress/8179.001.0001}{doi:\nolinkurl{10.7551/mitpress/8179.001.0001}}
+
+
+\bibitem[Li et~al\mbox{.}(2023)]%
+        {li2023camel}
+\bibfield{author}{\bibinfo{person}{Guohao Li}, \bibinfo{person}{Hasan Abed Al~Kader Hammoud}, \bibinfo{person}{Hani Itani}, \bibinfo{person}{Dmitrii Khizbullin}, {and} \bibinfo{person}{Bernard Ghanem}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{{CAMEL}: Communicative Agents for "Mind" Exploration of Large Language Model Society}.
+\newblock \bibinfo{howpublished}{arXiv:2303.17760}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2303.17760}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Littlewood and Miller(1989)]%
+        {littlewood1989conceptual}
+\bibfield{author}{\bibinfo{person}{B. Littlewood} {and} \bibinfo{person}{D.R. Miller}.} \bibinfo{year}{1989}\natexlab{}.
+\newblock \showarticletitle{Conceptual modeling of coincident failures in multiversion software}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Software Engineering}} \bibinfo{volume}{15}, \bibinfo{number}{12} (\bibinfo{year}{1989}), \bibinfo{pages}{1596--1614}.
+\newblock
+\href{https://doi.org/10.1109/32.58771}{doi:\nolinkurl{10.1109/32.58771}}
+
+
+\bibitem[Liu et~al\mbox{.}(2023)]%
+        {liu2024agentbench}
+\bibfield{author}{\bibinfo{person}{Xiao Liu}, \bibinfo{person}{Hao Yu}, \bibinfo{person}{Hanchen Zhang}, \bibinfo{person}{Yifan Xu}, \bibinfo{person}{Xuanyu Lei}, \bibinfo{person}{Hanyu Lai}, \bibinfo{person}{Yu Gu}, \bibinfo{person}{Hangliang Ding}, \bibinfo{person}{Kaiwen Men}, \bibinfo{person}{Kejuan Yang}, \bibinfo{person}{Shudan Zhang}, \bibinfo{person}{Xiang Deng}, \bibinfo{person}{Aohan Zeng}, \bibinfo{person}{Zhengxiao Du}, \bibinfo{person}{Chenhui Zhang}, \bibinfo{person}{Sheng Shen}, \bibinfo{person}{Tianjun Zhang}, \bibinfo{person}{Yu Su}, \bibinfo{person}{Huan Sun}, \bibinfo{person}{Minlie Huang}, \bibinfo{person}{Yuxiao Dong}, {and} \bibinfo{person}{Jie Tang}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{{AgentBench}: Evaluating {LLMs} as Agents}.
+\newblock \bibinfo{howpublished}{arXiv:2308.03688}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2308.03688}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Lomuscio et~al\mbox{.}(2015)]%
+        {lomuscio2017mcmas}
+\bibfield{author}{\bibinfo{person}{Alessio Lomuscio}, \bibinfo{person}{Hongyang Qu}, {and} \bibinfo{person}{Franco Raimondi}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{{MCMAS}: an open-source model checker for the verification of multi-agent systems}.
+\newblock \bibinfo{journal}{\emph{International Journal on Software Tools for Technology Transfer}} \bibinfo{volume}{19}, \bibinfo{number}{1} (\bibinfo{year}{2015}), \bibinfo{pages}{9--30}.
+\newblock
+\href{https://doi.org/10.1007/s10009-015-0378-x}{doi:\nolinkurl{10.1007/s10009-015-0378-x}}
+
+
+\bibitem[McMillan(1999)]%
+        {mcmillan1999circular}
+\bibfield{author}{\bibinfo{person}{K.~L. McMillan}.} \bibinfo{year}{1999}\natexlab{}.
+\newblock \showarticletitle{Circular Compositional Reasoning about Liveness}.
+\newblock In \bibinfo{booktitle}{\emph{Correct Hardware Design and Verification Methods (CHARME 1999), Lecture Notes in Computer Science}}. Vol.~\bibinfo{volume}{1703}. \bibinfo{pages}{342--346}.
+\newblock
+\href{https://doi.org/10.1007/3-540-48153-2_30}{doi:\nolinkurl{10.1007/3-540-48153-2_30}}
+
+
+\bibitem[Meyer(1992)]%
+        {meyer1992applying}
+\bibfield{author}{\bibinfo{person}{B. Meyer}.} \bibinfo{year}{1992}\natexlab{}.
+\newblock \showarticletitle{Applying 'design by contract'}.
+\newblock \bibinfo{journal}{\emph{Computer}} \bibinfo{volume}{25}, \bibinfo{number}{10} (\bibinfo{year}{1992}), \bibinfo{pages}{40--51}.
+\newblock
+\href{https://doi.org/10.1109/2.161279}{doi:\nolinkurl{10.1109/2.161279}}
+
+
+\bibitem[Misra and Chandy(1981)]%
+        {misra1981proofs}
+\bibfield{author}{\bibinfo{person}{J. Misra} {and} \bibinfo{person}{K.M. Chandy}.} \bibinfo{year}{1981}\natexlab{}.
+\newblock \showarticletitle{Proofs of Networks of Processes}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Software Engineering}} \bibinfo{volume}{SE--7}, \bibinfo{number}{4} (\bibinfo{year}{1981}), \bibinfo{pages}{417--426}.
+\newblock
+\href{https://doi.org/10.1109/tse.1981.230844}{doi:\nolinkurl{10.1109/tse.1981.230844}}
+
+
+\bibitem[Namjoshi and Trefler(2010)]%
+        {namjoshi2010completeness}
+\bibfield{author}{\bibinfo{person}{Kedar~S. Namjoshi} {and} \bibinfo{person}{Richard~J. Trefler}.} \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{On the completeness of compositional reasoning methods}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Computational Logic}} \bibinfo{volume}{11}, \bibinfo{number}{3} (\bibinfo{year}{2010}), \bibinfo{pages}{1--22}.
+\newblock
+\href{https://doi.org/10.1145/1740582.1740584}{doi:\nolinkurl{10.1145/1740582.1740584}}
+
+
+\bibitem[Pozzi et~al\mbox{.}(2006)]%
+        {pozzi2006exact}
+\bibfield{author}{\bibinfo{person}{Laura Pozzi}, \bibinfo{person}{Kubilay Atasu}, {and} \bibinfo{person}{Paolo Ienne}.} \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{Exact and approximate algorithms for the extension of embedded processor instruction sets}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems}} \bibinfo{volume}{25}, \bibinfo{number}{7} (\bibinfo{year}{2006}), \bibinfo{pages}{1209--1229}.
+\newblock
+\href{https://doi.org/10.1109/TCAD.2005.855950}{doi:\nolinkurl{10.1109/TCAD.2005.855950}}
+
+
+\bibitem[Qian et~al\mbox{.}(2024)]%
+        {qian2024chatdev}
+\bibfield{author}{\bibinfo{person}{Chen Qian}, \bibinfo{person}{Wei Liu}, \bibinfo{person}{Hongzhang Liu}, \bibinfo{person}{Nuo Chen}, \bibinfo{person}{Yufan Dang}, \bibinfo{person}{Jiahao Li}, \bibinfo{person}{Cheng Yang}, \bibinfo{person}{Weize Chen}, \bibinfo{person}{Yusheng Su}, \bibinfo{person}{Xin Cong}, \bibinfo{person}{Juyuan Xu}, \bibinfo{person}{Dahai Li}, \bibinfo{person}{Zhiyuan Liu}, {and} \bibinfo{person}{Maosong Sun}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{ChatDev}: Communicative Agents for Software Development}. In \bibinfo{booktitle}{\emph{Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (ACL)}}. \bibinfo{pages}{15174--15186}.
+\newblock
+\href{https://doi.org/10.18653/v1/2024.acl-long.810}{doi:\nolinkurl{10.18653/v1/2024.acl-long.810}}
+
+
+\bibitem[Rebedea et~al\mbox{.}(2023)]%
+        {rebedea2023nemo}
+\bibfield{author}{\bibinfo{person}{Traian Rebedea}, \bibinfo{person}{Razvan Dinu}, \bibinfo{person}{Makesh~Narsimhan Sreedhar}, \bibinfo{person}{Christopher Parisien}, {and} \bibinfo{person}{Jonathan Cohen}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{{NeMo} Guardrails: A Toolkit for Controllable and Safe {LLM} Applications with Programmable Rails}. In \bibinfo{booktitle}{\emph{Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing: System Demonstrations}}. \bibinfo{pages}{431--445}.
+\newblock
+\href{https://doi.org/10.18653/v1/2023.emnlp-demo.40}{doi:\nolinkurl{10.18653/v1/2023.emnlp-demo.40}}
+
+
+\bibitem[Reiter(1987)]%
+        {reiter1987theory}
+\bibfield{author}{\bibinfo{person}{Raymond Reiter}.} \bibinfo{year}{1987}\natexlab{}.
+\newblock \showarticletitle{A theory of diagnosis from first principles}.
+\newblock \bibinfo{journal}{\emph{Artificial Intelligence}} \bibinfo{volume}{32}, \bibinfo{number}{1} (\bibinfo{year}{1987}), \bibinfo{pages}{57--95}.
+\newblock
+\href{https://doi.org/10.1016/0004-3702(87)90062-2}{doi:\nolinkurl{10.1016/0004-3702(87)90062-2}}
+
+
+\bibitem[Ruan et~al\mbox{.}(2023)]%
+        {ruan2024toolemu}
+\bibfield{author}{\bibinfo{person}{Yangjun Ruan}, \bibinfo{person}{Honghua Dong}, \bibinfo{person}{Andrew Wang}, \bibinfo{person}{Silviu Pitis}, \bibinfo{person}{Yongchao Zhou}, \bibinfo{person}{Jimmy Ba}, \bibinfo{person}{Yann Dubois}, \bibinfo{person}{Chris~J. Maddison}, {and} \bibinfo{person}{Tatsunori Hashimoto}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{Identifying the Risks of {LM} Agents with an {LM}-Emulated Sandbox}.
+\newblock \bibinfo{howpublished}{arXiv:2309.15817}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2309.15817}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Ruijters and Stoelinga(2015)]%
+        {ruijters2015fault}
+\bibfield{author}{\bibinfo{person}{Enno Ruijters} {and} \bibinfo{person}{Mari\"{e}lle Stoelinga}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Fault tree analysis: A survey of the state-of-the-art in modeling, analysis and tools}.
+\newblock \bibinfo{journal}{\emph{Computer Science Review}}  \bibinfo{volume}{15--16} (\bibinfo{year}{2015}), \bibinfo{pages}{29--62}.
+\newblock
+\href{https://doi.org/10.1016/j.cosrev.2015.03.001}{doi:\nolinkurl{10.1016/j.cosrev.2015.03.001}}
+
+
+\bibitem[Tao et~al\mbox{.}(2024)]%
+        {tao2024magis}
+\bibfield{author}{\bibinfo{person}{Wei Tao}, \bibinfo{person}{Yucheng Zhou}, \bibinfo{person}{Yanlin Wang}, \bibinfo{person}{Wenqiang Zhang}, \bibinfo{person}{Hongyu Zhang}, {and} \bibinfo{person}{Yu Cheng}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{{MAGIS}: {LLM}-Based Multi-Agent Framework for {GitHub} Issue Resolution}. In \bibinfo{booktitle}{\emph{Advances in Neural Information Processing Systems 37 (NeurIPS)}}. \bibinfo{pages}{51963--51993}.
+\newblock
+\href{https://doi.org/10.52202/079017-1647}{doi:\nolinkurl{10.52202/079017-1647}}
+
+
+\bibitem[van~der Aalst(1998)]%
+        {vanderaalst1998application}
+\bibfield{author}{\bibinfo{person}{W.~M.~P. van~der Aalst}.} \bibinfo{year}{1998}\natexlab{}.
+\newblock \showarticletitle{The Application of {Petri} Nets to Workflow Management}.
+\newblock \bibinfo{journal}{\emph{Journal of Circuits, Systems and Computers}} \bibinfo{volume}{08}, \bibinfo{number}{01} (\bibinfo{year}{1998}), \bibinfo{pages}{21--66}.
+\newblock
+\href{https://doi.org/10.1142/s0218126698000043}{doi:\nolinkurl{10.1142/s0218126698000043}}
+
+
+\bibitem[Vargha and Delaney(2000)]%
+        {vargha2000critique}
+\bibfield{author}{\bibinfo{person}{András Vargha} {and} \bibinfo{person}{Harold~D. Delaney}.} \bibinfo{year}{2000}\natexlab{}.
+\newblock \showarticletitle{A Critique and Improvement of the "{CL}" Common Language Effect Size Statistics of {McGraw} and Wong}.
+\newblock \bibinfo{journal}{\emph{Journal of Educational and Behavioral Statistics}} \bibinfo{volume}{25}, \bibinfo{number}{2} (\bibinfo{year}{2000}), \bibinfo{pages}{101}.
+\newblock
+\href{https://doi.org/10.2307/1165329}{doi:\nolinkurl{10.2307/1165329}}
+
+
+\bibitem[Wang et~al\mbox{.}(2025)]%
+        {wang2026agentspec}
+\bibfield{author}{\bibinfo{person}{Haoyu Wang}, \bibinfo{person}{Christopher~M. Poskitt}, {and} \bibinfo{person}{Jun Sun}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{{AgentSpec}: Customizable Runtime Enforcement for Safe and Reliable {LLM} Agents}.
+\newblock \bibinfo{howpublished}{arXiv:2503.18666}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2503.18666}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Wang et~al\mbox{.}(2024)]%
+        {wang2024moa}
+\bibfield{author}{\bibinfo{person}{Junlin Wang}, \bibinfo{person}{Jue Wang}, \bibinfo{person}{Ben Athiwaratkun}, \bibinfo{person}{Ce Zhang}, {and} \bibinfo{person}{James Zou}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \bibinfo{title}{Mixture-of-Agents Enhances Large Language Model Capabilities}.
+\newblock \bibinfo{howpublished}{arXiv:2406.04692}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2406.04692}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Weiser(1984)]%
+        {weiser1984program}
+\bibfield{author}{\bibinfo{person}{Mark Weiser}.} \bibinfo{year}{1984}\natexlab{}.
+\newblock \showarticletitle{Program Slicing}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Software Engineering}} \bibinfo{volume}{SE--10}, \bibinfo{number}{4} (\bibinfo{year}{1984}), \bibinfo{pages}{352--357}.
+\newblock
+\href{https://doi.org/10.1109/tse.1984.5010248}{doi:\nolinkurl{10.1109/tse.1984.5010248}}
+
+
+\bibitem[Wilcoxon(1945)]%
+        {wilcoxon1945individual}
+\bibfield{author}{\bibinfo{person}{Frank Wilcoxon}.} \bibinfo{year}{1945}\natexlab{}.
+\newblock \showarticletitle{Individual Comparisons by Ranking Methods}.
+\newblock \bibinfo{journal}{\emph{Biometrics Bulletin}} \bibinfo{volume}{1}, \bibinfo{number}{6} (\bibinfo{year}{1945}), \bibinfo{pages}{80}.
+\newblock
+\href{https://doi.org/10.2307/3001968}{doi:\nolinkurl{10.2307/3001968}}
+
+
+\bibitem[Wong et~al\mbox{.}(2016)]%
+        {wong2016survey}
+\bibfield{author}{\bibinfo{person}{W.~Eric Wong}, \bibinfo{person}{Ruizhi Gao}, \bibinfo{person}{Yihao Li}, \bibinfo{person}{Rui Abreu}, {and} \bibinfo{person}{Franz Wotawa}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{A Survey on Software Fault Localization}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Software Engineering}} \bibinfo{volume}{42}, \bibinfo{number}{8} (\bibinfo{year}{2016}), \bibinfo{pages}{707--740}.
+\newblock
+\href{https://doi.org/10.1109/TSE.2016.2521368}{doi:\nolinkurl{10.1109/TSE.2016.2521368}}
+
+
+\bibitem[Wu et~al\mbox{.}(2023)]%
+        {wu2024autogen}
+\bibfield{author}{\bibinfo{person}{Qingyun Wu}, \bibinfo{person}{Gagan Bansal}, \bibinfo{person}{Jieyu Zhang}, \bibinfo{person}{Yiran Wu}, \bibinfo{person}{Beibin Li}, \bibinfo{person}{Erkang Zhu}, \bibinfo{person}{Li Jiang}, \bibinfo{person}{Xiaoyun Zhang}, \bibinfo{person}{Shaokun Zhang}, \bibinfo{person}{Jiale Liu}, \bibinfo{person}{Ahmed~Hassan Awadallah}, \bibinfo{person}{Ryen~W White}, \bibinfo{person}{Doug Burger}, {and} \bibinfo{person}{Chi Wang}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{{AutoGen}: Enabling Next-Gen {LLM} Applications via Multi-Agent Conversation}.
+\newblock \bibinfo{howpublished}{arXiv:2308.08155}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2308.08155}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Xia et~al\mbox{.}(2025)]%
+        {xia2025agentless}
+\bibfield{author}{\bibinfo{person}{Chunqiu~Steven Xia}, \bibinfo{person}{Yinlin Deng}, \bibinfo{person}{Soren Dunn}, {and} \bibinfo{person}{Lingming Zhang}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Demystifying {LLM}-Based Software Engineering Agents}.
+\newblock \bibinfo{journal}{\emph{Proceedings of the ACM on Software Engineering}} \bibinfo{volume}{2}, \bibinfo{number}{FSE} (\bibinfo{year}{2025}), \bibinfo{pages}{801--824}.
+\newblock
+\href{https://doi.org/10.1145/3715754}{doi:\nolinkurl{10.1145/3715754}}
+
+
+\bibitem[Yehudai et~al\mbox{.}(2025)]%
+        {yehudai2025survey}
+\bibfield{author}{\bibinfo{person}{Asaf Yehudai}, \bibinfo{person}{Lilach Eden}, \bibinfo{person}{Alan Li}, \bibinfo{person}{Guy Uziel}, \bibinfo{person}{Yilun Zhao}, \bibinfo{person}{Roy Bar-Haim}, \bibinfo{person}{Arman Cohan}, {and} \bibinfo{person}{Michal Shmueli-Scheuer}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{Survey on Evaluation of {LLM}-based Agents}.
+\newblock \bibinfo{howpublished}{arXiv:2503.16416}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2503.16416}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Zeller and Hildebrandt(2002)]%
+        {zeller2002simplifying}
+\bibfield{author}{\bibinfo{person}{A. Zeller} {and} \bibinfo{person}{R. Hildebrandt}.} \bibinfo{year}{2002}\natexlab{}.
+\newblock \showarticletitle{Simplifying and isolating failure-inducing input}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Software Engineering}} \bibinfo{volume}{28}, \bibinfo{number}{2} (\bibinfo{year}{2002}), \bibinfo{pages}{183--200}.
+\newblock
+\href{https://doi.org/10.1109/32.988498}{doi:\nolinkurl{10.1109/32.988498}}
+
+
+\bibitem[Zhang et~al\mbox{.}(2025)]%
+        {zhang2025which}
+\bibfield{author}{\bibinfo{person}{Shaokun Zhang}, \bibinfo{person}{Ming Yin}, \bibinfo{person}{Jieyu Zhang}, \bibinfo{person}{Jiale Liu}, \bibinfo{person}{Zhiguang Han}, \bibinfo{person}{Jingyang Zhang}, \bibinfo{person}{Beibin Li}, \bibinfo{person}{Chi Wang}, \bibinfo{person}{Huazheng Wang}, \bibinfo{person}{Yiran Chen}, {and} \bibinfo{person}{Qingyun Wu}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{Which Agent Causes Task Failures and When? On Automated Failure Attribution of {LLM} Multi-Agent Systems}.
+\newblock \bibinfo{howpublished}{arXiv:2505.00212}.
+\newblock
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2505.00212}
+\showURL{%
+\tempurl}
+
+
+\end{thebibliography}
