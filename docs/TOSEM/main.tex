@@ -1417,13 +1417,43 @@ In the example above, the model in which TS knows \p{tests} hides the defect, an
 
 \subsection{Overview}\label{sec:approach-overview}
 
-Agent slicing analyzes selected parts of a team precisely to expose defects in their relationships. The input is a declared team model $T$, including the graph, contracts, routing and join policies, goals, oracle assignment, and failure budget, together with a \emph{slicing strategy}. The strategy proposes a family $\mathcal{S}$ of convex slices. Singletons recover agent-level analysis. Larger slices can span hand-offs, parallel branches, joins, and shared failure domains. The following subsections define the slices, their semantics, and the conditions under which their results can be combined.
+Agent slicing has three steps (Fig.~\ref{fig:method}). It analyzes groups of components together to find candidate defects, confirms each candidate against the whole team, and shrinks each confirmed defect to the few components involved.
 
-For each $\sigma\in\mathcal{S}$, the checker explores member behavior exactly while taking outside components at face value. It records symptom keys with witnesses explaining the choices and failures that expose them. This hybrid approximation can produce spurious candidates, so a candidate is reported only after \emph{lifting}: a whole-team run must exhibit the symptom, and replaying its member choices in the slice must still exhibit it. Confirmation therefore establishes a defect of the declared team model, while potentially requiring a whole-team search. A failed or budget-exhausted search leaves a candidate unconfirmed.
+The input is a declared team model $T$ (Section~\ref{sec:background}) and a \emph{slicing strategy}, which proposes a family $\mathcal{S}$ of convex slices. Singleton slices give agent-level analysis. Larger slices can span hand-offs, parallel branches, joins, and shared models. The following subsections define slices, their semantics, and when their results can be combined.
 
-Confirmed findings are merged by symptom key and localized to inclusion-minimal confirming slices \emph{among those evaluated}, ranked by size and then by choice points. Witness states identify the mechanism: routing around a claimer, dropping a contribution, an unmet condition, or an oracle failure. A fixed candidate family may miss defects or return a larger explanation than exhaustive enumeration. Alternatively, a whole-team finding can initialize \emph{shrinking}: remove a member whenever the remaining slice is convex and still confirms the key, then repeat. The greedy procedure stops when no single member can be removed, but it does not guarantee minimum cardinality.
+\begin{figure}[H]
+\centering
+\begin{adjustbox}{max width=\linewidth}
+\begin{tikzpicture}[node distance=12mm,
+  io/.style={rectangle,rounded corners=2pt,draw=black!60,align=center,font=\scriptsize,text width=2cm,inner sep=3pt,minimum height=1.2cm},
+  st/.style={rectangle,rounded corners=2pt,draw=black!70,fill=black!4,align=center,font=\footnotesize,text width=2.2cm,inner sep=4pt,minimum height=1.5cm},
+  sd/.style={st,dashed,fill=white},
+  lb/.style={font=\tiny,text=black!70,inner sep=1pt}]
+\node[io] (in) {team and\\slicing strategy};
+\node[st,right=of in] (det) {\textbf{1~Detect}\\[0.5mm]\scriptsize analyze slices};
+\node[st,right=of det] (con) {\textbf{2~Confirm}\\[0.5mm]\scriptsize check on whole team};
+\node[st,right=of con] (loc) {\textbf{3~Localize}\\[0.5mm]\scriptsize find smallest slice};
+\node[io,right=of loc,fill=slicefill] (out) {defects with\\explaining slices};
+\draw[fl] (in)--(det);
+\draw[fl] (det)--(con) node[lb,midway,above=1mm] {candidates};
+\draw[fl] (con)--(loc) node[lb,midway,above=1mm] {confirmed};
+\draw[fl] (loc)--(out);
+\node[sd,below=8mm of con] (cert) {\textbf{Certify}\\[0.5mm]\scriptsize slice contracts, safety};
+\draw[fl,dashed] (in.south) |- (cert.west);
+\end{tikzpicture}
+\end{adjustbox}
+\caption{Overview of agent slicing. Steps 1--3 find, check, and explain defects. Certify (dashed) is separate and decides safety.}
+\label{fig:method}
+\Description{Pipeline from the team and slicing strategy through three numbered steps, Detect, Confirm and Localize, to defects with explaining slices. A separate dashed Certify box branches from the input.}
+\end{figure}
 
-Slices also support entry assumptions, per-exit guarantees, and exact boundary behaviors. These summaries describe what a subteam requires and supplies. Safety is decided separately, using exact whole-team checking or composition of boundary behaviors over a partition with an acyclic quotient and one global failure set (Theorem~\ref{thm:abs}). A derived flat assumption--guarantee pair need not express the exact behavior, and finding no confirmed defect in a bounded slice family is not a safety certificate. Section~\ref{sec:implementation} maps these analysis stages to the implementation and reproduction workflow.
+\textbf{Detect.} For each slice $\sigma\in\mathcal{S}$, the checker explores the behavior of the members exactly and takes all other components at face value, meaning it assumes they keep their contracts. It records each symptom it finds together with a \emph{witness}: the choices and failures that expose it. Because the outside is only approximated, some candidates are false alarms.
+
+\textbf{Confirm.} A candidate is reported only after \emph{lifting}. Some run of the whole team must show the symptom, and replaying that run's choices on the slice must show it as well. A confirmed finding is therefore a real defect of the declared team model. Confirming can require a search of the whole team, and a candidate whose search fails or exceeds its budget stays unconfirmed.
+
+\textbf{Localize.} Confirmed findings are merged by symptom key. Each key is localized to its smallest confirming slices among those evaluated, ranked by size and then by number of choice points. The witness shows the mechanism at work: a switch routing around a component that provides the property, a join dropping a contribution, an unmet condition, or an oracle failure. A fixed family of slices can miss a defect or return a larger explanation than necessary. \emph{Shrinking} avoids this. It starts from a whole-team finding, removes a member whenever the remaining slice is still convex and still confirms the key, and repeats. It stops when no single member can be removed, which does not guarantee the smallest possible slice.
+
+\textbf{Summarize and certify.} Slices also have entry assumptions, exit guarantees, and exact boundary behaviors, which describe what a group of components needs and provides. Safety is decided separately, either by exact whole-team checking or by composing boundary behaviors over a partition whose quotient graph is acyclic, using one global failure set (Theorem~\ref{thm:abs}). %Two cautions apply. A flat assumption--guarantee pair may not capture the exact behavior, and finding no confirmed defect in a bounded family of slices does not prove the team safe. Section~\ref{sec:implementation} maps these stages to the code and the reproduction workflow.
 
 \subsection{Slices}
 
