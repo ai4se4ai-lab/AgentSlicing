@@ -56,6 +56,63 @@ def cnf_team(clauses, nvars):
     return Team(nodes, edges, ['bad'])
 
 
+def cnf_team_robust(clauses, nvars):
+    """Robust-key variant (coNP-hardness): an agent A (oracle o) provides tok after the variable
+    gadgets; every clause gate requires tok and guarantees the critical goal c; f = 1.
+    Failing o always loses c; fault-free, c is missing iff the formula is satisfiable.
+    Hence (robust, OUT, c) is a symptom iff the formula is unsatisfiable."""
+    nodes, edges = [Node(INPUT, 'gate')], []
+    prev = INPUT
+    for i in range(nvars):
+        w = Node(f'w{i}', 'gate', route='switch')
+        tn = Node(f't{i}', 'gate', gua=frozenset({f't{i}'}))
+        fn = Node(f'f{i}', 'gate', gua=frozenset({f'f{i}'}))
+        m = Node(f'm{i}', 'gate', join=1)
+        nodes += [w, tn, fn, m]
+        edges += [(prev, w.id), (w.id, tn.id), (w.id, fn.id), (tn.id, m.id), (fn.id, m.id)]
+        prev = m.id
+    nodes.append(Node('A', 'agent', gua=frozenset({'tok'}), oracle='o'))
+    edges.append((prev, 'A'))
+    prev = 'A'
+    for j, cl in enumerate(clauses):
+        req = frozenset(f'f{v}' if pos else f't{v}' for v, pos in cl) | {'tok'}
+        nodes.append(Node(f'k{j}', 'gate', req=req, gua=frozenset({'c'})))
+        edges.append((prev, f'k{j}'))
+        prev = f'k{j}'
+    nodes.append(Node(OUTPUT, 'gate', req=frozenset({'c'})))
+    edges.append((prev, OUTPUT))
+    return Team(nodes, edges, ['c'], ['c'], 1)
+
+
+def cnf_team_robust_np(clauses, nvars):
+    """Robust-key NP-hardness: a gate P guarantees the critical goal phi iff some clause is
+    falsified (bad present); an agent A (oracle o) also guarantees phi. Fault-free, phi always
+    arrives; failing o misses phi iff the formula is satisfiable."""
+    base = cnf_team(clauses, nvars)
+    nodes = [n for n in base.nodes.values() if n.id != OUTPUT]
+    last = base.pred[OUTPUT][0]
+    edges = [e for e in base.edges if e[1] != OUTPUT]
+    nodes += [Node('P', 'gate', req=frozenset({'bad'}), gua=frozenset({'phi'})), Node('A', 'agent', gua=frozenset({'phi'}), oracle='o'),
+              Node(OUTPUT, 'gate', req=frozenset({'phi'}))]
+    edges += [(last, 'P'), ('P', 'A'), ('A', OUTPUT)]
+    return Team(nodes, edges, ['phi'], ['phi'], 1)
+
+
+def reach_team(clauses, nvars):
+    """Reachability NP-hardness: switches pick literals, any-joins form clauses, an all-join R of
+    all clauses is reached iff the formula is satisfiable (R requires an unclaimed property)."""
+    nodes, edges = [Node(INPUT, 'gate'), Node(OUTPUT, 'gate', join=1)], []
+    for i in range(nvars):
+        nodes += [Node(f'w{i}', 'gate', route='switch'), Node(f't{i}', 'gate'), Node(f'f{i}', 'gate')]
+        edges += [(INPUT, f'w{i}'), (f'w{i}', f't{i}'), (f'w{i}', f'f{i}'), (f't{i}', OUTPUT), (f'f{i}', OUTPUT)]
+    for j, cl in enumerate(clauses):
+        nodes.append(Node(f'c{j}', 'gate', join=1))
+        edges += [(f't{v}' if pos else f'f{v}', f'c{j}') for v, pos in cl] + [(f'c{j}', 'R')]
+    nodes.append(Node('R', 'gate', req=frozenset({'never'})))
+    edges.append(('R', OUTPUT))
+    return Team(nodes, edges, [], [], 0)
+
+
 def reduction(seed):
     rng = random.Random(seed)
     n = rng.randint(2, 6)
@@ -63,7 +120,10 @@ def reduction(seed):
     clauses = [[(v, rng.random() < 0.5) for v in rng.sample(range(n), min(3, n))] for _ in range(m)]
     sat = any(all(any(a[v] == pos for v, pos in cl) for cl in clauses) for a in itertools.product([False, True], repeat=n))
     unsafe = ('goal', OUTPUT, 'bad') in sem.symptoms(cnf_team(clauses, n))
-    return {'sat': sat, 'unsafe': unsafe}
+    robust = ('robust', OUTPUT, 'c') in sem.symptoms(cnf_team_robust(clauses, n))
+    robust_np = ('robust', OUTPUT, 'phi') in sem.symptoms(cnf_team_robust_np(clauses, n))
+    reach = ('assume', 'R', 'never') in sem.symptoms(reach_team(clauses, n))
+    return {'sat': sat, 'unsafe': unsafe, 'robust': robust, 'robust_np': robust_np, 'reach': reach}
 
 
 def fooling():
@@ -127,7 +187,10 @@ def main():
                'wild': {'teams': N_WILD, 'checked': dict(tried), 'mismatching_teams': dict(agg)},
                'bench': {'teams': sum(1 for r in bench_rows if r), 'checked': dict(btried), 'mismatching_teams': dict(bagg)},
                'reduction': {'formulas': len(red), 'satisfiable': sum(r['sat'] for r in red),
-                             'disagreements': sum(r['sat'] != r['unsafe'] for r in red)},
+                             'disagreements': sum(r['sat'] != r['unsafe'] for r in red),
+                             'robust_disagreements': sum(r['sat'] == r['robust'] for r in red),
+                             'robust_np_disagreements': sum(r['sat'] != r['robust_np'] for r in red),
+                             'reach_disagreements': sum(r['sat'] != r['reach'] for r in red)},
                'fooling': fooling()}
     save('e1_conformance', payload)
     print(payload['wild'], payload['bench'], payload['reduction'], payload['fooling'], round(payload['seconds']), 's')

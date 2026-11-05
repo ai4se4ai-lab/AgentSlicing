@@ -87,8 +87,12 @@ def _minimal(masks):
     return keep
 
 
-def findings(team: Team, sigma: int, max_runs: int | None = 200_000, stats: dict | None = None, deadline: float | None = None) -> dict:
-    """Symptom keys of H_sigma -> one witness. `sigma` is a node bitmask (Team.nbit)."""
+def findings(team: Team, sigma: int, max_runs: int | None = 200_000, stats: dict | None = None, deadline: float | None = None,
+             all_witnesses: dict | None = None, cap: int = 64) -> dict:
+    """Symptom keys of H_sigma -> one witness. `sigma` is a node bitmask (Team.nbit).
+
+    With `all_witnesses` (a dict), every distinct witness of each dynamic key is also
+    collected there (at most `cap` per key); confirmation by lifting needs them."""
     static = static_findings(team)
     if sigma == 0:
         return dict(static)
@@ -105,6 +109,16 @@ def findings(team: Team, sigma: int, max_runs: int | None = 200_000, stats: dict
         if not region_mask & nbit[k[1]]:
             result[k] = w
     always_unreached = [None]       # nodes unreached in every run so far (None = no run yet)
+
+    def record(target, k, witness):
+        if all_witnesses is None:
+            target.setdefault(k, witness())
+            return
+        w = witness()
+        target.setdefault(k, w)
+        lst = all_witnesses.setdefault(k, [])
+        if len(lst) < cap and w not in lst:
+            lst.append(w)
     runs = 0
     robust_candidates: dict = {}
 
@@ -149,11 +163,11 @@ def findings(team: Team, sigma: int, max_runs: int | None = 200_000, stats: dict
         for n, content in found:
             if fault_free:
                 for k in _keys_at(team, n, content):
-                    result.setdefault(k, witness())
+                    record(result, k, witness)
             elif n == OUTPUT:
                 miss = team.crit_mask & ~content
                 for p in team.names(miss):
-                    robust_candidates.setdefault(('robust', OUTPUT, p), witness())
+                    record(robust_candidates, ('robust', OUTPUT, p), witness)
 
     for fail in _fault_sets(team, members):
         fault_free = not fail
@@ -180,10 +194,10 @@ def findings(team: Team, sigma: int, max_runs: int | None = 200_000, stats: dict
             state_out[n] = content | gua if applies else content
             if fault_free:
                 for k in _keys_at(team, n, content):
-                    result.setdefault(k, witness())
+                    record(result, k, witness)
             elif n == OUTPUT:
                 for p in team.names(team.crit_mask & ~content):
-                    robust_candidates.setdefault(('robust', OUTPUT, p), witness())
+                    record(robust_candidates, ('robust', OUTPUT, p), witness)
 
         def dfs(i):
             """Deterministic members are processed in a loop; recursion happens only at choices."""

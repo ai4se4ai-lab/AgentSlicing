@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+docs/TSE/*.aux
+docs/TSE/*.log
+docs/TSE/*.blg
+docs/TSE/*.out
+docs/TSE/*.fls
+docs/TSE/*.fdb_latexmk
+docs/TSE/*.synctex.gz

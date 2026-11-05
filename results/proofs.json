@@ -8,7 +8,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0037
+   "seconds": 0.0018
   },
   {
    "obligation": "L2-face-value-dominates",
@@ -16,7 +16,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0025
+   "seconds": 0.0008
   },
   {
    "obligation": "L3-join-subset",
@@ -24,7 +24,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0021
+   "seconds": 0.0007
   },
   {
    "obligation": "L4-missing-antitone",
@@ -32,7 +32,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0018
+   "seconds": 0.0006
   },
   {
    "obligation": "L5-evidence-monotone",
@@ -40,15 +40,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.002
-  },
-  {
-   "obligation": "L6-halt-is-exclusion",
-   "theorem": "Lemma H",
-   "expect": "unsat",
-   "z3": "unsat",
-   "ok": true,
-   "seconds": 0.0003
+   "seconds": 0.0014
   },
   {
    "obligation": "L7-env-uniform",
@@ -56,7 +48,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0008
+   "seconds": 0.0007
   },
   {
    "obligation": "L8-must-sound",
@@ -64,7 +56,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0021
+   "seconds": 0.0015
   },
   {
    "obligation": "L9-meet-below-choice",
@@ -72,7 +64,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0007
+   "seconds": 0.0005
   },
   {
    "obligation": "L10-fault-antitone",
@@ -80,7 +72,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0026
+   "seconds": 0.0007
   },
   {
    "obligation": "L11-failed-provides-nothing",
@@ -88,7 +80,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0001
+   "seconds": 0.0006
   },
   {
    "obligation": "L12-decl-enables",
@@ -96,7 +88,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.002
+   "seconds": 0.0007
   },
   {
    "obligation": "L13-decl-local",
@@ -104,23 +96,23 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0018
+   "seconds": 0.0007
   },
   {
    "obligation": "C1-non-distributive",
-   "theorem": "T7 / must-analysis",
+   "theorem": "B6 incompleteness",
    "expect": "sat",
    "z3": "sat",
    "ok": true,
-   "seconds": 0.0157
+   "seconds": 0.0068
   },
   {
-   "obligation": "C2-single-pair-inexact",
+   "obligation": "C2-no-exact-single-pair",
    "theorem": "T2(c)",
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0002
+   "seconds": 0.0014
   }
  ]
 }

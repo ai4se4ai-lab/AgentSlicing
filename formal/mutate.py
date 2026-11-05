@@ -17,7 +17,7 @@ MUTANTS = {
     'join-intersection': 'L3-join-subset',
     'applies-ignores-decl': 'L12-decl-enables',
     'decl-inherited': 'L13-decl-local',
-    'single-pair-ok': 'C2-single-pair-inexact',
+    'single-pair-ok': 'C2-no-exact-single-pair',
 }
 
 

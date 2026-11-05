@@ -24,6 +24,7 @@ class Params:
     n_goals: int = 2
     fault_budget: int = 1
     p_switch: float = 0.3         # in 'mixed': probability that a block is a choice block
+    n_critical: int = 0           # number of goals marked critical (E8 uses 1; E2 hosts have none)
 
 
 # ------------------------------------------------------------------ topologies
@@ -227,7 +228,8 @@ def assign(g: G, rng: random.Random, params: Params, name: str) -> Team:
     cand = sorted(x for x in lo_c[OUTPUT] if x.startswith('w_'))
     goals = rng.sample(cand, min(params.n_goals, len(cand))) if cand else []
     nodes[OUTPUT] = Node(OUTPUT, 'gate', req=frozenset(goals), join=g.join.get(OUTPUT, ALL))
-    return Team(nodes.values(), g.edges, goals, (), params.fault_budget, name)
+    critical = rng.sample(sorted(goals), min(params.n_critical, len(goals))) if params.n_critical else ()
+    return Team(nodes.values(), g.edges, goals, critical, params.fault_budget, name)
 
 
 def generate(kind: str, n: int, seed: int, params: Params | None = None) -> Team:

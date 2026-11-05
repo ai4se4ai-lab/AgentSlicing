@@ -31,7 +31,7 @@ def metagpt(o):
     return build([('PM', 'agent', [], ['prd'], o('PM')), ('Architect', 'agent', ['prd'], ['design'], o('Architect')),
                   ('ProjMgr', 'agent', ['design'], ['tasks'], o('ProjMgr')),
                   ('Engineer', 'agent', ['tasks', 'design'], ['code', 'implemented'], o('Engineer')),
-                  ('QA', 'agent', ['code'], ['unit_tests'], o('QA')), ('TestRun', 'gate', ['unit_tests'], ['tests_pass'])],
+                  ('QA', 'agent', ['code'], ['unit_tests'], o('QA')), ('TestRun', 'gate', ['unit_tests', 'code'], ['tests_pass'])],
                  [('IN', 'PM'), ('PM', 'Architect'), ('Architect', 'ProjMgr'), ('ProjMgr', 'Engineer'), ('Engineer', 'QA'),
                   ('QA', 'TestRun'), ('TestRun', 'OUT')], goals=['implemented', 'tests_pass'], critical=['tests_pass'], f=1)
 
@@ -40,25 +40,25 @@ def metagpt(o):
 def chatdev(o):
     return build([('Design', 'agent', [], ['spec'], o('Design')), ('Coding', 'agent', ['spec'], ['code'], o('Coding')),
                   ('Complete', 'agent', ['code'], ['code_complete'], o('Complete')),
-                  ('Review', 'agent', ['code'], ['correct'], o('Review')), ('Execute', 'gate', [], ['runs']),
+                  ('Review', 'agent', ['code'], ['reviewed'], o('Review')), ('Execute', 'gate', ['code'], ['runs']),
                   ('Testing', 'agent', ['runs'], ['correct'], o('Testing'))],
                  [('IN', 'Design'), ('Design', 'Coding'), ('Coding', 'Complete'), ('Complete', 'Review'), ('Review', 'Execute'),
-                  ('Execute', 'Testing'), ('Testing', 'OUT')], goals=['code_complete', 'runs', 'correct'], critical=['correct'], f=1)
+                  ('Execute', 'Testing'), ('Testing', 'OUT')], goals=['code_complete', 'runs', 'reviewed', 'correct'], critical=['correct'], f=1)
 
 
 @design('AgentCoder', 'huang2023agentcoder', 'programmer || test designer -> test executor (script)')
 def agentcoder(o, join='all'):
     return build([('Programmer', 'agent', [], ['code'], o('Programmer')), ('TestDesigner', 'agent', [], ['tests'], o('TestDesigner')),
-                  ('Executor', 'gate', ['tests'], ['tests_pass'], None, 'fork', join)],
+                  ('Executor', 'gate', ['tests', 'code'], ['tests_pass'], None, 'fork', join)],
                  [('IN', 'Programmer'), ('IN', 'TestDesigner'), ('Programmer', 'Executor'), ('TestDesigner', 'Executor'),
                   ('Executor', 'OUT')], goals=['tests_pass'], critical=['tests_pass'], f=1)
 
 
-@design('MapCoder', 'islam2024mapcoder', 'retrieval -> planning -> coding -> sample I/O check -> debugging')
+@design('MapCoder', 'islam2024mapcoder', 'retrieval -> planning -> coding -> sample I/O check (from the problem statement) -> debugging')
 def mapcoder(o):
     return build([('Retrieval', 'agent', [], ['examples'], o('Retrieval')), ('Planning', 'agent', ['examples'], ['plan'], o('Planning')),
-                  ('Coding', 'agent', ['plan'], ['code'], o('Coding')), ('SampleIO', 'gate', [], ['samples_pass']),
-                  ('Debugging', 'agent', ['samples_pass'], ['debugged'], o('Debugging'))],
+                  ('Coding', 'agent', ['plan'], ['code'], o('Coding')), ('SampleIO', 'gate', ['code'], ['samples_pass']),
+                  ('Debugging', 'agent', ['code'], ['debugged'], o('Debugging'))],
                  [('IN', 'Retrieval'), ('Retrieval', 'Planning'), ('Planning', 'Coding'), ('Coding', 'SampleIO'),
                   ('SampleIO', 'Debugging'), ('Debugging', 'OUT')], goals=['samples_pass', 'debugged'], critical=['samples_pass'], f=1)
 
@@ -71,12 +71,13 @@ def selfcollab(o):
                  goals=['tested'], critical=['tested'], f=1)
 
 
-@design('Debate', 'du2024debate', 'three agents answer in parallel -> majority vote')
+@design('Debate', 'du2024debate', 'three agents answer, then each revises after reading all answers (one debate round) -> majority vote')
 def debate(o, join=2):
-    return build([('A1', 'agent', [], ['answer_ok'], o('A1')), ('A2', 'agent', [], ['answer_ok'], o('A2')),
-                  ('A3', 'agent', [], ['answer_ok'], o('A3')), ('Vote', 'gate', [], [], None, 'fork', join)],
-                 [('IN', 'A1'), ('IN', 'A2'), ('IN', 'A3'), ('A1', 'Vote'), ('A2', 'Vote'), ('A3', 'Vote'), ('Vote', 'OUT')],
-                 goals=['answer_ok'], critical=['answer_ok'], f=1)
+    r1 = [(f'A{i}', 'agent', [], [f'ans{i}'], o(f'A{i}')) for i in range(1, 4)]
+    r2 = [(f'R{i}', 'agent', ['ans1', 'ans2', 'ans3'], ['answer_ok'], o(f'R{i}')) for i in range(1, 4)]
+    edges = [('IN', f'A{i}') for i in range(1, 4)] + [(f'A{i}', f'R{j}') for i in range(1, 4) for j in range(1, 4)] + \
+            [(f'R{i}', 'Vote') for i in range(1, 4)] + [('Vote', 'OUT')]
+    return build(r1 + r2 + [('Vote', 'gate', [], [], None, 'fork', join)], edges, goals=['answer_ok'], critical=['answer_ok'], f=1)
 
 
 @design('MoA', 'wang2024moa', 'two proposer layers (different LLMs) -> aggregator')
@@ -98,13 +99,15 @@ def autogen(o):
                   ('Merge', 'Executor'), ('Executor', 'OUT')], goals=['runs', 'reviewed'], critical=['runs'], f=1)
 
 
-@design('Agentless', 'xia2025agentless', 'localize -> sampled repairs || reproduction-test generation -> regression and reproduction runs -> select')
+@design('Agentless', 'xia2025agentless', 'localize -> sampled repairs; reproduction-test generation; each candidate validated by regression and reproduction runs -> select')
 def agentless(o, join='any'):
     return build([('Localize', 'agent', [], ['locations'], o('Localize')),
                   ('Repair1', 'agent', ['locations'], ['patch'], o('Repair1')), ('Repair2', 'agent', ['locations'], ['patch'], o('Repair2')),
                   ('ReproGen', 'agent', [], ['repro_test'], o('ReproGen')),
-                  ('Select', 'gate', [], [], None, 'fork', join),
-                  ('Regression', 'gate', ['patch'], ['regression_pass']), ('ReproRun', 'gate', ['patch', 'repro_test'], ['issue_fixed'])],
-                 [('IN', 'Localize'), ('IN', 'ReproGen'), ('Localize', 'Repair1'), ('Localize', 'Repair2'), ('Repair1', 'Select'),
-                  ('Repair2', 'Select'), ('Select', 'Regression'), ('Regression', 'ReproRun'), ('ReproGen', 'ReproRun'), ('ReproRun', 'OUT')],
+                  ('Validate1', 'gate', ['patch', 'repro_test'], ['regression_pass', 'issue_fixed']),
+                  ('Validate2', 'gate', ['patch', 'repro_test'], ['regression_pass', 'issue_fixed']),
+                  ('Select', 'gate', [], [], None, 'fork', join)],
+                 [('IN', 'Localize'), ('IN', 'ReproGen'), ('Localize', 'Repair1'), ('Localize', 'Repair2'),
+                  ('Repair1', 'Validate1'), ('ReproGen', 'Validate1'), ('Repair2', 'Validate2'), ('ReproGen', 'Validate2'),
+                  ('Validate1', 'Select'), ('Validate2', 'Select'), ('Select', 'OUT')],
                  goals=['regression_pass', 'issue_fixed'], critical=['issue_fixed'], f=1)

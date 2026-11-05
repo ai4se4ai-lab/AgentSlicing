@@ -17,11 +17,11 @@ def chain_example():
 
 
 def forkjoin_example(policy='any'):
-    return build([('RA', 'agent', [], ['spec']), ('AR', 'agent', ['spec'], ['design']), ('TM', 'agent', ['spec'], ['threat_model']),
-                  ('DV', 'agent', ['design'], ['implemented']), ('ST', 'agent', ['threat_model'], ['sec_tested']),
+    return build([('RA', 'agent', [], ['spec']), ('AR', 'agent', ['spec'], ['design']), ('DV', 'agent', ['design'], ['code']),
+                  ('CR', 'agent', ['code'], ['reviewed']), ('ST', 'agent', ['code'], ['sec_tested']),
                   ('RG', 'gate', [], [], None, 'fork', policy)],
-                 [('IN', 'RA'), ('RA', 'AR'), ('RA', 'TM'), ('AR', 'DV'), ('TM', 'ST'), ('DV', 'RG'), ('ST', 'RG'), ('RG', 'OUT')],
-                 goals=['implemented', 'sec_tested'])
+                 [('IN', 'RA'), ('RA', 'AR'), ('AR', 'DV'), ('DV', 'CR'), ('DV', 'ST'), ('CR', 'RG'), ('ST', 'RG'), ('RG', 'OUT')],
+                 goals=['reviewed', 'sec_tested'])
 
 
 def test_chain_running_example():
@@ -36,11 +36,11 @@ def test_chain_running_example():
 
 def test_forkjoin_running_example():
     t = forkjoin_example()
-    assert set(sem.symptoms(t)) == {('goal', 'OUT', 'implemented'), ('goal', 'OUT', 'sec_tested')}
+    assert set(sem.symptoms(t)) == {('goal', 'OUT', 'reviewed'), ('goal', 'OUT', 'sec_tested')}
     assert an.agent_level(t)['findings'] == {}
-    rep = an.check(t, sl.exhaustive(t, 3))
+    rep = an.check_confirmed(t, sl.exhaustive(t, 3))
     for k in sem.symptoms(t):
-        assert sorted(sorted(t.nodes_of(s)) for s in rep['findings'][k]['minimal']) == [['DV', 'RG'], ['RG', 'ST']]
+        assert sorted(sorted(t.nodes_of(s)) for s in rep['findings'][k]['minimal']) == [['CR', 'RG'], ['RG', 'ST']]
         assert rep['findings'][k]['class'] == 'S2'
     assert sem.symptoms(forkjoin_example('all')) == {}
 
@@ -127,3 +127,64 @@ def test_conformance_property(seed):
 def test_model_oracle_property(seed):
     t = cf.wild_team(seed, n=3 + seed % 2)
     assert oracle.model_symptoms(t, 3_000_000) == set(sem.symptoms(t))
+
+
+def test_false_alarm_and_nonmonotonicity():
+    """T3(c), T5(e): an outside all-join at face value admits a run the team does not have."""
+    t = build([('s', 'gate', [], [], None, 'switch'), ('y', 'gate', [], ['g']),
+               ('x', 'gate', [], [], None, 'fork', 'any')],
+              [('IN', 's'), ('IN', 'y'), ('s', 'x'), ('y', 'x'), ('s', 'OUT'), ('x', 'OUT')], goals=['g'])
+    assert sem.symptoms(t) == {}
+    small, large = t.nmask(['s', 'x', 'y']), t.nmask(['s', 'x', 'y', 'OUT'])
+    assert ('goal', 'OUT', 'g') in sem.findings(t, small)
+    assert ('goal', 'OUT', 'g') not in sem.findings(t, large)
+
+
+def test_cyclic_quotient_circular_contracts():
+    """T2(d): convex parts {a,d}, {b,c} with a cyclic quotient; flat contracts discharge each other
+    although neither requirement is ever established."""
+    t = build([('a', 'agent', ['y'], ['x']), ('b', 'agent', ['x'], ['y']), ('c', 'agent', ['x'], ['y']), ('d', 'agent', ['y'], ['x'])],
+              [('IN', 'a'), ('IN', 'c'), ('a', 'b'), ('c', 'd'), ('b', 'OUT'), ('d', 'OUT')], goals=['x', 'y'])
+    ad, bc = t.nmask(['a', 'd']), t.nmask(['b', 'c'])
+    assert sl.is_convex(t, ad) and sl.is_convex(t, bc)
+    assert not sl.quotient_is_acyclic(t, [ad, bc, t.nbit['IN'], t.nbit['OUT']])
+    # each flat contract is valid when its entries are assumed to carry its assumption
+    assert ct.declared_valid(t, ad, t.m(['y']), t.m(['x']))
+    assert ct.declared_valid(t, bc, t.m(['x']), t.m(['y']))
+    assert {('assume', 'a', 'y'), ('assume', 'c', 'x')} <= set(sem.symptoms(t))
+    assert not sem.is_safe(sem.symptoms(t))
+
+
+def test_confirmation_removes_agent_level_false_alarm():
+    """Reviewer counterexample: an outside all-join at face value; the raw singleton finding is
+    not a symptom, and confirmation (lifting) removes it."""
+    t = build([('s', 'gate', [], [], None, 'switch'), ('a', 'gate', [], ['x']), ('J', 'gate', ['x'], [])],
+              [('IN', 's'), ('s', 'a'), ('s', 'OUT'), ('IN', 'J'), ('a', 'J'), ('J', 'OUT')], goals=['g'], inputs=['g'],
+              out_join='any')
+    assert sem.symptoms(t) == {}
+    assert ('assume', 'J', 'x') in sem.findings(t, t.nbit['s'])
+    assert an.confirmed_findings(t, t.nbit['s']) == {}
+    assert an.check_confirmed(t, sl.singleton(t))['findings'] == {}
+
+
+@settings(max_examples=120, deadline=None, derandomize=True, suppress_health_check=list(HealthCheck))
+@given(st.integers(0, 10_000))
+def test_confirmed_findings_match_oracle(seed):
+    t = cf.wild_team(seed, n=3 + seed % 3)
+    sym = sem.symptoms(t)
+    for s in sl.exhaustive(t, 2):
+        conf = set(an.confirmed_findings(t, s))
+        assert conf == cf.confirmed_oracle(t, s)
+        assert all(an.correct(sym, k) for k in conf)
+
+
+def test_running_example_baselines():
+    t = build([('RA', 'agent', [], ['req_spec'], 'g'), ('AR', 'agent', ['req_spec'], ['design'], 'g'),
+               ('DV', 'agent', ['design'], ['code', 'tests'], 'g'), ('SR', 'agent', ['code'], ['sec_reviewed'], 'g'),
+               ('TS', 'gate', ['tests'], ['tests_pass'])],
+              [('IN', 'RA'), ('RA', 'AR'), ('AR', 'DV'), ('DV', 'SR'), ('SR', 'TS'), ('TS', 'OUT')],
+              goals=['tests_pass', 'sec_reviewed'], critical=['tests_pass'], f=1)
+    k = ('robust', 'OUT', 'tests_pass')
+    assert k in an.must_analysis(t)['findings']           # a global must-analysis detects it ...
+    s, _ = an.shrink(t, k)
+    assert t.nodes_of(s) == ['DV', 'SR', 'TS']            # ... slices localize it

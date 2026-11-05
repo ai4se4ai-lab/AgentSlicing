@@ -62,6 +62,11 @@ def run(args):
             r['peak_mb'] = tracemalloc.get_traced_memory()[1] / 2**20
             tracemalloc.stop()
         rec['strategies'][name] = r
+    # B6 must-analysis (global, path-insensitive, linear per failure set)
+    from slicing import analysis as an
+    m0 = time.perf_counter()
+    mf = an.must_analysis(t)['findings']
+    rec['must'] = {'seconds': time.perf_counter() - m0, 'timeout': False, 'detected': bool(set(mf) & keys)}
     # whole-team exact
     w0 = time.perf_counter()
     stats = {}

@@ -70,6 +70,83 @@ def hybrid_oracle(team: Team, sigma: int) -> set:
     return {k for k in found if not (k[0] == 'robust' and k[2] in goal)}
 
 
+def all_runs(team: Team):
+    """Every run of T: all switch choices, all admissible contributor sets (any size >= q),
+    all failure sets |F| <= f. Yields (choices, faults, reached, content). Independent of
+    `analysis.lift` and of the checker's enumerator."""
+    orcs = team.oracles
+    fsets = [frozenset(c) for r in range(min(team.f, len(orcs)) + 1) for c in combinations(orcs, r)]
+    for F in fsets:
+        def rec(i, reached, content, out, choices):
+            if i == len(team.order):
+                yield choices, F, reached, content
+                return
+            n = team.order[i]
+            node = team.nodes[n]
+            req, gua, decl = team.mask[n]
+            if n == INPUT:
+                yield from rec(i + 1, {**reached, n: True}, {**content, n: 0}, {**out, n: gua}, choices)
+                return
+            preds = team.pred[n]
+            sw = dict((k, v) for t, k, v in choices if t == 'switch')
+            dlv = [p for p in preds if reached[p] and (team.nodes[p].route != 'switch' or sw.get(p) == n)]
+            q = ALL if len(preds) <= 1 else node.join
+            if q == ALL:
+                opts = [None] if len(dlv) == len(preds) else []
+            else:
+                opts = list(_subsets(dlv, q))
+            if not opts:
+                yield from rec(i + 1, {**reached, n: False}, {**content, n: 0}, {**out, n: 0}, choices)
+                return
+            for C in opts:
+                cs = preds if C is None else C
+                c = 0
+                for p in cs:
+                    c |= out[p]
+                applies = (req & ~(c | decl)) == 0 and (node.kind == 'gate' or node.oracle not in F)
+                o = c | gua if applies else c
+                ch = choices if C is None else choices + [('contrib', n, list(C))]
+                succ = team.succ[n] if node.route == 'switch' and len(team.succ[n]) > 1 else [None]
+                for s in succ:
+                    yield from rec(i + 1, {**reached, n: True}, {**content, n: c}, {**out, n: o},
+                                   ch if s is None else ch + [('switch', n, s)])
+        yield from rec(0, {}, {}, {}, [])
+
+
+def _run_keys(team: Team, reached, content, faulty: bool) -> set:
+    keys = set()
+    for n in team.order:
+        if n == INPUT or not reached[n]:
+            continue
+        req, _, decl = team.mask[n]
+        if not faulty:
+            kind = 'goal' if n == OUTPUT else 'assume'
+            keys |= {(kind, n, p) for p in team.names(req & ~(content[n] | decl))}
+        elif n == OUTPUT:
+            keys |= {('robust', n, p) for p in team.names(team.crit_mask & ~content[n])}
+    return keys
+
+
+def confirmed_oracle(team: Team, sigma: int) -> set:
+    """Keys of F(sigma) (replay oracle) exhibited by some run of T whose member choices and
+    member failures, replayed in H_sigma, exhibit the same key."""
+    raw = hybrid_oracle(team, sigma)
+    static = set(sem.static_findings(team))
+    orc_s = {team.nodes[n].oracle for n in team.nodes_of(sigma) if team.nodes[n].kind == 'agent'}
+    out = set()
+    for choices, F, reached, content in all_runs(team):
+        tkeys = _run_keys(team, reached, content, bool(F)) & raw
+        if not tkeys:
+            continue
+        mine = [c for c in choices if sigma & team.nbit[c[1]]]
+        hr, hc, _, _ = an.hybrid_run(team, sigma, {'choices': mine, 'faults': sorted(F & orc_s)})
+        hkeys = _run_keys(team, hr, hc, bool(F & orc_s)) if F & orc_s or not F else set()
+        for k in tkeys:
+            if k in static or k in hkeys:
+                out.add(k)
+    return out
+
+
 def wild_team(seed: int, n: int = 5, props: int = 4) -> Team:
     """Random team with arbitrary contracts, policies, switches and faults (not clean)."""
     rng = random.Random(seed)
@@ -137,15 +214,20 @@ def check_team(team: Team, kmax: int = 3) -> dict:
             if s & team.nbit[v] and not al_v <= fam[s]:
                 rec += 1
     out['recovery'] = rec
-    # T5(c): the hull of a witness lineage manifests the key
-    bad = 0
-    for k, w in sym.items():
-        if not w.get('slice'):
-            continue
-        h = an.lineage_hull(team, k, w)
-        if k not in sem.findings(team, h):
-            bad += 1
-    out['witness_hull'] = bad
+    # confirmed findings (lifting, T3b) vs. an independent run-enumeration oracle; and soundness
+    small = [s for s in slices if sl.size(s) <= 2]
+    out['confirmed_vs_oracle'] = sum(1 for s in small if set(an.confirmed_findings(team, s)) != confirmed_oracle(team, s))
+    out['confirmed_sound'] = sum(1 for s in small for k in an.confirmed_findings(team, s) if not an.correct(sym, k))
+    # T5(c): confirmed findings are monotone under slice growth (robust keys: or the goal key is raw-found)
+    conf = {s: set(an.confirmed_findings(team, s)) for s in slices}
+    mono = 0
+    for s in slices:
+        for s2 in slices:
+            if s != s2 and s & s2 == s:
+                for k in conf[s] - conf[s2]:
+                    if k[0] != 'robust' or ('goal', k[1], k[2]) not in fam[s2]:
+                        mono += 1
+    out['confirmed_monotone'] = mono
     # T5(a)/T3(a): every symptom of T is found by the whole slice; whole-slice findings are exact
     out['whole_exact'] = int(set(sem.findings(team, full)) != set(sym))
     # T2(d): partition with acyclic quotient, part summaries composed in quotient order
@@ -202,10 +284,29 @@ def mutate(team: Team, rng: random.Random):
     return new, {'node': a, 'field': field}
 
 
+def edge_mutation(team: Team, rng: random.Random):
+    """Add a forward edge or remove a redundant one (both endpoints keep other edges)."""
+    if rng.random() < 0.5 and len(team.order) > 3:
+        for _ in range(30):
+            i, j = sorted(rng.sample(range(0, len(team.order) - 1), 2))
+            u, v = team.order[i], team.order[j]
+            if (u, v) not in team.edges and v != INPUT:
+                return Team(team.nodes.values(), list(team.edges) + [(u, v)], team.goals, team.critical, team.f, team.name), {'edge': (u, v)}
+    cands = [(u, v) for u, v in team.edges if len(team.succ[u]) > 1 and len(team.pred[v]) > 1]
+    for u, v in rng.sample(cands, len(cands)):
+        node = team.nodes[v]
+        if node.join == ALL or node.join <= len(team.pred[v]) - 1:
+            return Team(team.nodes.values(), [e for e in team.edges if e != (u, v)], team.goals, team.critical, team.f, team.name), {'edge': (u, v)}
+    return mutate(team, rng)
+
+
 def incremental_check(team: Team, slices: list[int]) -> int:
     rng = random.Random(len(slices) * 7 + len(team.edges))
     old_res = inc.full(team, slices)
-    new, change = mutate(team, rng)
+    if rng.random() < 0.3:
+        new, change = edge_mutation(team, rng)
+    else:
+        new, change = mutate(team, rng)
     new_family = [s for s in slices if sl.is_convex(new, s)]
     r = inc.recertify(team, new, change, old_res, new_family)
     truth = inc.full(new, new_family)

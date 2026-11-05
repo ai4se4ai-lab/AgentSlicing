@@ -100,7 +100,7 @@ def derived_contract(team: Team, sigma: int, env: int, faults: bool = False) -> 
                 req, _, decl = team.mask[n]
                 assume |= {(n, p) for p in team.names(req & ~(c | decl))}
 
-    def guarantee(fail):
+    def guarantee(fail, per_exit=None):
         g = None
         for st, sw in member_runs(team, sigma, {e: (True, env) for e in entries}, fail):
             for u, v in exits:
@@ -108,9 +108,12 @@ def derived_contract(team: Team, sigma: int, env: int, faults: bool = False) -> 
                 if r and (team.nodes[u].route != 'switch' or sw.get(u) == v):
                     o = added | (env if flow else 0)
                     g = o if g is None else g & o
+                    if per_exit is not None:
+                        per_exit[(u, v)] = o if (u, v) not in per_exit else per_exit[(u, v)] & o
         return 0 if g is None else g
-    G = guarantee(frozenset())
-    out = {'assume': assume, 'guarantee': G}
+    per = {}
+    G = guarantee(frozenset(), per)
+    out = {'assume': assume, 'guarantee': G, 'per_exit': per}
     if faults and team.f > 0:
         orcs = sorted({team.nodes[n].oracle for n in members if team.nodes[n].kind == 'agent'})
         k = min(team.f, len(orcs))

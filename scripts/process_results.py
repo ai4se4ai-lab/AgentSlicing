@@ -100,8 +100,35 @@ def pct(x):
     return f'{100 * x:.1f}'
 
 
+TABLES: dict = {}
+FIGS: dict = {}
+PGF_COLORS = ['cA', 'cB', 'cC', 'cD', 'cE', 'cF', 'cG']
+PGF_MARKS = ['*', 'square*', 'triangle*', 'diamond*', 'pentagon*', '+', 'x']
+PGF_STYLES = ['solid', 'dashed', 'dashdotted', 'densely dotted', 'solid', 'dashed', 'dashdotted']
+
+
 def write_table(name, text):
+    """Table bodies go to docs/TSE/tables/ (artifact) and into the generated block of main.tex."""
     (OUT / 'tables' / f'{name}.tex').write_text(text + '\n', encoding='utf-8')
+    TABLES['tab' + ''.join(w.capitalize() for w in name.split('_'))] = text
+
+
+def coords(xs, ys):
+    return ' '.join(f'({x:.6g},{y:.6g})' for x, y in zip(xs, ys) if not (math.isnan(x) or math.isnan(y)))
+
+
+def pgf_series(i, xs, mean, lo=None, hi=None, legend=None, color=None, width='semithick'):
+    """One line (and an optional confidence band) as pgfplots commands."""
+    col = color or PGF_COLORS[i % 7]
+    out = []
+    if lo is not None:
+        band = coords(list(xs) + list(xs)[::-1], list(lo) + list(hi)[::-1])
+        out.append(f'\\addplot[fill={col},fill opacity=0.15,draw=none,forget plot] coordinates {{{band}}} -- cycle;')
+    out.append(f'\\addplot[{col},{width},{PGF_STYLES[i % 7]},mark={PGF_MARKS[i % 7]},mark size=1.4pt,mark options={{solid}}] '
+               f'coordinates {{{coords(xs, mean)}}};')
+    if legend:
+        out.append(f'\\addlegendentry{{{legend}}}')
+    return '\n'.join(out)
 
 
 def plt():
@@ -144,15 +171,20 @@ def e1():
         macro('ReductionFormulas', r['formulas'])
         macro('ReductionSat', r['satisfiable'])
         macro('ReductionDisagreements', r['disagreements'])
+        macro('ReductionRobustDisagreements', r.get('robust_disagreements', 0))
+        macro('ReductionRobustNPDisagreements', r.get('robust_np_disagreements', 0))
+        macro('ReductionReachDisagreements', r.get('reach_disagreements', 0))
         macro('FoolingAllHold', 'all' if all(all(v.values()) for v in d['fooling'].values()) else 'not all')
         names = {'HN_equals_T': 'Exact semantics vs.\\ independent replay ($H_N=T$)',
                  'hybrid_vs_oracle': 'Hybrid semantics vs.\\ exhaustive replay (all slices $\\le 3$)',
                  'static_in_singletons': 'Lemma~\\ref{lem:face} at singletons ($F(\\emptyset)\\subseteq F(\\{v\\})$)',
-                 'recovery': 'Recovery of agent-level findings (Thm.~\\ref{thm:sep}c)',
-                 'witness_hull': 'Witness hull manifests (Thm.~\\ref{thm:loc}c)',
+                 'recovery': 'Static keys persist in every slice (Thm.~\\ref{thm:sep}c)',
+                 'confirmed_vs_oracle': 'Confirmed findings vs.\\ run-enumeration oracle ($\\le 2$)',
+                 'confirmed_sound': 'Confirmed findings are symptoms (Thm.~\\ref{thm:sound}b)',
+                 'confirmed_monotone': 'Confirmed findings are monotone (Thm.~\\ref{thm:loc}c)',
                  'whole_exact': 'Whole slice is exact (Thm.~\\ref{thm:sound}a)',
                  'quotient': 'Partition summaries compose (Thm.~\\ref{thm:abs}d)',
-                 'incremental': 'Incremental $=$ full re-verification (Thm.~\\ref{thm:inc})',
+                 'incremental': 'Incremental $=$ full re-verification, incl.\\ edges (Thm.~\\ref{thm:inc})',
                  'model_oracle': 'Run semantics vs.\\ all evidence models (Lemmas W, M)'}
         lines = []
         for k, label in names.items():
@@ -163,20 +195,44 @@ def e1():
 
 
 # ------------------------------------------------------------------ E2 / E4
-CHK = [('k1', 'B1 agent level'), ('SL', 'SL (combined)'), ('window2', 'window-2'), ('band1', 'band-1'),
-       ('region', 'region'), ('goal', 'goal-directed'), ('B2', 'B2 whole team'), ('B3', 'B3 random'),
-       ('B4', 'B4 lint'), ('B5', 'B5 smells')]
+CHK = [('singleton', 'B1 agent (conf.)'), ('SL', 'SL (conf.)'), ('window2', 'window-2'), ('band1', 'band-1'),
+       ('region', 'region'), ('goal', 'goal-dir.'), ('B2', 'B2 whole'), ('B3', 'B3 random'),
+       ('B4', 'B4 lint'), ('B5', 'B5 smells'), ('B6', 'B6 must')]
 CLS_ORDER = ['A1', 'A2', 'A3', 'S1v', 'A4', 'S5', 'S2', 'S3', 'S4', 'S6a', 'S6b']
+DECOY = ['D2', 'D4', 'D5', 'D6']
 
 
-def seed_rates(rows, checker, field, cond=lambda r: True):
+def seed_rates(rows, checker, field, cond=lambda r: True, unit=lambda r: r['seed']):
     by = defaultdict(list)
     for r in rows:
         if checker in r['checkers'] and cond(r):
             v = r['checkers'][checker].get(field)
             if v is not None:
-                by[r['seed']].append(bool(v))
+                by[unit(r)].append(bool(v))
     return {s: np.mean(v) for s, v in by.items()}
+
+
+def cluster_ci(rows, value, n=4000):
+    """Bootstrap CI of a mean, resampling clusters (topology, size, seed): the hosts that are
+    reused across classes and checkers."""
+    by = defaultdict(list)
+    for r in rows:
+        v = value(r)
+        if v is not None:
+            by[(r['topo'], r['n'], r['seed'])].append(float(v))
+    keys = list(by)
+    if not keys:
+        return (math.nan, math.nan, math.nan)
+    sums = np.array([sum(by[k]) for k in keys])
+    cnts = np.array([len(by[k]) for k in keys])
+    idx = RNG.integers(0, len(keys), (n, len(keys)))
+    m = sums[idx].sum(axis=1) / cnts[idx].sum(axis=1)
+    return (float(sums.sum() / cnts.sum()), float(np.quantile(m, 0.025)), float(np.quantile(m, 0.975)))
+
+
+def cp_upper(k, n, alpha=0.05):
+    """One-sided 95% Clopper-Pearson upper bound."""
+    return 1.0 if k == n else float(stats.beta.ppf(1 - alpha, k + 1, n - k))
 
 
 def e2():
@@ -194,8 +250,10 @@ def e2():
     macro('BenchNodesSmallMax', max(r['nodes'] for r in small))
     macro('BenchNodesMediumMax', max(r['nodes'] for r in medium))
     macro('BenchNodesMediumMin', min(r['nodes'] for r in medium))
+    macro('BenchKSix', sum(1 for r in small if r.get('K') == 6))
     defect = [r for r in rows if r['cls'] in CLS_ORDER]
-    # recall table (all teams, small+medium; k-family columns are small only)
+    hidden = [r for r in rows if r['cls'] in HIDDEN]
+    # recall table: primary key (and the pre-registered any-GT-key definition in macros)
     lines = []
     for cls in CLS_ORDER:
         rs = [r for r in rows if r['cls'] == cls]
@@ -207,150 +265,259 @@ def e2():
         dd = f"{min(dep)}--{max(dep)}" if dep and min(dep) != max(dep) else (str(dep[0]) if dep else '--')
         lines.append(f"{cls} & {dd} & " + ' & '.join(cells) + ' \\\\')
     write_table('recall', '\n'.join(lines))
-    # hidden rate: fraction of injected defects (small benchmark) whose primary key has depth >= 2
-    dep_all = [r['depth'] for r in small if r['cls'] in CLS_ORDER and r.get('depth')]
-    macro('HiddenRate', np.mean([x >= 2 for x in dep_all]), 'pct')
-    macro('HiddenRateSlice', np.mean([r['depth'] >= 2 for r in small if r['cls'] in HIDDEN and r.get('depth')]), 'pct')
-    for c in ['k1', 'SL', 'B2', 'B3', 'B4', 'B5', 'goal', 'region']:
-        hid = [r['checkers'][c]['primary_detected'] for r in rows if r['cls'] in HIDDEN and c in r['checkers']]
+    for c in ['singleton', 'SL', 'B2', 'B3', 'B4', 'B5', 'B6', 'goal', 'region', 'window2', 'band1', 'B1raw', 'SLraw']:
+        hid = [r['checkers'][c]['primary_detected'] for r in hidden if c in r['checkers']]
         macro(f'RecallHidden{c}', np.mean(hid), 'pct')
+        macro(f'RecallHiddenN{c}', int(sum(hid)))
         allc = [r['checkers'][c]['primary_detected'] for r in defect if c in r['checkers']]
         macro(f'RecallAll{c}', np.mean(allc), 'pct')
-    # statistics H2.1: per class, per-seed recall SL vs B1 (small + medium)
-    stat_lines, ps, keep = [], [], []
-    for cls in HIDDEN:
-        rs = [r for r in rows if r['cls'] == cls]
-        a = seed_rates(rs, 'SL', 'primary_detected')
-        b = seed_rates(rs, 'k1', 'primary_detected', lambda r: True)
-        b = {s: v for s, v in b.items()} or {s: 0.0 for s in a}
-        # medium rows have no k1 column: use singleton strategy as the agent-level checker
-        b2 = seed_rates(rs, 'singleton', 'primary_detected')
-        seeds = sorted(a)
-        x = [a[s] for s in seeds]
-        y = [b2[s] for s in seeds]
-        p = wilcoxon_greater(x, y)
-        ps.append(p)
-        b01, b10, pm = mcnemar([r['checkers']['SL']['primary_detected'] for r in rs], [r['checkers']['singleton']['primary_detected'] for r in rs])
-        keep.append((cls, np.mean(x), np.mean(y), p, a12(x, y), b10, b01, pm, len(rs)))
-    adj = holm(np.array(ps))
-    for (cls, mx, my, p, eff, b10, b01, pm, n), pa in zip(keep, adj):
-        stat_lines.append(f"{cls} & {n} & {pct(mx)} & {pct(my)} & {'$<$0.001' if pa < 0.001 else f'{pa:.3f}'} & {eff:.2f} & {b10}/{b01} & "
-                          f"{'$<$0.001' if pm < 0.001 else f'{pm:.3f}'} \\\\")
-    write_table('stats_recall', '\n'.join(stat_lines))
-    macro('HTwoOneMaxP', max(adj), 'p')
-    macro('HTwoOneMinAtwelve', min(k[4] for k in keep), '.2f')
+        anyk = [r['checkers'][c]['detected'] for r in hidden if c in r['checkers']]
+        macro(f'RecallPlanHidden{c}', np.mean(anyk), 'pct')
+        s6b = [r['checkers'][c]['detected'] for r in rows if r['cls'] == 'S6b' and c in r['checkers']]
+        macro(f'RecallPlanSSixb{c}', np.mean(s6b), 'pct')
+    macro('HiddenTeams', len(hidden))
+    macro('HiddenDesignShare', len([c for c in CLS_ORDER if c in HIDDEN]) / len(CLS_ORDER), 'pct')
     # localization (small benchmark, hidden classes, detected)
-    loc_lines = []
-    exact_seed = {}
-    for c, label in [('k5', 'exhaustive $k\\le5$'), ('SL', 'SL (combined)'), ('goal', 'goal-directed'), ('region', 'region'),
-                     ('window2', 'window-2'), ('B2', 'B2 whole team'), ('B3', 'B3 random')]:
+    loc_rows = [('SL', 'SL (combined)'), ('goal', 'goal-directed'), ('region', 'region'), ('window2', 'window-2'),
+                ('B3', 'B3 random slices'), ('B2', 'B2 witness lineage hull'), ('B2dev', 'B2 witness deviation set'),
+                ('B2shrink', 'B2 + slice shrinking')]
+    loc_lines, exact_seed = [], {}
+    for c, label in loc_rows:
         rs = [r for r in small if r['cls'] in HIDDEN and c in r['checkers'] and r['checkers'][c].get('primary_detected')]
-        ex = [bool(r['checkers'][c].get('exact')) for r in rs]
-        pr = [bool(r['checkers'][c].get('precise')) for r in rs]
-        hit = [bool(r['checkers'][c].get('hit')) for r in rs]
-        sr = [r['checkers'][c]['size_ratio'] for r in rs]
-        ts = [r['checkers'][c]['top_size'] for r in rs]
-        m, lo, hi = boot_ci(ex)
-        loc_lines.append(f"{label} & {len(rs)} & {pct(m)} [{pct(lo)}, {pct(hi)}] & {pct(np.mean(pr))} & {pct(np.mean(hit))} & "
-                         f"{np.mean(ts):.1f} & {np.mean(sr):.2f} \\\\")
+        if not rs:
+            continue
+        m, lo, hi = cluster_ci(rs, lambda r: bool(r['checkers'][c].get('exact')))
+        mn = np.mean([bool(r['checkers'][c].get('minimum')) for r in rs])
+        pr = np.mean([bool(r['checkers'][c].get('precise')) for r in rs])
+        hit = np.mean([bool(r['checkers'][c].get('hit')) for r in rs])
+        ts = np.mean([r['checkers'][c]['top_size'] for r in rs])
+        sr = np.mean([r['checkers'][c]['size_ratio'] for r in rs])
+        cost = np.mean([r['checkers'][c]['slices'] for r in rs])
+        loc_lines.append(f"{label} & {len(rs)} & {pct(m)} [{pct(lo)}, {pct(hi)}] & {pct(mn)} & {pct(pr)} & {pct(hit)} & "
+                         f"{ts:.1f} & {sr:.2f} & {cost:.0f} \\\\")
         exact_seed[c] = seed_rates([r for r in small if r['cls'] in HIDDEN], c, 'exact',
-                                   lambda r, c=c: r['checkers'].get(c, {}).get('primary_detected'))
+                                   lambda r, c=c: r['checkers'].get(c, {}).get('primary_detected'),
+                                   unit=lambda r: (r['topo'], r['seed']))
         macro(f'LocExact{c}', m, 'pct')
-        macro(f'LocPrecise{c}', np.mean(pr), 'pct')
-        macro(f'LocRatio{c}', np.mean(sr), '.2f')
-        macro(f'LocSize{c}', np.mean(ts), '.1f')
+        macro(f'LocExactLo{c}', lo, 'pct')
+        macro(f'LocExactHi{c}', hi, 'pct')
+        macro(f'LocMinimum{c}', mn, 'pct')
+        macro(f'LocPrecise{c}', pr, 'pct')
+        macro(f'LocRatio{c}', sr, '.2f')
+        macro(f'LocSize{c}', ts, '.1f')
+        macro(f'LocCost{c}', cost, '.0f')
     write_table('localization', '\n'.join(loc_lines))
-    for other in ['B2', 'B3']:
-        seeds = sorted(set(exact_seed['SL']) & set(exact_seed[other]))
-        x = [exact_seed['SL'][s] for s in seeds]
-        y = [exact_seed[other][s] for s in seeds]
-        macro(f'HTwoTwoP{other}', wilcoxon_greater(x, y), 'p')
-        macro(f'HTwoTwoA{other}', a12(x, y), '.2f')
+    # H2.2: SL vs B3, B2dev, B2 (exact localization; unit = topology x seed; Holm over the three)
+    comps = [o for o in ['B3', 'B2dev', 'B2'] if o in exact_seed]
+    ps, effs = [], []
+    for other in comps:
+        units = sorted(set(exact_seed['SL']) & set(exact_seed[other]))
+        x = [exact_seed['SL'][u] for u in units]
+        y = [exact_seed[other][u] for u in units]
+        ps.append(wilcoxon_greater(x, y))
+        effs.append(a12(x, y))
+        macro(f'HTwoTwoN{other}', len(units))
+    for other, pa, e in zip(comps, holm(np.array(ps)), effs):
+        macro(f'HTwoTwoP{other}', pa, 'p')
+        macro(f'HTwoTwoA{other}', e, '.2f')
+    # shrinking vs SL (two-sided information: is shrinking better?)
+    if 'B2shrink' in exact_seed:
+        units = sorted(set(exact_seed['SL']) & set(exact_seed['B2shrink']))
+        x = [exact_seed['B2shrink'][u] for u in units]
+        y = [exact_seed['SL'][u] for u in units]
+        macro('ShrinkVsSLP', wilcoxon_greater(x, y), 'p')
+        macro('ShrinkVsSLA', a12(x, y), '.2f')
+    # per-class localization (exact %, small benchmark)
+    pc = []
+    for cls in HIDDEN:
+        cells = []
+        for c in ['SL', 'B3', 'B2dev', 'B2shrink']:
+            rs = [r for r in small if r['cls'] == cls and r['checkers'].get(c, {}).get('primary_detected')]
+            cells.append(pct(np.mean([bool(r['checkers'][c].get('exact')) for r in rs])) if rs else '--')
+            if c == 'SL' and rs:
+                macro(f'LocExactSL{cls}', np.mean([bool(r['checkers'][c].get('exact')) for r in rs]), 'pct')
+        pc.append(f"{cls} & " + ' & '.join(cells) + ' \\\\')
+    write_table('loc_class', '\n'.join(pc))
     # medium localization
-    for c in ['SL', 'B2', 'B3', 'goal']:
-        rs = [r for r in medium if r['cls'] in HIDDEN and c in r['checkers'] and r['checkers'][c].get('primary_detected')]
+    for c in ['SL', 'B2', 'B2dev', 'B2shrink', 'B3', 'goal']:
+        rs = [r for r in medium if r['cls'] in HIDDEN and r['checkers'].get(c, {}).get('primary_detected')]
         if rs:
             macro(f'MedPrecise{c}', np.mean([bool(r['checkers'][c].get('precise')) for r in rs]), 'pct')
             macro(f'MedRatio{c}', np.mean([r['checkers'][c]['size_ratio'] for r in rs]), '.3f')
             macro(f'MedSize{c}', np.mean([r['checkers'][c]['top_size'] for r in rs]), '.1f')
-    # false alarms on clean + decoys (all sizes)
+    sc = [r['checkers']['B2shrink']['checks'] for r in rows if r['checkers'].get('B2shrink', {}).get('primary_detected')
+          and r['cls'] in HIDDEN]
+    if sc:
+        macro('ShrinkChecks', np.mean(sc), '.0f')
+    # false alarms on clean + decoys: counts and Clopper-Pearson upper bounds
     fa_lines = []
-    for c, label in CHK:
-        for grp, cls in [('clean', ['clean']), ('decoy', ['D2', 'D4', 'D5', 'D6'])]:
+    for c, label in CHK + [('B1raw', 'B1 agent (raw)'), ('SLraw', 'SL (raw)')]:
+        cells = []
+        for grp, cls in [('clean', ['clean']), ('decoy', DECOY)]:
             v = [bool(r['checkers'][c]['alarm']) for r in rows if r['cls'] in cls and c in r['checkers']]
             if v:
-                m, lo, hi = boot_ci(v)
-                macro(f'Alarm{grp}{c}', m, 'pct')
-                macro(f'AlarmHi{grp}{c}', hi, 'pct')
-        v1 = [bool(r['checkers'][c]['alarm']) for r in rows if r['cls'] == 'clean' and c in r['checkers']]
-        v2 = [bool(r['checkers'][c]['alarm']) for r in rows if r['cls'] in ('D2', 'D4', 'D5', 'D6') and c in r['checkers']]
-        if v1:
-            fa_lines.append(f"{label} & {pct(np.mean(v1))} & {pct(np.mean(v2))} \\\\")
+                k = int(sum(v))
+                macro(f'Alarm{grp}{c}', np.mean(v), 'pct')
+                macro(f'AlarmHi{grp}{c}', cp_upper(k, len(v)), 'pct')
+                cells.append(f"{k}/{len(v)} ({pct(np.mean(v))})")
+            else:
+                cells.append('--')
+        fa_lines.append(f"{label} & " + ' & '.join(cells) + ' \\\\')
     write_table('alarms', '\n'.join(fa_lines))
     macro('CleanTeams', sum(r['cls'] == 'clean' for r in rows))
-    macro('DecoyTeams', sum(r['cls'] in ('D2', 'D4', 'D5', 'D6') for r in rows))
-    fk = sum(r['checkers']['SL']['false_keys'] for r in rows)
-    tk = sum(r['checkers']['SL']['reported'] for r in rows)
-    macro('SLFalseKeys', fk)
-    macro('SLReportedKeys', tk)
-    macro('SLPrecision', 1 - fk / max(1, tk), 'pct')
-    # diagnosis accuracy (SL, hidden + S5 classes)
-    acc = [r['checkers']['SL'].get('cls') == r['cls'] for r in rows if r['cls'] in HIDDEN + ['S5'] and r['checkers']['SL'].get('primary_detected')]
-    macro('DiagnosisAccuracy', np.mean(acc), 'pct')
+    macro('DecoyTeams', sum(r['cls'] in DECOY for r in rows))
+    for c in ['SL', 'SLraw', 'B6', 'B5', 'B1raw', 'singleton']:
+        fk = sum(r['checkers'][c]['false_keys'] for r in rows if c in r['checkers'])
+        tk = sum(r['checkers'][c]['reported'] for r in rows if c in r['checkers'])
+        macro(f'FalseKeys{c}', fk)
+        macro(f'ReportedKeys{c}', tk)
+        macro(f'Precision{c}', 1 - fk / max(1, tk), 'pct')
+    lifts = [r['checkers']['SL']['lifts'] for r in rows]
+    macro('SLLifts', np.mean(lifts), '.1f')
+    macro('SLUnconfirmed', sum(r['checkers']['SL']['unconfirmed'] for r in rows))
     # per-topology recall on hidden classes
     topo_lines = []
     for topo in ['chain', 'tree', 'forkjoin', 'layered', 'sp', 'random', 'mixed']:
-        rs = [r for r in rows if r['topo'] == topo and r['cls'] in HIDDEN]
-        cells = [pct(np.mean([r['checkers'][c]['primary_detected'] for r in rs if c in r['checkers']])) for c in ['singleton', 'SL', 'region', 'goal', 'B3', 'B5']]
+        rs = [r for r in hidden if r['topo'] == topo]
+        cells = [pct(np.mean([r['checkers'][c]['primary_detected'] for r in rs if c in r['checkers']]))
+                 for c in ['singleton', 'SL', 'region', 'goal', 'B3', 'B5', 'B6']]
         sr = [r['checkers']['SL']['size_ratio'] for r in rs if r['checkers']['SL'].get('primary_detected')]
         topo_lines.append(f"{topo} & {len(rs)} & " + ' & '.join(cells) + f" & {np.mean(sr):.2f} \\\\")
     write_table('topology', '\n'.join(topo_lines))
-    # E4: recall by k (small), per class with per-seed bootstrap CI
-    p = plt()
-    fig, ax = p.subplots(figsize=(3.45, 2.3))
-    ks = list(range(1, d['K'] + 1))
+    # E4 (within the benchmark): recall by k
+    ks = list(range(1, 6))
     sweep_lines = []
-    for i, cls in enumerate(HIDDEN):
-        means, lows, highs = [], [], []
-        for k in ks:
-            sr = seed_rates([r for r in small if r['cls'] == cls], f'k{k}', 'primary_detected')
-            m, lo, hi = boot_ci(list(sr.values()))
-            means.append(m); lows.append(lo); highs.append(hi)
-        ax.fill_between(ks, lows, highs, color=COLORS[i], alpha=0.12, linewidth=0)
-        ax.plot(ks, means, STYLES[i], color=COLORS[i], marker=MARKERS[i], markersize=4, label=cls)
+    for cls in HIDDEN:
+        means = [np.mean([r['checkers'][f'k{k}']['primary_detected'] for r in small if r['cls'] == cls]) for k in ks]
         sweep_lines.append(f"{cls} & " + ' & '.join(pct(m) for m in means) + ' \\\\')
-    allk = []
-    for k in ks:
-        sr = seed_rates([r for r in small if r['cls'] in CLS_ORDER], f'k{k}', 'primary_detected')
-        allk.append(boot_ci(list(sr.values())))
-    ax.plot(ks, [a[0] for a in allk], '-', color='#3d3d3a', linewidth=2.2, label='all classes')
-    ax.set_xlabel('maximum slice size $k$ (exhaustive convex slices)')
-    ax.set_ylabel('recall (primary symptom)')
-    ax.set_xticks(ks)
-    ax.set_ylim(-0.03, 1.05)
-    ax.legend(loc='lower right', ncol=2, fontsize=7)
-    fig.tight_layout()
-    fig.savefig(OUT / 'figures/k_sweep.pdf')
-    p.close(fig)
-    sweep_lines.append('all classes & ' + ' & '.join(pct(a[0]) for a in allk) + ' \\\\')
+    allk = [np.mean([r['checkers'][f'k{k}']['primary_detected'] for r in small if r['cls'] in CLS_ORDER]) for k in ks]
+    sweep_lines.append('all classes & ' + ' & '.join(pct(a) for a in allk) + ' \\\\')
     write_table('k_sweep', '\n'.join(sweep_lines))
     for k, a in zip(ks, allk):
-        macro(f'RecallK{k}', a[0], 'pct')
-    gains = [allk[i + 1][0] - allk[i][0] for i in range(len(ks) - 1)]
-    sat = next((ks[i] for i, g in enumerate(gains) if g < 0.01), None)
-    macro('SaturationK', sat if sat is not None else 'none')
-    for k in ks:
-        alarms = [bool(r['checkers'][f'k{k}']['alarm']) for r in small if r['cls'] in ('clean', 'D2', 'D4', 'D5', 'D6')]
+        macro(f'RecallK{k}', a, 'pct')
+        alarms = [bool(r['checkers'][f'k{k}']['alarm']) for r in small if r['cls'] in ['clean'] + DECOY]
         macro(f'AlarmK{k}', np.mean(alarms), 'pct')
         macro(f'SlicesK{k}', np.mean([r['checkers'][f'k{k}']['slices'] for r in small]), '.0f')
     # depth histogram per class
     dep_lines = []
     for cls in CLS_ORDER:
-        dep = [r['depth'] for r in small if r['cls'] == cls and r.get('depth')]
-        cnt = [sum(1 for x in dep if x == k) for k in range(1, 6)]
+        dep = [r['depth'] for r in small if r['cls'] == cls]
+        cnt = [sum(1 for x in dep if x == k) for k in range(1, 7)] + [sum(1 for x in dep if x is None)]
         dep_lines.append(f"{cls} & " + ' & '.join(str(c) for c in cnt) + ' \\\\')
     write_table('depth', '\n'.join(dep_lines))
-    SUMMARY['e2'] = {'hidden_rate': MACROS[mname('HiddenRate')]}
+
+
+# ------------------------------------------------------------------ E4b: hand-off distance sweep
+def e4b():
+    d = load('e4_depth_sweep')
+    if not d:
+        return
+    rows = d['rows']
+    K = d['kmax']
+    ks = list(range(1, K + 1))
+    chainy = [r for r in rows if r['cls'] in ('S4', 'S6a', 'S6b')]
+    macro('DepthSweepTeams', len(rows))
+    macro('DepthSweepKmax', K)
+    macro('DepthIsEllPlusTwo', np.mean([r['depth'] == r['ell'] + 2 for r in chainy]), 'pct')
+    macro('DepthTwoForJoins', np.mean([r['depth'] == 2 for r in rows if r['cls'] in ('S2', 'S3')]), 'pct')
+    series = []
+    for i, ell in enumerate(range(6)):
+        rs = [r for r in chainy if r['ell'] == ell]
+        ys = [np.mean([r['detected_by_k'][str(k)] for r in rs]) for k in ks]
+        series.append(pgf_series(i, ks, ys, legend=f'$\\ell={ell}$'))
+    rs = [r for r in rows if r['cls'] in ('S2', 'S3')]
+    series.append(pgf_series(6, ks, [np.mean([r['detected_by_k'][str(k)] for r in rs]) for k in ks],
+                             legend='S2, S3 (any $\\ell$)', color='black', width='very thick'))
+    FIGS['figDepthSweep'] = ('\\begin{tikzpicture}\\begin{axis}[width=\\columnwidth,height=5.2cm,xlabel={maximum slice size $k$},'
+                             f'ylabel={{recall (confirmed)}},xtick={{{",".join(map(str, ks))}}},ymin=-0.03,ymax=1.05,grid=major,'
+                             'grid style={gray!20},legend columns=4,legend style={at={(0.5,-0.32)},anchor=north,font=\\scriptsize,draw=none,fill=none},'
+                             'tick label style={font=\\footnotesize},label style={font=\\footnotesize}]\n'
+                             + '\n'.join(series) + '\n\\end{axis}\\end{tikzpicture}')
+    lines = []
+    for cls in ['S2', 'S3', 'S4', 'S6a', 'S6b']:
+        cells = []
+        for ell in range(6):
+            dep = [r['depth'] for r in rows if r['cls'] == cls and r['ell'] == ell]
+            cells.append(f"{np.mean([x for x in dep if x]):.1f}" if any(dep) else '--')
+        lines.append(f"{cls} & " + ' & '.join(cells) + ' \\\\')
+    write_table('depth_sweep', '\n'.join(lines))
+    slices = {k: np.mean([r['slices_by_k'][str(k)] for r in rows]) for k in ks}
+    macro('DepthSweepSlicesKTwo', slices[2], '.0f')
+    macro('DepthSweepSlicesKMax', slices[K], '.0f')
+
+
+# ------------------------------------------------------------------ E8: mutation benchmark
+def e8():
+    d = load('e8_mutation')
+    if not d:
+        return
+    rows = [r for r in d['rows'] if not r.get('skipped')]
+    macro('MutTeams', len(d['rows']))
+    macro('MutSkipped', len(d['rows']) - len(rows))
+    macro('MutMutations', sum(len(r['ops']) for r in rows))
+    unsafe = [r for r in rows if r.get('unsafe')]
+    unclean = [r for r in rows if r.get('symptoms')]
+    macro('MutUnclean', len(unclean))
+    macro('MutUnsafe', len(unsafe))
+    orc = [r['oracle_agrees'] for r in rows if 'oracle_agrees' in r]
+    macro('MutOracleTeams', len(orc))
+    macro('MutOracleDisagree', sum(1 for x in orc if not x))
+    keys = [(r, k, dd) for r in unclean for k, dd in r['depth'].items()]
+    macro('MutKeys', len(keys))
+    hist = defaultdict(int)
+    for _, _, dd in keys:
+        hist[dd if dd is not None else 'deep'] += 1
+    for k in range(1, 7):
+        macro(f'MutDepth{k}', hist.get(k, 0))
+    macro('MutDepthDeep', hist.get('deep', 0))
+    hid = [(r, k) for r, k, dd in keys if dd is None or dd >= 2]
+    macro('MutHiddenKeys', len(hid))
+    macro('MutHiddenShare', len(hid) / max(1, len(keys)), 'pct')
+    only_hidden = [r for r in unclean if all((dd is None or dd >= 2) for dd in r['depth'].values())]
+    macro('MutTeamsHiddenOnly', len(only_hidden))
+    macro('MutTeamsWithHidden', sum(1 for r in unclean if any(dd is None or dd >= 2 for dd in r['depth'].values())))
+    lines = []
+    names = [('B1', 'B1 agent (conf.)'), ('B1raw', 'B1 agent (raw)'), ('SL', 'SL (conf.)'), ('SLraw', 'SL (raw)'),
+             ('B6', 'B6 must'), ('B5', 'B5 smells'), ('B4', 'B4 lint')]
+    for c, label in names:
+        allk = [r['checkers'][c]['per_key'][k]['found'] for r, k, _ in keys]
+        hk = [r['checkers'][c]['per_key'][k]['found'] for r, k in hid]
+        fk = sum(r['checkers'][c]['false_keys'] for r in unclean)
+        rep = sum(r['checkers'][c]['reported'] for r in unclean)
+        ex = [r['checkers'][c]['per_key'][k].get('exact') for r, k in hid if r['checkers'][c]['per_key'][k]['found']]
+        ex = [e for e in ex if e is not None]
+        lines.append(f"{label} & {pct(np.mean(allk))} & {pct(np.mean(hk)) if hk else '--'} & {fk}/{rep} & "
+                     f"{pct(np.mean(ex)) if ex else '--'} \\\\")
+        macro(f'MutRecall{c}', np.mean(allk), 'pct')
+        if hk:
+            macro(f'MutRecallHidden{c}', np.mean(hk), 'pct')
+        macro(f'MutFalse{c}', fk)
+        macro(f'MutReported{c}', rep)
+        macro(f'MutFalseRate{c}', fk / max(1, rep), 'pct')
+        if ex:
+            macro(f'MutExact{c}', np.mean(ex), 'pct')
+    shr = [v for r in unclean for v in r.get('shrink', {}).values()]
+    if shr:
+        lines.append(f"B2 + slice shrinking & 100.0 & 100.0 & -- & {pct(np.mean([s['shrink_exact'] for s in shr]))} \\\\")
+        lines.append(f"B2 deviation set & 100.0 & 100.0 & -- & {pct(np.mean([s['dev_exact'] for s in shr]))} \\\\")
+        macro('MutShrinkExact', np.mean([s['shrink_exact'] for s in shr]), 'pct')
+        macro('MutShrinkMinimum', np.mean([s['shrink_minimum'] for s in shr]), 'pct')
+        macro('MutShrinkChecks', np.mean([s['shrink_checks'] for s in shr]), '.0f')
+        macro('MutDevExact', np.mean([s['dev_exact'] for s in shr]), 'pct')
+        macro('MutDevRatio', np.mean([s['dev_precise_size_ratio'] for s in shr]), '.2f')
+    write_table('mutation', '\n'.join(lines))
+    ops = defaultdict(int)
+    for r in rows:
+        for o in r['ops']:
+            ops[o] += 1
+    write_table('mutation_ops', ', '.join(f"{o.replace('_', ' ')} ({n})" for o, n in sorted(ops.items())))
+    # which mutation operators produce hidden keys
+    opl = []
+    for o in sorted(ops):
+        rs = [r for r in unclean if o in r['ops']]
+        kk = [dd for r in rs for dd in r['depth'].values()]
+        opl.append(f"{o.replace('_', ' ')} & {len(rs)} & {len(kk)} & {pct(np.mean([x is None or x >= 2 for x in kk])) if kk else '--'} \\\\")
+    write_table('mutation_by_op', '\n'.join(opl))
 
 
 # ------------------------------------------------------------------ E3
@@ -366,15 +533,19 @@ def e3():
     doc = [r for r in rows if r['variant'] == 'documented']
     macro('ArchUnsafeDocumented', sum(not r['safe'] for r in doc))
     macro('ArchHiddenDocumented', sum(any(not s['agent_level'] for s in r['symptoms']) for r in doc))
+    macro('ArchHiddenSmell', sum(any(not s['agent_level'] and s.get('smell') for s in r['symptoms']) for r in doc))
+    macro('ArchHiddenMust', sum(any(not s['agent_level'] and s.get('must') for s in r['symptoms']) for r in doc))
+    macro('ArchSafeFZero', sum(1 for r in rows if r['variant'] == 'f0' and r['safe']))
     for r in doc:
         if r['symptoms']:
             s = min(r['symptoms'], key=lambda s: (s['agent_level'], s['depth'] or 99))
             sl_ = ', '.join(s['minimal'][0]) if s['minimal'] else '--'
             key = f"{s['key'][0]}: \\textsf{{{s['key'][2].replace('_', '\\_')}}}"
             lines.append(f"\\cite{{{r['source']}}} {r['design']} & {r['nodes']} & {key} & {s['class']} & {s['depth']} & "
-                         f"{{\\footnotesize {sl_}}} & {'yes' if s['agent_level'] else 'no'} \\\\")
+                         f"{{\\footnotesize {sl_}}} & {'yes' if s['agent_level'] else 'no'} & {'yes' if s.get('smell') else 'no'} & "
+                         f"{'yes' if s.get('must') else 'no'} \\\\")
         else:
-            lines.append(f"\\cite{{{r['source']}}} {r['design']} & {r['nodes']} & none & -- & -- & -- & -- \\\\")
+            lines.append(f"\\cite{{{r['source']}}} {r['design']} & {r['nodes']} & none & -- & -- & -- & -- & -- & -- \\\\")
     write_table('architectures', '\n'.join(lines))
     sens = []
     for dsg in designs:
@@ -400,85 +571,79 @@ def e5():
     if not d:
         return
     rows = d['rows']
-    strats = ['singleton', 'window2', 'band1', 'region', 'goal', 'SL']
-    labels = {'singleton': 'singleton (B1)', 'window2': 'window-2', 'band1': 'band-1', 'region': 'region', 'goal': 'goal-directed', 'SL': 'SL (combined)'}
+    B = d['budget']
+    strats = ['singleton', 'window2', 'band1', 'region', 'goal', 'SL', 'must', 'whole']
+    labels = {'singleton': 'singleton (B1)', 'window2': 'window-2', 'band1': 'band-1', 'region': 'region',
+              'goal': 'goal-directed', 'SL': 'SL (combined)', 'must': 'B6 must', 'whole': 'B2 whole team'}
     sizes = sorted({r['n'] for r in rows})
     macro('ScaleMaxNodes', max(r['nodes'] for r in rows))
     macro('ScaleTeams', len(rows))
-    macro('ScaleBudget', d['budget'], '.0f')
-    p = plt()
-    fig, axes = p.subplots(1, 2, figsize=(7.0, 2.4), sharey=True)
-    slope_lines = []
+    macro('ScaleBudget', B, '.0f')
+
+    def res(r, s):
+        return r[s] if s in ('whole', 'must') else r['strategies'][s]
+
+    def secs(x):
+        return B if x['timeout'] else x['seconds']             # censored at the budget
+    pgf_panels, slope_lines = [], []
     for ai, topo_set in enumerate([['layered', 'sp', 'random'], ['mixed']]):
-        ax = axes[ai]
-        for i, s in enumerate(strats + ['whole']):
+        pgf_lines = []
+        for i, s in enumerate(strats):
             xs, med, lo, hi = [], [], [], []
             for n in sizes:
                 rs = [r for r in rows if r['n'] == n and r['topo'] in topo_set]
-                if s == 'whole':
-                    v = [r['whole']['seconds'] for r in rs if not r['whole']['timeout']]
-                    if len(v) < len(rs) / 2:
-                        continue
-                else:
-                    v = [r['strategies'][s]['seconds'] for r in rs if not r['strategies'][s]['timeout']]
-                    if len(v) < len(rs) / 2:
-                        continue
+                v = [secs(res(r, s)) for r in rs]
                 xs.append(np.mean([r['nodes'] for r in rs]))
-                med.append(np.median(v)); lo.append(np.quantile(v, 0.25)); hi.append(np.quantile(v, 0.75))
-            col = COLORS[i % 7] if s != 'whole' else '#3d3d3a'
-            if xs:
-                ax.fill_between(xs, lo, hi, color=col, alpha=0.12, linewidth=0)
-                ax.plot(xs, med, STYLES[i % 7], color=col, marker=MARKERS[i % 7], markersize=3.5,
-                        label=labels.get(s, 'B2 whole team (exact)'))
-        ax.set_xscale('log'); ax.set_yscale('log')
-        ax.set_xlabel('team size (nodes)')
-        ax.set_title('switch-free topologies' if ai == 0 else 'mixed (switches + any-joins)', fontsize=8)
-    axes[0].set_ylabel('wall time per team (s), median, IQR band')
-    axes[1].legend(fontsize=6.5, loc='upper left')
-    fig.tight_layout()
-    fig.savefig(OUT / 'figures/scalability.pdf')
-    p.close(fig)
-    for s in strats + ['whole']:
+                med.append(max(np.median(v), 1e-5)); lo.append(max(np.quantile(v, 0.25), 1e-5)); hi.append(max(np.quantile(v, 0.75), 1e-5))
+            pgf_lines.append(pgf_series(i, xs, med, lo, hi, labels[s] if ai == 1 else None,
+                                        color='black' if s == 'whole' else None))
+        title = 'switch-free topologies' if ai == 0 else 'mixed (switches and any-joins)'
+        opts = (f'width=0.37\\textwidth,height=5.2cm,xmode=log,ymode=log,xlabel={{team size (nodes)}},title={{{title}}},'
+                'grid=major,grid style={gray!20},tick label style={font=\\footnotesize},label style={font=\\footnotesize},'
+                'title style={font=\\footnotesize}')
+        opts += ',ylabel={wall time per team (s)}' if ai == 0 else ',legend pos=outer north east,legend style={font=\\scriptsize,draw=none,fill=none}'
+        pgf_panels.append(f'\\begin{{axis}}[{opts}' + (',name=left]' if ai == 0 else ',at={(left.east)},anchor=west,xshift=1.2cm]')
+                          + '\n' + '\n'.join(pgf_lines) + '\n\\end{axis}')
+    FIGS['figScalability'] = '\\begin{tikzpicture}\n' + '\n'.join(pgf_panels) + '\n\\end{tikzpicture}'
+    for s in strats:
         for grp, topo_set in [('free', ['layered', 'sp', 'random']), ('mixed', ['mixed'])]:
-            pts = []
-            for r in rows:
-                if r['topo'] not in topo_set or r['n'] < 50:
-                    continue
-                x = r['whole'] if s == 'whole' else r['strategies'][s]
-                if not x['timeout'] and x['seconds'] > 0:
-                    pts.append((math.log(r['nodes']), math.log(x['seconds'])))
-            if len(pts) < 5:
-                slope = (math.nan, math.nan, math.nan)
-            else:
-                P = np.array(pts)
-                sl = np.polyfit(P[:, 0], P[:, 1], 1)[0]
-                bs = []
-                for _ in range(2000):
-                    i = RNG.integers(0, len(P), len(P))
-                    bs.append(np.polyfit(P[i, 0], P[i, 1], 1)[0])
-                slope = (sl, np.quantile(bs, 0.025), np.quantile(bs, 0.975))
             tos = [r for r in rows if r['topo'] in topo_set]
-            tout = sum((r['whole'] if s == 'whole' else r['strategies'][s])['timeout'] for r in tos)
-            big = [r for r in tos if r['n'] == max(sizes)]
-            tbig = [(r['whole'] if s == 'whole' else r['strategies'][s]) for r in big]
-            med_big = np.median([x['seconds'] for x in tbig if not x['timeout']]) if any(not x['timeout'] for x in tbig) else math.nan
-            det = [x.get('detected') for x in ((r['whole'] if s == 'whole' else r['strategies'][s]) for r in tos)]
-            det = [bool(v) for v in det if v is not None]
-            slope_lines.append(f"{labels.get(s, 'B2 whole team (exact)')} & {grp} & "
-                               f"{'--' if math.isnan(slope[0]) else f'{slope[0]:.2f} [{slope[1]:.2f}, {slope[2]:.2f}]'} & "
-                               f"{'--' if math.isnan(med_big) else f'{med_big:.2f}'} & {tout}/{len(tos)} & {pct(np.mean(det)) if det else '--'} \\\\")
-            if not math.isnan(slope[0]):
-                macro(f'Slope{s}{grp}', slope[0], '.2f')
-                macro(f'SlopeHi{s}{grp}', slope[2], '.2f')
+            pts_c = [(math.log(r['nodes']), math.log(max(secs(res(r, s)), 1e-6))) for r in tos if r['n'] >= 50]
+            pts_s = [(math.log(r['nodes']), math.log(max(res(r, s)['seconds'], 1e-6))) for r in tos if r['n'] >= 50 and not res(r, s)['timeout']]
+
+            def fit(P):
+                if len(P) < 5:
+                    return (math.nan, math.nan, math.nan)
+                P = np.array(P)
+                sl_ = np.polyfit(P[:, 0], P[:, 1], 1)[0]
+                bs = [np.polyfit(P[i, 0], P[i, 1], 1)[0] for i in (RNG.integers(0, len(P), len(P)) for _ in range(2000))]
+                return (sl_, np.quantile(bs, 0.025), np.quantile(bs, 0.975))
+            sc, ss = fit(pts_c), fit(pts_s)
+            tout = sum(res(r, s)['timeout'] for r in tos)
+            big = [secs(res(r, s)) for r in tos if r['n'] == max(sizes)]
+            det = sum(1 for r in tos if res(r, s).get('detected') and not res(r, s)['timeout'])
+            fmt = lambda t: '--' if math.isnan(t[0]) else f'{t[0]:.2f} [{t[1]:.2f}, {t[2]:.2f}]'
+            slope_lines.append(f"{labels[s]} & {grp} & {fmt(ss)} & {fmt(sc)} & {np.median(big):.2f} & {tout}/{len(tos)} & {det}/{len(tos)} \\\\")
+            if not math.isnan(sc[0]):
+                macro(f'Slope{s}{grp}', sc[0], '.2f')
+                macro(f'SlopeHi{s}{grp}', sc[2], '.2f')
+            if not math.isnan(ss[0]):
+                macro(f'SlopeSurv{s}{grp}', ss[0], '.2f')
             macro(f'Timeouts{s}{grp}', tout)
-            macro(f'Detect{s}{grp}', np.mean(det) if det else 0.0, 'pct')
-            if not math.isnan(med_big):
-                macro(f'TimeBig{s}{grp}', med_big, '.2f')
+            macro(f'Detect{s}{grp}', det)
+            macro(f'DetectRate{s}{grp}', det / len(tos), 'pct')
+            macro(f'TimeBig{s}{grp}', float(np.median(big)), '.2f')
+            macro(f'Teams{grp}', len(tos))
     write_table('scalability', '\n'.join(slope_lines))
     ex = [r['exhaustive3'] for r in rows]
     macro('ExhSkipped', sum(1 for x in ex if x.get('skipped')))
     macro('ExhTimeout', sum(1 for x in ex if x.get('timeout')))
     macro('ExhRun', sum(1 for x in ex if not x.get('skipped')))
+    mem = [r['strategies']['SL'].get('peak_mb') for r in rows if r['strategies']['SL'].get('peak_mb') is not None]
+    if mem:
+        macro('PeakMemSL', max(mem), '.0f')
+    lim = sum(r['strategies']['SL']['limited'] for r in rows)
+    macro('LimitedSL', lim)
     cc = d['convex_counts']
     lines = []
     for n in sorted({c['n'] for c in cc}):
@@ -494,6 +659,8 @@ def e6():
         return
     ch = [(r['topo'], c) for r in d['rows'] for c in r['changes']]
     macro('EvoChanges', len(ch))
+    macro('EvoTeams', len(d['rows']))
+    macro('EvoSkipped', sum(1 for r in d['rows'] if r.get('skipped')))
     macro('EvoAgree', np.mean([c['agree'] for _, c in ch]), 'pct')
     frac = [c['redone'] / c['total'] for _, c in ch]
     macro('EvoRedone', np.mean(frac), 'pct')
@@ -504,6 +671,13 @@ def e6():
     macro('EvoRedoneChain', np.mean([c['redone'] / c['total'] for t, c in ch if t == 'chain']), 'pct')
     speed = [c['full_seconds'] / max(c['inc_seconds'], 1e-6) for _, c in ch]
     macro('EvoSpeedup', float(np.median(speed)), '.1f')
+    macro('EvoSlower', np.mean([x < 1 for x in speed]), 'pct')
+    for n in sorted({r['n'] for r in d['rows']}):
+        sp = [c['full_seconds'] / max(c['inc_seconds'], 1e-6) for r in d['rows'] if r['n'] == n for c in r['changes']]
+        rd = [c['redone'] / c['total'] for r in d['rows'] if r['n'] == n for c in r['changes']]
+        macro(f'EvoSpeedupN{n}', float(np.median(sp)), '.1f')
+        macro(f'EvoRedoneN{n}', np.mean(rd), 'pct')
+        macro(f'EvoSlowerN{n}', np.mean([x < 1 for x in sp]), 'pct')
     kinds = ['oracle', 'kind', 'route', 'join', 'req', 'decl', 'gua', 'edge']
     lines = []
     topos = ['chain', 'tree', 'forkjoin', 'layered', 'sp', 'random', 'mixed']
@@ -520,8 +694,12 @@ def e6():
     p = plt()
     fig, ax = p.subplots(figsize=(3.45, 2.2))
     present = [k for k in kinds if any(c['change'] == k for _, c in ch)]
+    pgf_lines = []
     for i, grp in enumerate([['chain'], ['tree', 'forkjoin', 'layered', 'sp', 'random', 'mixed']]):
         ys = [np.mean([c['redone'] / c['total'] for t, c in ch if c['change'] == k and t in grp] or [np.nan]) for k in present]
+        cis = [boot_ci([c['redone'] / c['total'] for t, c in ch if c['change'] == k and t in grp]) for k in present]
+        pgf_lines.append(pgf_series(i, list(range(len(present))), ys, [c[1] for c in cis], [c[2] for c in cis],
+                                    'chain' if i == 0 else 'other topologies'))
         ax.plot(range(len(present)), ys, STYLES[i], color=COLORS[i], marker=MARKERS[i], markersize=4,
                 label='chain' if i == 0 else 'other topologies')
     ax.set_xticks(range(len(present)))
@@ -533,6 +711,13 @@ def e6():
     fig.tight_layout()
     fig.savefig(OUT / 'figures/evolution.pdf')
     p.close(fig)
+    FIGS['figEvolution'] = ('\\begin{tikzpicture}\\begin{axis}[width=\\columnwidth,height=5cm,ymin=0,ymax=1.05,'
+                            f'xtick={{{",".join(str(i) for i in range(len(present)))}}},xticklabels={{{",".join(present)}}},'
+                            'x tick label style={rotate=30,anchor=north east,font=\\footnotesize},xlabel={changed attribute},'
+                            'ylabel={fraction of slices re-verified},grid=major,grid style={gray!20},'
+                            'legend pos=north west,legend style={font=\\scriptsize,draw=none,fill=none},'
+                            'tick label style={font=\\footnotesize},label style={font=\\footnotesize}]\n'
+                            + '\n'.join(pgf_lines) + '\n\\end{axis}\\end{tikzpicture}')
 
 
 # ------------------------------------------------------------------ E7
@@ -573,6 +758,32 @@ def e7():
     macro('WildFAFalse', w['false'])
     macro('WildFARate', w['false'] / max(1, w['findings']), 'pct')
     macro('WildFASliceRate', w['slices_false'] / max(1, w['slices']), 'pct')
+    if 'confirmed' in w:
+        macro('WildFAConfirmed', w['confirmed'])
+        macro('WildFAConfirmedFalse', w['confirmed_false'])
+        macro('WildFATrueLost', w['true_lost'])
+        macro('WildFALiftSeconds', w['lift_seconds'], '.1f')
+        macro('WildNCSlices', w['nc_slices'])
+        macro('WildNCFalseRate', w['nc_false'] / max(1, w['nc_findings']), 'pct')
+
+
+# ------------------------------------------------------------------ running example
+def rex():
+    d = load('running_example')
+    if not d:
+        return
+    for name, label in [('chain', 'Chain'), ('chain_repair_downstream', 'Down'), ('chain_repair_independent', 'Indep'),
+                        ('forkjoin', 'Fj'), ('forkjoin_all', 'FjAll')]:
+        r = d[name]
+        macro(f'Rex{label}Convex', r['convex_slices'])
+        macro(f'Rex{label}Agent', len(r['agent_level']))
+        macro(f'Rex{label}Lint', len(r['lint']))
+        macro(f'Rex{label}Smells', len(r['smells']))
+        macro(f'Rex{label}Symptoms', len(r['symptoms']))
+        if r['symptoms']:
+            s = r['symptoms'][0]
+            macro(f'Rex{label}Depth', s['depth'])
+            macro(f'Rex{label}Minimal', len(s['minimal']))
 
 
 def write_macros():
@@ -581,10 +792,30 @@ def write_macros():
         lines.append(f'\\newcommand{{\\{k}}}{{{MACROS[k]}}}')
     (OUT / 'results_macros.tex').write_text('\n'.join(lines) + '\n', encoding='utf-8')
     (RES / 'macros.json').write_text(json.dumps(MACROS, indent=1, sort_keys=True) + '\n', encoding='utf-8')
-    print(len(MACROS), 'macros')
+    # the same macros, plus table bodies and plot code, as a marked block inside main.tex
+    block = [BEGIN, '% Generated by scripts/process_results.py from results/*.json. Do not edit this block.']
+    block += [f'\\newcommand{{\\{k}}}{{{MACROS[k]}}}' for k in sorted(MACROS)]
+    for k in sorted(TABLES):
+        block.append(f'\\newcommand{{\\{k}}}{{%\n{TABLES[k]}}}')
+    for k in sorted(FIGS):
+        block.append(f'\\newcommand{{\\{k}}}{{%\n{FIGS[k]}}}')
+    block.append(END)
+    main = OUT / 'main.tex'
+    text = main.read_text(encoding='utf-8')
+    if BEGIN in text and END in text:
+        head, rest = text.split(BEGIN, 1)
+        _, tail = rest.split(END, 1)
+        main.write_text(head + '\n'.join(block) + tail, encoding='utf-8')
+    else:
+        print('main.tex has no generated block; skipped')
+    print(len(MACROS), 'macros', len(TABLES), 'tables', len(FIGS), 'figures')
+
+
+BEGIN = '% BEGIN GENERATED RESULTS'
+END = '% END GENERATED RESULTS'
 
 
 if __name__ == '__main__':
-    for f in (e1, e2, e3, e5, e6, e7):
+    for f in (rex, e1, e2, e4b, e8, e3, e5, e6, e7):
         f()
     write_macros()

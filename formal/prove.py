@@ -108,9 +108,6 @@ ob('L5-evidence-monotone', Implies(And(sub(E1, E2), Implies(ok1, ok2),
                                        ForAll(x, Select(o1, x) == Or(Select(c1, x), And(sub(req, E1), ok1, Select(gua, x)))),
                                        ForAll(x, Select(o2, x) == Or(Select(c1, x), And(sub(req, E2), ok2, Select(gua, x))))),
                                    sub(o1, o2)), theorem='Lemma W')
-# L6: a halted contributor contributes exactly what an excluded contributor contributes
-ob('L6-halt-is-exclusion', Implies(And(chosen_union(u, [a1, a2], [BoolVal(False), s2]),
-                                       chosen_union(w, [a1, a2], [BoolVal(False), s2])), eq(u, w)), theorem='Lemma H')
 # L7: entry edges of a member carry the same environment, so any nonempty choice among them gives env
 env = Const('env', Set)
 ob('L7-env-uniform', Implies(And(Or(s1, s2), chosen_union(u, [env, env], [s1, s2])), eq(u, env)), theorem='T1')
@@ -137,24 +134,26 @@ A_, B_, AB, oA, oB, oAB = Consts('A_ B_ AB oA oB oAB', Set)
 ob('C1-non-distributive', And(inter_is(AB, A_, B_), out_is(oA, A_, req, gua, decl, BoolVal(True)),
                               out_is(oB, B_, req, gua, decl, BoolVal(True)), out_is(oAB, AB, req, gua, decl, BoolVal(True)),
                               Not(ForAll(x, Select(oAB, x) == And(Select(oA, x), Select(oB, x))))),
-   expect='sat', theorem='T7 / must-analysis')
+   expect='sat', theorem='B6 incompleteness')
 
-# C2 (T2c): no single (A,G) pair is exact for two independent members (finite, bit-vector encoding)
-# bits: r1=1, r2=2, g1=4, g2=8. G_sigma(E) = (g1 if r1 in E) | (g2 if r2 in E) | (E pass-through ignored)
-A, Gs, Ev = BitVec('A', 4), BitVec('G', 4), BitVec('E', 4)
-
-
-def derived(e):
-    return If(e & 1 == 1, BitVecVal(4, 4), BitVecVal(0, 4)) | If(e & 2 == 2, BitVecVal(8, 4), BitVecVal(0, 4))
-
-
-def single(a, g, e):
-    return If(a & e == a, g, BitVecVal(0, 4))
+# C2 (T2c): an exit whose guarantee g appears iff r1 or r2 enters (two members r1->g, r2->g
+# feeding one exit node) has no exact single pair (A, G): exactness on the three environments
+# {}, {r1}, {r2} is already contradictory. Holds for any distinct r1, r2, g in any universe.
+from z3 import Distinct, K, Store
+r1, r2, gq = Consts('r1 r2 gq', Prop)
+Ac, Gc = Consts('Ac Gc', Set)
+X0 = K(Prop, BoolVal(False))
+envs = [X0, Store(X0, r1, BoolVal(True)), Store(X0, r2, BoolVal(True))]
 
 
-envs = [BitVecVal(v, 4) for v in (0, 1, 2, 3)]
-ob('C2-single-pair-inexact', ForAll([A, Gs], Or(*[derived(e) != single(A, Gs, e) for e in envs])) if MUTANT != 'single-pair-ok'
-   else BoolVal(False), theorem='T2(c)')
+def derived_exit(X):
+    if MUTANT == 'single-pair-ok':                      # a non-disjunctive exit: g iff r1 enters
+        return lambda y: Or(Select(X, y), And(y == gq, Select(X, r1)))
+    return lambda y: Or(Select(X, y), And(y == gq, Or(Select(X, r1), Select(X, r2))))
+
+
+exact = And(*[ForAll(x, derived_exit(X)(x) == Or(Select(X, x), And(sub(Ac, X), Select(Gc, x)))) for X in envs])
+ob('C2-no-exact-single-pair', Not(And(Distinct(r1, r2, gq), exact)), theorem='T2(c)')
 
 
 def check_one(formula, expect, timeout_ms=60_000):

@@ -43,9 +43,9 @@
  },
  {
   "mutant": "single-pair-ok",
-  "expected": "C2-single-pair-inexact",
+  "expected": "C2-no-exact-single-pair",
   "failed": [
-   "C2-single-pair-inexact"
+   "C2-no-exact-single-pair"
   ],
   "killed": true
  }

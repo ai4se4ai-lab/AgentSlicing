@@ -1,16 +1,16 @@
 {
  "env": {
-  "commit": "80e77a2ebf68b6c2930da2be5da030a024eddf67",
+  "commit": "c223880de23228fc34ff61511d9bea30d9939300",
   "dirty_worktree": true,
-  "python": "3.13.14",
-  "platform": "Windows-11-10.0.26100-SP0",
-  "numpy": "2.2.5",
-  "scipy": "1.16.2",
+  "python": "3.12.3",
+  "platform": "Linux-6.17.0-1029-nvidia-aarch64-with-glibc2.39",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
   "z3": "5.3.3",
-  "cpus": 22,
-  "started": "2026-11-04T16:20:10"
+  "cpus": 20,
+  "started": "2026-11-04T17:27:52"
  },
- "seconds": 0.6219782829284668,
+ "seconds": 0.08112311363220215,
  "rows": [
   {
    "design": "MetaGPT",
@@ -36,7 +36,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 8,
@@ -116,6 +117,7 @@
       "id": "TestRun",
       "kind": "gate",
       "req": [
+       "code",
        "unit_tests"
       ],
       "gua": [
@@ -188,7 +190,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 8,
@@ -268,6 +271,7 @@
       "id": "TestRun",
       "kind": "gate",
       "req": [
+       "code",
        "unit_tests"
       ],
       "gua": [
@@ -340,7 +344,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 8,
@@ -420,6 +425,7 @@
       "id": "TestRun",
       "kind": "gate",
       "req": [
+       "code",
        "unit_tests"
       ],
       "gua": [
@@ -553,6 +559,7 @@
       "id": "TestRun",
       "kind": "gate",
       "req": [
+       "code",
        "unit_tests"
       ],
       "gua": [
@@ -615,18 +622,17 @@
       "OUT",
       "correct"
      ],
-     "depth": 3,
-     "class": "S4",
+     "depth": 1,
+     "class": "A4",
      "minimal": [
       [
-       "Review",
-       "Execute",
        "Testing"
       ]
      ],
-     "agent_level": false,
-     "lint": false,
-     "smell": true
+     "agent_level": true,
+     "lint": true,
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 8,
@@ -635,6 +641,7 @@
     "goals": [
      "code_complete",
      "correct",
+     "reviewed",
      "runs"
     ],
     "critical": [
@@ -686,14 +693,16 @@
        "code"
       ],
       "gua": [
-       "correct"
+       "reviewed"
       ],
       "oracle": "backbone"
      },
      {
       "id": "Execute",
       "kind": "gate",
-      "req": [],
+      "req": [
+       "code"
+      ],
       "gua": [
        "runs"
       ]
@@ -715,6 +724,7 @@
       "req": [
        "code_complete",
        "correct",
+       "reviewed",
        "runs"
       ],
       "gua": []
@@ -757,15 +767,35 @@
    "source": "qian2024chatdev",
    "note": "design -> coding -> code complete -> review -> execution -> testing",
    "variant": "distinct",
-   "safe": true,
-   "clean": true,
-   "symptoms": [],
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "correct"
+     ],
+     "depth": 1,
+     "class": "A4",
+     "minimal": [
+      [
+       "Testing"
+      ]
+     ],
+     "agent_level": true,
+     "lint": true,
+     "smell": false,
+     "must": true
+    }
+   ],
    "nodes": 8,
    "spec": {
     "name": "team",
     "goals": [
      "code_complete",
      "correct",
+     "reviewed",
      "runs"
     ],
     "critical": [
@@ -817,14 +847,16 @@
        "code"
       ],
       "gua": [
-       "correct"
+       "reviewed"
       ],
       "oracle": "Review"
      },
      {
       "id": "Execute",
       "kind": "gate",
-      "req": [],
+      "req": [
+       "code"
+      ],
       "gua": [
        "runs"
       ]
@@ -846,6 +878,7 @@
       "req": [
        "code_complete",
        "correct",
+       "reviewed",
        "runs"
       ],
       "gua": []
@@ -897,18 +930,17 @@
       "OUT",
       "correct"
      ],
-     "depth": 3,
-     "class": "S4",
+     "depth": 1,
+     "class": "A4",
      "minimal": [
       [
-       "Review",
-       "Execute",
        "Testing"
       ]
      ],
-     "agent_level": false,
-     "lint": false,
-     "smell": true
+     "agent_level": true,
+     "lint": true,
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 8,
@@ -917,6 +949,7 @@
     "goals": [
      "code_complete",
      "correct",
+     "reviewed",
      "runs"
     ],
     "critical": [
@@ -968,14 +1001,16 @@
        "code"
       ],
       "gua": [
-       "correct"
+       "reviewed"
       ],
       "oracle": "backbone"
      },
      {
       "id": "Execute",
       "kind": "gate",
-      "req": [],
+      "req": [
+       "code"
+      ],
       "gua": [
        "runs"
       ]
@@ -997,6 +1032,7 @@
       "req": [
        "code_complete",
        "correct",
+       "reviewed",
        "runs"
       ],
       "gua": []
@@ -1048,6 +1084,7 @@
     "goals": [
      "code_complete",
      "correct",
+     "reviewed",
      "runs"
     ],
     "critical": [
@@ -1099,14 +1136,16 @@
        "code"
       ],
       "gua": [
-       "correct"
+       "reviewed"
       ],
       "oracle": "backbone"
      },
      {
       "id": "Execute",
       "kind": "gate",
-      "req": [],
+      "req": [
+       "code"
+      ],
       "gua": [
        "runs"
       ]
@@ -1128,6 +1167,7 @@
       "req": [
        "code_complete",
        "correct",
+       "reviewed",
        "runs"
       ],
       "gua": []
@@ -1183,13 +1223,18 @@
      "class": "S6a",
      "minimal": [
       [
+       "Programmer",
+       "Executor"
+      ],
+      [
        "TestDesigner",
        "Executor"
       ]
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 5,
@@ -1231,6 +1276,7 @@
       "id": "Executor",
       "kind": "gate",
       "req": [
+       "code",
        "tests"
       ],
       "gua": [
@@ -1288,13 +1334,18 @@
      "class": "S6a",
      "minimal": [
       [
+       "Programmer",
+       "Executor"
+      ],
+      [
        "TestDesigner",
        "Executor"
       ]
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 5,
@@ -1336,6 +1387,7 @@
       "id": "Executor",
       "kind": "gate",
       "req": [
+       "code",
        "tests"
       ],
       "gua": [
@@ -1393,13 +1445,18 @@
      "class": "S6a",
      "minimal": [
       [
+       "Programmer",
+       "Executor"
+      ],
+      [
        "TestDesigner",
        "Executor"
       ]
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 5,
@@ -1441,6 +1498,7 @@
       "id": "Executor",
       "kind": "gate",
       "req": [
+       "code",
        "tests"
       ],
       "gua": [
@@ -1527,6 +1585,7 @@
       "id": "Executor",
       "kind": "gate",
       "req": [
+       "code",
        "tests"
       ],
       "gua": [
@@ -1578,6 +1637,29 @@
      "key": [
       "assume",
       "Executor",
+      "code"
+     ],
+     "depth": 2,
+     "class": "S3",
+     "minimal": [
+      [
+       "Programmer",
+       "Executor"
+      ],
+      [
+       "TestDesigner",
+       "Executor"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true,
+     "must": true
+    },
+    {
+     "key": [
+      "assume",
+      "Executor",
       "tests"
      ],
      "depth": 2,
@@ -1594,7 +1676,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -1616,7 +1699,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 5,
@@ -1658,6 +1742,7 @@
       "id": "Executor",
       "kind": "gate",
       "req": [
+       "code",
        "tests"
       ],
       "gua": [
@@ -1701,11 +1786,31 @@
   {
    "design": "MapCoder",
    "source": "islam2024mapcoder",
-   "note": "retrieval -> planning -> coding -> sample I/O check -> debugging",
+   "note": "retrieval -> planning -> coding -> sample I/O check (from the problem statement) -> debugging",
    "variant": "documented",
-   "safe": true,
-   "clean": true,
-   "symptoms": [],
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "samples_pass"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "Coding",
+       "SampleIO"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true,
+     "must": true
+    }
+   ],
    "nodes": 7,
    "spec": {
     "name": "team",
@@ -1758,7 +1863,9 @@
      {
       "id": "SampleIO",
       "kind": "gate",
-      "req": [],
+      "req": [
+       "code"
+      ],
       "gua": [
        "samples_pass"
       ]
@@ -1767,7 +1874,7 @@
       "id": "Debugging",
       "kind": "agent",
       "req": [
-       "samples_pass"
+       "code"
       ],
       "gua": [
        "debugged"
@@ -1815,11 +1922,31 @@
   {
    "design": "MapCoder",
    "source": "islam2024mapcoder",
-   "note": "retrieval -> planning -> coding -> sample I/O check -> debugging",
+   "note": "retrieval -> planning -> coding -> sample I/O check (from the problem statement) -> debugging",
    "variant": "distinct",
-   "safe": true,
-   "clean": true,
-   "symptoms": [],
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "samples_pass"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "Coding",
+       "SampleIO"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true,
+     "must": true
+    }
+   ],
    "nodes": 7,
    "spec": {
     "name": "team",
@@ -1872,7 +1999,9 @@
      {
       "id": "SampleIO",
       "kind": "gate",
-      "req": [],
+      "req": [
+       "code"
+      ],
       "gua": [
        "samples_pass"
       ]
@@ -1881,7 +2010,7 @@
       "id": "Debugging",
       "kind": "agent",
       "req": [
-       "samples_pass"
+       "code"
       ],
       "gua": [
        "debugged"
@@ -1929,11 +2058,31 @@
   {
    "design": "MapCoder",
    "source": "islam2024mapcoder",
-   "note": "retrieval -> planning -> coding -> sample I/O check -> debugging",
+   "note": "retrieval -> planning -> coding -> sample I/O check (from the problem statement) -> debugging",
    "variant": "shared",
-   "safe": true,
-   "clean": true,
-   "symptoms": [],
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "samples_pass"
+     ],
+     "depth": 2,
+     "class": "S6a",
+     "minimal": [
+      [
+       "Coding",
+       "SampleIO"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": true,
+     "must": true
+    }
+   ],
    "nodes": 7,
    "spec": {
     "name": "team",
@@ -1986,7 +2135,9 @@
      {
       "id": "SampleIO",
       "kind": "gate",
-      "req": [],
+      "req": [
+       "code"
+      ],
       "gua": [
        "samples_pass"
       ]
@@ -1995,7 +2146,7 @@
       "id": "Debugging",
       "kind": "agent",
       "req": [
-       "samples_pass"
+       "code"
       ],
       "gua": [
        "debugged"
@@ -2043,7 +2194,7 @@
   {
    "design": "MapCoder",
    "source": "islam2024mapcoder",
-   "note": "retrieval -> planning -> coding -> sample I/O check -> debugging",
+   "note": "retrieval -> planning -> coding -> sample I/O check (from the problem statement) -> debugging",
    "variant": "f0",
    "safe": true,
    "clean": true,
@@ -2100,7 +2251,9 @@
      {
       "id": "SampleIO",
       "kind": "gate",
-      "req": [],
+      "req": [
+       "code"
+      ],
       "gua": [
        "samples_pass"
       ]
@@ -2109,7 +2262,7 @@
       "id": "Debugging",
       "kind": "agent",
       "req": [
-       "samples_pass"
+       "code"
       ],
       "gua": [
        "debugged"
@@ -2177,7 +2330,8 @@
      ],
      "agent_level": true,
      "lint": true,
-     "smell": false
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 5,
@@ -2280,7 +2434,8 @@
      ],
      "agent_level": true,
      "lint": true,
-     "smell": false
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 5,
@@ -2383,7 +2538,8 @@
      ],
      "agent_level": true,
      "lint": true,
-     "smell": false
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 5,
@@ -2551,7 +2707,7 @@
   {
    "design": "Debate",
    "source": "du2024debate",
-   "note": "three agents answer in parallel -> majority vote",
+   "note": "three agents answer, then each revises after reading all answers (one debate round) -> majority vote",
    "variant": "documented",
    "safe": false,
    "clean": false,
@@ -2566,32 +2722,33 @@
      "class": "S4",
      "minimal": [
       [
-       "A1",
-       "A2",
-       "A3"
+       "R1",
+       "R2",
+       "R3"
       ],
       [
-       "A1",
-       "A2",
+       "R1",
+       "R2",
        "Vote"
       ],
       [
-       "A1",
-       "A3",
+       "R1",
+       "R3",
        "Vote"
       ],
       [
-       "A2",
-       "A3",
+       "R2",
+       "R3",
        "Vote"
       ]
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
-   "nodes": 6,
+   "nodes": 9,
    "spec": {
     "name": "team",
     "goals": [
@@ -2613,7 +2770,7 @@
       "kind": "agent",
       "req": [],
       "gua": [
-       "answer_ok"
+       "ans1"
       ],
       "oracle": "backbone"
      },
@@ -2622,7 +2779,7 @@
       "kind": "agent",
       "req": [],
       "gua": [
-       "answer_ok"
+       "ans2"
       ],
       "oracle": "backbone"
      },
@@ -2630,6 +2787,45 @@
       "id": "A3",
       "kind": "agent",
       "req": [],
+      "gua": [
+       "ans3"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R1",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R2",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R3",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
       "gua": [
        "answer_ok"
       ],
@@ -2666,14 +2862,50 @@
      ],
      [
       "A1",
-      "Vote"
+      "R1"
+     ],
+     [
+      "A1",
+      "R2"
+     ],
+     [
+      "A1",
+      "R3"
      ],
      [
       "A2",
-      "Vote"
+      "R1"
+     ],
+     [
+      "A2",
+      "R2"
+     ],
+     [
+      "A2",
+      "R3"
      ],
      [
       "A3",
+      "R1"
+     ],
+     [
+      "A3",
+      "R2"
+     ],
+     [
+      "A3",
+      "R3"
+     ],
+     [
+      "R1",
+      "Vote"
+     ],
+     [
+      "R2",
+      "Vote"
+     ],
+     [
+      "R3",
       "Vote"
      ],
      [
@@ -2686,12 +2918,46 @@
   {
    "design": "Debate",
    "source": "du2024debate",
-   "note": "three agents answer in parallel -> majority vote",
+   "note": "three agents answer, then each revises after reading all answers (one debate round) -> majority vote",
    "variant": "distinct",
-   "safe": true,
-   "clean": true,
-   "symptoms": [],
-   "nodes": 6,
+   "safe": false,
+   "clean": false,
+   "symptoms": [
+    {
+     "key": [
+      "robust",
+      "OUT",
+      "answer_ok"
+     ],
+     "depth": 4,
+     "class": "S6a",
+     "minimal": [
+      [
+       "A1",
+       "R1",
+       "R2",
+       "R3"
+      ],
+      [
+       "A2",
+       "R1",
+       "R2",
+       "R3"
+      ],
+      [
+       "A3",
+       "R1",
+       "R2",
+       "R3"
+      ]
+     ],
+     "agent_level": false,
+     "lint": false,
+     "smell": false,
+     "must": true
+    }
+   ],
+   "nodes": 9,
    "spec": {
     "name": "team",
     "goals": [
@@ -2713,7 +2979,7 @@
       "kind": "agent",
       "req": [],
       "gua": [
-       "answer_ok"
+       "ans1"
       ],
       "oracle": "A1"
      },
@@ -2722,7 +2988,7 @@
       "kind": "agent",
       "req": [],
       "gua": [
-       "answer_ok"
+       "ans2"
       ],
       "oracle": "A2"
      },
@@ -2731,9 +2997,48 @@
       "kind": "agent",
       "req": [],
       "gua": [
-       "answer_ok"
+       "ans3"
       ],
       "oracle": "A3"
+     },
+     {
+      "id": "R1",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "R1"
+     },
+     {
+      "id": "R2",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "R2"
+     },
+     {
+      "id": "R3",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "R3"
      },
      {
       "id": "Vote",
@@ -2766,14 +3071,50 @@
      ],
      [
       "A1",
-      "Vote"
+      "R1"
+     ],
+     [
+      "A1",
+      "R2"
+     ],
+     [
+      "A1",
+      "R3"
      ],
      [
       "A2",
-      "Vote"
+      "R1"
+     ],
+     [
+      "A2",
+      "R2"
+     ],
+     [
+      "A2",
+      "R3"
      ],
      [
       "A3",
+      "R1"
+     ],
+     [
+      "A3",
+      "R2"
+     ],
+     [
+      "A3",
+      "R3"
+     ],
+     [
+      "R1",
+      "Vote"
+     ],
+     [
+      "R2",
+      "Vote"
+     ],
+     [
+      "R3",
       "Vote"
      ],
      [
@@ -2786,7 +3127,7 @@
   {
    "design": "Debate",
    "source": "du2024debate",
-   "note": "three agents answer in parallel -> majority vote",
+   "note": "three agents answer, then each revises after reading all answers (one debate round) -> majority vote",
    "variant": "shared",
    "safe": false,
    "clean": false,
@@ -2801,32 +3142,33 @@
      "class": "S4",
      "minimal": [
       [
-       "A1",
-       "A2",
-       "A3"
+       "R1",
+       "R2",
+       "R3"
       ],
       [
-       "A1",
-       "A2",
+       "R1",
+       "R2",
        "Vote"
       ],
       [
-       "A1",
-       "A3",
+       "R1",
+       "R3",
        "Vote"
       ],
       [
-       "A2",
-       "A3",
+       "R2",
+       "R3",
        "Vote"
       ]
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
-   "nodes": 6,
+   "nodes": 9,
    "spec": {
     "name": "team",
     "goals": [
@@ -2848,7 +3190,7 @@
       "kind": "agent",
       "req": [],
       "gua": [
-       "answer_ok"
+       "ans1"
       ],
       "oracle": "backbone"
      },
@@ -2857,7 +3199,7 @@
       "kind": "agent",
       "req": [],
       "gua": [
-       "answer_ok"
+       "ans2"
       ],
       "oracle": "backbone"
      },
@@ -2865,6 +3207,45 @@
       "id": "A3",
       "kind": "agent",
       "req": [],
+      "gua": [
+       "ans3"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R1",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R2",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R3",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
       "gua": [
        "answer_ok"
       ],
@@ -2901,14 +3282,50 @@
      ],
      [
       "A1",
-      "Vote"
+      "R1"
+     ],
+     [
+      "A1",
+      "R2"
+     ],
+     [
+      "A1",
+      "R3"
      ],
      [
       "A2",
-      "Vote"
+      "R1"
+     ],
+     [
+      "A2",
+      "R2"
+     ],
+     [
+      "A2",
+      "R3"
      ],
      [
       "A3",
+      "R1"
+     ],
+     [
+      "A3",
+      "R2"
+     ],
+     [
+      "A3",
+      "R3"
+     ],
+     [
+      "R1",
+      "Vote"
+     ],
+     [
+      "R2",
+      "Vote"
+     ],
+     [
+      "R3",
       "Vote"
      ],
      [
@@ -2921,12 +3338,12 @@
   {
    "design": "Debate",
    "source": "du2024debate",
-   "note": "three agents answer in parallel -> majority vote",
+   "note": "three agents answer, then each revises after reading all answers (one debate round) -> majority vote",
    "variant": "f0",
    "safe": true,
    "clean": true,
    "symptoms": [],
-   "nodes": 6,
+   "nodes": 9,
    "spec": {
     "name": "team",
     "goals": [
@@ -2948,7 +3365,7 @@
       "kind": "agent",
       "req": [],
       "gua": [
-       "answer_ok"
+       "ans1"
       ],
       "oracle": "backbone"
      },
@@ -2957,7 +3374,7 @@
       "kind": "agent",
       "req": [],
       "gua": [
-       "answer_ok"
+       "ans2"
       ],
       "oracle": "backbone"
      },
@@ -2965,6 +3382,45 @@
       "id": "A3",
       "kind": "agent",
       "req": [],
+      "gua": [
+       "ans3"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R1",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R2",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R3",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
       "gua": [
        "answer_ok"
       ],
@@ -3001,14 +3457,50 @@
      ],
      [
       "A1",
-      "Vote"
+      "R1"
+     ],
+     [
+      "A1",
+      "R2"
+     ],
+     [
+      "A1",
+      "R3"
      ],
      [
       "A2",
-      "Vote"
+      "R1"
+     ],
+     [
+      "A2",
+      "R2"
+     ],
+     [
+      "A2",
+      "R3"
      ],
      [
       "A3",
+      "R1"
+     ],
+     [
+      "A3",
+      "R2"
+     ],
+     [
+      "A3",
+      "R3"
+     ],
+     [
+      "R1",
+      "Vote"
+     ],
+     [
+      "R2",
+      "Vote"
+     ],
+     [
+      "R3",
       "Vote"
      ],
      [
@@ -3021,7 +3513,7 @@
   {
    "design": "Debate",
    "source": "du2024debate",
-   "note": "three agents answer in parallel -> majority vote",
+   "note": "three agents answer, then each revises after reading all answers (one debate round) -> majority vote",
    "variant": "alt_join",
    "safe": false,
    "clean": false,
@@ -3036,29 +3528,30 @@
      "class": "S2",
      "minimal": [
       [
-       "A1",
+       "R1",
        "Vote"
       ],
       [
-       "A2",
+       "R2",
        "Vote"
       ],
       [
-       "A3",
+       "R3",
        "Vote"
       ],
       [
-       "A1",
-       "A2",
-       "A3"
+       "R1",
+       "R2",
+       "R3"
       ]
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
-   "nodes": 6,
+   "nodes": 9,
    "spec": {
     "name": "team",
     "goals": [
@@ -3080,7 +3573,7 @@
       "kind": "agent",
       "req": [],
       "gua": [
-       "answer_ok"
+       "ans1"
       ],
       "oracle": "backbone"
      },
@@ -3089,7 +3582,7 @@
       "kind": "agent",
       "req": [],
       "gua": [
-       "answer_ok"
+       "ans2"
       ],
       "oracle": "backbone"
      },
@@ -3097,6 +3590,45 @@
       "id": "A3",
       "kind": "agent",
       "req": [],
+      "gua": [
+       "ans3"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R1",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R2",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
+      "gua": [
+       "answer_ok"
+      ],
+      "oracle": "backbone"
+     },
+     {
+      "id": "R3",
+      "kind": "agent",
+      "req": [
+       "ans1",
+       "ans2",
+       "ans3"
+      ],
       "gua": [
        "answer_ok"
       ],
@@ -3133,14 +3665,50 @@
      ],
      [
       "A1",
-      "Vote"
+      "R1"
+     ],
+     [
+      "A1",
+      "R2"
+     ],
+     [
+      "A1",
+      "R3"
      ],
      [
       "A2",
-      "Vote"
+      "R1"
+     ],
+     [
+      "A2",
+      "R2"
+     ],
+     [
+      "A2",
+      "R3"
      ],
      [
       "A3",
+      "R1"
+     ],
+     [
+      "A3",
+      "R2"
+     ],
+     [
+      "A3",
+      "R3"
+     ],
+     [
+      "R1",
+      "Vote"
+     ],
+     [
+      "R2",
+      "Vote"
+     ],
+     [
+      "R3",
       "Vote"
      ],
      [
@@ -3173,7 +3741,8 @@
      ],
      "agent_level": true,
      "lint": true,
-     "smell": false
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 9,
@@ -3372,7 +3941,8 @@
      ],
      "agent_level": true,
      "lint": true,
-     "smell": false
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 9,
@@ -3571,7 +4141,8 @@
      ],
      "agent_level": true,
      "lint": true,
-     "smell": false
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 9,
@@ -3972,7 +4543,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4010,7 +4582,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4048,7 +4621,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4074,7 +4648,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4100,7 +4675,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4126,7 +4702,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4152,7 +4729,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4178,7 +4756,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4204,7 +4783,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4230,7 +4810,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4256,7 +4837,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4282,7 +4864,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4308,7 +4891,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 9,
@@ -4519,7 +5103,8 @@
      ],
      "agent_level": true,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4544,7 +5129,8 @@
      ],
      "agent_level": true,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4568,7 +5154,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": false
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 7,
@@ -4711,7 +5298,8 @@
      ],
      "agent_level": true,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4736,7 +5324,8 @@
      ],
      "agent_level": true,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4760,7 +5349,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": false
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 7,
@@ -4903,7 +5493,8 @@
      ],
      "agent_level": true,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4928,7 +5519,8 @@
      ],
      "agent_level": true,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -4952,7 +5544,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": false
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 7,
@@ -5095,7 +5688,8 @@
      ],
      "agent_level": true,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -5120,7 +5714,8 @@
      ],
      "agent_level": true,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     },
     {
      "key": [
@@ -5144,7 +5739,8 @@
      ],
      "agent_level": false,
      "lint": false,
-     "smell": false
+     "smell": false,
+     "must": true
     }
    ],
    "nodes": 7,
@@ -5259,7 +5855,7 @@
   {
    "design": "Agentless",
    "source": "xia2025agentless",
-   "note": "localize -> sampled repairs || reproduction-test generation -> regression and reproduction runs -> select",
+   "note": "localize -> sampled repairs; reproduction-test generation; each candidate validated by regression and reproduction runs -> select",
    "variant": "documented",
    "safe": false,
    "clean": false,
@@ -5270,29 +5866,35 @@
       "OUT",
       "issue_fixed"
      ],
-     "depth": 2,
+     "depth": 3,
      "class": "S6a",
      "minimal": [
       [
        "ReproGen",
-       "ReproRun"
+       "Validate1",
+       "Validate2"
       ],
       [
        "Repair1",
-       "Select",
-       "Regression",
-       "ReproRun"
+       "Validate1",
+       "Select"
       ],
       [
        "Repair2",
-       "Select",
-       "Regression",
-       "ReproRun"
+       "Validate2",
+       "Select"
+      ],
+      [
+       "Repair1",
+       "Repair2",
+       "Validate1",
+       "Validate2"
       ]
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 9,
@@ -5354,32 +5956,35 @@
       "oracle": "backbone"
      },
      {
-      "id": "Select",
-      "kind": "gate",
-      "req": [],
-      "gua": [],
-      "join": "any"
-     },
-     {
-      "id": "Regression",
-      "kind": "gate",
-      "req": [
-       "patch"
-      ],
-      "gua": [
-       "regression_pass"
-      ]
-     },
-     {
-      "id": "ReproRun",
+      "id": "Validate1",
       "kind": "gate",
       "req": [
        "patch",
        "repro_test"
       ],
       "gua": [
-       "issue_fixed"
+       "issue_fixed",
+       "regression_pass"
       ]
+     },
+     {
+      "id": "Validate2",
+      "kind": "gate",
+      "req": [
+       "patch",
+       "repro_test"
+      ],
+      "gua": [
+       "issue_fixed",
+       "regression_pass"
+      ]
+     },
+     {
+      "id": "Select",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
      },
      {
       "id": "OUT",
@@ -5410,26 +6015,30 @@
      ],
      [
       "Repair1",
-      "Select"
+      "Validate1"
+     ],
+     [
+      "ReproGen",
+      "Validate1"
      ],
      [
       "Repair2",
+      "Validate2"
+     ],
+     [
+      "ReproGen",
+      "Validate2"
+     ],
+     [
+      "Validate1",
+      "Select"
+     ],
+     [
+      "Validate2",
       "Select"
      ],
      [
       "Select",
-      "Regression"
-     ],
-     [
-      "Regression",
-      "ReproRun"
-     ],
-     [
-      "ReproGen",
-      "ReproRun"
-     ],
-     [
-      "ReproRun",
       "OUT"
      ]
     ]
@@ -5438,7 +6047,7 @@
   {
    "design": "Agentless",
    "source": "xia2025agentless",
-   "note": "localize -> sampled repairs || reproduction-test generation -> regression and reproduction runs -> select",
+   "note": "localize -> sampled repairs; reproduction-test generation; each candidate validated by regression and reproduction runs -> select",
    "variant": "distinct",
    "safe": false,
    "clean": false,
@@ -5449,29 +6058,36 @@
       "OUT",
       "issue_fixed"
      ],
-     "depth": 2,
+     "depth": 3,
      "class": "S6a",
      "minimal": [
       [
        "ReproGen",
-       "ReproRun"
+       "Validate1",
+       "Validate2"
       ],
       [
        "Repair1",
-       "Select",
-       "Regression",
-       "ReproRun"
+       "Validate1",
+       "Select"
       ],
       [
        "Repair2",
-       "Select",
-       "Regression",
-       "ReproRun"
+       "Validate2",
+       "Select"
+      ],
+      [
+       "Localize",
+       "Repair1",
+       "Repair2",
+       "Validate1",
+       "Validate2"
       ]
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 9,
@@ -5533,32 +6149,35 @@
       "oracle": "ReproGen"
      },
      {
-      "id": "Select",
-      "kind": "gate",
-      "req": [],
-      "gua": [],
-      "join": "any"
-     },
-     {
-      "id": "Regression",
-      "kind": "gate",
-      "req": [
-       "patch"
-      ],
-      "gua": [
-       "regression_pass"
-      ]
-     },
-     {
-      "id": "ReproRun",
+      "id": "Validate1",
       "kind": "gate",
       "req": [
        "patch",
        "repro_test"
       ],
       "gua": [
-       "issue_fixed"
+       "issue_fixed",
+       "regression_pass"
       ]
+     },
+     {
+      "id": "Validate2",
+      "kind": "gate",
+      "req": [
+       "patch",
+       "repro_test"
+      ],
+      "gua": [
+       "issue_fixed",
+       "regression_pass"
+      ]
+     },
+     {
+      "id": "Select",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
      },
      {
       "id": "OUT",
@@ -5589,26 +6208,30 @@
      ],
      [
       "Repair1",
-      "Select"
+      "Validate1"
+     ],
+     [
+      "ReproGen",
+      "Validate1"
      ],
      [
       "Repair2",
+      "Validate2"
+     ],
+     [
+      "ReproGen",
+      "Validate2"
+     ],
+     [
+      "Validate1",
+      "Select"
+     ],
+     [
+      "Validate2",
       "Select"
      ],
      [
       "Select",
-      "Regression"
-     ],
-     [
-      "Regression",
-      "ReproRun"
-     ],
-     [
-      "ReproGen",
-      "ReproRun"
-     ],
-     [
-      "ReproRun",
       "OUT"
      ]
     ]
@@ -5617,7 +6240,7 @@
   {
    "design": "Agentless",
    "source": "xia2025agentless",
-   "note": "localize -> sampled repairs || reproduction-test generation -> regression and reproduction runs -> select",
+   "note": "localize -> sampled repairs; reproduction-test generation; each candidate validated by regression and reproduction runs -> select",
    "variant": "shared",
    "safe": false,
    "clean": false,
@@ -5628,29 +6251,35 @@
       "OUT",
       "issue_fixed"
      ],
-     "depth": 2,
+     "depth": 3,
      "class": "S6a",
      "minimal": [
       [
        "ReproGen",
-       "ReproRun"
+       "Validate1",
+       "Validate2"
       ],
       [
        "Repair1",
-       "Select",
-       "Regression",
-       "ReproRun"
+       "Validate1",
+       "Select"
       ],
       [
        "Repair2",
-       "Select",
-       "Regression",
-       "ReproRun"
+       "Validate2",
+       "Select"
+      ],
+      [
+       "Repair1",
+       "Repair2",
+       "Validate1",
+       "Validate2"
       ]
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 9,
@@ -5712,32 +6341,35 @@
       "oracle": "backbone"
      },
      {
-      "id": "Select",
-      "kind": "gate",
-      "req": [],
-      "gua": [],
-      "join": "any"
-     },
-     {
-      "id": "Regression",
-      "kind": "gate",
-      "req": [
-       "patch"
-      ],
-      "gua": [
-       "regression_pass"
-      ]
-     },
-     {
-      "id": "ReproRun",
+      "id": "Validate1",
       "kind": "gate",
       "req": [
        "patch",
        "repro_test"
       ],
       "gua": [
-       "issue_fixed"
+       "issue_fixed",
+       "regression_pass"
       ]
+     },
+     {
+      "id": "Validate2",
+      "kind": "gate",
+      "req": [
+       "patch",
+       "repro_test"
+      ],
+      "gua": [
+       "issue_fixed",
+       "regression_pass"
+      ]
+     },
+     {
+      "id": "Select",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
      },
      {
       "id": "OUT",
@@ -5768,26 +6400,30 @@
      ],
      [
       "Repair1",
-      "Select"
+      "Validate1"
+     ],
+     [
+      "ReproGen",
+      "Validate1"
      ],
      [
       "Repair2",
+      "Validate2"
+     ],
+     [
+      "ReproGen",
+      "Validate2"
+     ],
+     [
+      "Validate1",
+      "Select"
+     ],
+     [
+      "Validate2",
       "Select"
      ],
      [
       "Select",
-      "Regression"
-     ],
-     [
-      "Regression",
-      "ReproRun"
-     ],
-     [
-      "ReproGen",
-      "ReproRun"
-     ],
-     [
-      "ReproRun",
       "OUT"
      ]
     ]
@@ -5796,7 +6432,7 @@
   {
    "design": "Agentless",
    "source": "xia2025agentless",
-   "note": "localize -> sampled repairs || reproduction-test generation -> regression and reproduction runs -> select",
+   "note": "localize -> sampled repairs; reproduction-test generation; each candidate validated by regression and reproduction runs -> select",
    "variant": "f0",
    "safe": true,
    "clean": true,
@@ -5860,32 +6496,35 @@
       "oracle": "backbone"
      },
      {
-      "id": "Select",
-      "kind": "gate",
-      "req": [],
-      "gua": [],
-      "join": "any"
-     },
-     {
-      "id": "Regression",
-      "kind": "gate",
-      "req": [
-       "patch"
-      ],
-      "gua": [
-       "regression_pass"
-      ]
-     },
-     {
-      "id": "ReproRun",
+      "id": "Validate1",
       "kind": "gate",
       "req": [
        "patch",
        "repro_test"
       ],
       "gua": [
-       "issue_fixed"
+       "issue_fixed",
+       "regression_pass"
       ]
+     },
+     {
+      "id": "Validate2",
+      "kind": "gate",
+      "req": [
+       "patch",
+       "repro_test"
+      ],
+      "gua": [
+       "issue_fixed",
+       "regression_pass"
+      ]
+     },
+     {
+      "id": "Select",
+      "kind": "gate",
+      "req": [],
+      "gua": [],
+      "join": "any"
      },
      {
       "id": "OUT",
@@ -5916,26 +6555,30 @@
      ],
      [
       "Repair1",
-      "Select"
+      "Validate1"
+     ],
+     [
+      "ReproGen",
+      "Validate1"
      ],
      [
       "Repair2",
+      "Validate2"
+     ],
+     [
+      "ReproGen",
+      "Validate2"
+     ],
+     [
+      "Validate1",
+      "Select"
+     ],
+     [
+      "Validate2",
       "Select"
      ],
      [
       "Select",
-      "Regression"
-     ],
-     [
-      "Regression",
-      "ReproRun"
-     ],
-     [
-      "ReproGen",
-      "ReproRun"
-     ],
-     [
-      "ReproRun",
       "OUT"
      ]
     ]
@@ -5944,7 +6587,7 @@
   {
    "design": "Agentless",
    "source": "xia2025agentless",
-   "note": "localize -> sampled repairs || reproduction-test generation -> regression and reproduction runs -> select",
+   "note": "localize -> sampled repairs; reproduction-test generation; each candidate validated by regression and reproduction runs -> select",
    "variant": "alt_join",
    "safe": false,
    "clean": false,
@@ -5955,24 +6598,25 @@
       "OUT",
       "issue_fixed"
      ],
-     "depth": 2,
+     "depth": 3,
      "class": "S6a",
      "minimal": [
       [
        "ReproGen",
-       "ReproRun"
+       "Validate1",
+       "Validate2"
       ],
       [
        "Repair1",
        "Repair2",
-       "Select",
-       "Regression",
-       "ReproRun"
+       "Validate1",
+       "Validate2"
       ]
      ],
      "agent_level": false,
      "lint": false,
-     "smell": true
+     "smell": true,
+     "must": true
     }
    ],
    "nodes": 9,
@@ -6034,31 +6678,34 @@
       "oracle": "backbone"
      },
      {
-      "id": "Select",
-      "kind": "gate",
-      "req": [],
-      "gua": []
-     },
-     {
-      "id": "Regression",
-      "kind": "gate",
-      "req": [
-       "patch"
-      ],
-      "gua": [
-       "regression_pass"
-      ]
-     },
-     {
-      "id": "ReproRun",
+      "id": "Validate1",
       "kind": "gate",
       "req": [
        "patch",
        "repro_test"
       ],
       "gua": [
-       "issue_fixed"
+       "issue_fixed",
+       "regression_pass"
       ]
+     },
+     {
+      "id": "Validate2",
+      "kind": "gate",
+      "req": [
+       "patch",
+       "repro_test"
+      ],
+      "gua": [
+       "issue_fixed",
+       "regression_pass"
+      ]
+     },
+     {
+      "id": "Select",
+      "kind": "gate",
+      "req": [],
+      "gua": []
      },
      {
       "id": "OUT",
@@ -6089,26 +6736,30 @@
      ],
      [
       "Repair1",
-      "Select"
+      "Validate1"
+     ],
+     [
+      "ReproGen",
+      "Validate1"
      ],
      [
       "Repair2",
+      "Validate2"
+     ],
+     [
+      "ReproGen",
+      "Validate2"
+     ],
+     [
+      "Validate1",
+      "Select"
+     ],
+     [
+      "Validate2",
       "Select"
      ],
      [
       "Select",
-      "Regression"
-     ],
-     [
-      "Regression",
-      "ReproRun"
-     ],
-     [
-      "ReproGen",
-      "ReproRun"
-     ],
-     [
-      "ReproRun",
       "OUT"
      ]
     ]

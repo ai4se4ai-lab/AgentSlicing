@@ -72,16 +72,34 @@ def ablation(args):
 
 
 def wild_false(seed):
+    """Raw vs. confirmed findings of all convex slices (size <= 3) on unstructured teams, and
+    non-convex slices (a convex slice minus one interior node)."""
+    from slicing import analysis as an
     t = cf.wild_team(seed, n=5 + seed % 3)
-    sym = set(sem.symptoms(t))
-    out = {'teams': 1, 'findings': 0, 'false': 0, 'slices': 0, 'slices_false': 0}
+    symd = sem.symptoms(t)
+    out = {'teams': 1, 'findings': 0, 'false': 0, 'slices': 0, 'slices_false': 0, 'confirmed': 0,
+           'confirmed_false': 0, 'true_lost': 0, 'lift_seconds': 0.0, 'nc_slices': 0, 'nc_findings': 0, 'nc_false': 0}
+    rng = random.Random(seed)
     for s in sl.exhaustive(t, 3):
         f = set(sem.findings(t, s))
         out['slices'] += 1
         out['findings'] += len(f)
-        bad = len(f - sym)
+        bad = sum(1 for k in f if not an.correct(symd, k))
         out['false'] += bad
         out['slices_false'] += int(bad > 0)
+        t0 = time.perf_counter()
+        c = set(an.confirmed_findings(t, s))
+        out['lift_seconds'] += time.perf_counter() - t0
+        out['confirmed'] += len(c)
+        out['confirmed_false'] += sum(1 for k in c if not an.correct(symd, k))
+        out['true_lost'] += sum(1 for k in f if an.correct(symd, k) and k not in c)
+        inner = [x for x in t.nodes_of(s) if t.anc[x] & s and t.desc[x] & s]
+        if inner:
+            s2 = s & ~t.nbit[rng.choice(inner)]
+            f2 = set(sem.findings(t, s2))
+            out['nc_slices'] += 1
+            out['nc_findings'] += len(f2)
+            out['nc_false'] += sum(1 for k in f2 if not an.correct(symd, k))
     return out
 
 

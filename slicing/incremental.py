@@ -15,13 +15,15 @@ from .model import OUTPUT, Team
 ATTRIBUTE_ONLY = ('oracle', 'kind', 'route', 'join')
 
 
-def slice_result(team: Team, s: int, max_runs=200_000) -> frozenset:
+def slice_result(team: Team, s: int, max_runs=200_000, deadline=None) -> frozenset:
+    if deadline is not None and time.perf_counter() > deadline:
+        raise sem.RunLimit('deadline')
     static = sem.static_findings(team)
-    return frozenset(k for k in sem.findings(team, s, max_runs) if k not in static)
+    return frozenset(k for k in sem.findings(team, s, max_runs, deadline=deadline) if k not in static)
 
 
-def full(team: Team, family: list[int]) -> dict:
-    return {s: slice_result(team, s) for s in family}
+def full(team: Team, family: list[int], deadline=None) -> dict:
+    return {s: slice_result(team, s, deadline=deadline) for s in family}
 
 
 def dependency(old: Team, new: Team, change: dict) -> tuple[int, str]:
@@ -68,7 +70,7 @@ def affected(team: Team, s: int, D: int, mode: str, old: Team | None = None) -> 
     return bool(s & closure)
 
 
-def recertify(old: Team, new: Team, change: dict, old_results: dict, new_family: list[int]) -> dict:
+def recertify(old: Team, new: Team, change: dict, old_results: dict, new_family: list[int], deadline=None) -> dict:
     """Re-evaluate only affected slices; others reuse their stored dynamic findings."""
     t0 = time.perf_counter()
     D, mode = dependency(old, new, change)
@@ -77,6 +79,6 @@ def recertify(old: Team, new: Team, change: dict, old_results: dict, new_family:
         if s in old_results and sl.is_convex(old, s) and not affected(new, s, D, mode, old):
             res[s] = old_results[s]
         else:
-            res[s] = slice_result(new, s)
+            res[s] = slice_result(new, s, deadline=deadline)
             redone += 1
     return {'results': res, 'redone': redone, 'total': len(new_family), 'seconds': time.perf_counter() - t0}

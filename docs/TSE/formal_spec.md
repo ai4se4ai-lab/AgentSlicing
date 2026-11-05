@@ -90,7 +90,10 @@ Special cases: H_N = T (no outside), so F(N) = Sym(T). H_∅ is the pure face-va
 world: c(v) = cone(v) = In ∪ ⋃_{u∈anc(v)} gua(u).
 
 **Definition 6 (Agent-level analysis AL).** AL = ⋃_{v∈N} F({v}), the findings of all
-singleton slices. *Proposition 1 (characterization):* F({v}) consists of
+singleton slices. *Proposition 1 (characterization, as proved in the paper):* F(∅) ⊆ F({v}), and every
+key of F({v}) ∖ F(∅) has a witness in which v does not apply or v is a switch (a join's
+singleton sees the union of its inputs, so join policies never matter at agent level).
+The earlier informal reading was: F({v}) consists of
 (i) F(∅): requirements not claimed by any ancestor and goals not claimed by any
 ancestor of ω; (ii) if v's own requirements are unmatched, the downstream
 requirements and goals that only v claimed; (iii) if v is an agent, the critical
@@ -159,8 +162,10 @@ c_{σ'}(v,ρ') ⊆ c_σ(v,ρ).
 
 **T2 Slice abstraction.** (a) Replacing σ by a macro component whose behavior is
 Beh_σ leaves Sym unchanged (keys at outside nodes and ω; member keys are reported
-by the macro). (b) If a declared contract is valid and the abstracted team is safe,
-then T is safe. (c) A single-pair (A,G) contract cannot be exact (counterexample:
+by the macro). (b) (f = 0) If a declared contract is valid and the team in which σ is
+replaced by a component that delivers G^d whenever its entries carry A^d (and behaves
+arbitrarily otherwise) is safe, then T is safe. [refined while writing the proof:
+faults are handled only by the exact relation of (a)/(d)] (c) A single-pair (A,G) contract cannot be exact (counterexample:
 two independent members). (d) For a partition slicing with acyclic quotient, Sym(T)
 equals the symptoms of the quotient team of macros evaluated in topological order;
 with a cyclic quotient, flat (A,G) macro contracts admit circular reasoning that is
@@ -186,7 +191,9 @@ in F(σ) for every slice σ ∋ v (live teams).
 **T5 Localization.** (a) If κ ∈ Sym(T), MMS(κ) is nonempty. (b) MMS(κ) need not be a
 singleton set (S2 with two branches has two minimal slices); it is unique iff the
 intersection of the minimal manifesting slices manifests κ. (c) For every witness
-run of κ in T, the hull of its contributing lineage to the symptom node manifests κ,
+run of κ in T, the hull of its contributing lineage to the symptom node manifests κ
+(for a robust key: κ or the stronger goal key of the same property; refined while
+writing the proof, the alternative never occurred in E1),
 so depth(κ) ≤ the smallest witness-hull size. (d) Monotonicity: if κ ∈ F(σ) and its
 witness lifts to H_σ' (σ ⊆ σ'), then κ ∈ F(σ'); in particular when σ'∖σ contains no
 switch and no all/quorum join. (e) Monotonicity fails in general (counterexample with

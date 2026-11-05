@@ -1,16 +1,16 @@
 {
  "env": {
-  "commit": "80e77a2ebf68b6c2930da2be5da030a024eddf67",
+  "commit": "c223880de23228fc34ff61511d9bea30d9939300",
   "dirty_worktree": true,
-  "python": "3.13.14",
-  "platform": "Windows-11-10.0.26100-SP0",
-  "numpy": "2.2.5",
-  "scipy": "1.16.2",
+  "python": "3.12.3",
+  "platform": "Linux-6.17.0-1029-nvidia-aarch64-with-glibc2.39",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
   "z3": "5.3.3",
-  "cpus": 22,
-  "started": "2026-11-04T15:38:55"
+  "cpus": 20,
+  "started": "2026-11-04T18:13:40"
  },
- "seconds": 63.4034698009491,
+ "seconds": 20.201404809951782,
  "wild": {
   "teams": 20000,
   "checked": {
@@ -18,7 +18,9 @@
    "hybrid_vs_oracle": 20000,
    "static_in_singletons": 20000,
    "recovery": 20000,
-   "witness_hull": 20000,
+   "confirmed_vs_oracle": 20000,
+   "confirmed_sound": 20000,
+   "confirmed_monotone": 20000,
    "whole_exact": 20000,
    "quotient": 20000,
    "incremental": 20000,
@@ -29,7 +31,9 @@
    "hybrid_vs_oracle": 0,
    "static_in_singletons": 0,
    "recovery": 0,
-   "witness_hull": 0,
+   "confirmed_vs_oracle": 0,
+   "confirmed_sound": 0,
+   "confirmed_monotone": 0,
    "whole_exact": 0,
    "quotient": 0,
    "incremental": 0,
@@ -43,7 +47,9 @@
    "hybrid_vs_oracle": 1120,
    "static_in_singletons": 1120,
    "recovery": 1120,
-   "witness_hull": 1120,
+   "confirmed_vs_oracle": 1120,
+   "confirmed_sound": 1120,
+   "confirmed_monotone": 1120,
    "whole_exact": 1120,
    "quotient": 1120,
    "incremental": 1120
@@ -53,7 +59,9 @@
    "hybrid_vs_oracle": 0,
    "static_in_singletons": 0,
    "recovery": 0,
-   "witness_hull": 0,
+   "confirmed_vs_oracle": 0,
+   "confirmed_sound": 0,
+   "confirmed_monotone": 0,
    "whole_exact": 0,
    "quotient": 0,
    "incremental": 0
@@ -61,8 +69,11 @@
  },
  "reduction": {
   "formulas": 500,
-  "satisfiable": 486,
-  "disagreements": 0
+  "satisfiable": 379,
+  "disagreements": 0,
+  "robust_disagreements": 0,
+  "robust_np_disagreements": 0,
+  "reach_disagreements": 0
  },
  "fooling": {
   "S4": {

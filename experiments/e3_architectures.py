@@ -20,15 +20,16 @@ VARIANTS = {
 
 def analyse(t: Team):
     sym = sem.symptoms(t)
-    rep = an.check(t, sl.exhaustive(t, 5))
-    al = set(an.agent_level(t)['findings'])
+    rep = an.check_confirmed(t, sl.exhaustive(t, 5))
+    al = set(an.check_confirmed(t, sl.singleton(t))['findings'])
+    must = set(an.must_analysis(t)['findings'])
     out = []
     for k in sorted(sym):
         f = rep['findings'].get(k)
         depth = None if f is None else (1 if f['static'] else min(sl.size(s) for s in f['minimal']))
         out.append({'key': list(k), 'depth': depth, 'class': f and f['class'],
                     'minimal': [t.nodes_of(s) for s in f['minimal']] if f else None, 'agent_level': k in al,
-                    'lint': k in an.lint(t)['findings'], 'smell': k in an.smells(t)['findings']})
+                    'lint': k in an.lint(t)['findings'], 'smell': k in an.smells(t)['findings'], 'must': k in must})
     return {'safe': sem.is_safe(sym), 'clean': not sym, 'symptoms': out, 'nodes': len(t.order)}
 
 
