@@ -1381,13 +1381,22 @@ In the Chain, every fault-free run meets every requirement and delivers both goa
 
 \subsection{From Models to Runs}
 
-The guarantee we want is about all behaviors that respect the contracts. In such a behavior a component may know more than its content: an agent may happen to see a fact nobody guaranteed.
+A run assumes that a component knows exactly what it was told: its content, plus any evidence it declared. A real agent may know more. It may happen to hold a fact that nobody guaranteed, for example from its own training. We want conclusions that hold for every behavior that respects the contracts, so we describe such behaviors explicitly and then show that plain runs are enough.
 
 \begin{definition}[Contract-respecting model]\label{def:model}
-A \emph{model} of $T$ is a run $(W,C,F)$ together with evidence sets $E(v)\supseteq c(v)\cup\decl(v)$ for reached nodes, where contents are computed as in Definition~\ref{def:run} except that $v$ applies if $\req(v)\subseteq E(v)$ and its oracle has not failed. Its keys are those of Definition~\ref{def:sym} with $E(v)$ in place of $c(v)\cup\decl(v)$ (and $E(\omega)$ in place of $c(\omega)$).
+A \emph{model} of a team $T$ is a run $(W,C,F)$ together with an \emph{evidence set} $E(v)$ for every reached node $v$, where $E(v)\supseteq c(v)\cup\decl(v)$. The set $E(v)$ is everything $v$ knows when it acts: what it was told, what it declared, and possibly more. Two things change compared with Definition~\ref{def:run}.
+\begin{itemize}
+\item $v$ applies if $\req(v)\subseteq E(v)$ (instead of $\req(v)\subseteq c(v)\cup\decl(v)$) and its oracle has not failed.
+\item The keys of Definition~\ref{def:sym} are read with $E(v)$ in place of $c(v)\cup\decl(v)$, and with $E(\omega)$ in place of $c(\omega)$.
+\end{itemize}
+Contents and outputs are otherwise computed as in a run. A run is the special case $E(v)=c(v)\cup\decl(v)$.
 \end{definition}
 
-Models differ from runs only by extra evidence. This is a modeling choice: we let a component know more than it was told, but not less. The following lemmas show that runs, and only a few of them, suffice.
+\begin{example}[A model]\label{ex:model}
+Take the Chain with $F=\{g\}$, so DV's model has failed and no \p{tests} reach TS. In the run, TS knows nothing and cannot apply, so \p{tests\_pass} is lost. A model may instead let TS know \p{tests} anyway, with $E(\p{TS})=\{\p{tests}\}$. Then TS applies and establishes \p{tests\_pass}, although no component guaranteed \p{tests}.
+\end{example}
+
+Models differ from runs only by this extra evidence. It is a modeling choice: a component may know more than it was told, but never less. Extra evidence can only make components apply, so it can hide a defect but never create one. The run with the least evidence is therefore the worst case, and the following lemmas show that runs, and only a few of them, suffice.
 
 \begin{lemma}[Worst case]\label{lem:w}
 A key is produced by some model if and only if it is produced by some run.
@@ -1399,8 +1408,8 @@ Content is monotone in the contributor sets and antitone in the failure set. To 
 
 The idea behind Lemma~\ref{lem:w} is that more evidence can only make more components apply, which only adds properties downstream. The minimal evidence $c(v)\cup\decl(v)$ is the worst case. Proofs are in Appendix~\ref{app:proofs}.
 
-\begin{example}[Models and the worst case]\label{ex:model}
-In the Chain with $F=\{g\}$, a contract-respecting model may let TS happen to know \p{tests} even though DV failed, so that TS applies and delivers \p{tests\_pass}. Such extra evidence can only make the team look safer, so the run, in which TS knows only what it received, is the worst case (Lemma~\ref{lem:w}). Likewise, in the Fork-join team a run in which RG uses both branches contains more than either one-branch run, so it suffices to consider the runs in which RG uses exactly one branch (Lemma~\ref{lem:m}). In the Chain, $\min(f,|\Orc|)=1$, so it suffices to fail $g$.
+\begin{example}[Using the lemmas]\label{ex:lemmas}
+In the example above, the model in which TS knows \p{tests} hides the defect, and the run exposes it (Lemma~\ref{lem:w}). In the Fork-join team, a run in which RG uses both branches contains more than either one-branch run, so it suffices to consider the runs in which RG uses exactly one branch (Lemma~\ref{lem:m}). In the Chain, $\min(f,|\Orc|)=1$, so it suffices to fail $g$.
 \end{example}
 
 % =====================================================================
