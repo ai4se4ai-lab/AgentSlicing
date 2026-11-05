@@ -456,6 +456,96 @@ def e4b():
     macro('DepthSweepSlicesKMax', slices[K], '.0f')
 
 
+
+# ------------------------------------------------------------------ teaser figure (E8)
+def teaser():
+    """Two-panel opening figure from every E8 team, styled like the scalability figure: against team size,
+    (a) share of defect symptoms found and (b) share of hidden symptoms localized to exactly a minimal
+    confirming slice, one line per method with a 95% cluster-bootstrap band and one shared legend.
+    """
+    d8 = load('e8_mutation')
+    if not d8:
+        return
+    unclean = [r for r in d8['rows'] if not r.get('skipped') and r.get('symptoms')]
+    keys = [(r, k, dd) for r in unclean for k, dd in r['depth'].items()]
+    sizes = sorted({r['nodes'] for r in unclean})
+    hidden = lambda dd: dd is None or dd >= 2
+    rng = np.random.default_rng(20261104)   # local stream: do not perturb the shared RNG used by later stages
+
+    def ci(items, value):
+        """Mean of value over items, with a 95% bootstrap CI resampling host teams (topology, size, seed)."""
+        by = defaultdict(lambda: [0.0, 0])
+        for r, k, dd in items:
+            v = value(r, k, dd)
+            if v is not None:
+                c = by[(r['topo'], r['n'], r['seed'])]
+                c[0] += float(v)
+                c[1] += 1
+        if not by:
+            return (math.nan, math.nan, math.nan)
+        s = np.array([v[0] for v in by.values()])
+        c = np.array([v[1] for v in by.values()])
+        idx = rng.integers(0, len(s), (4000, len(s)))
+        m = s[idx].sum(axis=1) / c[idx].sum(axis=1)
+        return tuple(100 * x for x in (s.sum() / c.sum(), np.quantile(m, 0.025), np.quantile(m, 0.975)))
+
+    found = lambda c: (lambda r, k, dd: r['checkers'][c]['per_key'][k]['found'])
+    def sl_exact(r, k, dd):
+        p = r['checkers']['SL']['per_key'][k]
+        return p.get('exact') if p['found'] else None
+    shrink = lambda f: (lambda r, k, dd: r['shrink'][k][f] if k in r.get('shrink', {}) else None)
+    # method -> (legend, style); the same style marks the same method in both panels
+    M = {
+        'SL':     ('Agent slicing (confirmed)', 'cA,thick,solid,mark=*'),
+        'shrink': ('Agent slicing + shrinking', 'cA!50!black,thick,densely dashed,mark=diamond*'),
+        'k2':     ('Slices of $\\le$2 agents only', 'cC,semithick,dashdotted,mark=triangle*'),
+        'B1':     ('Agent-level check', 'cB,semithick,dashed,mark=square*'),
+        'B6':     ('Global must-analysis', 'cG,thick,densely dotted,mark=x,mark size=3pt'),
+        'dev':    ('Deviating agents of a witness', 'cE,semithick,solid,mark=pentagon*'),
+        'B5':     ('Smell catalogue', 'cD,semithick,dotted,mark=diamond*'),
+        'B4':     ('Structural lint', 'gray,semithick,dashed,mark=o'),
+    }
+    detect = {'SL': found('SL'), 'k2': lambda r, k, dd: dd is not None and dd <= 2, 'B1': found('B1'),
+              'B5': found('B5'), 'B4': found('B4'), 'B6': found('B6')}   # B6 last: drawn on top of SL at ~100%
+    localize = {'shrink': shrink('shrink_exact'), 'SL': sl_exact, 'dev': shrink('dev_exact'),
+                'B6': lambda r, k, dd: 0.0 if r['checkers']['B6']['per_key'][k]['found'] else None}  # reports one node; a hidden symptom's minimal slice has >= 2
+
+    def panel(metrics, only_hidden):
+        out = []
+        for key, fn in metrics.items():
+            col = M[key][1].split(',')[0]
+            stats_ = [ci([(r, k, dd) for r, k, dd in keys if r['nodes'] == s and (hidden(dd) or not only_hidden)], fn) for s in sizes]
+            mean, lo, hi = zip(*stats_)
+            out.append(f'\\addplot[fill={col},fill opacity=0.15,draw=none,forget plot] coordinates '
+                       f'{{{coords(list(sizes) + sizes[::-1], list(lo) + list(hi)[::-1])}}} -- cycle;')
+            out.append(f'\\addplot[mark size=1.6pt,{M[key][1]},mark options={{solid}},forget plot] coordinates {{{coords(sizes, mean)}}};')
+        return out
+
+    pooled = lambda fn, only_hidden=False: ci([(r, k, dd) for r, k, dd in keys if hidden(dd) or not only_hidden], fn)[0] / 100
+    macro('TeaserKeys', len(keys))
+    macro('TeaserTeams', len(unclean))
+    macro('TeaserSizeMin', sizes[0])
+    macro('TeaserSizeMax', sizes[-1])
+    macro('TeaserAgentShare', pooled(found('B1')), 'pct')
+    macro('TeaserSliceShareTwo', pooled(detect['k2']), 'pct')
+    macro('TeaserSlicingShare', pooled(found('SL')), 'pct')
+    macro('TeaserLintShare', pooled(found('B4')), 'pct')
+    macro('TeaserSmellShare', pooled(found('B5')), 'pct')
+
+    legend = [f'\\addlegendimage{{mark size=1.6pt,{M[k][1]},mark options={{solid}}}}\\addlegendentry{{{M[k][0]}}}' for k in M]
+    ax = ('width=0.37\\textwidth,height=5.2cm,xmode=log,log basis x=2,'
+          f'xtick={{{",".join(map(str, sizes))}}},xticklabels={{{",".join(map(str, sizes))}}},'
+          f'xmin={sizes[0] * 0.88:.2f},xmax={sizes[-1] * 1.12:.2f},ymin=-4,ymax=104,ytick={{0,25,50,75,100}},'
+          'xlabel={team size (nodes)},grid=major,grid style={gray!20},tick label style={font=\\footnotesize},'
+          'label style={font=\\footnotesize},title style={font=\\footnotesize}')
+    FIGS['figTeaser'] = (
+        '\\begin{tikzpicture}\n'
+        f'\\begin{{axis}}[{ax},title={{(a) defect symptoms found}},ylabel={{share of symptoms (\\%)}},name=left]\n'
+        + '\n'.join(panel(detect, False)) + '\n\\end{axis}\n'
+        f'\\begin{{axis}}[{ax},title={{(b) hidden symptoms localized exactly}},at={{(left.east)}},anchor=west,xshift=1.2cm,'
+        'legend pos=outer north east,legend cell align=left,legend style={font=\\scriptsize,draw=none,fill=none}]\n'
+        + '\n'.join(legend) + '\n' + '\n'.join(panel(localize, True)) + '\n\\end{axis}\n\\end{tikzpicture}')
+
 # ------------------------------------------------------------------ E8: mutation benchmark
 def e8():
     d = load('e8_mutation')
@@ -880,6 +970,6 @@ END = '% END GENERATED RESULTS'
 
 
 if __name__ == '__main__':
-    for f in (rex, e1, e2, e4b, e8, e3, e5, e6, e7):
+    for f in (rex, e1, e2, e4b, e8, teaser, e3, e5, e6, e7):
         f()
     write_macros()

@@ -37,7 +37,7 @@
 \lstset{basicstyle=\normalfont\fontsize{8}{10}\selectfont\ttfamily\color{listingink},
   keywordstyle=\bfseries\color{listingaccent},
   stringstyle=\color{listingaccent},
-  commentstyle=\itshape\color{listingmuted},
+  commentstyle=\color{listingmuted},
   columns=fullflexible,keepspaces=true,showstringspaces=false,
   breaklines=true,breakatwhitespace=false,tabsize=2,
   numbers=left,stepnumber=1,numbersep=8pt,
@@ -683,6 +683,15 @@
 \newcommand{\resSlopewindowTwomixed}{1.88}
 \newcommand{\resTeamsfree}{270}
 \newcommand{\resTeamsmixed}{90}
+\newcommand{\resTeaserAgentShare}{63.9\%}
+\newcommand{\resTeaserKeys}{3{,}863}
+\newcommand{\resTeaserLintShare}{31.0\%}
+\newcommand{\resTeaserSizeMax}{32}
+\newcommand{\resTeaserSizeMin}{8}
+\newcommand{\resTeaserSliceShareTwo}{88.5\%}
+\newcommand{\resTeaserSlicingShare}{99.9\%}
+\newcommand{\resTeaserSmellShare}{27.0\%}
+\newcommand{\resTeaserTeams}{1{,}345}
 \newcommand{\resTimeBigSLfree}{46.82}
 \newcommand{\resTimeBigSLmixed}{60.00}
 \newcommand{\resTimeBigbandOnefree}{0.09}
@@ -997,13 +1006,53 @@ mixed & 200 & 0.0 & 100.0 & 40.0 & 100.0 & 99.0 & 80.0 & 100.0 & 0.15 \\}
 \addlegendentry{B2 whole team}
 \end{axis}
 \end{tikzpicture}}
+\newcommand{\figTeaser}{%
+\begin{tikzpicture}
+\begin{axis}[width=0.37\textwidth,height=5.2cm,xmode=log,log basis x=2,xtick={8,12,22,32},xticklabels={8,12,22,32},xmin=7.04,xmax=35.84,ymin=-4,ymax=104,ytick={0,25,50,75,100},xlabel={team size (nodes)},grid=major,grid style={gray!20},tick label style={font=\footnotesize},label style={font=\footnotesize},title style={font=\footnotesize},title={(a) defect symptoms found},ylabel={share of symptoms (\%)},name=left]
+\addplot[fill=cA,fill opacity=0.15,draw=none,forget plot] coordinates {(8,100) (12,100) (22,99.4371) (32,100) (32,100) (22,100) (12,100) (8,100)} -- cycle;
+\addplot[mark size=1.6pt,cA,thick,solid,mark=*,mark options={solid},forget plot] coordinates {(8,100) (12,100) (22,99.8193) (32,100)};
+\addplot[fill=cC,fill opacity=0.15,draw=none,forget plot] coordinates {(8,91.9832) (12,89.1408) (22,78.5073) (32,81.8669) (32,88.948) (22,87.805) (12,95.2619) (8,96.5186)} -- cycle;
+\addplot[mark size=1.6pt,cC,semithick,dashdotted,mark=triangle*,mark options={solid},forget plot] coordinates {(8,94.3966) (12,92.3429) (22,83.1075) (32,85.4145)};
+\addplot[fill=cB,fill opacity=0.15,draw=none,forget plot] coordinates {(8,67.1161) (12,57.3767) (22,53) (32,56.0377) (32,69.5009) (22,65.2737) (12,68.1005) (8,76.2583)} -- cycle;
+\addplot[mark size=1.6pt,cB,semithick,dashed,mark=square*,mark options={solid},forget plot] coordinates {(8,71.6595) (12,62.7429) (22,59.1689) (32,62.7492)};
+\addplot[fill=cD,fill opacity=0.15,draw=none,forget plot] coordinates {(8,17.1734) (12,26.4341) (22,19.5971) (32,22.7219) (32,35.1872) (22,31.4382) (12,38.5899) (8,28.0188)} -- cycle;
+\addplot[mark size=1.6pt,cD,semithick,dotted,mark=diamond*,mark options={solid},forget plot] coordinates {(8,22.1983) (12,32.2286) (22,25.2936) (32,28.8562)};
+\addplot[fill=gray,fill opacity=0.15,draw=none,forget plot] coordinates {(8,30.3534) (12,24.193) (22,23.4007) (32,28.6427) (32,38.6839) (22,32.9529) (12,33.2909) (8,39.6147)} -- cycle;
+\addplot[mark size=1.6pt,gray,semithick,dashed,mark=o,mark options={solid},forget plot] coordinates {(8,34.6983) (12,28.4571) (22,27.8229) (32,33.4732)};
+\addplot[fill=cG,fill opacity=0.15,draw=none,forget plot] coordinates {(8,99.6458) (12,99.6324) (22,100) (32,99.4344) (32,100) (22,100) (12,100) (8,100)} -- cycle;
+\addplot[mark size=1.6pt,cG,thick,densely dotted,mark=x,mark size=3pt,mark options={solid},forget plot] coordinates {(8,99.8922) (12,99.8857) (22,100) (32,99.7901)};
+\end{axis}
+\begin{axis}[width=0.37\textwidth,height=5.2cm,xmode=log,log basis x=2,xtick={8,12,22,32},xticklabels={8,12,22,32},xmin=7.04,xmax=35.84,ymin=-4,ymax=104,ytick={0,25,50,75,100},xlabel={team size (nodes)},grid=major,grid style={gray!20},tick label style={font=\footnotesize},label style={font=\footnotesize},title style={font=\footnotesize},title={(b) hidden symptoms localized exactly},at={(left.east)},anchor=west,xshift=1.2cm,legend pos=outer north east,legend cell align=left,legend style={font=\scriptsize,draw=none,fill=none}]
+\addlegendimage{mark size=1.6pt,cA,thick,solid,mark=*,mark options={solid}}\addlegendentry{Agent slicing (confirmed)}
+\addlegendimage{mark size=1.6pt,cA!50!black,thick,densely dashed,mark=diamond*,mark options={solid}}\addlegendentry{Agent slicing + shrinking}
+\addlegendimage{mark size=1.6pt,cC,semithick,dashdotted,mark=triangle*,mark options={solid}}\addlegendentry{Slices of $\le$2 agents only}
+\addlegendimage{mark size=1.6pt,cB,semithick,dashed,mark=square*,mark options={solid}}\addlegendentry{Agent-level check}
+\addlegendimage{mark size=1.6pt,cG,thick,densely dotted,mark=x,mark size=3pt,mark options={solid}}\addlegendentry{Global must-analysis}
+\addlegendimage{mark size=1.6pt,cE,semithick,solid,mark=pentagon*,mark options={solid}}\addlegendentry{Deviating agents of a witness}
+\addlegendimage{mark size=1.6pt,cD,semithick,dotted,mark=diamond*,mark options={solid}}\addlegendentry{Smell catalogue}
+\addlegendimage{mark size=1.6pt,gray,semithick,dashed,mark=o,mark options={solid}}\addlegendentry{Structural lint}
+\addplot[fill=cA!50!black,fill opacity=0.15,draw=none,forget plot] coordinates {(8,100) (12,100) (22,97.2642) (32,95.6693) (32,99.6645) (22,100) (12,100) (8,100)} -- cycle;
+\addplot[mark size=1.6pt,cA!50!black,thick,densely dashed,mark=diamond*,mark options={solid},forget plot] coordinates {(8,100) (12,100) (22,98.913) (32,97.9381)};
+\addplot[fill=cA,fill opacity=0.15,draw=none,forget plot] coordinates {(8,92.7417) (12,83.2351) (22,77.1047) (32,70.863) (32,83.6513) (22,89.2944) (12,93.8054) (8,99.3468)} -- cycle;
+\addplot[mark size=1.6pt,cA,thick,solid,mark=*,mark options={solid},forget plot] coordinates {(8,96.5779) (12,88.8199) (22,83.4239) (32,77.6632)};
+\addplot[fill=cE,fill opacity=0.15,draw=none,forget plot] coordinates {(8,0) (12,0.293255) (22,0) (32,0) (32,1.14943) (22,1.77528) (12,3.37838) (8,4.23753)} -- cycle;
+\addplot[mark size=1.6pt,cE,semithick,solid,mark=pentagon*,mark options={solid},forget plot] coordinates {(8,1.52091) (12,1.5528) (22,0.543478) (32,0.343643)};
+\addplot[fill=cG,fill opacity=0.15,draw=none,forget plot] coordinates {(8,0) (12,0) (22,0) (32,0) (32,0) (22,0) (12,0) (8,0)} -- cycle;
+\addplot[mark size=1.6pt,cG,thick,densely dotted,mark=x,mark size=3pt,mark options={solid},forget plot] coordinates {(8,0) (12,0) (22,0) (32,0)};
+\end{axis}
+\end{tikzpicture}}
 % END GENERATED RESULTS
 
 \begin{document}
 
 \title[Agent Slicing: Localizing Blind Spots in Multi-Agent AI Teams]{Agent Slicing: Localizing Blind Spots in Declared-Contract Models of Multi-Agent AI Teams}
 
-\author{Anonymous Authors}
+\author{Majid Babaei}
+\orcid{0000-0002-1394-4030}
+\affiliation{%
+  \institution{University of the Fraser Valley}
+  \country{Canada}}
+\email{majid.babaei@ufv.ca}
 
 \begin{abstract}
 Software teams increasingly build systems in which several AI agents hand work to one another. Such a team can be unsafe even when every agent meets its own contract, because the defect lives in a relationship among agents: a join that releases on the first approval, two reviewers that share one model, a test gate whose input was written by a fallible agent. We study this problem on \emph{declared-contract models} of agent teams: directed acyclic graphs of agents and deterministic gates with requirements, guarantees, fork, switch, join policies (all, any, quorum) and model failures. We introduce \emph{agent slicing}. A slice is a convex, possibly disconnected, set of agents analyzed exactly while the rest of the team is taken at face value. A slice reports a defect only when its witness \emph{lifts} to a run of the whole team, so reported findings are never false alarms with respect to the model. The size of the smallest slice that confirms a defect is its \emph{depth}; the smallest confirming slices localize it, and depth at least two means that an agent-by-agent check does not report it. We prove that confirmed findings are sound and monotone in the slice, when slice abstraction is compositional (partitions with an acyclic quotient and a global failure set), and that a change invalidates only a computable set of slices, and we give the complexity of each question. On \resMutTeams{} teams with defects induced by random engineering changes, \resMutHiddenShare{} of the defect symptoms have depth at least two; for \resMutALDeclaredClean{} of the \resMutUnclean{} defective teams an agent-by-agent check reports nothing at all. A linear global must-analysis detects \resMutRecallHiddenBSix{} of the hidden symptoms but \resMutFalseRateBSix{} of its findings are false and it names only the symptom node. Confirmed slice analysis detects \resMutRecallHiddenSL{} of them with no false finding; shrinking a whole-team witness slice by slice returns an exact minimal slice for \resMutShrinkExact{} of them and the combined slicing strategy for \resMutExactSL. These rates depend on team size and on the mix of changes. No language model is run, and we make no claim that any model meets a contract.
@@ -1025,9 +1074,20 @@ Software teams increasingly build systems in which several AI agents hand work t
 \end{CCSXML}
 \ccsdesc[500]{Software and its engineering~Model checking}
 \ccsdesc[500]{Computing methodologies~Multi-agent systems}
-\keywords{Multi-agent systems, large language models, assume-guarantee reasoning, contracts, compositional verification, fault localization}
 
 \maketitle
+
+% Keep Figure 1 directly after CCS Concepts.
+\begin{figure}[H]
+\centering
+\begin{adjustbox}{max width=\linewidth}
+\figTeaser
+\end{adjustbox}
+\caption{Detection and localization of defects induced by random engineering changes, by team size; mean and 95\% bootstrap band over teams. Hidden symptoms are those no agent-level check can report.}
+\label{fig:teaser}
+\Description{Two plots against team size from 8 to 32 nodes. (a) Share of defect symptoms found: confirmed agent slicing and the global must-analysis are near 100 percent, slices of at most two agents near 85 to 95 percent, the agent-level check near 60 to 70 percent, and the structural lint and smell catalogue near 30 percent. (b) Share of hidden symptoms localized to exactly a minimal slice: agent slicing with shrinking stays near 100 percent, confirmed agent slicing falls from about 97 to about 78 percent, and the deviating agents of a whole-team witness and the global must-analysis stay near zero.}
+\end{figure}
+
 
 % =====================================================================
 \section{Introduction}
@@ -1129,6 +1189,8 @@ Assume-guarantee reasoning gives the vocabulary: each component assumes somethin
 \Description{Agent slicing on a chain and on a branching team. Highlighted convex subsets show whole-team, individual-agent, and intermediate analyses.}
 \end{figure}
 
+\textbf{What slicing buys.} Fig.~\ref{fig:teaser} shows the two benefits on \resTeaserTeams{} defective teams of \resTeaserSizeMin--\resTeaserSizeMax{} nodes, obtained by applying random engineering changes to teams that were correct by construction (\resTeaserKeys{} defect symptoms; Section~\ref{sec:rq2}). First, slicing \emph{exposes} defects that checks of single agents cannot see (Fig.~\ref{fig:teaser}a). An agent-level check finds \resTeaserAgentShare{} of the symptoms, a structural lint \resTeaserLintShare{} and a smell catalogue \resTeaserSmellShare. Slices of at most two agents already find \resTeaserSliceShareTwo, and confirmed agent slicing finds \resTeaserSlicingShare, at every team size. Because every slice finding is confirmed on the whole team, none of these is a false alarm; a global must-analysis finds almost as many symptoms, but \resMutFalseRateBSix{} of its findings are false. Second, slicing \emph{localizes} a defect: it names the smallest set of agents whose relationship is wrong (Fig.~\ref{fig:teaser}b). Shrinking a confirmed witness slice by slice returns exactly such a minimal set for almost every hidden symptom, and confirmed slicing alone, without a whole-team run, does so for most of them, less often on larger teams. The must-analysis names only the node where the symptom appears, and the agents that deviate in a whole-team witness almost never form a minimal set.
+
 We study three research questions.
 
 \textbf{RQ1, Formal foundation and expressiveness.} \emph{Can an agent slice be defined as a first-class contract such that slice-level reasoning is sound and compositional, recovers agent-level analysis as a special case, and is strictly more expressive than it?}
@@ -1143,10 +1205,10 @@ We study three research questions.
 \item \emph{Slices as analyzable components}: convex slices, a hybrid semantics whose approximation we characterize, confirmation by lifting, per-exit derived slice contracts, emergent obligations as predicates over witnesses, and slicings with an explicit acyclic-quotient condition (Section~\ref{sec:approach}).
 \item The notions of \emph{depth} and \emph{minimal confirming slice}, and a taxonomy of blind spots (A1--A4, S1--S6) defined by the mechanism of their witness.
 \item Eight results (Proposition~\ref{prop:al}, Theorems~\ref{thm:abs}--\ref{thm:loc}, Proposition~\ref{prop:overlap}, Theorems~\ref{thm:cx} and~\ref{thm:inc}) with paper proofs, some steps of which are sketched (Appendix~\ref{app:proofs}). Per-node steps are SMT obligations, and every result with a computational statement is checked against brute-force oracles on small teams.
-\item An implementation, three benchmarks (injected defects, defects induced by random engineering changes, encodings of nine published designs), seven baselines, and a replication package that regenerates every number in the paper.
+\item An implementation, three benchmarks (injected defects, defects induced by random engineering changes, encodings of nine published designs), six baselines, and a replication package that regenerates every number in the paper.
 \end{itemize}
 
-\textbf{Main results.} On teams with defects induced by random engineering changes (8--32 nodes), \resMutHiddenShare{} of the \resMutKeys{} symptoms have depth at least two. That an agent-by-agent check finds none of these is true by definition of depth; the measured part is how many there are, and that for \resMutALDeclaredClean{} of the \resMutUnclean{} defective teams (\resMutALDeclaredCleanUnsafe{} of them unsafe) such a check reports nothing at all. A global must-analysis finds \resMutRecallHiddenBSix{} of the hidden symptoms in linear time, but \resMutFalseRateBSix{} of its findings are false and it localizes only to the symptom node. Confirmed slice analysis finds \resMutRecallHiddenSL{} of them with no false finding. For localization, the best pipeline in our data is: detect (whole team or must-analysis), confirm, then shrink the witness slice by slice; it returns an exact minimal confirming slice for \resMutShrinkExact{} of hidden symptoms at about \resMutShrinkChecks{} slice checks each. The combined slicing strategy, which needs no whole-team run, is exact for \resMutExactSL{}, and the deviation set of a whole-team witness for \resMutDevExact. The hidden share and the strategy's exactness change with team size (Section~\ref{sec:rq2}). Depth equals the number of hand-offs between the interacting agents plus two for the injected defect families, independently of host size. Small slices scale to thousands of agents; on choice-rich teams both large slices and whole-team checking hit time limits.
+\textbf{Main results.} We generated teams that are correct by construction and applied one to three random engineering changes to each (8--32 nodes); whatever defects resulted are the ground truth. Of the \resMutKeys{} defect symptoms, \resMutHiddenShare{} have depth at least two. That an agent-by-agent check misses these is true by definition of depth; what we measure is how many there are. For \resMutALDeclaredClean{} of the \resMutUnclean{} defective teams (\resMutALDeclaredCleanUnsafe{} of them unsafe), an agent-by-agent check reports nothing at all and would declare the team clean. Confirmed slice analysis finds \resMutRecallHiddenSL{} of the hidden symptoms with no false finding. A global must-analysis also finds \resMutRecallHiddenBSix{} of them in linear time, but \resMutFalseRateBSix{} of its findings are false and it only points at the node where the symptom appears. For localization, the best pipeline in our data is: detect (whole team or must-analysis), confirm, then shrink the witness slice by slice. It returns an exact minimal confirming slice for \resMutShrinkExact{} of hidden symptoms, at about \resMutShrinkChecks{} slice checks each. The combined slicing strategy, which needs no whole-team run, is exact for \resMutExactSL{}, and the deviation set of a whole-team witness for \resMutDevExact. The hidden share and the strategy's exactness change with team size (Section~\ref{sec:rq2}). For the injected defect families, depth equals the number of hand-offs between the interacting agents plus two, independently of team size (Fig.~\ref{fig:depthsweep}). On teams without switches, small slices scale to thousands of agents; on choice-rich teams both large slices and whole-team checking hit time limits.
 
 \textbf{Scope.} We ask whether a composition is justified \emph{given the declared contracts} of its parts. We do not claim that any LLM satisfies a contract, that our contracts describe the encoded systems faithfully, or that any deployed team became safer. Compositional certification with declared contracts (Theorem~\ref{thm:abs}b) is proved only without model failures; with failures, composition uses exact boundary behaviors. Confirming a finding requires a search over runs of the whole team, so confirmed slice analysis is not a local check. No language model is run.
 
@@ -1324,9 +1386,15 @@ Look at each component alone. AR needs \p{req\_spec}, which RA guarantees upstre
 % =====================================================================
 \section{Agent Slicing}\label{sec:approach}
 
-\subsection{Overview}
+\subsection{Overview}\label{sec:approach-overview}
 
-The analysis takes a team specification and a \emph{slicing strategy}. The strategy proposes slices. For each slice, the analysis explores the slice's internal behaviors exactly while taking the rest of the team at face value, and records every symptom it sees with a witness. Each witness is then \emph{lifted}: the analysis searches for a run of the whole team that agrees with the witness inside the slice and shows the same symptom. Only confirmed findings are reported, each with its smallest confirming slices, a mechanism class, and the lifted run. Safety is certified separately, either with the slice of all nodes or compositionally with a partition (Theorem~\ref{thm:abs}). As an alternative to fixed strategies, a whole-team witness can be \emph{shrunk} slice by slice until no member can be removed.
+Agent slicing analyzes selected parts of a team precisely to expose defects in their relationships. The input is a declared team model $T$, including the graph, contracts, routing and join policies, goals, oracle assignment, and failure budget, together with a \emph{slicing strategy}. The strategy proposes a family $\mathcal{S}$ of convex slices. Singletons recover agent-level analysis; larger slices can span hand-offs, parallel branches, joins, and shared failure domains. The following subsections define the slices, their semantics, and the conditions under which their results can be combined.
+
+For each $\sigma\in\mathcal{S}$, the checker explores member behavior exactly while taking outside components at face value. It records symptom keys with witnesses explaining the choices and failures that expose them. This hybrid approximation can produce spurious candidates, so a candidate is reported only after \emph{lifting}: a whole-team run must exhibit the symptom, and replaying its member choices in the slice must still exhibit it. Confirmation therefore establishes a defect of the declared team model, while potentially requiring a whole-team search. A failed or budget-exhausted search leaves a candidate unconfirmed.
+
+Confirmed findings are merged by symptom key and localized to inclusion-minimal confirming slices \emph{among those evaluated}, ranked by size and then by choice points. Witness states identify the mechanism: routing around a claimer, dropping a contribution, an unmet condition, or an oracle failure. A fixed candidate family may miss defects or return a larger explanation than exhaustive enumeration. Alternatively, a whole-team finding can initialize \emph{shrinking}: remove a member whenever the remaining slice is convex and still confirms the key, then repeat. The greedy procedure stops when no single member can be removed; it does not guarantee minimum cardinality.
+
+Slices also support entry assumptions, per-exit guarantees, and exact boundary behaviors. These summaries describe what a subteam requires and supplies. Safety is decided separately, using exact whole-team checking or composition of boundary behaviors over a partition with an acyclic quotient and one global failure set (Theorem~\ref{thm:abs}). A derived flat assumption--guarantee pair need not express the exact behavior, and finding no confirmed defect in a bounded slice family is not a safety certificate. Section~\ref{sec:implementation} maps these analysis stages to the implementation and reproduction workflow.
 
 \subsection{Slices}
 
@@ -1412,7 +1480,7 @@ Slice & Entries carry & Naive $N_\sigma$ & Derived $G_\sigma$ / $G^f_\sigma$\\
 \midrule
 DV, SR, TS & \p{req\_spec}, \p{design} & \p{code}, \p{tests}, \p{sec\_rev.}, \p{tests\_pass} & $G$: same; $G^f$: nothing\\
 SR, TS & $+$\p{code}, \p{tests} & \p{sec\_rev.}, \p{tests\_pass} & $G$: same; $G^f$: \p{tests\_pass}\\
-ST, RG & \p{spec}, \p{design}, \p{code} & \p{sec\_tested} & $G$: nothing\\
+ST, RG & \p{req\_spec}, \p{design}, \p{code} & \p{sec\_tested} & $G$: nothing\\
 CR, RG & same as above & \p{reviewed} & $G$: nothing\\
 \bottomrule
 \end{tabularx}
@@ -1478,7 +1546,7 @@ Algorithm~\ref{alg:check} is the slice-level checker. For each slice it enumerat
 
 \subsection{A Taxonomy of Blind Spots}
 
-Table~\ref{tab:classes} lists the blind-spot classes. Each is defined by the claimer states in a confirming witness (previous subsection), so the class of a finding is computed, not guessed. The first five classes are visible at agent level; S2--S6 involve a relationship among components.
+Table~\ref{tab:classes} lists the blind-spot classes. Each is defined by the claimer states in a confirming witness (previous subsection), so the class of a finding is computed, not guessed. The first five classes are visible at agent level; S2--S6 involve a relationship among components, and of these only S5 is visible, at its switch.
 
 \begin{table}[tbp]
 \caption{Blind-Spot Classes, Defined by the Claimer States of a Confirming Witness. ``AL'': Visible to Agent-Level Analysis}
@@ -1579,9 +1647,50 @@ For an edge change $(u,v)$, let $\Delta$ be $u$'s face-value output in either ve
 % =====================================================================
 \section{Evaluation}\label{sec:eval}
 
-\subsection{Implementation}
+\subsection{Implementation and Reproducibility}\label{sec:implementation}
 
-The library \texttt{slicing} (Python) implements the team model with property sets as bit masks, the exact and hybrid semantics, lifting and confirmation, slice enumeration and the strategies, derived and declared contracts, partition summaries (Theorem~\ref{thm:abs}d), the checkers and baselines, the classification of findings, incremental recertification, a topology generator, a defect injector, and a mutation operator set. Teams are written in a small JSON specification language (Appendix~\ref{app:grammar}). Three oracles serve as independent ground truth for conformance testing. The \emph{model oracle} enumerates contract-respecting models (Definition~\ref{def:model}) with all switch choices, all admissible contributor sets, all failure sets with $|F|\le f$, and every evidence assignment between the realized minimum and that minimum plus the requirements and goals of the node (the only properties evidence can affect). The \emph{replay oracle} enumerates all runs of $H_\sigma$ and replays each with an evaluator that shares no code with the checker's enumerator. The \emph{run oracle} enumerates every run of $T$ and decides confirmed findings directly from Definition~\ref{def:confirmed}, without the lifting search. The replay and run oracles share one function with the implementation: the evaluator that replays a run in $H_\sigma$, which the lifting search also uses to verify candidates; they share no code with the checker's enumerator or with the lifting search. Proof obligations use Z3~\cite{demoura2008z3} version \resZThreeVersion{}.
+The replication package implements the approach as a Python library, \texttt{slicing}, with separate modules for the analysis stages outlined in Section~\ref{sec:approach-overview}. Experiments call these modules directly rather than maintaining separate implementations of the proposed checker. The implementation analyzes declared models on CPUs; it neither calls a language model nor requires a GPU. Appendix~\ref{app:grammar} gives the input language and an executable example for a reader's own team.
+
+\subsubsection{From approach components to code}
+
+\textbf{Model representation.} \path{slicing/model.py} defines immutable node records and the \texttt{Team} container, including JSON loading, structural validation, and edits that construct a new team. Construction computes a topological order, predecessor and successor lists, and ancestor and descendant masks. Property names are interned to bit positions, so requirements, guarantees, evidence, and run contents are represented by Python integer bit masks. Slices use a separate node mask. Consequently, union, intersection, membership, and containment checks in the semantics are bitwise operations, while user-facing keys and reports retain node and property names.
+
+\textbf{Candidate generation and hybrid checking.} \path{slicing/slices.py} implements convexity tests, hull closure, exhaustive enumeration, and the singleton, window, band, region, and goal-directed strategies. The analysis accepts the resulting family of node masks, so the strategy can be changed without changing the checker. \path{slicing/semantics.py} caches face-value outputs and static findings for each team and implements \texttt{findings(team, sigma)}. The checker enumerates internal choices using the minimal-contributor and maximal-failure reductions of Lemma~\ref{lem:m}, and records symptom keys with witnesses containing choices and failed oracles. Setting the slice to all nodes gives the exact team semantics through \texttt{symptoms}. Run bounds and deadlines stop expensive searches rather than treating an unfinished search as a safety verdict.
+
+\textbf{Confirmation and localization.} \path{slicing/analysis.py} provides the main entry point, \texttt{check\_confirmed}. It confirms static keys, invokes hybrid checking for each candidate, and calls \texttt{confirm} to search for a lifting run and replay it on the slice. Confirmed keys are collected in a map from a symptom to its confirming slices and witnesses. \texttt{localize} removes non-minimal evaluated slices and ranks the remaining ones; \texttt{diagnose} assigns the mechanism class from the witness. The returned report contains these findings and statistics on slices, lifting attempts, unconfirmed candidates, run-limit events, exhausted searches, and time-outs. The same module implements the baselines and \texttt{shrink}, which repeatedly removes a node when the remaining slice stays convex and the key remains confirmed. This implementation is greedy: it establishes that no single node can be removed, not that the final slice has globally minimum size.
+
+\textbf{Boundary summaries and recertification.} \path{slicing/contracts.py} implements entry assumptions, per-exit and robust guarantees, declared-contract checks, and the gap from naive composition. \texttt{PartSummary} constructs boundary outcomes lazily and caches them by relevant entry contents, delivery, and failures. \texttt{quotient\_symptoms} composes partition summaries with a global failure set, implementing Theorem~\ref{thm:abs}d. For evolving teams, \path{slicing/incremental.py} computes dependency sets and reuses unaffected \emph{raw} slice findings through \texttt{recertify}. This reuse does not certify previously lifted findings after a change: confirmation still depends on the updated whole team, as stated in Theorem~\ref{thm:inc}.
+
+\subsubsection{Validation and experiment drivers}
+
+Three semantic oracles support conformance testing. The \emph{model oracle}, in \path{slicing/oracle.py}, enumerates contract-respecting models (Definition~\ref{def:model}) with all switch choices, admissible contributor sets, failure sets with $|F|\le f$, and evidence assignments between the realized minimum and that minimum plus the node's requirements and goals. The \emph{replay oracle}, in \path{slicing/conformance.py}, enumerates runs of $H_\sigma$ and replays them with an evaluator that shares no code with the checker's enumerator. The \emph{run oracle} in the same module enumerates runs of $T$ and decides confirmed findings directly from Definition~\ref{def:confirmed}, without the lifting search. These are distinct enumeration procedures, but not completely independent implementations: the replay and run oracles share a replay evaluator with the lifting search's candidate validation. They share no code with the checker's enumerator or the lifting search itself. \path{formal/prove.py} and \path{formal/mutate.py} check the per-node SMT obligations and proof mutants using Z3~\cite{demoura2008z3} version \resZThreeVersion{}; these checks do not mechanize the paper's inductive proofs.
+
+The scripts in \path{experiments/} assemble these components into the evaluations. E1 checks conformance; E2 measures detection and localization on injected defects; E3 analyzes the published-design encodings in \path{experiments/architectures.py}; E4b varies hand-off distance and slice size; E5 measures scalability; E6 checks edits and incremental reuse; E7 measures sensitivity, ablation, and false findings; and E8 applies random engineering changes. The topology and contract generator is \path{slicing/generator.py}, the controlled defect injector is \path{slicing/injector.py}, and E8's mutation operators are defined in \path{experiments/e8_mutation.py}. The distinction matters for reproduction: injected classes and depths are controlled inputs in E2, whereas E8 measures the symptoms that result from the selected changes.
+
+\subsubsection{Reproducing the results}
+
+Listing~\ref{lst:reproduce} gives the commands from the replication package's root directory. Python~3.12 is the reported environment; \path{requirements.txt} pins the Python dependencies. The full run is CPU-based and uses process workers according to the available core count. A TeX installation with the ACM class, bibliography style, and packages used by the manuscript is needed only for the PDF build.
+
+\begin{lstlisting}[float=htbp,language=sh,caption={Reproduction commands, executed from the repository root. The quick and full runs are alternative experiment modes.},label={lst:reproduce}]
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+make test
+
+# Quick validation using the bundled remaining results:
+make quick
+
+# Full regeneration of all experiments and summaries:
+make all
+
+# Typeset the bundled TOSEM manuscript and preview:
+make -C docs/TOSEM
+\end{lstlisting}
+
+\texttt{make test} runs the unit and property-based tests. \texttt{make quick} runs the proof obligations, proof mutants, tests, running example, E1, E3, and postprocessing; it does not rerun E2, E4b, or E5--E8. Thus its postprocessed summaries also use the bundled result files for the omitted experiments. For a complete reproduction, use \texttt{make all}, which invokes \path{experiments/run_all.py} and runs every experiment before postprocessing. The driver runs each stage as a separate process, writes its output to \path{results/logs/}, and stops at the first failed stage. A selected stage can also be rerun by name, for example \texttt{.venv/bin/python experiments/run\_all.py e8\_mutation process}; postprocessing then combines the new E8 file with the other available results. Experiment runs replace their result files, so comparisons with the bundled snapshot should use a separate checkout or a preserved copy.
+
+\textbf{From executions to reported numbers.} Experiment scripts save raw measurements and findings as \path{results/*.json}. Shared utilities record the commit identifier, working-tree status, Python and numerical-library versions, platform, available CPUs, start time, and elapsed time. Generator and experiment seeds and search budgets are fixed in the scripts; statistical resampling uses NumPy seed 20261104. \path{scripts/process_results.py} reads the JSON files, computes the statistics and confidence intervals, and writes \path{results/macros.json}, LaTeX result macros, table bodies, and figures. The same script generates the opening figure (Fig.~\ref{fig:teaser}) from the E8 file. Its current output directory is \path{docs/TSE}; it also replaces the marked generated-results block in that directory's \texttt{main.tex}. The TOSEM source bundles the corresponding numerical snapshot with revised presentation, including merged result tables. Consequently, \texttt{make -C docs/TOSEM} typesets that snapshot; it does not execute experiments or automatically import fresh postprocessor output. A reader can compare a fresh run's generated macros and table bodies with the TOSEM values, and inspect the raw JSON and stage logs when a number differs.
+
+Reproduction should compare semantic findings, class counts, and statistical summaries together with their recorded seeds and budgets, rather than require byte-identical files: provenance and timings necessarily change. Hardware and load can also change which runs finish within a wall-time budget, affecting censored timings and budget-limited detection coverage. Such differences must be interpreted with the recorded time-out and exhaustion indicators. The supplied JSON files allow the reported snapshot to be audited and its statistics recomputed without rerunning the expensive scalability experiment; this is distinct from independently regenerating the experimental data.
 
 \subsection{Experimental Setup}\label{sec:setup}
 
@@ -1629,7 +1738,7 @@ H3.3 & Incremental recertification re-verifies fewer than half of the slices. & 
 
 \textbf{Method.} We validate the theory in three ways. (i) SMT obligations. The per-node steps of the proofs are formulas over arrays from an uninterpreted sort of properties to Booleans, so each holds for every property universe and every contract; an obligation is valid if its negation is unsatisfiable. These are one-step set identities; they guard the definitions against slips, not the inductions over topological order, which are proved on paper. Six \emph{proof mutants} each change one definition (for example, letting declared evidence flow on) and must break the obligation that depends on it. (ii) Conformance. On \resWildTeams{} random ``wild'' teams with arbitrary contracts, policies, switches and faults (3--7 inner nodes) and on \resBenchTeams{} small injected teams (4--7 inner nodes before injection), we compare the implementation with the three oracles and check each computational theorem statement directly, for all convex slices of size at most 3 (2 for the run oracle). (iii) The hardness reductions of Theorem~\ref{thm:cx} on \resReductionFormulas{} random 3-CNF formulas, and the view-disjunctive constructions of Theorem~\ref{thm:sep}b.
 
-\begin{table}[tbp]
+\begin{table}[H]
 \caption{SMT Proof Obligations (Z3 \resZThreeVersion). ``Valid'': the Negation Is Unsatisfiable; ``Countermodel'': a Satisfying Model Exists, as Intended}
 \label{tab:proofs}
 \centering
@@ -1643,7 +1752,7 @@ ID & Obligation & Used in & Kind & OK\\
 \end{tabularx}
 \end{table}
 
-\begin{table}[tbp]
+\begin{table}[H]
 \caption{Conformance Against Brute-Force Oracles: Teams Checked (Wild, Injected) and Teams With Any Mismatch}
 \label{tab:conformance}
 \centering
@@ -1855,7 +1964,7 @@ Design & doc. & shared & distinct & $f=0$ & alt.\ join\\
 
 Under the documented configuration, all \resArchUnsafeDocumented{} designs have a symptom, and \resArchHiddenDocumented{} have one that agent-level analysis does not report. With $f=0$, \resArchSafeFZero{} of the nine are safe: the findings are about robustness to one model failure, which P3 deliberately asks about. The recurring pattern is S6a: a deterministic gate (MetaGPT's test run, AgentCoder's executor, MapCoder's sample input/output check, Agentless's validation runs) certifies a critical property using tests or code written by an LLM agent, so the gate's guarantee is only as robust as that agent's model. The minimal slice \{writer, gate\} says exactly that. The repair is to back the gate's input with an independent source, as AgentCoder does for its tests but not for its code; in the running example, an independent test designer on another model makes the chain safe (\resRexIndepSymptoms{} symptoms). In multi-agent debate, the three revisers run on one backbone (S4, depth 3); with distinct models the finding changes to S6a (the vote rests on the round-one answers). ChatDev's critical claim rests on one LLM tester (A4, visible at agent level). The AutoGen group-chat encoding loses \p{runs} when the manager routes to the critic (S6b, depth 3, together with depth-one bypass findings); this finding depends on unrolling the chat once. The smell detector reports the hidden finding in \resArchHiddenSmell{} and the must-analysis in \resArchHiddenMust{} of the \resArchHiddenDocumented{} designs, but neither says which agents form the defect. These are findings about our encodings. In particular, a robust symptom says only that the critical claim is not established when one model fails; it does not distinguish a gate that would then falsely certify (weak LLM-written tests that pass) from one that would visibly fail (MapCoder's sample check uses input/output pairs from the problem statement, so a wrong program fails it). Whether the real systems mitigate the findings, for example by retries, repeated sampling or human review, is outside our model.
 
-\answer{RQ2}{On defects induced by random engineering changes, \resMutHiddenShare{} of the symptoms have depth at least two, a share that is higher on larger teams; an agent-by-agent check reports none of them by definition, and for \resMutALDeclaredClean{} of \resMutUnclean{} defective teams it reports nothing at all. Confirmed slice analysis finds \resMutRecallHiddenSL{} of the hidden symptoms with no false finding; raw slice findings are \resMutFalseRateSLraw{} false. A global must-analysis detects \resMutRecallHiddenBSix{} of the hidden symptoms but \resMutFalseRateBSix{} of its findings are false and it names only the symptom node. For localization, shrinking a whole-team witness slice by slice is exact for \resMutShrinkExact{} of hidden symptoms, the combined slicing strategy for \resMutExactSL{} (less on larger teams), and the witness's deviation set for \resMutDevExact. In \resArchHiddenDocumented{} of nine encoded designs, our declared contracts admit a defect that agent-level analysis does not report (the must-analysis reports it); mostly, a gate's critical claim rests on an artifact written by one model.}
+\answer{RQ2}{On defects induced by random engineering changes, \resMutHiddenShare{} of the symptoms have depth at least two, a share that is lower on the smallest teams (\resMutHiddenShareNSix{} at 8 nodes) than on larger ones (up to \resMutHiddenShareNTwoZero{}); an agent-by-agent check reports none of them by definition, and for \resMutALDeclaredClean{} of \resMutUnclean{} defective teams it reports nothing at all. Confirmed slice analysis finds \resMutRecallHiddenSL{} of the hidden symptoms with no false finding; raw slice findings are \resMutFalseRateSLraw{} false. A global must-analysis detects \resMutRecallHiddenBSix{} of the hidden symptoms but \resMutFalseRateBSix{} of its findings are false and it names only the symptom node. For localization, shrinking a whole-team witness slice by slice is exact for \resMutShrinkExact{} of hidden symptoms, the combined slicing strategy for \resMutExactSL{} (less on larger teams), and the witness's deviation set for \resMutDevExact. In \resArchHiddenDocumented{} of nine encoded designs, our declared contracts admit a defect that agent-level analysis does not report (the must-analysis reports it); mostly, a gate's critical claim rests on an artifact written by one model.}
 
 \subsection{RQ3: Cost, Slicing Strategy, and Evolution}\label{sec:rq3}
 
@@ -1933,11 +2042,11 @@ Class & full & joins as \textsf{all} & no faults & non-convex false keys\\
 \end{tabular}
 \end{table}
 
-\answer{RQ3}{Slices must be as large as the distance between the interacting agents plus two: depth is $\ell+2$ for $\ell$ hand-offs and $2$ for joins, independently of the host's size. Small slices (singleton, window-2, band) scale polynomially to \resScaleMaxNodes{} nodes; on mixed teams singleton and window-2 time out on \resTimeoutssingletonmixed{} and \resTimeoutswindowTwomixed{} of \resTeamsmixed{} teams and band-1 on \resTimeoutsbandOnemixed. Confirmed SL on teams of up to 200 nodes never exceeded the budget (\resConfTimeoutsmixed{} time-outs on mixed teams). Large slices pay for the choice points they contain: on choice-rich teams SL times out on \resTimeoutsSLmixed{} of \resTeamsmixed{} teams and whole-team checking on \resTimeoutswholemixed; on switch-free teams whole-team checking and the must-analysis are cheaper than any slicing. The pre-registered scalability hypothesis is therefore not supported. Incremental recertification is always correct and re-verifies \resEvoRedoneNonChain{} of the slices on non-chain topologies, but saves little wall time on small slices (median \resEvoSpeedup$\times$). Raw slice findings are \resWildFARate{} false on unstructured teams; confirmation removes them all.}
+\answer{RQ3}{Slices must be as large as the distance between the interacting agents plus two: depth is $\ell+2$ for $\ell$ hand-offs and $2$ for joins, independently of the host's size. On switch-free teams, small slices (singleton, window-2, band) scale polynomially to \resScaleMaxNodes{} nodes; on mixed teams singleton and window-2 time out on \resTimeoutssingletonmixed{} and \resTimeoutswindowTwomixed{} of \resTeamsmixed{} teams and band-1 on \resTimeoutsbandOnemixed. Confirmed SL on teams of up to 200 nodes never exceeded the budget (\resConfTimeoutsmixed{} time-outs on mixed teams). Large slices pay for the choice points they contain: on choice-rich teams SL times out on \resTimeoutsSLmixed{} of \resTeamsmixed{} teams and whole-team checking on \resTimeoutswholemixed; on switch-free teams whole-team checking and the must-analysis are cheaper than any slicing. The pre-registered scalability hypothesis is therefore not supported. Incremental recertification is always correct and re-verifies \resEvoRedoneNonChain{} of the slices on non-chain topologies, but saves little wall time on small slices (median \resEvoSpeedup$\times$). Raw slice findings are \resWildFARate{} false on unstructured teams; confirmation removes them all.}
 
 \subsection{Discussion}\label{sec:discussion}
 
-\textbf{What slices add, and what they do not.} Detection alone does not need slices: an exact whole-team check finds every symptom, and a linear global must-analysis finds almost all of them. What slices add is \emph{which agents}. A confirmed finding comes with the smallest set of agents whose joint behavior already exhibits it, together with the obligation that fails (joint coverage, non-bypass, conditional backing, independence). Neither a whole-team witness (whose deviation set names every agent that misbehaved, relevant or not) nor a must-analysis (which names the node where a fact is missing) gives that. Confirmation removes the false findings that face value would otherwise produce.
+\textbf{What slices add, and what they do not.} Detection alone does not need slices: an exact whole-team check finds every symptom, and a linear global must-analysis finds essentially all of them, at the price of some false findings. What slices add is \emph{which agents}. A confirmed finding comes with the smallest set of agents whose joint behavior already exhibits it, together with the obligation that fails (joint coverage, non-bypass, conditional backing, independence). Neither a whole-team witness (whose deviation set names every agent that misbehaved, relevant or not) nor a must-analysis (which names the node where a fact is missing) gives that. Confirmation removes the false findings that face value would otherwise produce.
 
 \textbf{Which defects hide?} Every defect whose mechanism is a join policy, a shared model, or a conditional guarantee resting on a fallible provision is hidden at agent level (Proposition~\ref{prop:al}). Defects whose mechanism is a missing claim are visible. In the mutation benchmark, relaxing an \textsf{all}-join is the change most likely to create a hidden defect. An \texttt{any} or quorum join is not dangerous by itself: the decoy whose branches all claim every goal is safe. The danger is a join whose branches carry \emph{different} guarantees, which slices see because they compute what each branch establishes.
 
@@ -1975,9 +2084,12 @@ Class & full & joins as \textsf{all} & no faults & non-convex false keys\\
 \textbf{Diagnosis, redundancy and safety analysis.} Model-based diagnosis computes minimal sets of components whose abnormality explains an observation~\cite{reiter1987theory}; minimal confirming slices are minimal sets of components whose \emph{exact} analysis exposes a symptom, a dual notion computed before any observation. Fault trees and their minimal cut sets~\cite{ruijters2015fault}, and contract-based fault-tree generation~\cite{bozzano2014formal}, analyze how component failures combine; a minimal confirming slice of a robust key is close to a minimal cut set, S4 is a common-cause failure, and S6a a dependent failure. N-version programming relies on independent versions~\cite{avizienis1985nversion}; Knight and Leveson showed that independently developed versions fail together more often than independence predicts~\cite{knight1986experimental}, and Littlewood and Miller modeled coincident failures~\cite{littlewood1989conceptual}. Feature interactions~\cite{calder2003feature} are an earlier case of defects that arise only in combination, and systems-theoretic safety analysis treats safety as a property of interactions~\cite{leveson2011engineering}. Model checkers for multi-agent systems verify epistemic and temporal properties~\cite{lomuscio2017mcmas}; we target a simpler contract-level question.
 
 % =====================================================================
+\section*{Declaration on the Use of AI}
+Generative AI tools were used to assist with organizing the repository code and checking the manuscript for grammatical errors. The author reviewed the generated suggestions and takes full responsibility for the accuracy and integrity of all claims, proofs, references, and the final manuscript.
+
 \section{Conclusion and Future Work}\label{sec:conclusion}
 
-A team of AI agents can fail even when every agent keeps its contract, and the failure lives in a relationship among a few agents. Agent slicing makes such relationships analyzable: a slice is a convex set of agents analyzed exactly while the rest is taken at face value, and a finding counts only when its witness lifts to a run of the team. The theory gives sound, monotone confirmed findings, compositional abstraction over acyclic partitions with a global failure set (with declared contracts, only without failures), a separation from analyses that judge one agent's view at a time, and local recertification of raw findings. On defects induced by random engineering changes, \resMutHiddenShare{} of the symptoms are not reported by an agent-by-agent check, a share that is higher on larger teams in our data. Confirmed slices find them without false findings. A global must-analysis detects them cheaply but imprecisely; a whole-team witness alone names too many agents; shrinking that witness slice by slice names the few agents involved. Confirmation and shrinking need whole-team searches, so the method is a diagnosis aid, not a local check.
+A team of AI agents can fail even when every agent keeps its contract, and the failure lives in a relationship among a few agents. Agent slicing makes such relationships analyzable: a slice is a convex set of agents analyzed exactly while the rest is taken at face value, and a finding counts only when its witness lifts to a run of the team. The theory gives sound, monotone confirmed findings, compositional abstraction over acyclic partitions with a global failure set (with declared contracts, only without failures), a separation from analyses that judge one agent's view at a time, and local recertification of raw findings. On defects induced by random engineering changes, \resMutHiddenShare{} of the symptoms are not reported by an agent-by-agent check; the share is lowest on the smallest teams. Confirmed slices find them without false findings. A global must-analysis detects them cheaply but imprecisely; a whole-team witness alone names too many agents; shrinking that witness slice by slice names the few agents involved. Confirmation and shrinking need whole-team searches, so the method is a diagnosis aid, not a local check.
 
 Future work includes validating findings against executions and failure traces of real agent pipelines, extracting team graphs and contracts mechanically from orchestration code, independent encodings, distinguishing a gate that rejects from one that falsely certifies, cycles and retries beyond bounded unrolling, shared mutable state, graded and probabilistic contracts, strategies bounded by choice points, and contract discovery from orchestration code.
 

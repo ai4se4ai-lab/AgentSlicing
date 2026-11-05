@@ -2,8 +2,8 @@
 
 `main.tex` is the complete paper adapted from `../TSE/main.tex`. The TSE files are unchanged.
 
-- `main.pdf`: submission manuscript, ACM single-column `manuscript,screen,review` format with line numbers (40 pages).
-- `journal-preview.pdf`: ACM `acmsmall` journal-layout preview without review line numbers (41 pages).
+- `main.pdf`: submission manuscript, ACM single-column `manuscript,screen,review` format with line numbers (42 pages).
+- `journal-preview.pdf`: ACM `acmsmall` journal-layout preview without review line numbers (44 pages).
 - `journal-preview.tex`: small wrapper around `main.tex`; all paper content remains in one source.
 
 Build both PDFs from this directory:
@@ -27,8 +27,8 @@ Anonymous authorship is retained from the TSE source. Replace it with the correc
 
 ## Validation
 
-Both PDFs were compiled with latexmk/pdfLaTeX and BibTeX, and inspected visually. Final LaTeX logs contain no warnings, unresolved citations/references, or overfull boxes. All PDF fonts are embedded, and all 67 cited works resolve. The additional-tables appendix and its cross-reference have been removed. Experimental values and the bibliography are preserved; table presentation is adapted for normal-size text.
+Both PDFs were compiled with latexmk/pdfLaTeX and BibTeX, and inspected visually. Final LaTeX logs contain no warnings, unresolved citations/references, or overfull boxes. All PDF fonts are embedded, and all 67 cited works resolve. The additional-tables appendix and its cross-reference have been removed. Experimental values are preserved; table presentation is adapted for normal-size text. The bibliography has been independently audited against live primary metadata, with verified arXiv versions preferred; see [references_audit.md](references_audit.md).
 
-Layout adjustments include full-width Tables 3 and 4 with expanded wording, normal-size table text, merged single-grid result tables (Tables 10, 11, and 14), and rounded light-gray research-question callouts. The Team Specification Language appendix now describes parser defaults, contracts, topology construction, validation, and model revision. Its JSON example and Python analysis listing were executed against the implementation; the example produces the two stated missing-goal keys, and the all-join repair has no symptoms at fault budget zero. Listings use compact 8-point monospaced text with 10-point line spacing, muted syntax colors, a light-gray background, and line numbers. This formatting and documentation revision is not a new scientific review.
+Layout adjustments include full-width Tables 3 and 4 with expanded wording, normal-size table text, merged single-grid result tables (Tables 10, 11, and 14), and rounded light-gray research-question callouts. The Team Specification Language appendix now describes parser defaults, contracts, topology construction, validation, and model revision. Its JSON example and Python analysis listing were executed against the implementation; the example produces the two stated missing-goal keys, and the all-join repair has no symptoms at fault budget zero. Listings use compact 8-point monospaced text with 10-point line spacing, muted syntax colors, a light-gray background, and line numbers. Section 3.1 provides a text overview of candidate generation, hybrid checking, lifting, localization, shrinking, boundary summaries, and the separate safety-certification path. Section 4.1 maps these components to their Python modules and documents test, quick, full-experiment, postprocessing, and PDF-only reproduction workflows. It explicitly records that the current result postprocessor targets `docs/TSE`, while TOSEM typesets a bundled result snapshot. This formatting and documentation revision is not a new scientific review.
 
-BibTeX still reports 37 nonfatal metadata warnings for missing publisher/address fields in the inherited bibliography. References render and every citation resolves; the source bibliography was preserved rather than filling gaps with unverified metadata.
+BibTeX reports three nonfatal missing-address warnings (Benveniste, Efron, Leveson). Unverified publisher addresses were not invented to suppress warnings. The audit covers all 69 bibliography records: 25 cite verified arXiv versions (10 converted from published records), and 44 retain verified publications where no matching arXiv version was located. Field-level changes and primary-source evidence are recorded in `references_audit.json` and `references_audit.csv`.
