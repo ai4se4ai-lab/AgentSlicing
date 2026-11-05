@@ -187,7 +187,7 @@ def e1():
                  'whole_exact': 'Whole slice is exact (Thm.~\\ref{thm:sound}a)',
                  'quotient': 'Partition summaries compose (Thm.~\\ref{thm:abs}d)',
                  'incremental': 'Incremental $=$ full re-verification, incl.\\ edges (Thm.~\\ref{thm:inc})',
-                 'model_oracle': 'Run semantics vs.\\ all evidence models (Lemmas W, M)'}
+                 'model_oracle': 'Run semantics vs.\\ all evidence models (Lemmas~\\ref{lem:w}, \\ref{lem:m})'}
         lines = []
         for k, label in names.items():
             lines.append(f"{label} & {w['checked'].get(k, 0):,} & {b['checked'].get(k, 0):,} & "
