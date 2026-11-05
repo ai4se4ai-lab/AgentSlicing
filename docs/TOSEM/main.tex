@@ -1211,7 +1211,7 @@ We evaluate agent slicing through three research questions, covering its theoret
 % =====================================================================
 \section{Background: Agent Teams and Their Semantics}\label{sec:background}
 
-This section provides the background and formal model needed to define agent slicing. We first describe agents, deterministic gates, and their contracts, then explain how routing choices, join policies, and model failures determine a team's runs. We define the symptoms used to assess safety and show why these runs suffice to analyze behaviors that respect the contracts. Finally, we introduce two small software teams as running examples. Table~\ref{tab:notation} summarizes the notation.
+This section gives the background and formal model needed to define agent slicing. We start with two small software teams that serve as running examples (Section~\ref{sec:running}). We then define teams, with their agents, gates and contracts (Section~\ref{sec:team}), and the runs that resolve a team's routing choices, join policies, and model failures. Next we define the symptoms used to assess safety, and show why these runs suffice to analyze every behavior that respects the contracts. Each definition is followed by a short example on the running teams. Table~\ref{tab:notation} summarizes the notation.
 
 \begin{table}[tbp]
 \caption{Notation}
@@ -1243,95 +1243,9 @@ $\depth(\kappa),\MMS(\kappa)$ & depth; minimal confirming slices of key $\kappa$
 \end{tabularx}
 \end{table}
 
-\subsection{Agents, Gates and Contracts}
-
-A team works on a shared artifact, for example a code change, and builds up facts about it: a design exists, adequate tests exist, the tests pass. We call such facts \emph{properties} and write $\Props$ for the finite set of properties a team mentions. A component \emph{requires} some properties before it can do its job, and it \emph{guarantees} others when it does its job. This is design by contract~\cite{meyer1992applying} applied to team members.
-
-Assume-guarantee reasoning connects these component contracts: each component assumes properties of its inputs and guarantees properties of its outputs, and composition requires discharging each assumption~\cite{misra1981proofs,jones1983tentative,abadi1993composing,benveniste2018contracts}. For agent teams, this means checking whether the guarantees actually delivered along the team's possible execution paths establish the requirements of downstream components and the team's goals.
-
-Properties are semantic claims, not artifacts. ``\p{tests}'' means that an adequate test suite exists, not that a file named \texttt{tests} was produced. When an agent's model fails, the agent may still produce an artifact, for example a weak test suite, but the property it claims does not hold. A downstream test runner that requires \p{tests} then cannot establish \p{tests\_pass}, even if it executes and reports success. So the model covers errors of commission (a wrong artifact presented as right, such as a test suite with vacuous assertions) as well as omission (no artifact at all, such as no tests written), at the level of properties: in both cases \p{tests} does not hold. What the model does not distinguish is what happens next. A symptom at the output says that the team can release without the property being established. It does not say whether the release is a false certification (the runner reports ``pass'' on weak tests) or a visible failure that a later step would catch (the runner reports ``fail'' and someone retries). Safety here is partial correctness: a run that never reaches the output produces no symptom, so a pipeline that blocks on a failed check is safe in the model only if the block is modeled as not reaching the output.
-
-Two kinds of components matter. An \emph{agent} is driven by a language model. Its guarantee is \emph{conditional}: it holds only when the agent's requirements are met and its model (its \emph{oracle}) does not fail. A \emph{gate} is a deterministic program, such as a test runner or a schema check. A gate's guarantee is conditional on its requirements but never on a model.
-
-An agent may also \emph{declare} evidence for itself, for example ``I read the specification''. Declared evidence counts when we decide whether that agent can act, but it never flows to other components. Semantically, declaring $p$ is the same as removing $p$ from the agent's own requirements. We keep the notion because it records a common documentation practice and makes its locality explicit.
-
-\begin{definition}[Team]\label{def:team}
-A \emph{team} $T$ consists of a graph, node contracts, models, coordination rules, and goals:
-\begin{itemize}
-\item Graph. A finite directed acyclic graph $(N,E)$ with a unique source $\iota$ (the input) and a unique sink $\omega$ (the output). Every node lies on a path from $\iota$ to $\omega$.
-\item Node contracts. Each node $n$ has a kind $\kappa(n)\in\{\mathsf{agent},\mathsf{gate}\}$ and three sets of properties: requirements $\req(n)$, guarantees $\gua(n)$, and declared evidence $\decl(n)$, all subsets of $\Props$. The input $\iota$ and the output $\omega$ are gates, because they run no model. The guarantees $\gua(\iota)$ are the input facts.
-\item Models. Each agent $n$ uses an oracle $\orc(n)$. Agents may share an oracle.
-\item Coordination. Routing $\rt(n)\in\{\mathsf{fork},\mathsf{switch}\}$ says whether $n$ delivers to all successors or to exactly one. A node with several predecessors has a join policy $\jn(n)\in\{\mathsf{all}\}\cup\{1,\ldots,|\pred(n)|\}$, where a number is a quorum and \textnormal{\texttt{any}} is the quorum $1$.
-\item Goals and faults. The goals $\Phi\subseteq\Props$ are required by the output ($\req(\omega)=\Phi$). The critical goals $\Phi_c\subseteq\Phi$ must survive failures, and the fault budget $f\in\mathbb{N}$ bounds how many oracles may fail in one run.
-\end{itemize}
-Formally, $T=(N,E,\iota,\omega,\kappa,\req,\gua,\decl,\orc,\rt,\jn,\Phi,\Phi_c,f)$.
-\end{definition}
-
-We write $\pred(n)$ and $\succs(n)$ for direct predecessors and successors, and $\anc(n)$ and $\desc(n)$ for proper ancestors and descendants. The starred forms $\anc^*$ and $\desc^*$ include the node itself. A switch with one successor is a fork.
-
-\subsection{Runs}
-
-A run fixes every choice the team leaves open and then computes what each node receives and produces. Three kinds of choice remain open: which successor a switch picks, which delivered inputs a quorum or \texttt{any} join actually uses, and which oracles fail.
-
-\begin{definition}[Run]\label{def:run}
-A \emph{run} $\rho=(W,C,F)$ consists of
-\begin{itemize}
-\item a \emph{switch choice} $W(n)\in\succs(n)$ for each switch $n$;
-\item a \emph{contributor set} $C(n)$ for each node $n$ with several predecessors, namely the in-edges whose outputs $n$ uses;
-\item a set $F$ of \emph{failed oracles} with $|F|\le f$.
-\end{itemize}
-A run is \emph{fault-free} if $F=\emptyset$. Given $\rho$, process the nodes in topological order. The input $\iota$ is reached, with content $c(\iota)=\emptyset$ and output $o(\iota)=\gua(\iota)$. For every other node $v$:
-\begin{enumerate}
-\item \emph{Delivery.} An edge $(u,v)$ is \emph{delivered} if $u$ is reached and either $u$ is a fork or $W(u)=v$. Let $D(v)$ be the set of delivered in-edges of $v$.
-\item \emph{Reached.} $v$ is reached if $D(v)$ satisfies its join policy: all in-edges for \textsf{all} (and for a node with a single in-edge), at least $q$ in-edges for quorum $q$.
-\item \emph{Contributors.} For \textsf{all}, $C(v)$ is all in-edges. For quorum $q$, $C(v)$ is a subset of $D(v)$ with $|C(v)|\ge q$.
-\item \emph{Content.} The content of $v$ is the union of the outputs it uses: $c(v)=\bigcup_{(u,v)\in C(v)} o(u)$.
-\item \emph{Applies.} $v$ \emph{applies} if $\req(v)\subseteq c(v)\cup\decl(v)$ and either $v$ is a gate or its oracle has not failed ($\orc(v)\notin F$).
-\item \emph{Output.} $o(v)=c(v)\cup\gua(v)$ if $v$ applies, and $o(v)=c(v)$ otherwise.
-\end{enumerate}
-\end{definition}
-
-Properties flow along the contributing lineage. A join that uses one branch forgets what the other branch established. This is what makes \texttt{any} and quorum joins interesting.
-
-\subsection{Symptoms and Safety}
-
-A team can go wrong in three observable ways: a component acts without a property it requires, the output misses a goal, or the output misses a critical goal when up to $f$ oracles fail. We name each by a \emph{key}, a triple of kind, node and property.
-
-\begin{definition}[Symptoms, safety]\label{def:sym}
-The \emph{symptoms} $\Sym(T)$ of a team are the keys
-\begin{itemize}
-\item $\key{assume}{v}{p}$: some fault-free run reaches $v\neq\omega$ with $p\in\req(v)\setminus(c(v)\cup\decl(v))$;
-\item $\key{goal}{\omega}{\varphi}$: some fault-free run reaches $\omega$ with $\varphi\in\Phi\setminus c(\omega)$;
-\item $\key{robust}{\omega}{\varphi}$: $\key{goal}{\omega}{\varphi}\notin\Sym(T)$, and some run with $|F|\le f$ reaches $\omega$ with $\varphi\in\Phi_c\setminus c(\omega)$.
-\end{itemize}
-$T$ is \emph{safe} if $\Sym(T)$ contains no goal or robust key, and \emph{clean} if $\Sym(T)=\emptyset$.
-\end{definition}
-
-Two remarks on scope. Safety is a partial-correctness notion: a run in which the output is never reached (for example, an \textsf{all}-join behind a switch) produces no symptom. And under failures we check only critical goals at the output, since an agent acting without its requirements because an upstream model failed is the expected consequence of the failure, not a design defect.
-
-\subsection{From Models to Runs}
-
-The guarantee we want is about all behaviors that respect the contracts. In such a behavior a component may know more than its content: an agent may happen to see a fact nobody guaranteed.
-
-\begin{definition}[Contract-respecting model]\label{def:model}
-A \emph{model} of $T$ is a run $(W,C,F)$ together with evidence sets $E(v)\supseteq c(v)\cup\decl(v)$ for reached nodes, where contents are computed as in Definition~\ref{def:run} except that $v$ applies if $\req(v)\subseteq E(v)$ and its oracle has not failed. Its keys are those of Definition~\ref{def:sym} with $E(v)$ in place of $c(v)\cup\decl(v)$ (and $E(\omega)$ in place of $c(\omega)$).
-\end{definition}
-
-Models differ from runs only by extra evidence. This is a modeling choice: we let a component know more than it was told, but not less. The following lemmas show that runs, and only a few of them, suffice.
-
-\begin{lemma}[Worst case]\label{lem:w}
-A key is produced by some model if and only if it is produced by some run.
-\end{lemma}
-
-\begin{lemma}[Minimal choices]\label{lem:m}
-Content is monotone in the contributor sets and antitone in the failure set. To decide $\Sym(T)$ it suffices to enumerate runs whose quorum joins use exactly $q$ contributors and whose failure sets have size $\min(f,|\Orc|)$.
-\end{lemma}
-
-The idea behind Lemma~\ref{lem:w} is that more evidence can only make more components apply, which only adds properties downstream. The minimal evidence $c(v)\cup\decl(v)$ is the worst case. Proofs are in Appendix~\ref{app:proofs}.
-
 \subsection{Running Example}\label{sec:running}
 
-We use two small software teams throughout (Fig.~\ref{fig:running}).
+We use two small software teams throughout (Fig.~\ref{fig:running}). Each is a pipeline of \emph{agents}, which are driven by language models, and \emph{gates}, which are deterministic programs such as a test runner. A step needs certain facts about the work product before it can start and establishes new facts when it finishes. The next subsections define these notions precisely, and each definition is followed by an example on these two teams.
 
 \begin{figure}[!t]
 \centering
@@ -1376,16 +1290,118 @@ We use two small software teams throughout (Fig.~\ref{fig:running}).
 \end{scope}
 \end{tikzpicture}
 \end{adjustbox}
-\caption{Running example. Circles are agents, squares are gates. Labels show requirements and ($\to$) guarantees. Agent-level analysis reports nothing for either team. Shaded: minimal confirming slices, $\{$DV, SR, TS$\}$ for the chain (a robust loss of \p{tests\_pass}) and $\{$ST, RG$\}$ (one of two) for the fork-join team.}
+\caption{Running example. Circles are agents, squares are gates. Labels show requirements and ($\to$) guarantees. Checking each component alone reports nothing for either team. Shaded: the components whose interaction causes the defect, $\{$DV, SR, TS$\}$ for the chain (a robust loss of \p{tests\_pass}) and $\{$ST, RG$\}$ (one of two) for the fork-join team. Section~\ref{sec:approach} makes this precise.}
 \label{fig:running}
 \Description{Software-development team with developer, reviewer, test, and release gates. Highlighted slices expose lost approvals and guarantees that depend on a shared model.}
 \end{figure}
 
-\textbf{Chain.} A requirements analyst (RA) writes a specification; an architect (AR) turns it into a design; a developer (DV) writes code and tests; a security reviewer (SR) reviews the code; a deterministic test runner (TS) runs the tests and guarantees \p{tests\_pass}. The goals are \p{tests\_pass} and \p{sec\_reviewed}; \p{tests\_pass} is critical, and one model failure is tolerated ($f=1$). All four agents use the same model $g$.
+\textbf{Chain.} A requirements analyst (RA) writes a specification. An architect (AR) turns it into a design. A developer (DV) writes code and tests. A security reviewer (SR) reviews the code. A deterministic test runner (TS) runs the tests and establishes that they pass. The team promises two things: the tests pass (\p{tests\_pass}) and the code is security reviewed (\p{sec\_reviewed}). The first is \emph{critical}: it must hold even if one language model fails ($f=1$). All four agents use the same model $g$.
 
-Look at each component alone. AR needs \p{req\_spec}, which RA guarantees upstream. DV needs \p{design}, guaranteed by AR. SR needs \p{code} and TS needs \p{tests}, both guaranteed by DV. The critical goal is guaranteed by a \emph{gate}, so it seems not to depend on any model. Every assumption is matched; an agent-level check reports nothing. Yet the team is not robust. If model $g$ fails at DV, the tests DV writes are not adequate, TS cannot establish \p{tests\_pass}, and the release lacks its critical goal. The defect is neither in DV (it is allowed to fail; $f=1$) nor in TS (it behaves correctly). It lies in the relationship: \emph{a deterministic gate's critical guarantee rests on a fallible agent's provision.}
+Look at each component alone. AR needs \p{req\_spec}, which RA guarantees upstream. DV needs \p{design}, guaranteed by AR. SR needs \p{code} and TS needs \p{tests}, both guaranteed by DV. The critical goal is guaranteed by a gate, so it seems not to depend on any model. Every assumption is matched, so an agent-level check, which examines each component against its own contract, reports nothing. Yet the team is not robust. If the shared model $g$ fails, the tests DV writes are not adequate, TS cannot establish \p{tests\_pass}, and the release lacks its critical goal. The defect is neither in DV (it is allowed to fail, since $f=1$) nor in TS (it behaves correctly). It lies in the relationship: \emph{a deterministic gate's critical guarantee rests on a fallible agent's provision.}
 
-\textbf{Fork-join.} The analyst, architect and developer form a chain. The developer's code then forks to a code reviewer (CR), which guarantees \p{reviewed}, and a security tester (ST), which guarantees \p{sec\_tested}. Both feed a release gate (RG) with policy \texttt{any}: release on the first approval. Every requirement is matched and every goal is claimed by an ancestor of the output. Agent-level analysis is silent. But a run in which RG uses only CR's approval releases code that was not security tested, and the converse run releases code that was not reviewed.
+\textbf{Fork-join.} The analyst, architect and developer again form a chain. The developer's code then forks to a code reviewer (CR), which guarantees \p{reviewed}, and a security tester (ST), which guarantees \p{sec\_tested}. Both feed a release gate (RG) with policy \texttt{any}: release on the first approval. Every requirement is matched and every goal is claimed by an ancestor of the output, so agent-level analysis is silent. But a run in which RG uses only CR's approval releases code that was not security tested, and the converse run releases code that was not reviewed.
+
+\subsection{Agents, Gates and Contracts}\label{sec:team}
+
+A team works on a shared artifact, for example a code change, and builds up facts about it: a design exists, adequate tests exist, the tests pass. We call such facts \emph{properties} and write $\Props$ for the finite set of properties a team mentions. A component \emph{requires} some properties before it can do its job, and it \emph{guarantees} others when it does its job. This is design by contract~\cite{meyer1992applying} applied to team members.
+
+%Assume-guarantee reasoning connects these component contracts: each component assumes properties of its inputs and guarantees properties of its outputs, and composition requires discharging each assumption~\cite{misra1981proofs,jones1983tentative,abadi1993composing,benveniste2018contracts}. For agent teams, this means checking whether the guarantees actually delivered along the team's possible execution paths establish the requirements of downstream components and the team's goals.
+
+%Properties are semantic claims, not artifacts. ``\p{tests}'' means that an adequate test suite exists, not that a file named \texttt{tests} was produced. When an agent's model fails, the agent may still produce an artifact, for example a weak test suite, but the property it claims does not hold. A downstream test runner that requires \p{tests} then cannot establish \p{tests\_pass}, even if it executes and reports success. So the model covers errors of commission (a wrong artifact presented as right, such as a test suite with vacuous assertions) as well as omission (no artifact at all, such as no tests written), at the level of properties: in both cases \p{tests} does not hold. What the model does not distinguish is what happens next. A symptom at the output says that the team can release without the property being established. It does not say whether the release is a false certification (the runner reports ``pass'' on weak tests) or a visible failure that a later step would catch (the runner reports ``fail'' and someone retries). Safety here is partial correctness: a run that never reaches the output produces no symptom, so a pipeline that blocks on a failed check is safe in the model only if the block is modeled as not reaching the output.
+
+Two kinds of components matter. An \emph{agent} is driven by a language model. Its guarantee is \emph{conditional}: it holds only when the agent's requirements are met and its model (its \emph{oracle}) does not fail. A \emph{gate} is a deterministic program, such as a test runner or a schema check. A gate's guarantee is conditional on its requirements but never on a model.
+
+%An agent may also \emph{declare} evidence for itself, for example ``I read the specification''. Declared evidence counts when we decide whether that agent can act, but it never flows to other components. Semantically, declaring $p$ is the same as removing $p$ from the agent's own requirements. We keep the notion because it records a common documentation practice and makes its locality explicit. For example, if DV declares \p{design} (``I read the design''), DV may act even when no upstream component supplies \p{design}, but TS downstream still does not receive \p{design} from DV.
+
+\begin{definition}[Team]\label{def:team}
+A \emph{team} $T$ consists of a graph, node contracts, models, coordination rules, and goals:
+\begin{itemize}
+\item Graph. A finite directed acyclic graph $(N,E)$ with a unique source $\iota$ (the input) and a unique sink $\omega$ (the output). Every node lies on a path from $\iota$ to $\omega$.
+\item Node contracts. Each node $n$ has a kind $\kappa(n)\in\{\mathsf{agent},\mathsf{gate}\}$ and three sets of properties: requirements $\req(n)$, guarantees $\gua(n)$, and declared evidence $\decl(n)$, all subsets of $\Props$. The input $\iota$ and the output $\omega$ are gates, because they run no model. The guarantees $\gua(\iota)$ are the input facts.
+\item Models. Each agent $n$ uses an oracle $\orc(n)$. Agents may share an oracle.
+\item Coordination. Routing $\rt(n)\in\{\mathsf{fork},\mathsf{switch}\}$ says whether $n$ delivers to all successors or to exactly one. A node with several predecessors has a join policy $\jn(n)\in\{\mathsf{all}\}\cup\{1,\ldots,|\pred(n)|\}$, where a number is a quorum and \textnormal{\texttt{any}} is the quorum $1$.
+\item Goals and faults. The goals $\Phi\subseteq\Props$ are required by the output ($\req(\omega)=\Phi$). The critical goals $\Phi_c\subseteq\Phi$ must survive failures, and the fault budget $f\in\mathbb{N}$ bounds how many oracles may fail in one run.
+\end{itemize}
+Formally, $T=(N,E,\iota,\omega,\kappa,\req,\gua,\decl,\orc,\rt,\jn,\Phi,\Phi_c,f)$.
+\end{definition}
+
+We write $\pred(n)$ and $\succs(n)$ for direct predecessors and successors, and $\anc(n)$ and $\desc(n)$ for proper ancestors and descendants. The starred forms $\anc^*$ and $\desc^*$ include the node itself. A switch with one successor is a fork.
+
+\begin{example}[A team]\label{ex:team}
+The Chain has seven nodes in a line: the input IN, the agents RA, AR, DV and SR, the gate TS, and the output OUT. The labels in Fig.~\ref{fig:running} give the contracts. For instance, $\req(\p{DV})=\{\p{design}\}$ and $\gua(\p{DV})=\{\p{code},\p{tests}\}$, while the gate TS has $\req(\p{TS})=\{\p{tests}\}$ and $\gua(\p{TS})=\{\p{tests\_pass}\}$. The four agents share one oracle, $\orc(\p{RA})=\orc(\p{AR})=\orc(\p{DV})=\orc(\p{SR})=g$. Every node has one successor and at most one predecessor, so routing and join policies play no role. The goals are $\Phi=\{\p{tests\_pass},\p{sec\_reviewed}\}$ with $\Phi_c=\{\p{tests\_pass}\}$, and $f=1$. The Fork-join team differs in its graph and policies: DV has two successors CR and ST, and the gate RG has two predecessors with join policy \texttt{any}.
+\end{example}
+
+\subsection{Runs}
+
+A run fixes every choice the team leaves open and then computes what each node receives and produces. Three kinds of choice remain open: which successor a switch picks, which delivered inputs a quorum or \texttt{any} join actually uses, and which oracles fail.
+
+\begin{definition}[Run]\label{def:run}
+A \emph{run} $\rho=(W,C,F)$ consists of
+\begin{itemize}
+\item a \emph{switch choice} $W(n)\in\succs(n)$ for each switch $n$;
+\item a \emph{contributor set} $C(n)$ for each node $n$ with several predecessors, namely the in-edges whose outputs $n$ uses;
+\item a set $F$ of \emph{failed oracles} with $|F|\le f$.
+\end{itemize}
+A run is \emph{fault-free} if $F=\emptyset$. Given $\rho$, process the nodes in topological order. The input $\iota$ is reached, with content $c(\iota)=\emptyset$ and output $o(\iota)=\gua(\iota)$. For every other node $v$:
+\begin{enumerate}
+\item \emph{Delivery.} An edge $(u,v)$ is \emph{delivered} if $u$ is reached and either $u$ is a fork or $W(u)=v$. Let $D(v)$ be the set of delivered in-edges of $v$.
+\item \emph{Reached.} $v$ is reached if $D(v)$ satisfies its join policy: all in-edges for \textsf{all} (and for a node with a single in-edge), at least $q$ in-edges for quorum $q$.
+\item \emph{Contributors.} For \textsf{all}, $C(v)$ is all in-edges. For quorum $q$, $C(v)$ is a subset of $D(v)$ with $|C(v)|\ge q$.
+\item \emph{Content.} The content of $v$ is the union of the outputs it uses: $c(v)=\bigcup_{(u,v)\in C(v)} o(u)$.
+\item \emph{Applies.} $v$ \emph{applies} if $\req(v)\subseteq c(v)\cup\decl(v)$ and either $v$ is a gate or its oracle has not failed ($\orc(v)\notin F$).
+\item \emph{Output.} $o(v)=c(v)\cup\gua(v)$ if $v$ applies, and $o(v)=c(v)$ otherwise.
+\end{enumerate}
+\end{definition}
+
+Properties flow along the contributing lineage. A join that uses one branch forgets what the other branch established. This is what makes \texttt{any} and quorum joins interesting.
+
+\begin{example}[Runs]\label{ex:run}
+The Chain has no switches and no joins, so a run is determined by $F$. In the fault-free run $F=\emptyset$, every agent applies. RA outputs \p{req\_spec}, AR adds \p{design}, DV adds \p{code} and \p{tests}, SR adds \p{sec\_reviewed}, and TS adds \p{tests\_pass}. The content of OUT contains both goals. In the run $F=\{g\}$, all four agents use $g$, so none of them applies and none adds a property. TS receives no \p{tests}, cannot apply, and the content of OUT lacks \p{tests\_pass}. In the Fork-join team, the gate RG receives both CR's and ST's outputs but, with policy \texttt{any}, a run may choose $C(\p{RG})=\{(\p{CR},\p{RG})\}$. Then $c(\p{RG})$ contains \p{reviewed} but not \p{sec\_tested}, because the join forgets ST's branch.
+\end{example}
+
+\subsection{Symptoms and Safety}
+
+A team can go wrong in three observable ways: a component acts without a property it requires, the output misses a goal, or the output misses a critical goal when up to $f$ oracles fail. We name each by a \emph{key}, a triple of kind, node and property.
+
+\begin{definition}[Symptoms, safety]\label{def:sym}
+The \emph{symptoms} $\Sym(T)$ of a team are the keys
+\begin{itemize}
+\item $\key{assume}{v}{p}$: some fault-free run reaches $v\neq\omega$ with $p\in\req(v)\setminus(c(v)\cup\decl(v))$;
+\item $\key{goal}{\omega}{\varphi}$: some fault-free run reaches $\omega$ with $\varphi\in\Phi\setminus c(\omega)$;
+\item $\key{robust}{\omega}{\varphi}$: $\key{goal}{\omega}{\varphi}\notin\Sym(T)$, and some run with $|F|\le f$ reaches $\omega$ with $\varphi\in\Phi_c\setminus c(\omega)$.
+\end{itemize}
+$T$ is \emph{safe} if $\Sym(T)$ contains no goal or robust key, and \emph{clean} if $\Sym(T)=\emptyset$.
+\end{definition}
+
+Two remarks on scope. Safety is a partial-correctness notion: a run in which the output is never reached (for example, an \textsf{all}-join behind a switch) produces no symptom. And under failures we check only critical goals at the output, since an agent acting without its requirements because an upstream model failed is the expected consequence of the failure, not a design defect.
+
+\begin{example}[Symptoms]\label{ex:sym}
+In the Chain, every fault-free run meets every requirement and delivers both goals, so $\Sym(T)$ has no assume key and no goal key. The run $F=\{g\}$ misses the critical goal \p{tests\_pass} at OUT, so $\Sym(T)$ contains the key $\key{robust}{\p{OUT}}{\p{tests\_pass}}$ and the Chain is not safe. (Under $F=\{g\}$ the downstream agents also act without their requirements, but this is the expected consequence of the failure, not a symptom.) In the Fork-join team, the run in which RG uses only CR misses \p{sec\_tested}, and the converse run misses \p{reviewed}. Its symptoms are therefore $\key{goal}{\p{OUT}}{\p{sec\_tested}}$ and $\key{goal}{\p{OUT}}{\p{reviewed}}$. An assume key would arise, for instance, if AR did not guarantee \p{design}: then $\key{assume}{\p{DV}}{\p{design}}$ would be a symptom.
+\end{example}
+
+\subsection{From Models to Runs}
+
+The guarantee we want is about all behaviors that respect the contracts. In such a behavior a component may know more than its content: an agent may happen to see a fact nobody guaranteed.
+
+\begin{definition}[Contract-respecting model]\label{def:model}
+A \emph{model} of $T$ is a run $(W,C,F)$ together with evidence sets $E(v)\supseteq c(v)\cup\decl(v)$ for reached nodes, where contents are computed as in Definition~\ref{def:run} except that $v$ applies if $\req(v)\subseteq E(v)$ and its oracle has not failed. Its keys are those of Definition~\ref{def:sym} with $E(v)$ in place of $c(v)\cup\decl(v)$ (and $E(\omega)$ in place of $c(\omega)$).
+\end{definition}
+
+Models differ from runs only by extra evidence. This is a modeling choice: we let a component know more than it was told, but not less. The following lemmas show that runs, and only a few of them, suffice.
+
+\begin{lemma}[Worst case]\label{lem:w}
+A key is produced by some model if and only if it is produced by some run.
+\end{lemma}
+
+\begin{lemma}[Minimal choices]\label{lem:m}
+Content is monotone in the contributor sets and antitone in the failure set. To decide $\Sym(T)$ it suffices to enumerate runs whose quorum joins use exactly $q$ contributors and whose failure sets have size $\min(f,|\Orc|)$.
+\end{lemma}
+
+The idea behind Lemma~\ref{lem:w} is that more evidence can only make more components apply, which only adds properties downstream. The minimal evidence $c(v)\cup\decl(v)$ is the worst case. Proofs are in Appendix~\ref{app:proofs}.
+
+\begin{example}[Models and the worst case]\label{ex:model}
+In the Chain with $F=\{g\}$, a contract-respecting model may let TS happen to know \p{tests} even though DV failed, so that TS applies and delivers \p{tests\_pass}. Such extra evidence can only make the team look safer, so the run, in which TS knows only what it received, is the worst case (Lemma~\ref{lem:w}). Likewise, in the Fork-join team a run in which RG uses both branches contains more than either one-branch run, so it suffices to consider the runs in which RG uses exactly one branch (Lemma~\ref{lem:m}). In the Chain, $\min(f,|\Orc|)=1$, so it suffices to fail $g$.
+\end{example}
 
 % =====================================================================
 \section{Agent Slicing}\label{sec:approach}
