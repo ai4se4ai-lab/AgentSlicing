@@ -1,6 +1,0 @@
-{
-"wong2016survey": "@article{wong2016survey,\n  title = {A Survey on Software Fault Localization},\n  author = {Wong, W. Eric and Gao, Ruizhi and Li, Yihao and Abreu, Rui and Wotawa, Franz},\n  journal = {IEEE Transactions on Software Engineering},\n  year = {2016},\n  volume = {42},\n  number = {8},\n  pages = {707--740},\n  doi = {10.1109/TSE.2016.2521368}\n}",
-"johnson1994program": "@inproceedings{johnson1994program,\n  title = {The Program Structure Tree: Computing Control Regions in Linear Time},\n  author = {Johnson, Richard and Pearson, David and Pingali, Keshav},\n  booktitle = {Proceedings of the ACM SIGPLAN 1994 Conference on Programming Language Design and Implementation (PLDI)},\n  year = {1994},\n  pages = {171--185},\n  doi = {10.1145/178243.178258}\n}",
-"holm1979simple": "@article{holm1979simple,\n  title = {A Simple Sequentially Rejective Multiple Test Procedure},\n  author = {Holm, Sture},\n  journal = {Scandinavian Journal of Statistics},\n  year = {1979},\n  volume = {6},\n  number = {2},\n  pages = {65--70},\n  url = {https://www.jstor.org/stable/4615733}\n}",
-"leveson2011engineering": "@book{leveson2011engineering,\n  title = {Engineering a Safer World: Systems Thinking Applied to Safety},\n  author = {Leveson, Nancy G.},\n  publisher = {MIT Press},\n  year = {2012},\n  doi = {10.7551/mitpress/8179.001.0001}\n}"
-}

@@ -857,13 +857,14 @@ B4 lint & 31.0 & 0.0 & 59/1463 & -- \\
 B2 + slice shrinking & 100.0 & 100.0 & -- & 99.2 \\
 B2 deviation set & 100.0 & 100.0 & -- & 1.0 \\}
 \newcommand{\tabMutationByOp}{%
-add requirement & 501 & 1943 & 31.9 \\
-drop guarantee & 445 & 1501 & 24.2 \\
-fork to switch & 138 & 377 & 24.7 \\
-gate to agent & 415 & 1069 & 34.2 \\
-relax join & 369 & 1318 & 67.1 \\
-remove edge & 94 & 230 & 22.6 \\
-share oracle & 461 & 1071 & 36.3 \\}
+add requirement & 548 & 501 (91.4) & 1943 & 31.9 & 25 & 109 & 102 (93.6) & 28.0 \\
+drop guarantee & 511 & 445 (87.1) & 1501 & 24.2 & 35 & 80 & 71 (88.8) & 7.3 \\
+fork to switch & 404 & 138 (34.2) & 377 & 24.7 & 14 & 65 & 0 (0.0) & -- \\
+gate to agent & 495 & 415 (83.8) & 1069 & 34.2 & 56 & 90 & 79 (87.8) & 12.7 \\
+relax join & 403 & 369 (91.6) & 1318 & 67.1 & 157 & 80 & 78 (97.5) & 86.2 \\
+remove edge & 109 & 94 (86.2) & 230 & 22.6 & 13 & 19 & 17 (89.5) & 11.1 \\
+share oracle & 565 & 461 (81.6) & 1071 & 36.3 & 74 & 117 & 101 (86.3) & 10.9 \\
+}
 \newcommand{\tabMutationOps}{%
 add requirement (617), drop guarantee (593), fork to switch (441), gate to agent (545), relax join (420), remove edge (118), share oracle (626)}
 \newcommand{\tabMutationSize}{%
@@ -951,7 +952,7 @@ mixed & 200 & 0.0 & 100.0 & 40.0 & 100.0 & 99.0 & 80.0 & 100.0 & 0.15 \\}
 \addlegendentry{S2, S3 (any $\ell$)}
 \end{axis}\end{tikzpicture}}
 \newcommand{\figEvolution}{%
-\begin{tikzpicture}\begin{axis}[width=\columnwidth,height=5cm,ymin=0,ymax=1.05,xtick={0,1,2,3,4,5,6},xticklabels={kind,route,join,req,decl,gua,edge},x tick label style={rotate=30,anchor=north east,font=\footnotesize},xlabel={changed attribute},ylabel={fraction of slices re-verified},grid=major,grid style={gray!20},legend pos=north west,legend style={font=\scriptsize,draw=none,fill=none},tick label style={font=\footnotesize},label style={font=\footnotesize}]
+\begin{tikzpicture}\begin{axis}[width=\columnwidth,height=5cm,ymin=0,ymax=1.05,xtick={0,1,2,3,4,5,6},xticklabels={kind or oracle,routing,join policy,requirement,declared evidence,guarantee,edge},x tick label style={rotate=30,anchor=north east,font=\footnotesize},xlabel={changed attribute},ylabel={fraction of slices re-verified},grid=major,grid style={gray!20},legend pos=north west,legend style={font=\scriptsize,draw=none,fill=none},tick label style={font=\footnotesize},label style={font=\footnotesize}]
 \addplot[fill=cA,fill opacity=0.15,draw=none,forget plot] coordinates {(0,0.112803) (1,0.113636) (2,0.112857) (3,0.522376) (4,0.512022) (5,0.641209) (6,0.918016) (6,0.983502) (5,0.783629) (4,0.688901) (3,0.696935) (2,0.152374) (1,0.160421) (0,0.143045)} -- cycle;
 \addplot[cA,semithick,solid,mark=*,mark size=1.4pt,mark options={solid}] coordinates {(0,0.127657) (1,0.136491) (2,0.132616) (3,0.611777) (4,0.602782) (5,0.715277) (6,0.953787)};
 \addlegendentry{chain}
@@ -1041,6 +1042,185 @@ mixed & 200 & 0.0 & 100.0 & 40.0 & 100.0 & 99.0 & 80.0 & 100.0 & 0.15 \\}
 \addplot[mark size=1.6pt,cG,thick,densely dotted,mark=x,mark size=3pt,mark options={solid},forget plot] coordinates {(8,0) (12,0) (22,0) (32,0)};
 \end{axis}
 \end{tikzpicture}}
+\newcommand{\resMutBSixFalseRateNOneZero}{4.3\%}
+\newcommand{\resMutBSixFalseRateNSix}{1.4\%}
+\newcommand{\resMutBSixFalseRateNThreeZero}{4.4\%}
+\newcommand{\resMutBSixFalseRateNTwoZero}{2.9\%}
+\newcommand{\resMutOpAddRequirementALSilent}{25}
+\newcommand{\resMutOpAddRequirementHidden}{31.9\%}
+\newcommand{\resMutOpAddRequirementSingleHidden}{28.0\%}
+\newcommand{\resMutOpAddRequirementSingleTeams}{109}
+\newcommand{\resMutOpAddRequirementSingleUnclean}{102}
+\newcommand{\resMutOpAddRequirementTeams}{548}
+\newcommand{\resMutOpAddRequirementUnclean}{501}
+\newcommand{\resMutOpAddRequirementUncleanShare}{91.4\%}
+\newcommand{\resMutOpDropGuaranteeALSilent}{35}
+\newcommand{\resMutOpDropGuaranteeHidden}{24.2\%}
+\newcommand{\resMutOpDropGuaranteeSingleHidden}{7.3\%}
+\newcommand{\resMutOpDropGuaranteeSingleTeams}{80}
+\newcommand{\resMutOpDropGuaranteeSingleUnclean}{71}
+\newcommand{\resMutOpDropGuaranteeTeams}{511}
+\newcommand{\resMutOpDropGuaranteeUnclean}{445}
+\newcommand{\resMutOpDropGuaranteeUncleanShare}{87.1\%}
+\newcommand{\resMutOpForkToSwitchALSilent}{14}
+\newcommand{\resMutOpForkToSwitchHidden}{24.7\%}
+\newcommand{\resMutOpForkToSwitchSingleTeams}{65}
+\newcommand{\resMutOpForkToSwitchSingleUnclean}{0}
+\newcommand{\resMutOpForkToSwitchTeams}{404}
+\newcommand{\resMutOpForkToSwitchUnclean}{138}
+\newcommand{\resMutOpForkToSwitchUncleanShare}{34.2\%}
+\newcommand{\resMutOpGateToAgentALSilent}{56}
+\newcommand{\resMutOpGateToAgentHidden}{34.2\%}
+\newcommand{\resMutOpGateToAgentSingleHidden}{12.7\%}
+\newcommand{\resMutOpGateToAgentSingleTeams}{90}
+\newcommand{\resMutOpGateToAgentSingleUnclean}{79}
+\newcommand{\resMutOpGateToAgentTeams}{495}
+\newcommand{\resMutOpGateToAgentUnclean}{415}
+\newcommand{\resMutOpGateToAgentUncleanShare}{83.8\%}
+\newcommand{\resMutOpRelaxJoinALSilent}{157}
+\newcommand{\resMutOpRelaxJoinHidden}{67.1\%}
+\newcommand{\resMutOpRelaxJoinSingleHidden}{86.2\%}
+\newcommand{\resMutOpRelaxJoinSingleTeams}{80}
+\newcommand{\resMutOpRelaxJoinSingleUnclean}{78}
+\newcommand{\resMutOpRelaxJoinTeams}{403}
+\newcommand{\resMutOpRelaxJoinUnclean}{369}
+\newcommand{\resMutOpRelaxJoinUncleanShare}{91.6\%}
+\newcommand{\resMutOpRemoveEdgeALSilent}{13}
+\newcommand{\resMutOpRemoveEdgeHidden}{22.6\%}
+\newcommand{\resMutOpRemoveEdgeSingleHidden}{11.1\%}
+\newcommand{\resMutOpRemoveEdgeSingleTeams}{19}
+\newcommand{\resMutOpRemoveEdgeSingleUnclean}{17}
+\newcommand{\resMutOpRemoveEdgeTeams}{109}
+\newcommand{\resMutOpRemoveEdgeUnclean}{94}
+\newcommand{\resMutOpRemoveEdgeUncleanShare}{86.2\%}
+\newcommand{\resMutOpShareOracleALSilent}{74}
+\newcommand{\resMutOpShareOracleHidden}{36.3\%}
+\newcommand{\resMutOpShareOracleSingleHidden}{10.9\%}
+\newcommand{\resMutOpShareOracleSingleTeams}{117}
+\newcommand{\resMutOpShareOracleSingleUnclean}{101}
+\newcommand{\resMutOpShareOracleTeams}{565}
+\newcommand{\resMutOpShareOracleUnclean}{461}
+\newcommand{\resMutOpShareOracleUncleanShare}{81.6\%}
+\newcommand{\resMutSingleChangeTeams}{560}
+\newcommand{\resMutComboTeams}{1{,}120}
+\newcommand{\resMutOpAddRequirementComboHidden}{32.6\%}
+\newcommand{\resMutOpAddRequirementComboKeys}{1{,}632}
+\newcommand{\resMutOpDropGuaranteeComboHidden}{26.1\%}
+\newcommand{\resMutOpDropGuaranteeComboKeys}{1{,}350}
+\newcommand{\resMutOpForkToSwitchComboHidden}{24.7\%}
+\newcommand{\resMutOpForkToSwitchComboKeys}{377}
+\newcommand{\resMutOpGateToAgentComboHidden}{36.0\%}
+\newcommand{\resMutOpGateToAgentComboKeys}{990}
+\newcommand{\resMutOpRelaxJoinComboHidden}{63.4\%}
+\newcommand{\resMutOpRelaxJoinComboKeys}{1{,}100}
+\newcommand{\resMutOpRemoveEdgeComboHidden}{24.1\%}
+\newcommand{\resMutOpRemoveEdgeComboKeys}{203}
+\newcommand{\resMutOpShareOracleComboHidden}{39.0\%}
+\newcommand{\resMutOpShareOracleComboKeys}{970}
+\newcommand{\figDepthByOp}{%
+\begin{tikzpicture}
+\begin{axis}[xbar stacked,bar width=7pt,width=0.40\textwidth,height=5.4cm,xmin=0,xmax=100,ytick={0,1,2,3,4,5,6},ymin=-0.6,ymax=6.6,xtick={0,25,50,75,100},xlabel={share of symptom keys (\%)},axis y line*=left,axis x line*=bottom,xmajorgrids,grid style={gray!20},y axis line style={draw=none},ytick style={draw=none},tick label style={font=\footnotesize},label style={font=\footnotesize},title style={font=\footnotesize},title={(a) the only change},clip=false,yticklabels={remove edge,fork to switch,drop guarantee,add requirement,gate to agent,share oracle,relax join},name=left]
+\addplot[fill=black!18,draw=white,line width=0.5pt] coordinates {(88.89,0) (0,1) (92.72,2) (72.03,3) (87.34,4) (89.11,5) (13.76,6)};
+\addplot[fill=cA!35,draw=white,line width=0.5pt] coordinates {(3.704,0) (0,1) (4.636,2) (11.25,3) (6.329,4) (4.95,5) (76.61,6)};
+\addplot[fill=cA!70,draw=white,line width=0.5pt] coordinates {(0,0) (0,1) (0.6623,2) (4.823,3) (3.797,4) (0.9901,5) (4.128,6)};
+\addplot[fill=cA!60!black,draw=white,line width=0.5pt] coordinates {(7.407,0) (0,1) (1.987,2) (11.9,3) (2.532,4) (4.95,5) (5.505,6)};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,0) {\,$n=27$};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:0,1) {\,no symptom};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,2) {\,$n=151$};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,3) {\,$n=311$};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,4) {\,$n=79$};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,5) {\,$n=101$};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,6) {\,$n=218$};
+\end{axis}
+\begin{axis}[xbar stacked,bar width=7pt,width=0.40\textwidth,height=5.4cm,xmin=0,xmax=100,ytick={0,1,2,3,4,5,6},ymin=-0.6,ymax=6.6,xtick={0,25,50,75,100},xlabel={share of symptom keys (\%)},axis y line*=left,axis x line*=bottom,xmajorgrids,grid style={gray!20},y axis line style={draw=none},ytick style={draw=none},tick label style={font=\footnotesize},label style={font=\footnotesize},title style={font=\footnotesize},title={(b) combined with other changes},clip=false,yticklabels={},at={(left.east)},anchor=west,xshift=1.6cm,area legend,legend columns=4,legend style={at={(-0.3,-0.25)},anchor=north,font=\scriptsize,draw=none,fill=none,/tikz/every even column/.append style={column sep=6pt}},legend cell align=left]
+\addplot[fill=black!18,draw=white,line width=0.5pt] coordinates {(75.86,0) (75.33,1) (73.93,2) (67.4,3) (64.04,4) (61.03,5) (36.64,6)};
+\addlegendentry{depth 1}
+\addplot[fill=cA!35,draw=white,line width=0.5pt] coordinates {(17.73,0) (17.77,1) (16.37,2) (18.14,3) (21.92,4) (26.91,5) (52.45,6)};
+\addlegendentry{depth 2}
+\addplot[fill=cA!70,draw=white,line width=0.5pt] coordinates {(2.463,0) (3.183,1) (2.593,2) (5.453,3) (4.04,4) (3.299,5) (3.727,6)};
+\addlegendentry{depth 3}
+\addplot[fill=cA!60!black,draw=white,line width=0.5pt] coordinates {(3.941,0) (3.714,1) (7.111,2) (9.007,3) (10,4) (8.763,5) (7.182,6)};
+\addlegendentry{depth $\ge$4}
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,0) {\,$n=203$};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,1) {\,$n=377$};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,2) {\,$n=1{,}350$};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,3) {\,$n=1{,}632$};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,4) {\,$n=990$};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,5) {\,$n=970$};
+\node[font=\scriptsize,text=black!60,anchor=west] at (axis cs:100,6) {\,$n=1{,}100$};
+\end{axis}
+\end{tikzpicture}}
+\newcommand{\resEvoAllSlicesdecl}{0.0\%}
+\newcommand{\resEvoAllSlicesedge}{41.4\%}
+\newcommand{\resEvoAllSlicesgua}{6.6\%}
+\newcommand{\resEvoAllSlicesjoin}{0.0\%}
+\newcommand{\resEvoAllSliceskind}{0.0\%}
+\newcommand{\resEvoAllSlicesreq}{0.0\%}
+\newcommand{\resEvoAllSlicesroute}{0.0\%}
+\newcommand{\resEvoFullMs}{3.6}
+\newcommand{\resEvoIncMs}{1.9}
+\newcommand{\resEvoMediandecl}{41.5\%}
+\newcommand{\resEvoMedianedge}{96.6\%}
+\newcommand{\resEvoMediangua}{56.6\%}
+\newcommand{\resEvoMedianjoin}{9.4\%}
+\newcommand{\resEvoMediankind}{10.2\%}
+\newcommand{\resEvoMedianreq}{38.1\%}
+\newcommand{\resEvoMedianroute}{10.7\%}
+\newcommand{\resEvoSlicesNEightZero}{281}
+\newcommand{\resEvoSlicesNFourZero}{145}
+\newcommand{\resEvoSlicesNTwoZero}{78}
+\newcommand{\resEvoSlowerdecl}{19.1\%}
+\newcommand{\resEvoSloweredge}{66.6\%}
+\newcommand{\resEvoSlowergua}{27.9\%}
+\newcommand{\resEvoSlowerjoin}{0.0\%}
+\newcommand{\resEvoSlowerkind}{0.2\%}
+\newcommand{\resEvoSlowerreq}{16.1\%}
+\newcommand{\resEvoSlowerroute}{0.4\%}
+\newcommand{\resEvoSpeedupdecl}{1.4}
+\newcommand{\resEvoSpeedupedge}{0.9}
+\newcommand{\resEvoSpeedupgua}{1.2}
+\newcommand{\resEvoSpeedupjoin}{3.4}
+\newcommand{\resEvoSpeedupkind}{3.2}
+\newcommand{\resEvoSpeedupreq}{1.4}
+\newcommand{\resEvoSpeeduproute}{2.9}
+\newcommand{\tabEvolutionDetail}{%
+\multicolumn{13}{@{}l}{\textit{Node policy}}\\
+\quad kind or oracle & $\{a\}$ & 465 & 11.3 & {\footnotesize[10.7, 11.8]} & 10.2 & 0.0 & 14.4 & 10.9 & 8.8 & 3.5 & 3.2 & 0.2 \\
+\quad routing & $\{a\}$ & 258 & 11.6 & {\footnotesize[10.9, 12.3]} & 10.7 & 0.0 & 14.9 & 11.5 & 8.5 & 4.1 & 2.9 & 0.4 \\
+\quad join policy & $\{a\}$ & 226 & 10.4 & {\footnotesize[9.7, 11.1]} & 9.4 & 0.0 & 12.9 & 10.1 & 8.2 & 3.3 & 3.4 & 0.0 \\
+\addlinespace
+\multicolumn{13}{@{}l}{\textit{Node contract}}\\
+\quad requirement & $\anc^*(a)$ & 248 & 46.8 & {\footnotesize[43.6, 50.0]} & 38.1 & 0.0 & 52.1 & 47.5 & 42.2 & 4.6 & 1.4 & 16.1 \\
+\quad declared evidence & $\anc^*(a)$ & 251 & 48.5 & {\footnotesize[45.2, 51.7]} & 41.5 & 0.0 & 54.5 & 47.6 & 41.5 & 3.0 & 1.4 & 19.1 \\
+\quad guarantee & $\anc^*(Y)$ & 229 & 57.3 & {\footnotesize[53.6, 60.9]} & 56.6 & 6.6 & 60.4 & 53.7 & 57.2 & 3.8 & 1.2 & 27.9 \\
+\addlinespace
+\multicolumn{13}{@{}l}{\textit{Structure}}\\
+\quad edge added or removed & $\anc^*(Y)$, both & 290 & 80.7 & {\footnotesize[77.7, 83.5]} & 96.6 & 41.4 & 84.7 & 85.3 & 71.8 & 3.1 & 0.9 & 66.6 \\
+\midrule
+All changes &  & 1{,}967 & 36.0 & {\footnotesize[34.6, 37.4]} & 21.7 & 6.9 & 41.5 & 34.5 & 32.1 & 3.6 & 1.9 & 17.6 \\}
+\newcommand{\tabEvolutionTopology}{%
+\multicolumn{9}{@{}l}{\textit{Node policy}}\\
+\quad kind or oracle & 465 & 12.8 & 8.1 & 15.1 & 13.5 & 10.0 & 10.7 & 9.8 & 11.3 \\
+\quad routing & 258 & 13.6 & 9.4 & 14.6 & 13.9 & 10.3 & 9.8 & 9.4 & 11.6 \\
+\quad join policy & 226 & 13.3 & 7.9 & 11.9 & 11.0 & 9.6 & 8.2 & 10.4 & 10.4 \\
+\addlinespace
+\multicolumn{9}{@{}l}{\textit{Node contract}}\\
+\quad requirement & 248 & 61.2 & 36.8 & 58.9 & 52.0 & 37.9 & 31.7 & 54.9 & 46.8 \\
+\quad declared evidence & 251 & 60.3 & 29.4 & 64.3 & 57.6 & 43.0 & 40.6 & 40.9 & 48.5 \\
+\quad guarantee & 229 & 71.5 & 36.3 & 72.6 & 61.1 & 60.7 & 37.3 & 53.2 & 57.3 \\
+\addlinespace
+\multicolumn{9}{@{}l}{\textit{Structure}}\\
+\quad edge added or removed & 290 & 95.4 & 62.5 & 95.9 & 88.7 & 70.6 & 69.2 & 80.4 & 80.7 \\
+\midrule
+All changes & 1{,}967 & 42.0 & 25.4 & 45.2 & 44.7 & 31.2 & 30.8 & 32.1 & 36.0 \\}
+\newcommand{\resEvoMedianAll}{21.7\%}
+\newcommand{\resEvoRedoneTopochain}{42.0\%}
+\newcommand{\resEvoRedoneTopoforkjoin}{45.2\%}
+\newcommand{\resEvoRedoneTopolayered}{44.7\%}
+\newcommand{\resEvoRedoneTopomixed}{32.1\%}
+\newcommand{\resEvoRedoneToporandom}{30.8\%}
+\newcommand{\resEvoRedoneToposp}{31.2\%}
+\newcommand{\resEvoRedoneTopotree}{25.4\%}
 % END GENERATED RESULTS
 
 \begin{document}
@@ -1474,7 +1654,16 @@ If $\sigma$ is convex, no node outside $\sigma$ is both an ancestor and a descen
 To analyze a slice in isolation we must say what the rest of the team does. We take it at \emph{face value}: every outside component is assumed to keep its contract and to deliver everywhere.
 
 \begin{definition}[Hybrid semantics]\label{def:hybrid}
-The hybrid semantics $H_\sigma$ is defined like Definition~\ref{def:run} with these changes. Runs choose only member switches, member contributor sets, and failures $F\subseteq\orc(\sigma)$ with $|F|\le f$. Every \emph{outside} node is reached if it is $\iota$ or at least one in-edge is delivered (whatever its policy), all its delivered in-edges contribute, it always applies, and it delivers to all successors. Every entry edge into a member $v$ is delivered and carries the same environment $\env_\sigma(v)=\bigcup_{u\in\pred(v)\setminus\sigma} o(u)$, the union of the face-value outputs of all outside predecessors. The \emph{raw findings} $\Fd{\sigma}$ are the keys of Definition~\ref{def:sym} evaluated in $H_\sigma$ at every node, where a robust key requires the goal key of the same property to be absent from $\Fd{\sigma}$, as in Definition~\ref{def:sym}. For confirmation (Definition~\ref{def:confirmed}) we use the \emph{unsuppressed} robust candidates: a robust key is a candidate whenever some run of $H_\sigma$ with failures misses a critical goal at $\omega$, whether or not the slice also shows the goal key.
+For a slice $\sigma$, the \emph{hybrid semantics} $H_\sigma$ computes runs as in Definition~\ref{def:run}, except that members of $\sigma$ are analyzed exactly and all other nodes are taken at face value.
+\begin{itemize}
+\item \emph{Choices.} A run of $H_\sigma$ fixes only the choices made inside the slice: the switch choices and contributor sets of members, and a failure set $F\subseteq\orc(\sigma)$ with $|F|\le f$.
+\item \emph{Outside nodes.} An outside node is reached if it is $\iota$ or if at least one of its in-edges is delivered, whatever its join policy. All its delivered in-edges contribute, it always applies, and it delivers to all its successors.
+\item \emph{Entry edges.} Every entry edge into a member $v$ is delivered, and all entry edges carry the same \emph{environment}
+\[\env_\sigma(v)=\bigcup_{u\in\pred(v)\setminus\sigma} o(u),\]
+the union of the face-value outputs of the outside predecessors of $v$.
+\item \emph{Findings.} The \emph{raw findings} $\Fd{\sigma}$ are the keys of Definition~\ref{def:sym} evaluated in $H_\sigma$ at every node. As in Definition~\ref{def:sym}, a robust key is raw only if the goal key of the same property is absent from $\Fd{\sigma}$.
+\end{itemize}
+Confirmation (Definition~\ref{def:confirmed}) uses a weaker condition on robust keys. A robust key is an \emph{unsuppressed} candidate whenever some run of $H_\sigma$ with failures misses a critical goal at $\omega$, whether or not the slice also shows the goal key.
 \end{definition}
 
 By Lemma~\ref{lem:convex}, the outside predecessors of a member are never influenced by members, so $\env_\sigma(v)$ is a fixed set. Outside nodes \emph{below} members are recomputed in each run. This is how an internal failure becomes visible at the output. With $\sigma=N$ nothing is outside, $H_N$ is the exact semantics, and $\Fd{N}=\Sym(T)$. With $\sigma=\emptyset$ every node applies, and $\Fd{\emptyset}$ are the requirements and goals that no ancestor claims at all (\emph{static} keys).
@@ -1495,11 +1684,13 @@ We therefore never report a raw finding directly.
 A raw finding or robust candidate $\kappa$ of $\sigma$ \emph{lifts} if some run $\rho$ of $T$ exhibits $\kappa$ (for a robust key: misses the property at $\omega$ with $1\le|F|\le f$), and the \emph{replay} of $\rho$ on $\sigma$ exhibits $\kappa$ as well. The replay is the run of $H_\sigma$ that makes $\rho$'s switch and contributor choices at members, fails $F\cap\orc(\sigma)$, and, at members that $\rho$ does not reach (but $H_\sigma$ does), uses all delivered inputs and delivers to all successors if a fork and to none if a switch. The \emph{confirmed findings} $\mathcal{C}(\sigma)$ are the keys that lift.
 \end{definition}
 
-The definition ties a finding to the slice: the team must show the symptom, \emph{and} the slice must show it for the same internal choices. The implementation first searches team runs with the member switch choices of each recorded witness fixed (up to 64 witnesses per key), and then, if none lifts, searches all runs of the team. Each candidate run is replayed in $H_\sigma$. The second search is complete. A search that exceeds its budget (200{,}000 runs) is counted and the key is treated as unconfirmed, which happened \resConfExhausted{} times in E5. In the worst case, lifting is as hard as whole-team checking (Theorem~\ref{thm:cx}). In our benchmarks a slice finding needed \resSLLifts{} lift searches on average and each took milliseconds.
+The definition ties a finding to the slice: the team must show the symptom, \emph{and} the slice must show it for the same internal choices. The implementation first searches team runs with the member switch choices of each recorded witness fixed (up to 64 witnesses per key), and then, if none lifts, searches all runs of the team. Each candidate run is replayed in $H_\sigma$. %The second search is complete. A search that exceeds its budget (e.g., 200{,}000 runs) is counted and the key is treated as unconfirmed, which happened \resConfExhausted{} times in E5. In the worst case, lifting is as hard as whole-team checking (Theorem~\ref{thm:cx}). In our benchmarks a slice finding needed \resSLLifts{} lift searches on average and each took milliseconds.
 
 \subsection{Agent-Level Analysis}
 
-What does it mean to check a team agent by agent? The natural reading is: check each agent against its own contract, assuming every other component keeps its contract. That is the hybrid semantics of a singleton slice.
+Checking a team agent by agent means examining one component at a time. For each agent $v$, we ask whether $v$ can run into trouble in its own right: whether its requirements are met, whether its model can fail, and, if $v$ is a switch, which branch it takes. Every other component is taken at face value, so it is assumed to keep its contract and to deliver what it promises. This is exactly the hybrid semantics of the singleton slice $\{v\}$ (Definition~\ref{def:hybrid}): $v$ is analyzed exactly, and everything outside $v$ is at face value.
+
+For example, checking DV in the Chain, AR is assumed to deliver \p{design}, so DV's requirement is met. DV's model may fail, but TS is outside the slice and is assumed to keep its contract, so it still delivers \p{tests\_pass}. The check reports nothing. The defect appears only when DV and TS are analyzed together.
 
 \begin{definition}[Agent-level analysis]\label{def:al}
 The raw agent-level findings are $\bigcup_{v}\Fd{\{v\}}$, and the (confirmed) agent-level findings are $\AL(T)=\bigcup_{v}\mathcal{C}(\{v\})$.
@@ -1529,21 +1720,24 @@ The gap between naive and derived guarantees is what a slice adds. Each confirme
 Table~\ref{tab:contracts} shows derived contracts for the running example. For $\{$DV, SR, TS$\}$ the fault-free guarantee equals the naive one, but the robust guarantee loses \p{code}, \p{tests}, \p{sec\_reviewed} and \p{tests\_pass}. For $\{$SR, TS$\}$, with \p{tests} supplied from outside, the robust guarantee keeps \p{tests\_pass}, so the slice that \emph{explains} the defect must contain DV. For $\{$ST, RG$\}$ the naive guarantee contains \p{sec\_tested} but the derived one does not: joint coverage fails at RG.
 
 \begin{table}[tbp]
-\caption{Derived and Naive Exit Guarantees in the Running Example (Beyond What the Entries Carry)}
-\label{tab:contracts}
-\centering
-\normalsize
-\begin{tabularx}{\linewidth}{@{}YYYY@{}}
-\toprule
-Slice & Entries carry & Naive $N_\sigma$ & Derived $G_\sigma$ / $G^f_\sigma$\\
-\midrule
-DV, SR, TS & \p{req\_spec}, \p{design} & \p{code}, \p{tests}, \p{sec\_rev.}, \p{tests\_pass} & $G$: same, $G^f$: nothing\\
-SR, TS & $+$\p{code}, \p{tests} & \p{sec\_rev.}, \p{tests\_pass} & $G$: same, $G^f$: \p{tests\_pass}\\
-ST, RG & \p{req\_spec}, \p{design}, \p{code} & \p{sec\_tested} & $G$: nothing\\
-CR, RG & same as above & \p{reviewed} & $G$: nothing\\
-\bottomrule
-\end{tabularx}
-\end{table}
+  \caption{Derived and Naive Exit Guarantees in the Running Example (Beyond What the Entries Carry)}
+  \label{tab:contracts}
+  \centering
+  \normalsize
+  \begin{tabularx}{\linewidth}{@{}>{\hsize=0.5\hsize}X
+                                >{\hsize=1.1667\hsize}X
+                                >{\hsize=1.1667\hsize}X
+                                >{\hsize=1.1667\hsize}X@{}}
+  \toprule
+  Slice & Entries carry & Naive $N_\sigma$ & Derived $G_\sigma$ / $G^f_\sigma$\\
+  \midrule
+  DV, SR, TS & \p{req\_spec}, \p{design} & \p{code}, \p{tests}, \p{sec\_rev.}, \p{tests\_pass} & $G$: same, $G^f$: nothing\\
+  SR, TS & $+$\p{code}, \p{tests} & \p{sec\_rev.}, \p{tests\_pass} & $G$: same, $G^f$: \p{tests\_pass}\\
+  ST, RG & \p{req\_spec}, \p{design}, \p{code} & \p{sec\_tested} & $G$: nothing\\
+  CR, RG & same as above & \p{reviewed} & $G$: nothing\\
+  \bottomrule
+  \end{tabularx}
+  \end{table}
 
 \begin{definition}[Declared contract, exactness]\label{def:declared}
 A \emph{declared contract} of $\sigma$ is a pair $(A^d,G^d)$. It is \emph{valid} if, when every entry carries $A^d$, every member's requirements hold in every fault-free internal run and $G^d\subseteq G_{\sigma,e}(A^d)$ for every exit $e$. A pair $(A,G)$ is \emph{exact} for exit $e$ if, for every environment $X$, $G_{\sigma,e}(X)=X\cup G$ when $A\subseteq X$ and $G_{\sigma,e}(X)=X$ otherwise.
@@ -1726,30 +1920,30 @@ Three semantic oracles support conformance testing. The \emph{model oracle}, in 
 
 The scripts in \path{experiments/} assemble these components into the evaluations. E1 checks conformance. E2 measures detection and localization on injected defects. E3 analyzes the published-design encodings in \path{experiments/architectures.py}. E4b varies hand-off distance and slice size. E5 measures scalability. E6 checks edits and incremental reuse. E7 measures sensitivity, ablation, and false findings. E8 applies random engineering changes. The topology and contract generator is \path{slicing/generator.py}, the controlled defect injector is \path{slicing/injector.py}, and E8's mutation operators are defined in \path{experiments/e8_mutation.py}. The distinction matters for reproduction: injected classes and depths are controlled inputs in E2, whereas E8 measures the symptoms that result from the selected changes.
 
-\subsubsection{Reproducing the results}
+%\subsubsection{Reproducing the results}
 
-Listing~\ref{lst:reproduce} gives the commands from the replication package's root directory. Python~3.12 is the reported environment, and \path{requirements.txt} pins the Python dependencies. The full run is CPU-based and uses process workers according to the available core count. A TeX installation with the ACM class, bibliography style, and packages used by the manuscript is needed only for the PDF build.
+%Listing~\ref{lst:reproduce} gives the commands from the replication package's root directory. Python~3.12 is the reported environment, and \path{requirements.txt} pins the Python dependencies. The full run is CPU-based and uses process workers according to the available core count. A TeX installation with the ACM class, bibliography style, and packages used by the manuscript is needed only for the PDF build.
 
-\begin{lstlisting}[float=htbp,language=sh,caption={Reproduction commands, executed from the repository root. The quick and full runs are alternative experiment modes.},label={lst:reproduce}]
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-make test
+%\begin{lstlisting}[float=htbp,language=sh,caption={Reproduction commands, executed from the repository root. The quick and full runs are alternative experiment modes.},label={lst:reproduce}]
+% python3 -m venv .venv
+% .venv/bin/python -m pip install -r requirements.txt
+% make test
 
-# Quick validation using the bundled remaining results:
-make quick
+% # Quick validation using the bundled remaining results:
+% make quick
 
-# Full regeneration of all experiments and summaries:
-make all
+% # Full regeneration of all experiments and summaries:
+% make all
 
-# Typeset the bundled TOSEM manuscript and preview:
-make -C docs/TOSEM
-\end{lstlisting}
+% # Typeset the bundled TOSEM manuscript and preview:
+% make -C docs/TOSEM
+% \end{lstlisting}
 
-\texttt{make test} runs the unit and property-based tests. \texttt{make quick} runs the proof obligations, proof mutants, tests, running example, E1, E3, and postprocessing. It does not rerun E2, E4b, or E5--E8. Thus its postprocessed summaries also use the bundled result files for the omitted experiments. For a complete reproduction, use \texttt{make all}, which invokes \path{experiments/run_all.py} and runs every experiment before postprocessing. The driver runs each stage as a separate process, writes its output to \path{results/logs/}, and stops at the first failed stage. A selected stage can also be rerun by name, for example \texttt{.venv/bin/python experiments/run\_all.py e8\_mutation process}. Postprocessing then combines the new E8 file with the other available results. Experiment runs replace their result files, so comparisons with the bundled snapshot should use a separate checkout or a preserved copy.
+% \texttt{make test} runs the unit and property-based tests. \texttt{make quick} runs the proof obligations, proof mutants, tests, running example, E1, E3, and postprocessing. It does not rerun E2, E4b, or E5--E8. Thus its postprocessed summaries also use the bundled result files for the omitted experiments. For a complete reproduction, use \texttt{make all}, which invokes \path{experiments/run_all.py} and runs every experiment before postprocessing. The driver runs each stage as a separate process, writes its output to \path{results/logs/}, and stops at the first failed stage. A selected stage can also be rerun by name, for example \texttt{.venv/bin/python experiments/run\_all.py e8\_mutation process}. Postprocessing then combines the new E8 file with the other available results. Experiment runs replace their result files, so comparisons with the bundled snapshot should use a separate checkout or a preserved copy.
 
-\textbf{From executions to reported numbers.} Experiment scripts save raw measurements and findings as \path{results/*.json}. Shared utilities record the commit identifier, working-tree status, Python and numerical-library versions, platform, available CPUs, start time, and elapsed time. Generator and experiment seeds and search budgets are fixed in the scripts. Statistical resampling uses NumPy seed 20261104. \path{scripts/process_results.py} reads the JSON files, computes the statistics and confidence intervals, and writes \path{results/macros.json}, LaTeX result macros, table bodies, and figures. The same script generates the opening figure (Fig.~\ref{fig:teaser}) from the E8 file. Its current output directory is \path{docs/TSE}, and it also replaces the marked generated-results block in that directory's \texttt{main.tex}. The TOSEM source bundles the corresponding numerical snapshot with revised presentation, including merged result tables. Consequently, \texttt{make -C docs/TOSEM} typesets that snapshot. It does not execute experiments or automatically import fresh postprocessor output. A reader can compare a fresh run's generated macros and table bodies with the TOSEM values, and inspect the raw JSON and stage logs when a number differs.
+% \textbf{From executions to reported numbers.} Experiment scripts save raw measurements and findings as \path{results/*.json}. Shared utilities record the commit identifier, working-tree status, Python and numerical-library versions, platform, available CPUs, start time, and elapsed time. Generator and experiment seeds and search budgets are fixed in the scripts. Statistical resampling uses NumPy seed 20261104. \path{scripts/process_results.py} reads the JSON files, computes the statistics and confidence intervals, and writes \path{results/macros.json}, LaTeX result macros, table bodies, and figures. The same script generates the opening figure (Fig.~\ref{fig:teaser}) from the E8 file. Its current output directory is \path{docs/TSE}, and it also replaces the marked generated-results block in that directory's \texttt{main.tex}. The TOSEM source bundles the corresponding numerical snapshot with revised presentation, including merged result tables. Consequently, \texttt{make -C docs/TOSEM} typesets that snapshot. It does not execute experiments or automatically import fresh postprocessor output. A reader can compare a fresh run's generated macros and table bodies with the TOSEM values, and inspect the raw JSON and stage logs when a number differs.
 
-Reproduction should compare semantic findings, class counts, and statistical summaries together with their recorded seeds and budgets, rather than require byte-identical files: provenance and timings necessarily change. Hardware and load can also change which runs finish within a wall-time budget, affecting censored timings and budget-limited detection coverage. Such differences must be interpreted with the recorded time-out and exhaustion indicators. The supplied JSON files allow the reported snapshot to be audited and its statistics recomputed without rerunning the expensive scalability experiment. This is distinct from independently regenerating the experimental data.
+% Reproduction should compare semantic findings, class counts, and statistical summaries together with their recorded seeds and budgets, rather than require byte-identical files: provenance and timings necessarily change. Hardware and load can also change which runs finish within a wall-time budget, affecting censored timings and budget-limited detection coverage. Such differences must be interpreted with the recorded time-out and exhaustion indicators. The supplied JSON files allow the reported snapshot to be audited and its statistics recomputed without rerunning the expensive scalability experiment. This is distinct from independently regenerating the experimental data.
 
 \subsection{Experimental Setup}\label{sec:setup}
 
@@ -1837,7 +2031,21 @@ Conformance testing found two real bugs, both logged in the replication package.
 
 Of the \resMutTeams{} mutated teams, \resMutUnclean{} have at least one symptom and \resMutUnsafe{} are unsafe. Together they have \resMutKeys{} symptom keys. The replay oracle agrees with the exact semantics on all \resMutOracleTeams{} teams it checked (\resMutOracleDisagree{} disagreements).
 
-\textbf{How often are defects hidden?} Most symptoms are visible to an agent-by-agent check: \resMutDepthOne{} keys have depth~1. But \resMutHiddenKeys{} keys (\resMutHiddenShare) have depth at least two: \resMutDepthTwo{} of depth 2, \resMutDepthThree{} of depth 3, \resMutDepthFour{} of depth 4, \resMutDepthFive{} of depth 5 and \resMutDepthSix{} of depth 6. \resMutDeepKeys{} of the hidden keys are deeper than the enumeration bound. \resMutTeamsWithHidden{} teams have at least one hidden key, and in \resMutALDeclaredClean{} of the \resMutUnclean{} defective teams (\resMutALDeclaredCleanUnsafe{} of them unsafe) the confirmed agent-level check reports nothing, so it would declare the team clean. The hidden share depends on team size: \resMutHiddenShareNSix{} at 8 nodes, \resMutHiddenShareNOneZero{} at 12, \resMutHiddenShareNTwoZero{} at 22 and \resMutHiddenShareNThreeZero{} at 32 (Table~\ref{tab:mutsize}). Table~\ref{tab:mutop} shows which changes produce hidden defects: relaxing a join is the most dangerous change, followed by letting two agents share a model.
+\textbf{How often are defects hidden?} Most symptoms are visible to an agent-by-agent check: \resMutDepthOne{} keys have depth~1. But \resMutHiddenKeys{} keys (\resMutHiddenShare) have depth at least two: \resMutDepthTwo{} of depth 2, \resMutDepthThree{} of depth 3, \resMutDepthFour{} of depth 4, \resMutDepthFive{} of depth 5 and \resMutDepthSix{} of depth 6. \resMutDeepKeys{} of the hidden keys are deeper than the enumeration bound. \resMutTeamsWithHidden{} teams have at least one hidden key, and in \resMutALDeclaredClean{} of the \resMutUnclean{} defective teams (\resMutALDeclaredCleanUnsafe{} of them unsafe) the confirmed agent-level check reports nothing, so it would declare the team clean. The hidden share depends on team size: \resMutHiddenShareNSix{} at 8 nodes, \resMutHiddenShareNOneZero{} at 12, \resMutHiddenShareNTwoZero{} at 22 and \resMutHiddenShareNThreeZero{} at 32. Agent-level recall on hidden keys is \resMutRecallHiddenBOne{} at every size, and the false rate of the must-analysis B6 stays low, from \resMutBSixFalseRateNSix{} at 8 nodes to \resMutBSixFalseRateNThreeZero{} at 32. The per-size breakdown, with confidence intervals for the localization rates, is produced by \path{scripts/process_results.py} from \path{results/e8_mutation.json}.
+
+\textbf{Which changes create hidden defects?} Table~\ref{tab:mutop} breaks the results down by change operator. A team can receive up to three changes, so the left block counts every team that contains the operator, and the right block counts only the \resMutSingleChangeTeams{} teams whose single change is that operator, which attributes symptoms more cleanly. Relaxing an \textsf{all}-join is the most dangerous change. \resMutOpRelaxJoinHidden{} of the keys in teams containing it are hidden, and in \resMutOpRelaxJoinALSilent{} of its \resMutOpRelaxJoinUnclean{} defective teams the agent-level check reports nothing. Alone, it creates symptoms in \resMutOpRelaxJoinSingleUnclean{} of \resMutOpRelaxJoinSingleTeams{} teams, and \resMutOpRelaxJoinSingleHidden{} of their keys are hidden. Letting two agents share a model (\resMutOpShareOracleHidden{} hidden) and turning a gate into an agent (\resMutOpGateToAgentHidden{}) come next. Their symptoms are mostly visible when they are the only change (\resMutOpShareOracleSingleHidden{} and \resMutOpGateToAgentSingleHidden{} hidden), so most of their hidden defects arise in combination with other changes. Turning a fork into a switch never creates a symptom alone (\resMutOpForkToSwitchSingleUnclean{} of \resMutOpForkToSwitchSingleTeams{} teams), yet it appears in \resMutOpForkToSwitchUnclean{} defective teams when combined with other changes. Adding a requirement, dropping a guarantee, and removing an edge produce mostly visible defects. The counts for each operator are computed from the same result file.
+
+Fig.~\ref{fig:depthbyop} shows how deep these defects are and how the picture changes when changes combine. Alone, relaxing a join is the only change whose symptoms are mostly hidden, and most of them have depth~2: the join together with the branch it may take alone. In teams with two or three changes, every operator takes part in hidden symptoms, from \resMutOpRemoveEdgeComboHidden{} of the keys for removing an edge to \resMutOpRelaxJoinComboHidden{} for relaxing a join, with sharing a model second (\resMutOpShareOracleComboHidden). Sharing a model rises from \resMutOpShareOracleSingleHidden{} hidden alone to \resMutOpShareOracleComboHidden{} in combination, and turning a gate into an agent from \resMutOpGateToAgentSingleHidden{} to \resMutOpGateToAgentComboHidden. This is consistent with the mechanisms of Table~\ref{tab:classes}: correlated evidence (S4) needs two claimers on one model, and a conditional collapse (S6a) needs a gate whose input comes from a fallible agent, so a single change often supplies only one of the two ingredients. Symptoms of depth~3 or more are a minority under every operator. A review that checks each modified agent on its own therefore misses many of the defects that arise when independent changes interact.
+
+\begin{figure}[tbp]
+\centering
+\begin{adjustbox}{max width=\linewidth}
+\figDepthByOp
+\end{adjustbox}
+\caption{Depth of the symptom keys produced by each change operator in the mutation benchmark (E8): (a) teams whose only change is the operator; (b) teams that combine it with one or two other changes. Depth~1 (gray) is visible to agent-level analysis, and depths of 2 or more (blue) are hidden. $n$: symptom keys. Keys deeper than the enumeration bound are counted in depth~$\ge$4. Operators are ordered by the hidden share in (b).}
+\label{fig:depthbyop}
+\Description{Two panels of horizontal 100 percent stacked bars, one bar per change operator, split into depth 1, 2, 3 and at least 4. Alone, only relaxing a join produces mostly hidden symptoms, nearly all of depth 2. Combined with other changes, every operator produces hidden symptoms, between about a quarter and two thirds of its keys, with sharing a model and relaxing a join highest.}
+\end{figure}
 
 \begin{table}[tbp]
 \caption{Mutation Benchmark: Detection (\% of All and of Hidden Keys), False Findings, and Exact Localization of Hidden Keys}
@@ -1855,31 +2063,22 @@ Checker & All & Hidden & False/reported & Exact loc.\\
 \end{table}
 
 \begin{table}[tbp]
-\caption{Mutation Benchmark by Change Operator: Unclean Teams Containing the Operator, Their Keys, and the Share of Keys That Are Hidden}
+\caption{Mutation Benchmark by Change Operator. Teams: Teams Containing the Operator. Unclean: Those With at Least One Symptom (\%). Keys: Their Symptom Keys. Hidden: Share of Those Keys That Are Hidden (\%). AL Silent: Defective Teams Where the Confirmed Agent-Level Check Reports Nothing. Right Block: Only Teams Whose Single Change Is the Operator}
 \label{tab:mutop}
 \centering
 \normalsize
-\begin{tabular}{@{}lrrr@{}}
+\setlength{\tabcolsep}{4pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{@{}lrrrrr@{\hspace{12pt}}rrr@{}}
 \toprule
-Operator & Teams & Keys & Hidden (\%)\\
+ & \multicolumn{5}{c}{All teams containing the operator} & \multicolumn{3}{c}{Single-change teams}\\
+\cmidrule(lr){2-6}\cmidrule(l){7-9}
+Operator & Teams & Unclean (\%) & Keys & Hidden (\%) & AL silent & Teams & Unclean (\%) & Hidden (\%)\\
 \midrule
 \tabMutationByOp
 \bottomrule
 \end{tabular}
-\end{table}
-
-\begin{table}[tbp]
-\caption{Mutation Benchmark by Team Size: Unclean Teams, Keys, Share of Hidden Keys, B1 Recall on Hidden Keys, Exact Localization of SL [95\% Cluster-Bootstrap CI] and of Shrinking, and B6 False Rate (\%)}
-\label{tab:mutsize}
-\centering
-\normalsize\setlength{\tabcolsep}{2.5pt}
-\begin{tabular}{@{}rlrrrrlrr@{}}
-\toprule
-Inner & Nodes & Teams & Keys & Hidden & B1 & SL exact & Shrink & B6 false\\
-\midrule
-\tabMutationSize
-\bottomrule
-\end{tabular}
+\end{adjustbox}
 \end{table}
 
 \textbf{Detection and false findings.} Table~\ref{tab:mutation} compares the checkers. Confirmed agent-level analysis (B1) finds \resMutRecallBOne{} of all keys and \resMutRecallHiddenBOne{} of the hidden ones. Confirmed SL finds \resMutRecallSL{} of all keys and \resMutRecallHiddenSL{} of the hidden ones with no false finding (\resMutFalseSL{} false keys). The few it misses are deeper than any of its slices. Without confirmation, SL would report \resMutFalseSLraw{} false keys (\resMutFalseRateSLraw{} of its findings), and agent-level analysis \resMutFalseRateBOneraw. The global must-analysis B6 is a strong detector: it finds \resMutRecallBSix{} of all keys and \resMutRecallHiddenBSix{} of the hidden ones in linear time per failure set, but \resMutFalseBSix{} of its \resMutReportedBSix{} findings (\resMutFalseRateBSix) are false, because a lower bound on content does not know which nodes are reachable together. The smell detector B5 flags \resMutRecallHiddenBFive{} of the hidden keys but \resMutFalseRateBFive{} of its findings are false, and the lint B4 finds no hidden key.
@@ -1920,58 +2119,33 @@ Table~\ref{tab:recall} gives recall of the primary key by class on the \resBench
 Strategies matter. Band slices cut across parallel branches but never contain a join together with a branch, nor two components at different depths, so band-1 misses every hidden class. Region slices find S2 and S3 but miss S4 and S6, whose interacting components are not inside one single-entry single-exit region. Window-2 misses S4 and S6 when more than one hand-off separates the interacting components. Goal-directed slices find every class. Random slices of matched size find \resRecallHiddenBThree{}: on teams of this size, many slices happen to contain the interacting pair.
 
 \begin{table}[tbp]
-\caption{Localization of Hidden Injected Defects (Small Benchmark, Detected Cases). Exact: Top Slice Is a True Minimal Confirming Slice [95\% Cluster-Bootstrap CI]; Minimum: Its Size Equals the Depth; Precise: Within the Root-Cause Hull; Hit: Meets the Root Cause; Cost: Slice Checks}
+\caption{Localization of Hidden Injected Defects (Small Benchmark, Detected Cases). Exact: the Top Slice Is a True Minimal Confirming Slice (\%, With 95\% Cluster-Bootstrap CI). Min.: Its Size Equals the Depth (\%). Precise: It Lies Within the Root-Cause Hull (\%). Size: Nodes in the Top Slice. Ratio: Size Over $|N|$. Cost: Slice Checks. Every Checker Meets the Root Cause in 100\% of Cases}
 \label{tab:loc}
 \centering
 \normalsize
-\setlength{\tabcolsep}{2pt}
+\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\linewidth}{@{}Yrrrrrrrr@{}}
 \toprule
-Checker & $n$ & \shortstack{Exact\\{[95\% CI]}} & Min. & Precise & Hit & Size & Ratio & Cost\\
+Checker & $n$ & Exact & 95\% CI & Min. & Precise & Size & Ratio & Cost\\
 \midrule
-SL (combined) & 700 & \shortstack[r]{86.9\\{[85.3, 88.4]}} & 86.9 & 86.9 & 100.0 & 2.8 & 0.21 & 36\\
-goal-directed & 700 & \shortstack[r]{40.0\\{[40.0, 40.0]}} & 40.0 & 40.0 & 100.0 & 3.4 & 0.25 & 8\\
-region & 280 & \shortstack[r]{0.0\\{[0.0, 0.0]}} & 0.0 & 100.0 & 100.0 & 3.2 & 0.23 & 5\\
-window-2 & 416 & \shortstack[r]{100.0\\{[100.0, 100.0]}} & 100.0 & 100.0 & 100.0 & 2.0 & 0.15 & 13\\
-B3 random slices & 687 & \shortstack[r]{49.8\\{[46.3, 53.3]}} & 49.8 & 53.6 & 100.0 & 4.5 & 0.34 & 36\\
-B2 witness lineage hull & 700 & \shortstack[r]{0.0\\{[0.0, 0.0]}} & 0.0 & 0.0 & 100.0 & 12.4 & 0.92 & 1\\
-B2 witness deviation set & 700 & \shortstack[r]{0.0\\{[0.0, 0.0]}} & 38.9 & 0.0 & 100.0 & 3.4 & 0.26 & 1\\
-B2 + slice shrinking & 700 & \shortstack[r]{100.0\\{[100.0, 100.0]}} & 90.0 & 100.0 & 100.0 & 2.7 & 0.20 & 15\\
+\multicolumn{9}{@{}l}{\emph{Slicing strategies}}\\
+SL (combined) & 700 & 86.9 & [85.3, 88.4] & 86.9 & 86.9 & 2.8 & 0.21 & 36\\
+goal-directed & 700 & 40.0 & [40.0, 40.0] & 40.0 & 40.0 & 3.4 & 0.25 & 8\\
+region & 280 & 0.0 & [0.0, 0.0] & 0.0 & 100.0 & 3.2 & 0.23 & 5\\
+window-2 & 416 & 100.0 & [100.0, 100.0] & 100.0 & 100.0 & 2.0 & 0.15 & 13\\
+\midrule
+\multicolumn{9}{@{}l}{\emph{Baselines}}\\
+B3 random slices & 687 & 49.8 & [46.3, 53.3] & 49.8 & 53.6 & 4.5 & 0.34 & 36\\
+B2 witness lineage hull & 700 & 0.0 & [0.0, 0.0] & 0.0 & 0.0 & 12.4 & 0.92 & 1\\
+B2 witness deviation set & 700 & 0.0 & [0.0, 0.0] & 38.9 & 0.0 & 3.4 & 0.26 & 1\\
+B2 + slice shrinking & 700 & 100.0 & [100.0, 100.0] & 90.0 & 100.0 & 2.7 & 0.20 & 15\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\begin{table}[tbp]
-\caption{Exact Localization (\%) of Hidden Injected Defects by Class (Small Benchmark)}
-\label{tab:locclass}
-\centering
-\normalsize
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
-Class & SL & B3 random & B2 deviation & B2+shrink\\
-\midrule
-\tabLocClass
-\bottomrule
-\end{tabular}
-\end{table}
+\textbf{Localization.} Table~\ref{tab:loc} reports localization on the small benchmark. Per-class values are in \path{results/e2_detection.json} of the replication package. The witness lineage hull covers \resLocRatioBTwo{} of the team and is never minimal. As noted above, this is a property of the lineage hull, not an empirical finding, and we keep it only for reference. The witness deviation set is a fair whole-team baseline: it is small (\resLocRatioBTwodev{} of the team) but exact in \resLocExactBTwodev{} of cases, because it always includes nodes that deviated without mattering (all agents on a failed shared model, for instance). SL is exact in \resLocExactSL{} [\resLocExactLoSL, \resLocExactHiSL] of cases, against \resLocExactBThree{} for random slices of matched size (Holm-adjusted Wilcoxon $p\resHTwoTwoPBThree$, $\hat A_{12}=\resHTwoTwoABThree$), and better than the deviation set ($p\resHTwoTwoPBTwodev$, $\hat A_{12}=\resHTwoTwoABTwodev$). The aggregate hides one weak class. SL's top slice is exact in every case on S2, S3, S6a and S6b, and the witness deviation set is exact in none of them. On S4, however, SL's top slice is exact in only \resLocExactSLSFour{} of cases, close to random slices, because no SL strategy targets the pair of claimers of one critical goal, so its top slice is usually a larger confirming slice than the minimal hull of the pair. Shrinking is exact on all five classes. Shrinking a whole-team witness is exact in \resLocExactBTwoshrink{} of cases (minimum-size in \resLocMinimumBTwoshrink) at about \resLocCostBTwoshrink{} slice checks, and it is better than SL ($\hat A_{12}=\resShrinkVsSLA$). On the medium benchmark, without exhaustive ground truth, SL's top slice covers \resMedRatioSL{} of the team and is precise in \resMedPreciseSL{} of cases, and shrinking covers \resMedRatioBTwoshrink.
 
-\textbf{Localization.} Table~\ref{tab:loc} reports localization on the small benchmark, and Table~\ref{tab:locclass} breaks it down by class. The witness lineage hull covers \resLocRatioBTwo{} of the team and is never minimal. As noted above, this is a property of the lineage hull, not an empirical finding, and we keep it only for reference. The witness deviation set is a fair whole-team baseline: it is small (\resLocRatioBTwodev{} of the team) but exact in \resLocExactBTwodev{} of cases, because it always includes nodes that deviated without mattering (all agents on a failed shared model, for instance). SL is exact in \resLocExactSL{} [\resLocExactLoSL, \resLocExactHiSL] of cases, against \resLocExactBThree{} for random slices of matched size (Holm-adjusted Wilcoxon $p\resHTwoTwoPBThree$, $\hat A_{12}=\resHTwoTwoABThree$), and better than the deviation set ($p\resHTwoTwoPBTwodev$, $\hat A_{12}=\resHTwoTwoABTwodev$). The aggregate hides one weak class: on S4, SL's top slice is exact in only \resLocExactSLSFour{} of cases, close to random slices: no SL strategy targets the pair of claimers of one critical goal, so its top slice is usually a larger confirming slice than the minimal hull of the pair. Shrinking a whole-team witness is exact in \resLocExactBTwoshrink{} of cases (minimum-size in \resLocMinimumBTwoshrink) at about \resLocCostBTwoshrink{} slice checks, and it is better than SL ($\hat A_{12}=\resShrinkVsSLA$). On the medium benchmark, without exhaustive ground truth, SL's top slice covers \resMedRatioSL{} of the team and is precise in \resMedPreciseSL{} of cases, and shrinking covers \resMedRatioBTwoshrink.
-
-\begin{table}[tbp]
-\caption{False Alarms on \resCleanTeams{} Clean and \resDecoyTeams{} Decoy Teams: Teams With Any Reported Key (\%)}
-\label{tab:alarms}
-\centering
-\normalsize
-\begin{tabular}{@{}lrr@{}}
-\toprule
-Checker & Clean & Decoy\\
-\midrule
-\tabAlarms
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textbf{False alarms.} On clean and decoy teams, every checker except the smell detector is silent (Table~\ref{tab:alarms}). The one-sided 95\% upper bounds on the alarm rate of SL are \resAlarmHicleanSL{} (clean) and \resAlarmHidecoySL{} (decoys). B5 alarms on \resAlarmdecoyBFive{} of decoys: the shape of a defect is not the defect. Because the gadgets do not interact with their hosts, these numbers say little about unstructured teams, but E8 and E7 do.
+\textbf{False alarms.} On clean and decoy teams, every checker except the smell detector is silent, including the unconfirmed variants of B1 and SL (0 alarms on \resCleanTeams{} clean and \resDecoyTeams{} decoy teams; per-checker counts are in \path{results/e2_detection.json}). The one-sided 95\% upper bounds on the alarm rate of SL are \resAlarmHicleanSL{} (clean) and \resAlarmHidecoySL{} (decoys). B5 alarms on \resAlarmcleanBFive{} of clean teams and \resAlarmdecoyBFive{} of decoys: the shape of a defect is not the defect. Because the gadgets do not interact with their hosts, these numbers say little about unstructured teams, but E8 and E7 do.
 
 \subsubsection{Published designs (E3)}
 
@@ -1982,43 +2156,33 @@ We encoded nine published designs with the protocol below and analyzed them with
 \item[P3] A role guarantees the artifact it produces and requires every artifact it consumes. Goals are the quality claims the design's evaluation relies on, and the claim resting on executed tests is critical, with $f=1$.
 \item[P4] Iterative loops (debate rounds, debugging loops, group-chat turns) are unrolled once.
 \end{itemize}
-All contracts were declared by one team of encoders (us) from the published descriptions, and there is no second encoder. They are hypotheses about the designs, not measurements of their behavior. P3 with $f=1$ asks a specific question of every design: does any critical claim rest on a single model? Table~\ref{tab:arch} lists the most informative finding per design, and Table~\ref{tab:archsens} varies the oracle assignment, the fault budget and the join policy.
+All contracts were declared by one team of encoders (us) from the published descriptions, and there is no second encoder. They are hypotheses about the designs, not measurements of their behavior. P3 with $f=1$ asks a specific question of every design: does any critical claim rest on a single model? Table~\ref{tab:arch} lists the most informative finding per design and varies the oracle assignment, the fault budget and the join policy.
 
 \begin{table}[tbp]
-\caption{Encoded Published Designs (Documented Configuration): Most Informative Finding, Class, Depth, Minimal Confirming Slice, and Whether Agent-Level Analysis (AL), the Smell Detector (B5) and the Must-Analysis (B6) Report the Key}
+\caption{Encoded Published Designs. Finding: the Most Informative Finding Under the Documented Configuration. Reported by: Whether Agent-Level Analysis (AL), the Smell Detector (B5) and the Must-Analysis (B6) Report It. Last Four Columns: Classes of All Findings After Changing the Encoding (``safe'': No Finding; ``--'': Join Policy Does Not Apply). The Documented Classes Are the Class Column, Plus S5 for AutoGenGroup}
 \label{tab:arch}
 \centering
-\normalsize
-\setlength{\tabcolsep}{2pt}
-\begin{tabularx}{\linewidth}{@{}YrYlrYrrr@{}}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{@{}lrllrlccc@{\hspace{12pt}}llll@{}}
 \toprule
-Design & $|N|$ & Key & Class & Depth & Minimal slice & AL & B5 & B6\\
+ & & \multicolumn{4}{c}{Finding} & \multicolumn{3}{c}{Reported by} & \multicolumn{4}{c}{Classes when the encoding changes}\\
+\cmidrule(lr){3-6}\cmidrule(lr){7-9}\cmidrule(l){10-13}
+Design & $|N|$ & Key & Class & Depth & Minimal slice & AL & B5 & B6 & Shared & Distinct & $f{=}0$ & Alt.\ join\\
 \midrule
-\cite{hong2024metagpt} MetaGPT & 8 & robust: \textsf{tests\_pass} & S6a & 2 & {\normalsize QA, TestRun} & no & yes & yes\\
-\cite{qian2024chatdev} ChatDev & 8 & robust: \textsf{correct} & A4 & 1 & {\normalsize Testing} & yes & no & yes\\
-\cite{huang2023agentcoder} AgentCoder & 5 & robust: \textsf{tests\_pass} & S6a & 2 & {\normalsize Programmer, Executor} & no & yes & yes\\
-\cite{islam2024mapcoder} MapCoder & 7 & robust: \textsf{samples\_pass} & S6a & 2 & {\normalsize Coding, SampleIO} & no & yes & yes\\
-\cite{dong2024selfcollab} SelfCollab & 5 & robust: \textsf{tested} & A4 & 1 & {\normalsize Tester} & yes & no & yes\\
-\cite{du2024debate} Debate & 9 & robust: \textsf{answer\_ok} & S4 & 3 & {\normalsize R1, R2, R3} & no & yes & yes\\
-\cite{wang2024moa} MoA & 9 & robust: \textsf{answer\_ok} & A4 & 1 & {\normalsize Aggregator} & yes & no & yes\\
-\cite{wu2024autogen} AutoGenGroup & 7 & goal: \textsf{runs} & S6b & 3 & {\normalsize Coder, Merge, Executor} & no & no & yes\\
-\cite{xia2025agentless} Agentless & 9 & robust: \textsf{issue\_fixed} & S6a & 3 & {\normalsize ReproGen, Validate1, Validate2} & no & yes & yes\\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\begin{table}[tbp]
-\caption{Sensitivity of E3 Findings to the Encoding: Documented Oracles, One Shared Oracle, Distinct Oracles per Agent, No Faults ($f=0$), and an Alternative Join Policy}
-\label{tab:archsens}
-\centering
-\normalsize
-\begin{tabular}{@{}llllll@{}}
-\toprule
-Design & doc. & shared & distinct & $f=0$ & alt.\ join\\
-\midrule
-\tabArchSensitivity
+MetaGPT~\cite{hong2024metagpt} & 8 & robust: \textsf{tests\_pass} & S6a & 2 & QA, TestRun & no & yes & yes & S6a & S6a & safe & --\\
+ChatDev~\cite{qian2024chatdev} & 8 & robust: \textsf{correct} & A4 & 1 & Testing & yes & no & yes & A4 & A4 & safe & --\\
+AgentCoder~\cite{huang2023agentcoder} & 5 & robust: \textsf{tests\_pass} & S6a & 2 & Programmer, Executor & no & yes & yes & S6a & S6a & safe & S3/S6b\\
+MapCoder~\cite{islam2024mapcoder} & 7 & robust: \textsf{samples\_pass} & S6a & 2 & Coding, SampleIO & no & yes & yes & S6a & S6a & safe & --\\
+SelfCollab~\cite{dong2024selfcollab} & 5 & robust: \textsf{tested} & A4 & 1 & Tester & yes & no & yes & A4 & A4 & safe & --\\
+Debate~\cite{du2024debate} & 9 & robust: \textsf{answer\_ok} & S4 & 3 & R1, R2, R3 & no & yes & yes & S4 & S6a & safe & S2\\
+MoA~\cite{wang2024moa} & 9 & robust: \textsf{answer\_ok} & A4 & 1 & Aggregator & yes & no & yes & A4 & A4 & safe & S3/S6b\\
+AutoGenGroup~\cite{wu2024autogen} & 7 & goal: \textsf{runs} & S6b & 3 & Coder, Merge, Executor & no & no & yes & S5/S6b & S5/S6b & S5/S6b & --\\
+Agentless~\cite{xia2025agentless} & 9 & robust: \textsf{issue\_fixed} & S6a & 3 & ReproGen, Validate1, Validate2 & no & yes & yes & S6a & S6a & safe & S6a\\
 \bottomrule
 \end{tabular}
+\end{adjustbox}
 \end{table}
 
 Under the documented configuration, all \resArchUnsafeDocumented{} designs have a symptom, and \resArchHiddenDocumented{} have one that agent-level analysis does not report. With $f=0$, \resArchSafeFZero{} of the nine are safe: the findings are about robustness to one model failure, which P3 deliberately asks about. The recurring pattern is S6a: a deterministic gate (MetaGPT's test run, AgentCoder's executor, MapCoder's sample input/output check, Agentless's validation runs) certifies a critical property using tests or code written by an LLM agent, so the gate's guarantee is only as robust as that agent's model. The minimal slice \{writer, gate\} says exactly that. The repair is to back the gate's input with an independent source, as AgentCoder does for its tests but not for its code. In the running example, an independent test designer on another model makes the chain safe (\resRexIndepSymptoms{} symptoms). In multi-agent debate, the three revisers run on one backbone (S4, depth 3). With distinct models the finding changes to S6a (the vote rests on the round-one answers). ChatDev's critical claim rests on one LLM tester (A4, visible at agent level). The AutoGen group-chat encoding loses \p{runs} when the manager routes to the critic (S6b, depth 3, together with depth-one bypass findings). This finding depends on unrolling the chat once. The smell detector reports the hidden finding in \resArchHiddenSmell{} and the must-analysis in \resArchHiddenMust{} of the \resArchHiddenDocumented{} designs, but neither says which agents form the defect. These are findings about our encodings. In particular, a robust symptom says only that the critical claim is not established when one model fails. It does not distinguish a gate that would then falsely certify (weak LLM-written tests that pass) from one that would visibly fail (MapCoder's sample check uses input/output pairs from the problem statement, so a wrong program fails it). Whether the real systems mitigate the findings, for example by retries, repeated sampling or human review, is outside our model.
@@ -2027,15 +2191,7 @@ Under the documented configuration, all \resArchUnsafeDocumented{} designs have 
 
 \subsection{RQ3: Cost, Slicing Strategy, and Evolution}\label{sec:rq3}
 
-\textbf{Slice size and hand-off distance (E4).} How large must slices be? On the injected benchmark, recall of exhaustive-$k$ rises from \resRecallKOne{} at $k=1$ to \resRecallKTwo{} at $k=2$, \resRecallKThree{} at $k=3$ and \resRecallKFour{} at $k=4$, but this curve only restates the injector, which draws the number of hand-offs $\ell$ between interacting components from $\{0,1,2\}$. We therefore ran a dedicated sweep (E4b, \resDepthSweepTeams{} teams) with $\ell=0,\ldots,5$ and confirmed exhaustive slices up to $k=\resDepthSweepKmax$. Fig.~\ref{fig:depthsweep} shows the result: for S4, S6a and S6b the depth is exactly $\ell+2$ (in \resDepthIsEllPlusTwo{} of teams), and for S2 and S3 it is always $2$ (\resDepthTwoForJoins), whatever the length of the branches. This is what Theorem~\ref{thm:sep}a predicts from the gadget shape and convexity, so E4b confirms the implementation rather than discovering a law. To check that depth does not grow with the rest of the team, we repeated the sweep with a 12-node host (\resDepthSweepBigNodesMin--\resDepthSweepBigNodesMax{} nodes, enumerating slices up to size $\ell+2$): the depth is again $\ell+2$ (\resDepthBigIsEllPlusTwo) and $2$ for joins (\resDepthBigTwoForJoins). The number of slices grows with $k$ (\resDepthSweepSlicesKTwo{} slices per team at $k=2$, \resDepthSweepSlicesKMax{} at $k=\resDepthSweepKmax$), and no clean or decoy team raised an alarm at any $k$ (\resAlarmKFive). On the mutation benchmark, \resMutDepthOne{} of \resMutKeys{} symptoms have depth one and only \resMutDepthFive{} and \resMutDepthSix{} have depth five and six.
-
-\begin{figure}[!t]
-\centering
-\figDepthSweep
-\caption{Recall (confirmed) of the primary injected symptom by maximum slice size $k$, for hand-off distances $\ell=0,\ldots,5$ (S4, S6a, S6b pooled) and for join defects (S2, S3). The depth needed is $\ell+2$ for chains of conditional or correlated claims and $2$ for joins.}
-\label{fig:depthsweep}
-\Description{Confirmed recall versus maximum slice size. Conditional and correlated chain defects require slices of size equal to hand-off distance plus two, and join defects require size two.}
-\end{figure}
+\textbf{Slice size and hand-off distance (E4).} How large must slices be? On the injected benchmark, recall of exhaustive-$k$ rises from \resRecallKOne{} at $k=1$ to \resRecallKTwo{} at $k=2$, \resRecallKThree{} at $k=3$ and \resRecallKFour{} at $k=4$, but this curve only restates the injector, which draws the number of hand-offs $\ell$ between interacting components from $\{0,1,2\}$. We therefore ran a dedicated sweep (E4b, \resDepthSweepTeams{} teams) with $\ell=0,\ldots,5$ and confirmed exhaustive slices up to $k=\resDepthSweepKmax$. The result is a sharp threshold: for every class and hand-off distance, confirmed recall is $0$ for every $k$ below the defect's depth and $1$ from the depth on. For S4, S6a and S6b the depth is exactly $\ell+2$ (in \resDepthIsEllPlusTwo{} of teams), and for S2 and S3 it is always $2$ (\resDepthTwoForJoins), whatever the length of the branches. This is what Theorem~\ref{thm:sep}a predicts from the gadget shape and convexity, so E4b confirms the implementation rather than discovering a law. To check that depth does not grow with the rest of the team, we repeated the sweep with a 12-node host (\resDepthSweepBigNodesMin--\resDepthSweepBigNodesMax{} nodes, enumerating slices up to size $\ell+2$): the depth is again $\ell+2$ (\resDepthBigIsEllPlusTwo) and $2$ for joins (\resDepthBigTwoForJoins). The number of slices grows with $k$ (\resDepthSweepSlicesKTwo{} slices per team at $k=2$, \resDepthSweepSlicesKMax{} at $k=\resDepthSweepKmax$), and no clean or decoy team raised an alarm at any $k$ (\resAlarmKFive). On the mutation benchmark, \resMutDepthOne{} of \resMutKeys{} symptoms have depth one and only \resMutDepthFive{} and \resMutDepthSix{} have depth five and six.
 
 \textbf{Scalability (E5).} Published agent teams have tens of agents, a range that E8 covers with confirmed analysis. E5 asks how the methods behave far beyond it, to see where each one breaks. We generate teams of 10 to 5{,}000 nodes in four topologies, inject one hidden defect, and run each strategy with a budget of \resScaleBudget{}~s per team (\resScaleTeams{} teams). E5 measures raw slice analysis. Confirmation adds one lift search per finding. Time-outs are censored at the budget, and a defect counts as detected only when the run finished. Fig.~\ref{fig:scale} and Table~\ref{tab:scale} report wall time. On the three switch-free topologies every strategy finishes on almost every team and the censored log-log slopes stay close to 2 (SL: \resSlopeSLfree, upper bound \resSlopeHiSLfree, window-2: \resSlopewindowTwofree, band-1: \resSlopebandOnefree). But on these teams the exact whole-team checker is the cheapest method of all (slope \resSlopewholefree, and \resTimeBigwholefree~s at 5{,}000 nodes): without switches and with \textsf{all}-joins a team has one fault-free run plus one run per failure set, and checking it is a linear pass. The global must-analysis is also cheap (\resTimeBigmustfree~s at 5{,}000 nodes) and detects every defect. On the \emph{mixed} topology the picture changes. The whole-team checker's cost grows with the number of choice points and it exceeds the budget on \resTimeoutswholemixed{} of \resTeamsmixed{} teams. Singleton and window-2 slices time out on \resTimeoutssingletonmixed{} and \resTimeoutswindowTwomixed{} of them, but SL times out on \resTimeoutsSLmixed{} teams, because its goal-directed and region slices are hulls that grow with the team and contain many choice points (\resLimitedSL{} slices exceeded the per-slice run budget and were skipped). Counted over all teams, SL detects the defect in \resDetectSLmixed{} of \resTeamsmixed{} mixed teams and the whole-team checker in \resDetectwholemixed. Under the pre-registered decision rule, H3.1 is \emph{not supported}: the polynomial strategies exceed slope 2 on mixed teams, and whole-team checking is not super-polynomial on switch-free teams. The refined reading, that cost is driven by the choice points inside a slice rather than by the number of members, is exploratory. Peak memory of SL stayed below \resPeakMemSL~MB. Confirmation adds cost on top of raw slicing. On teams of up to 200 nodes we also ran confirmed SL: at 200 nodes its median time is \resConfTimeTwoHundredfree~s on switch-free teams and \resConfTimeTwoHundredmixed~s on mixed teams (raw SL: \resRawTimeTwoHundredfree~s and \resRawTimeTwoHundredmixed~s), it times out on \resConfTimeoutsfree{} of \resConfTeamsfree{} switch-free and \resConfTimeoutsmixed{} of \resConfTeamsmixed{} mixed teams of at most 200 nodes, and \resConfExhausted{} lift searches exceeded their budget.
 
@@ -2048,20 +2204,37 @@ Under the documented configuration, all \resArchUnsafeDocumented{} designs have 
 \end{figure}
 
 \begin{table}[tbp]
-\caption{Scalability: Log-Log Slope of Time vs.\ Size ($|N|\ge 50$) for Finished Runs Only and With Time-Outs Censored at the Budget [95\% Bootstrap CI], Median Time at 5{,}000 Nodes (Censored), Time-Outs, and Defects Detected by Finished Runs}
+\caption{Scalability for Teams With $|N|\ge 50$, on Switch-Free and Mixed Topologies (Switches and \texttt{any}-Joins). Slope: Log-Log Slope of Time Against Team Size With Time-Outs Censored at the Budget [95\% Bootstrap CI]. Time: Median Seconds per Team at 5{,}000 Nodes (Censored). Time-Outs and Defects Detected (by Finished Runs) Are Counts of Teams}
 \label{tab:scale}
 \centering
-\normalsize
-\begin{tabular}{@{}llllrrr@{}}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{@{}lrrrr@{\hspace{14pt}}rrrr@{}}
 \toprule
-Strategy & Topology & Slope (finished) & Slope (censored) & s @5k & Time-outs & Detected\\
+ & \multicolumn{4}{c}{Switch-free} & \multicolumn{4}{c}{Mixed}\\
+\cmidrule(lr){2-5}\cmidrule(l){6-9}
+Strategy & Slope [CI] & Time (s) & Time-outs & Detected & Slope [CI] & Time (s) & Time-outs & Detected\\
 \midrule
-\tabScalability
+singleton (B1) & 1.51 [1.37, 1.64] & 0.64 & 0/270 & 0/270 & 1.73 [1.55, 1.90] & 2.78 & 0/90 & 0/90\\
+window-2 & 1.70 [1.53, 1.87] & 14.90 & 0/270 & 198/270 & 1.88 [1.70, 2.05] & 7.92 & 0/90 & 64/90\\
+band-1 & 1.26 [1.15, 1.38] & 0.09 & 0/270 & 0/270 & 2.33 [2.15, 2.52] & 24.18 & 4/90 & 0/90\\
+region & 1.88 [1.72, 2.05] & 19.44 & 9/270 & 161/270 & 2.59 [2.40, 2.78] & 60.00 & 12/90 & 46/90\\
+goal-directed & 1.91 [1.79, 2.03] & 19.30 & 8/270 & 262/270 & 2.34 [2.13, 2.60] & 60.00 & 29/90 & 61/90\\
+SL (combined) & 1.94 [1.85, 2.03] & 46.82 & 13/270 & 257/270 & 2.20 [1.97, 2.46] & 60.00 & 30/90 & 60/90\\
+\midrule
+B6 must-analysis & 1.94 [1.92, 1.96] & 1.18 & 0/270 & 270/270 & 2.02 [1.95, 2.10] & 1.62 & 0/90 & 90/90\\
+B2 whole team & 1.14 [1.07, 1.21] & 0.02 & 0/270 & 270/270 & 2.89 [2.55, 3.24] & 60.00 & 36/90 & 54/90\\
 \bottomrule
 \end{tabular}
+\end{adjustbox}
 \end{table}
 
-\textbf{Evolution (E6).} We take \resEvoChanges{} random changes on \resEvoTeams{} teams of 20, 40 and 80 nodes (seven topologies, ten seeds, where teams whose full verification exceeds 60~s are skipped, which happened \resEvoSkipped{} times): a change of a requirement, guarantee or declared evidence, of an agent's kind or oracle, of a routing or join policy, or the addition or removal of an edge. After each change we re-verify incrementally with Theorem~\ref{thm:inc} and compare with full re-verification of all SL slices. The incremental result agrees with full re-verification in \resEvoAgree{} of the changes. On non-chain topologies \resEvoRedoneNonChain{} of the slices are re-verified (95\% CI upper bound \resEvoRedoneNonChainHi), against \resEvoRedoneChain{} on chains. The share falls with team size (\resEvoRedoneNTwoZero, \resEvoRedoneNFourZero{} and \resEvoRedoneNEightZero{} for 20, 40 and 80 nodes). Fig.~\ref{fig:evo} and Table~\ref{tab:evo} show that the saving depends on the change: changes of kind, routing or join policy re-verify only slices containing the node (\resEvoRedonekind, \resEvoRedoneroute, \resEvoRedonejoin), contract changes about half (\resEvoRedonereq{} for requirements, \resEvoRedonegua{} for guarantees), and edge changes \resEvoRedoneedge, because they change ancestor relations. In wall time the saving is small: the median speed-up is \resEvoSpeedup$\times$, and in \resEvoSlower{} of the changes incremental re-verification is \emph{slower} than full re-verification, because on teams of this size each slice is checked in microseconds and computing the dependency set is a noticeable share of the cost. The share of slices saved is the robust result, while the time saved depends on how expensive slices are.
+\textbf{Evolution (E6).} We take \resEvoChanges{} random changes on \resEvoTeams{} teams of 20, 40 and 80 nodes (seven topologies, ten seeds, where teams whose full verification exceeds 60~s are skipped, which happened \resEvoSkipped{} times): a change of a requirement, guarantee or declared evidence, of an agent's kind or oracle, of a routing or join policy, or the addition or removal of an edge. After each change we re-verify incrementally with Theorem~\ref{thm:inc} and compare with full re-verification of all SL slices. The incremental result agrees with full re-verification in \resEvoAgree{} of the changes. Over all changes, \resEvoRedone{} of the slices are re-verified (median \resEvoMedianAll), \resEvoRedoneNonChain{} on non-chain topologies (95\% CI upper bound \resEvoRedoneNonChainHi) against \resEvoRedoneChain{} on chains.
+
+Table~\ref{tab:evo}a and Fig.~\ref{fig:evo} show that the saving follows the dependency set of Theorem~\ref{thm:inc}. A change of kind or oracle, routing or join policy affects only the slices that contain the changed node (\resEvoRedonekind, \resEvoRedoneroute{} and \resEvoRedonejoin{} re-verified), and no such change re-verified every slice. A change of a requirement or declared evidence affects the slices that meet the node's ancestors (\resEvoRedonereq{} and \resEvoRedonedecl), and a change of a guarantee also the ancestors of the descendants that require the changed property (\resEvoRedonegua). Edge changes are the most expensive. They alter ancestor relations, so their dependency set is taken in both versions of the team: the median edge change re-verifies \resEvoMedianedge{} of the slices, and \resEvoAllSlicesedge{} of them re-verify every slice. For requirement and declared-evidence changes the median lies well below the mean (\resEvoMedianreq{} and \resEvoMediandecl), so a minority of changes, those at nodes with many ancestors, account for much of the re-verification. The share falls with team size (\resEvoRedoneNTwoZero, \resEvoRedoneNFourZero{} and \resEvoRedoneNEightZero{} at 20, 40 and 80 inner nodes, with \resEvoSlicesNTwoZero, \resEvoSlicesNFourZero{} and \resEvoSlicesNEightZero{} SL slices per team on average), most clearly for node-policy changes, whose dependency set does not grow with the team. Table~\ref{tab:evo}b shows the effect of topology. Fork-join, layered and chain teams re-verify the most (\resEvoRedoneTopoforkjoin, \resEvoRedoneTopolayered{} and \resEvoRedoneTopochain), and trees the least (\resEvoRedoneTopotree). This ordering is consistent with the dependency sets, which are ancestor sets: in a chain, or behind a fork-join or layer boundary, a node has many ancestors, while in a tree the ancestors of a node form a single path.
+
+In wall time the saving is small. Full re-verification of a team takes a median of \resEvoFullMs~ms, and incremental re-verification \resEvoIncMs~ms. The median speed-up is \resEvoSpeedup$\times$ overall: about $3\times$ for node-policy changes (\resEvoSpeedupkind$\times$, \resEvoSpeeduproute$\times$, \resEvoSpeedupjoin$\times$), \resEvoSpeedupreq$\times$ to \resEvoSpeedupgua$\times$ for contract changes, and \resEvoSpeedupedge$\times$ for edge changes. Incremental re-verification is \emph{slower} than full re-verification in \resEvoSlower{} of all changes and in \resEvoSloweredge{} of the edge changes, because on teams of this size each slice is checked in microseconds, and computing the dependency set is a noticeable share of the cost. The share of slices saved is the robust result. The time saved depends on how expensive slices are. We expect it to be larger on teams whose slices contain many choice points (E5), but we did not measure incremental recertification there.
 
 \begin{figure}[!t]
 \centering
@@ -2072,36 +2245,38 @@ Strategy & Topology & Slope (finished) & Slope (censored) & s @5k & Time-outs & 
 \end{figure}
 
 \begin{table}[tbp]
-\caption{Recertification: Share (\%) of SL Slices Re-Verified per Change Kind and Topology}
+\caption{Incremental Recertification (E6): Share (\%) of SL Slices Re-Verified After \resEvoChanges{} Random Changes on \resEvoTeams{} Teams, by Changed Attribute, Team Size and Topology, With Wall Time}
 \label{tab:evo}
 \centering
-\normalsize\setlength{\tabcolsep}{2pt}
-\begin{tabular}{@{}lrrrrrrrrr@{}}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}llrrlrrrrrrrr@{}}
+\multicolumn{13}{@{}l}{\small\textit{(a) By changed attribute}}\\[3pt]
 \toprule
-Change & $n$ & chain & tree & f.-j. & lay. & s.-p. & rand. & mixed & all\\
+& & & \multicolumn{4}{c}{Slices re-verified (\%)} & \multicolumn{3}{c}{By team size (\%)} & \multicolumn{3}{c}{Wall time}\\
+\cmidrule(lr){4-7}\cmidrule(lr){8-10}\cmidrule(l){11-13}
+Change & $\mathit{Dep}$ & $n$ & Mean & [95\% CI] & Median & All & 20 & 40 & 80 & Full (ms) & Speed-up & Slower (\%)\\
 \midrule
-\tabEvolution
+\tabEvolutionDetail
 \bottomrule
-\end{tabular}
+\end{tabular*}
+
+\bigskip
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrrrrrrrrr@{}}
+\multicolumn{10}{@{}l}{\small\textit{(b) By topology: mean share of slices re-verified (\%)}}\\[3pt]
+\toprule
+Change & $n$ & Chain & Tree & Fork-join & Layered & Series-par. & Random & Mixed & All\\
+\midrule
+\tabEvolutionTopology
+\bottomrule
+\end{tabular*}
+\par\smallskip\raggedright
+$\mathit{Dep}$: dependency set of Theorem~\ref{thm:inc}; $a$ is the changed node, $Y$ is $a$ together with its descendants that require a changed property, and for edges the set is taken in both versions of the team. Mean: over changes, with a 95\% bootstrap CI. All: share of changes that re-verify every slice. By team size: inner nodes before injection. Full: median time of full re-verification. Speed-up: median ratio of full to incremental time. Slower: share of changes for which incremental re-verification is slower than full re-verification.
 \end{table}
 
-\textbf{False findings, sensitivity and ablation (E7).} \emph{False findings on unstructured teams.} The injected benchmark is built from clean teams, which may flatter precision. On \resWildFATeams{} random wild teams with arbitrary contracts, policies and switches, we ran every convex slice of size at most 3: \resWildFAFalse{} of \resWildFAFindings{} raw findings (\resWildFARate) are not symptoms of the team, and \resWildFASliceRate{} of the \resWildFASlices{} slices report at least one false key. These are the false alarms of Theorem~\ref{thm:sound}c. Confirmation removes all of them (\resWildFAConfirmedFalse{} false among \resWildFAConfirmed{} confirmed findings) at a total lifting cost of \resWildFALiftSeconds~s. It also drops \resWildFATrueLost{} findings that are true symptoms of the team but whose witnesses in that slice do not lift. A larger slice confirms them (Theorem~\ref{thm:loc}c). Non-convex slices (a convex slice minus one interior node) have a false-finding rate of \resWildNCFalseRate{} on the same teams, close to convex ones. In our data convexity is justified by the semantics (a well-defined environment, Lemma~\ref{lem:convex}, and the abstraction theorem), not by fewer false findings. \emph{Sensitivity.} Varying the share of gates, the number of distinct oracles and the number of requirements per node on \resSensTeams{} injected teams of 15 nodes does not change the per-class outcome. Since the gadget is fixed per class, this is expected. \emph{Ablation} (Table~\ref{tab:ablation}). If the analysis treats every join as \textsf{all}, S2 and S3 are no longer detected (\resAbljoinsasallSTwo{} and \resAbljoinsasallSThree). Without fault reasoning, S4 and S6a are lost (\resAblnofaultsSFour{} and \resAblnofaultsSSixa). Each part of the semantics is responsible for specific classes.
+\textbf{False findings, sensitivity and ablation (E7).} \emph{False findings on unstructured teams.} The injected benchmark is built from clean teams, which may flatter precision. On \resWildFATeams{} random wild teams with arbitrary contracts, policies and switches, we ran every convex slice of size at most 3: \resWildFAFalse{} of \resWildFAFindings{} raw findings (\resWildFARate) are not symptoms of the team, and \resWildFASliceRate{} of the \resWildFASlices{} slices report at least one false key. These are the false alarms of Theorem~\ref{thm:sound}c. Confirmation removes all of them (\resWildFAConfirmedFalse{} false among \resWildFAConfirmed{} confirmed findings) at a total lifting cost of \resWildFALiftSeconds~s. It also drops \resWildFATrueLost{} findings that are true symptoms of the team but whose witnesses in that slice do not lift. A larger slice confirms them (Theorem~\ref{thm:loc}c). Non-convex slices (a convex slice minus one interior node) have a false-finding rate of \resWildNCFalseRate{} on the same teams, close to convex ones. In our data convexity is justified by the semantics (a well-defined environment, Lemma~\ref{lem:convex}, and the abstraction theorem), not by fewer false findings. \emph{Sensitivity.} Varying the share of gates, the number of distinct oracles and the number of requirements per node on \resSensTeams{} injected teams of 15 nodes does not change the per-class outcome. Since the gadget is fixed per class, this is expected. \emph{Ablation.} On \resAblTeams{} injected teams of 12 nodes with one hidden defect each, SL with the full semantics detects every class. Each ablation removes exactly the classes whose mechanism it disables. If the analysis treats every join as \textsf{all}, S2 and S3 are no longer detected (recall \resAbljoinsasallSTwo{} and \resAbljoinsasallSThree), and without fault reasoning S4 and S6a are lost (\resAblnofaultsSFour{} and \resAblnofaultsSSixa). The other classes keep full recall under both ablations. In particular, S6b survives both because it involves neither a join nor a failure. On the same teams, the \resAblNonconvexTried{} non-convex slices we tried produced \resAblNonconvexFalse{} false keys. The per-team records are in \path{results/e7_ablation.json} (field \texttt{ablation}), and \path{scripts/process_results.py} summarizes them per class.
 
-\begin{table}[tbp]
-\caption{Ablation on Hidden Injected Classes (Teams of 12 Nodes): Recall (\%) of SL With the Full Semantics, With Every Join Treated as \textsf{all}, and Without Fault Reasoning, and False Keys of Non-Convex Slices}
-\label{tab:ablation}
-\centering
-\normalsize
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
-Class & full & joins as \textsf{all} & no faults & non-convex false keys\\
-\midrule
-\tabAblation
-\bottomrule
-\end{tabular}
-\end{table}
-
-\answer{RQ3}{Slices must be as large as the distance between the interacting agents plus two: depth is $\ell+2$ for $\ell$ hand-offs and $2$ for joins, independently of the host's size. On switch-free teams, small slices (singleton, window-2, band) scale polynomially to \resScaleMaxNodes{} nodes. On mixed teams singleton and window-2 time out on \resTimeoutssingletonmixed{} and \resTimeoutswindowTwomixed{} of \resTeamsmixed{} teams and band-1 on \resTimeoutsbandOnemixed. Confirmed SL on teams of up to 200 nodes never exceeded the budget (\resConfTimeoutsmixed{} time-outs on mixed teams). Large slices pay for the choice points they contain: on choice-rich teams SL times out on \resTimeoutsSLmixed{} of \resTeamsmixed{} teams and whole-team checking on \resTimeoutswholemixed. On switch-free teams whole-team checking and the must-analysis are cheaper than any slicing. The pre-registered scalability hypothesis is therefore not supported. Incremental recertification is always correct and re-verifies \resEvoRedoneNonChain{} of the slices on non-chain topologies, but saves little wall time on small slices (median \resEvoSpeedup$\times$). Raw slice findings are \resWildFARate{} false on unstructured teams. Confirmation removes them all.}
+\answer{RQ3}{Slices must be as large as the distance between the interacting agents plus two: depth is $\ell+2$ for $\ell$ hand-offs and $2$ for joins, independently of the host's size. On switch-free teams, small slices (singleton, window-2, band) scale polynomially to \resScaleMaxNodes{} nodes. On mixed teams singleton and window-2 time out on \resTimeoutssingletonmixed{} and \resTimeoutswindowTwomixed{} of \resTeamsmixed{} teams and band-1 on \resTimeoutsbandOnemixed. Confirmed SL on teams of up to 200 nodes never exceeded the budget (\resConfTimeoutsmixed{} time-outs on mixed teams). Large slices pay for the choice points they contain: on choice-rich teams SL times out on \resTimeoutsSLmixed{} of \resTeamsmixed{} teams and whole-team checking on \resTimeoutswholemixed. On switch-free teams whole-team checking and the must-analysis are cheaper than any slicing. The pre-registered scalability hypothesis is therefore not supported. Incremental recertification always agreed with full re-verification and re-verifies \resEvoRedoneNonChain{} of the slices on non-chain topologies. The share follows the dependency set: about a tenth for changes of a node's kind, oracle, routing or join policy, about half for contract changes, and most slices for edge changes. It saves little wall time on small slices (median \resEvoSpeedup$\times$, about $3\times$ for node-policy changes, and slower than full re-verification for most edge changes). Raw slice findings are \resWildFARate{} false on unstructured teams. Confirmation removes them all.}
 
 \subsection{Discussion}\label{sec:discussion}
 

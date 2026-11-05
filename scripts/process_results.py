@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import re
 from collections import defaultdict
 from pathlib import Path
@@ -16,7 +17,7 @@ from scipy import stats
 
 ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / 'results'
-OUT = ROOT / 'docs/TSE'
+OUT = Path(os.environ.get('SLICING_OUT', ROOT / 'docs/TSE'))
 (OUT / 'tables').mkdir(parents=True, exist_ok=True)
 (OUT / 'figures').mkdir(parents=True, exist_ok=True)
 RNG = np.random.default_rng(20261104)
@@ -635,6 +636,7 @@ def e8():
                           f"{pct(m_) if not math.isnan(m_) else '--'} [{pct(lo_) if not math.isnan(lo_) else '--'}, {pct(hi_) if not math.isnan(hi_) else '--'}] & "
                           f"{pct(np.mean(sh)) if sh else '--'} & {pct(b6f / max(1, b6r))} \\\\")
         macro(f'MutHiddenShareN{n}', len(hk) / max(1, len(kk)), 'pct')
+        macro(f'MutB6FalseRateN{n}', b6f / max(1, b6r), 'pct')
         if not math.isnan(m_):
             macro(f'MutExactSLN{n}', m_, 'pct')
         if sh:
@@ -653,13 +655,89 @@ def e8():
         for o in r['ops']:
             ops[o] += 1
     write_table('mutation_ops', ', '.join(f"{o.replace('_', ' ')} ({n})" for o, n in sorted(ops.items())))
-    # which mutation operators produce hidden keys
+    # which mutation operators produce hidden keys: over all teams containing the operator, and over
+    # teams whose only change is that operator (cleaner attribution, since the others overlap)
+    def hidden(dd):
+        return dd is None or dd >= 2
+
     opl = []
     for o in sorted(ops):
-        rs = [r for r in unclean if o in r['ops']]
+        name = ''.join(w.capitalize() for w in o.split('_'))
+        applied = [r for r in rows if o in r['ops']]
+        rs = [r for r in applied if r.get('symptoms')]
         kk = [dd for r in rs for dd in r['depth'].values()]
-        opl.append(f"{o.replace('_', ' ')} & {len(rs)} & {len(kk)} & {pct(np.mean([x is None or x >= 2 for x in kk])) if kk else '--'} \\\\")
+        silent = [r for r in rs if not any(v['found'] for v in r['checkers']['B1']['per_key'].values())]
+        single = [r for r in applied if len(r['ops']) == 1]
+        srs = [r for r in single if r.get('symptoms')]
+        skk = [dd for r in srs for dd in r['depth'].values()]
+        hs = pct(np.mean([hidden(x) for x in kk])) if kk else '--'
+        shs = pct(np.mean([hidden(x) for x in skk])) if skk else '--'
+        opl.append(f"{o.replace('_', ' ')} & {len(applied)} & {len(rs)} ({pct(len(rs) / max(1, len(applied)))}) & {len(kk)} & "
+                   f"{hs} & {len(silent)} & {len(single)} & {len(srs)} ({pct(len(srs) / max(1, len(single)))}) & {shs} \\\\")
+        macro(f'MutOp{name}Teams', len(applied))
+        macro(f'MutOp{name}Unclean', len(rs))
+        macro(f'MutOp{name}UncleanShare', len(rs) / max(1, len(applied)), 'pct')
+        macro(f'MutOp{name}Hidden', np.mean([hidden(x) for x in kk]) if kk else 0, 'pct')
+        macro(f'MutOp{name}ALSilent', len(silent))
+        macro(f'MutOp{name}SingleTeams', len(single))
+        macro(f'MutOp{name}SingleUnclean', len(srs))
+        if skk:
+            macro(f'MutOp{name}SingleHidden', np.mean([hidden(x) for x in skk]), 'pct')
+    macro('MutSingleChangeTeams', sum(1 for r in rows if len(r['ops']) == 1))
     write_table('mutation_by_op', '\n'.join(opl))
+    depth_by_op(rows, sorted(ops))
+
+
+def depth_by_op(rows, ops):
+    """Figure: depth distribution of the symptom keys per change operator, (a) in teams whose only change
+    is that operator and (b) in teams that combine it with one or two other changes. 100% stacked bars;
+    depth 1 (visible at agent level) in neutral gray, hidden depths on a light-to-dark blue ramp."""
+    bins = [('1', lambda d: d == 1), ('2', lambda d: d == 2), ('3', lambda d: d == 3),
+            ('$\\ge$4', lambda d: d is None or d >= 4)]   # None: deeper than the enumeration bound
+    fills = ['black!18', 'cA!35', 'cA!70', 'cA!60!black']
+
+    def dist(rs):
+        dd = [d for r in rs if r.get('symptoms') for d in r['depth'].values()]
+        return len(dd), [100 * sum(map(f, dd)) / len(dd) if dd else 0 for _, f in bins]
+
+    single = {o: dist([r for r in rows if r['ops'] == [o]]) for o in ops}
+    combo = {o: dist([r for r in rows if o in r['ops'] and len(r['ops']) > 1]) for o in ops}
+    hid = lambda v: sum(v[1][1:])
+    # operators ordered by the hidden share of their combined teams, most dangerous on top
+    order = sorted(ops, key=lambda o: hid(combo[o]))
+    for o in ops:
+        name = ''.join(w.capitalize() for w in o.split('_'))
+        macro(f'MutOp{name}ComboHidden', hid(combo[o]) / 100, 'pct')
+        macro(f'MutOp{name}ComboKeys', combo[o][0])
+    macro('MutComboTeams', sum(1 for r in rows if len(r['ops']) > 1))
+    ys = ','.join(map(str, range(len(order))))
+    labels = ','.join(o.replace('_', ' ') for o in order)
+
+    def panel(data, title, extra, legend=False):
+        out = [f'\\begin{{axis}}[xbar stacked,bar width=7pt,width=0.40\\textwidth,height=5.4cm,xmin=0,xmax=100,'
+               f'ytick={{{ys}}},ymin=-0.6,ymax={len(order) - 0.4},xtick={{0,25,50,75,100}},'
+               'xlabel={share of symptom keys (\\%)},axis y line*=left,axis x line*=bottom,'
+               'xmajorgrids,grid style={gray!20},y axis line style={draw=none},ytick style={draw=none},'
+               'tick label style={font=\\footnotesize},label style={font=\\footnotesize},'
+               f'title style={{font=\\footnotesize}},title={{{title}}},clip=false,{extra}]']
+        for j, (lab, _) in enumerate(bins):
+            pts = ' '.join(f'({data[o][1][j]:.4g},{i})' for i, o in enumerate(order))
+            out.append(f'\\addplot[fill={fills[j]},draw=white,line width=0.5pt] coordinates {{{pts}}};')
+            if legend:
+                out.append(f'\\addlegendentry{{depth {lab}}}')
+        for i, o in enumerate(order):
+            n = data[o][0]
+            txt = f'$n={n:,}$'.replace(',', '{,}') if n else 'no symptom'
+            out.append(f'\\node[font=\\scriptsize,text=black!60,anchor=west] at (axis cs:{100 if n else 0},{i}) {{\\,{txt}}};')
+        out.append('\\end{axis}')
+        return out
+
+    legend = ('area legend,legend columns=4,legend style={at={(-0.3,-0.25)},anchor=north,font=\\scriptsize,'
+              'draw=none,fill=none,/tikz/every even column/.append style={column sep=6pt}},legend cell align=left')
+    left = panel(single, '(a) the only change', f'yticklabels={{{labels}}},name=left')
+    right = panel(combo, '(b) combined with other changes',
+                  'yticklabels={},at={(left.east)},anchor=west,xshift=1.6cm,' + legend, legend=True)
+    FIGS['figDepthByOp'] = '\\begin{tikzpicture}\n' + '\n'.join(left + right) + '\n\\end{tikzpicture}'
 
 
 # ------------------------------------------------------------------ E3
@@ -865,13 +943,84 @@ def e6():
     fig.tight_layout()
     fig.savefig(OUT / 'figures/evolution.pdf')
     p.close(fig)
+    names = {'kind': 'kind or oracle', 'route': 'routing', 'join': 'join policy', 'req': 'requirement',
+             'decl': 'declared evidence', 'gua': 'guarantee', 'edge': 'edge'}   # as in the recertification table
     FIGS['figEvolution'] = ('\\begin{tikzpicture}\\begin{axis}[width=\\columnwidth,height=5cm,ymin=0,ymax=1.05,'
-                            f'xtick={{{",".join(str(i) for i in range(len(present)))}}},xticklabels={{{",".join(present)}}},'
+                            f'xtick={{{",".join(str(i) for i in range(len(present)))}}},'
+                            f'xticklabels={{{",".join(names.get(k, k) for k in present)}}},'
                             'x tick label style={rotate=30,anchor=north east,font=\\footnotesize},xlabel={changed attribute},'
                             'ylabel={fraction of slices re-verified},grid=major,grid style={gray!20},'
                             'legend pos=north west,legend style={font=\\scriptsize,draw=none,fill=none},'
                             'tick label style={font=\\footnotesize},label style={font=\\footnotesize}]\n'
                             + '\n'.join(pgf_lines) + '\n\\end{axis}\\end{tikzpicture}')
+    evolution_detail(d['rows'], topos)
+
+
+def evolution_detail(teams, topos):
+    """Detailed recertification table: (a) per change type, the dependency rule of the incremental
+    theorem, the share of slices re-verified (mean with a 95% bootstrap CI over changes, median, share of
+    changes that re-verify every slice), the mean share by team size, and wall time; (b) the mean share
+    by change type and topology. The cross-check against full re-verification is reported in the text."""
+    rng = np.random.default_rng(20261104)   # local stream: do not perturb the shared RNG used by later stages
+    ch = [(r, c) for r in teams for c in r['changes']]
+    sizes = sorted({r['n'] for r in teams})
+    groups = [('Node policy', [('kind', 'kind or oracle', '$\\{a\\}$'), ('route', 'routing', '$\\{a\\}$'),
+                               ('join', 'join policy', '$\\{a\\}$')]),
+              ('Node contract', [('req', 'requirement', '$\\anc^*(a)$'), ('decl', 'declared evidence', '$\\anc^*(a)$'),
+                                 ('gua', 'guarantee', '$\\anc^*(Y)$')]),
+              ('Structure', [('edge', 'edge added or removed', '$\\anc^*(Y)$, both')])]
+
+    def ci(v):
+        v = np.asarray(v, float)
+        m = v[rng.integers(0, len(v), (10_000, len(v)))].mean(axis=1)
+        return v.mean(), np.quantile(m, 0.025), np.quantile(m, 0.975)
+
+    frac = lambda c: c['redone'] / c['total']
+    speed = lambda c: c['full_seconds'] / max(c['inc_seconds'], 1e-6)
+
+    def row(label, dep, cs):
+        f = [frac(c) for _, c in cs]
+        m, lo, hi = ci(f)
+        by = [pct(np.mean([frac(c) for r, c in cs if r['n'] == n])) for n in sizes]
+        sp = [speed(c) for _, c in cs]
+        full = 1000 * np.median([c['full_seconds'] for _, c in cs])
+        n_ = f'{len(cs):,}'.replace(',', '{,}')
+        return (f"{label} & {dep} & {n_} & {pct(m)} & {{\\footnotesize[{pct(lo)}, {pct(hi)}]}} & {pct(np.median(f))} & "
+                f"{pct(np.mean([x == 1 for x in f]))} & " + ' & '.join(by) +
+                f" & {full:.1f} & {np.median(sp):.1f} & {pct(np.mean([x < 1 for x in sp]))} \\\\")
+
+    a, b = [], []
+    for gi, (gname, items) in enumerate(groups):
+        if gi:
+            a.append('\\addlinespace')
+            b.append('\\addlinespace')
+        a.append(f'\\multicolumn{{13}}{{@{{}}l}}{{\\textit{{{gname}}}}}\\\\')
+        b.append(f'\\multicolumn{{9}}{{@{{}}l}}{{\\textit{{{gname}}}}}\\\\')
+        for k, label, dep in items:
+            cs = [(r, c) for r, c in ch if c['change'] == k]
+            if not cs:
+                continue
+            a.append(row(f'\\quad {label}', dep, cs))
+            cells = [pct(np.mean([frac(c) for r, c in cs if r['topo'] == t])) for t in topos]
+            b.append(f"\\quad {label} & {len(cs)} & " + ' & '.join(cells) + f" & {pct(np.mean([frac(c) for _, c in cs]))} \\\\")
+            sp = [speed(c) for _, c in cs]
+            macro(f'EvoMedian{k}', np.median([frac(c) for _, c in cs]), 'pct')
+            macro(f'EvoAllSlices{k}', np.mean([frac(c) == 1 for _, c in cs]), 'pct')
+            macro(f'EvoSpeedup{k}', float(np.median(sp)), '.1f')
+            macro(f'EvoSlower{k}', np.mean([x < 1 for x in sp]), 'pct')
+    a += ['\\midrule', row('All changes', '', ch)]
+    b += ['\\midrule', 'All changes & ' + f'{len(ch):,} & '.replace(',', '{,}') +
+          ' & '.join(pct(np.mean([frac(c) for r, c in ch if r['topo'] == t])) for t in topos) +
+          f" & {pct(np.mean([frac(c) for _, c in ch]))} \\\\"]
+    macro('EvoMedianAll', np.median([frac(c) for _, c in ch]), 'pct')
+    for t in topos:
+        macro(f'EvoRedoneTopo{t}', np.mean([frac(c) for r, c in ch if r['topo'] == t]), 'pct')
+    macro('EvoFullMs', 1000 * float(np.median([c['full_seconds'] for _, c in ch])), '.1f')
+    macro('EvoIncMs', 1000 * float(np.median([c['inc_seconds'] for _, c in ch])), '.1f')
+    for n in sizes:
+        macro(f'EvoSlicesN{n}', float(np.mean([r['slices'] for r in teams if r['n'] == n and not r.get('skipped')])), '.0f')
+    write_table('evolution_detail', '\n'.join(a))
+    write_table('evolution_topology', '\n'.join(b))
 
 
 # ------------------------------------------------------------------ E7
