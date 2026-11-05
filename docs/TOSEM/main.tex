@@ -1902,7 +1902,7 @@ For an edge change $(u,v)$, let $\Delta$ be $u$'s face-value output in either ve
 
 \subsection{Implementation and Reproducibility}\label{sec:implementation}
 
-The replication package implements the approach as a Python library, \texttt{slicing}, with separate modules for the analysis stages outlined in Section~\ref{sec:approach-overview}. Experiments call these modules directly rather than maintaining separate implementations of the proposed checker. The implementation analyzes declared models on CPUs. It neither calls a language model nor requires a GPU. Appendix~\ref{app:grammar} gives the input language and an executable example for a reader's own team.
+The source code and replication package are available in the AgentSlicing GitHub repository~\cite{babaei2026agentslicing}. The replication package implements the approach as a Python library, \texttt{slicing}, with separate modules for the analysis stages outlined in Section~\ref{sec:approach-overview}. Experiments call these modules directly rather than maintaining separate implementations of the proposed checker. The implementation analyzes declared models on CPUs. It neither calls a language model nor requires a GPU. Appendix~\ref{app:grammar} gives the input language and an executable example for a reader's own team.
 
 \subsubsection{From approach components to code}
 
