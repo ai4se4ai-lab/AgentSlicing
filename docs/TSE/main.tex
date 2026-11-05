@@ -29,7 +29,7 @@
 \newtheorem{definition}{Definition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
+\newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}{Corollary}
 \theoremstyle{remark}
 \newtheorem{example}{Example}
@@ -171,22 +171,37 @@
 \newcommand{\resBenchTeams}{1{,}120}
 \newcommand{\resBenchTotal}{4{,}480}
 \newcommand{\resCleanTeams}{280}
+\newcommand{\resConfDetectfree}{150}
+\newcommand{\resConfDetectmixed}{50}
+\newcommand{\resConfExhausted}{0}
+\newcommand{\resConfTeamsfree}{150}
+\newcommand{\resConfTeamsmixed}{50}
+\newcommand{\resConfTimeTwoHundredfree}{0.06}
+\newcommand{\resConfTimeTwoHundredmixed}{0.68}
+\newcommand{\resConfTimeoutsfree}{0}
+\newcommand{\resConfTimeoutsmixed}{0}
 \newcommand{\resConformanceChecks}{11}
 \newcommand{\resConformanceComparisons}{219{,}200}
 \newcommand{\resConformanceMismatches}{0}
 \newcommand{\resDecoyTeams}{1{,}120}
+\newcommand{\resDepthBigIsEllPlusTwo}{100.0\%}
+\newcommand{\resDepthBigTwoForJoins}{100.0\%}
 \newcommand{\resDepthIsEllPlusTwo}{100.0\%}
+\newcommand{\resDepthSweepBigNodesMax}{33}
+\newcommand{\resDepthSweepBigNodesMin}{17}
+\newcommand{\resDepthSweepBigTeams}{600}
 \newcommand{\resDepthSweepKmax}{8}
 \newcommand{\resDepthSweepSlicesKMax}{155}
 \newcommand{\resDepthSweepSlicesKTwo}{32}
-\newcommand{\resDepthSweepTeams}{600}
+\newcommand{\resDepthSweepSmallTeams}{600}
+\newcommand{\resDepthSweepTeams}{1{,}200}
 \newcommand{\resDepthTwoForJoins}{100.0\%}
-\newcommand{\resDetectRateSLfree}{94.4\%}
-\newcommand{\resDetectRateSLmixed}{64.4\%}
+\newcommand{\resDetectRateSLfree}{95.2\%}
+\newcommand{\resDetectRateSLmixed}{66.7\%}
 \newcommand{\resDetectRatebandOnefree}{0.0\%}
 \newcommand{\resDetectRatebandOnemixed}{0.0\%}
-\newcommand{\resDetectRategoalfree}{96.7\%}
-\newcommand{\resDetectRategoalmixed}{66.7\%}
+\newcommand{\resDetectRategoalfree}{97.0\%}
+\newcommand{\resDetectRategoalmixed}{67.8\%}
 \newcommand{\resDetectRatemustfree}{100.0\%}
 \newcommand{\resDetectRatemustmixed}{100.0\%}
 \newcommand{\resDetectRateregionfree}{59.6\%}
@@ -197,12 +212,12 @@
 \newcommand{\resDetectRatewholemixed}{60.0\%}
 \newcommand{\resDetectRatewindowTwofree}{73.3\%}
 \newcommand{\resDetectRatewindowTwomixed}{71.1\%}
-\newcommand{\resDetectSLfree}{255}
-\newcommand{\resDetectSLmixed}{58}
+\newcommand{\resDetectSLfree}{257}
+\newcommand{\resDetectSLmixed}{60}
 \newcommand{\resDetectbandOnefree}{0}
 \newcommand{\resDetectbandOnemixed}{0}
-\newcommand{\resDetectgoalfree}{261}
-\newcommand{\resDetectgoalmixed}{60}
+\newcommand{\resDetectgoalfree}{262}
+\newcommand{\resDetectgoalmixed}{61}
 \newcommand{\resDetectmustfree}{270}
 \newcommand{\resDetectmustmixed}{90}
 \newcommand{\resDetectregionfree}{161}
@@ -213,7 +228,7 @@
 \newcommand{\resDetectwholemixed}{54}
 \newcommand{\resDetectwindowTwofree}{198}
 \newcommand{\resDetectwindowTwomixed}{64}
-\newcommand{\resEOneSeconds}{20}
+\newcommand{\resEOneSeconds}{32}
 \newcommand{\resEvoAgree}{100.0\%}
 \newcommand{\resEvoChanges}{1{,}967}
 \newcommand{\resEvoRedone}{36.0\%}
@@ -231,10 +246,10 @@
 \newcommand{\resEvoRedonereq}{46.8\%}
 \newcommand{\resEvoRedoneroute}{11.6\%}
 \newcommand{\resEvoSkipped}{0}
-\newcommand{\resEvoSlower}{18.1\%}
-\newcommand{\resEvoSlowerNEightZero}{16.2\%}
-\newcommand{\resEvoSlowerNFourZero}{18.0\%}
-\newcommand{\resEvoSlowerNTwoZero}{20.3\%}
+\newcommand{\resEvoSlower}{17.6\%}
+\newcommand{\resEvoSlowerNEightZero}{15.9\%}
+\newcommand{\resEvoSlowerNFourZero}{18.4\%}
+\newcommand{\resEvoSlowerNTwoZero}{18.7\%}
 \newcommand{\resEvoSpeedup}{1.9}
 \newcommand{\resEvoSpeedupNEightZero}{1.9}
 \newcommand{\resEvoSpeedupNFourZero}{1.9}
@@ -242,7 +257,7 @@
 \newcommand{\resEvoTeams}{210}
 \newcommand{\resExhRun}{200}
 \newcommand{\resExhSkipped}{160}
-\newcommand{\resExhTimeout}{6}
+\newcommand{\resExhTimeout}{7}
 \newcommand{\resFalseKeysBFive}{8{,}305}
 \newcommand{\resFalseKeysBOneraw}{0}
 \newcommand{\resFalseKeysBSix}{0}
@@ -261,7 +276,7 @@
 \newcommand{\resHTwoTwoPBTwodev}{<0.001}
 \newcommand{\resHiddenDesignShare}{45.5\%}
 \newcommand{\resHiddenTeams}{1{,}400}
-\newcommand{\resLimitedSL}{225}
+\newcommand{\resLimitedSL}{239}
 \newcommand{\resLocCostBThree}{36}
 \newcommand{\resLocCostBTwo}{1}
 \newcommand{\resLocCostBTwodev}{1}
@@ -331,6 +346,7 @@
 \newcommand{\resLocSizegoal}{3.4}
 \newcommand{\resLocSizeregion}{3.2}
 \newcommand{\resLocSizewindowTwo}{2.0}
+\newcommand{\resManySwitchMismatches}{0}
 \newcommand{\resMedPreciseBThree}{39.5\%}
 \newcommand{\resMedPreciseBTwo}{0.0\%}
 \newcommand{\resMedPreciseBTwodev}{0.0\%}
@@ -350,72 +366,96 @@
 \newcommand{\resMedSizeSL}{2.7}
 \newcommand{\resMedSizegoal}{3.4}
 \newcommand{\resModelOracleTeams}{8{,}000}
-\newcommand{\resMutDepthDeep}{0}
-\newcommand{\resMutDepthFive}{13}
-\newcommand{\resMutDepthFour}{17}
-\newcommand{\resMutDepthOne}{1{,}042}
-\newcommand{\resMutDepthSix}{7}
-\newcommand{\resMutDepthThree}{49}
-\newcommand{\resMutDepthTwo}{414}
-\newcommand{\resMutDevExact}{1.8\%}
+\newcommand{\resMutALDeclaredClean}{210}
+\newcommand{\resMutALDeclaredCleanUnsafe}{190}
+\newcommand{\resMutDeepKeys}{152}
+\newcommand{\resMutDepthDeep}{152}
+\newcommand{\resMutDepthFive}{59}
+\newcommand{\resMutDepthFour}{82}
+\newcommand{\resMutDepthOne}{2{,}467}
+\newcommand{\resMutDepthSix}{10}
+\newcommand{\resMutDepthThree}{142}
+\newcommand{\resMutDepthTwo}{951}
+\newcommand{\resMutDevExact}{1.0\%}
 \newcommand{\resMutDevRatio}{0.36}
 \newcommand{\resMutExactBFive}{0.0\%}
 \newcommand{\resMutExactBOneraw}{0.0\%}
-\newcommand{\resMutExactSL}{91.4\%}
-\newcommand{\resMutExactSLraw}{91.2\%}
-\newcommand{\resMutFalseBFive}{544}
-\newcommand{\resMutFalseBFour}{22}
+\newcommand{\resMutExactSL}{86.3\%}
+\newcommand{\resMutExactSLNOneZero}{88.8\%}
+\newcommand{\resMutExactSLNSix}{96.6\%}
+\newcommand{\resMutExactSLNThreeZero}{77.7\%}
+\newcommand{\resMutExactSLNTwoZero}{83.4\%}
+\newcommand{\resMutExactSLraw}{86.0\%}
+\newcommand{\resMutFalseBFive}{2{,}107}
+\newcommand{\resMutFalseBFour}{59}
 \newcommand{\resMutFalseBOne}{0}
-\newcommand{\resMutFalseBOneraw}{84}
-\newcommand{\resMutFalseBSix}{45}
-\newcommand{\resMutFalseRateBFive}{54.5\%}
-\newcommand{\resMutFalseRateBFour}{3.2\%}
+\newcommand{\resMutFalseBOneraw}{201}
+\newcommand{\resMutFalseBSix}{129}
+\newcommand{\resMutFalseRateBFive}{66.0\%}
+\newcommand{\resMutFalseRateBFour}{4.0\%}
 \newcommand{\resMutFalseRateBOne}{0.0\%}
-\newcommand{\resMutFalseRateBOneraw}{6.9\%}
-\newcommand{\resMutFalseRateBSix}{2.8\%}
+\newcommand{\resMutFalseRateBOneraw}{7.1\%}
+\newcommand{\resMutFalseRateBSix}{3.2\%}
 \newcommand{\resMutFalseRateSL}{0.0\%}
-\newcommand{\resMutFalseRateSLraw}{6.1\%}
+\newcommand{\resMutFalseRateSLraw}{6.5\%}
 \newcommand{\resMutFalseSL}{0}
-\newcommand{\resMutFalseSLraw}{107}
-\newcommand{\resMutHiddenKeys}{500}
-\newcommand{\resMutHiddenShare}{32.4\%}
-\newcommand{\resMutKeys}{1{,}542}
-\newcommand{\resMutMutations}{1{,}296}
+\newcommand{\resMutFalseSLraw}{283}
+\newcommand{\resMutHiddenKeys}{1{,}396}
+\newcommand{\resMutHiddenShare}{36.1\%}
+\newcommand{\resMutHiddenShareNOneZero}{37.3\%}
+\newcommand{\resMutHiddenShareNSix}{28.3\%}
+\newcommand{\resMutHiddenShareNThreeZero}{37.3\%}
+\newcommand{\resMutHiddenShareNTwoZero}{40.8\%}
+\newcommand{\resMutKeys}{3{,}863}
+\newcommand{\resMutMutations}{3{,}360}
 \newcommand{\resMutOracleDisagree}{0}
 \newcommand{\resMutOracleTeams}{840}
-\newcommand{\resMutRecallBFive}{27.6\%}
-\newcommand{\resMutRecallBFour}{36.4\%}
-\newcommand{\resMutRecallBOne}{67.6\%}
-\newcommand{\resMutRecallBOneraw}{67.6\%}
+\newcommand{\resMutPipeExact}{99.2\%}
+\newcommand{\resMutPipeRecallHidden}{89.1\%}
+\newcommand{\resMutRecallBFive}{27.0\%}
+\newcommand{\resMutRecallBFour}{31.0\%}
+\newcommand{\resMutRecallBOne}{63.9\%}
+\newcommand{\resMutRecallBOneraw}{63.9\%}
 \newcommand{\resMutRecallBSix}{99.9\%}
-\newcommand{\resMutRecallHiddenBFive}{71.8\%}
+\newcommand{\resMutRecallHiddenBFive}{62.1\%}
 \newcommand{\resMutRecallHiddenBFour}{0.0\%}
 \newcommand{\resMutRecallHiddenBOne}{0.0\%}
-\newcommand{\resMutRecallHiddenBOneraw}{0.2\%}
+\newcommand{\resMutRecallHiddenBOneraw}{0.1\%}
 \newcommand{\resMutRecallHiddenBSix}{100.0\%}
-\newcommand{\resMutRecallHiddenSL}{100.0\%}
-\newcommand{\resMutRecallHiddenSLraw}{100.0\%}
-\newcommand{\resMutRecallSL}{100.0\%}
-\newcommand{\resMutRecallSLraw}{100.0\%}
-\newcommand{\resMutReportedBFive}{998}
-\newcommand{\resMutReportedBFour}{691}
-\newcommand{\resMutReportedBOne}{1{,}128}
-\newcommand{\resMutReportedBOneraw}{1{,}213}
-\newcommand{\resMutReportedBSix}{1{,}586}
-\newcommand{\resMutReportedSL}{1{,}642}
-\newcommand{\resMutReportedSLraw}{1{,}749}
-\newcommand{\resMutShrinkChecks}{14}
-\newcommand{\resMutShrinkExact}{100.0\%}
-\newcommand{\resMutShrinkMinimum}{96.2\%}
+\newcommand{\resMutRecallHiddenSL}{99.9\%}
+\newcommand{\resMutRecallHiddenSLraw}{99.9\%}
+\newcommand{\resMutRecallSL}{99.9\%}
+\newcommand{\resMutRecallSLraw}{99.9\%}
+\newcommand{\resMutReportedBFive}{3{,}191}
+\newcommand{\resMutReportedBFour}{1{,}463}
+\newcommand{\resMutReportedBOne}{2{,}720}
+\newcommand{\resMutReportedBOneraw}{2{,}834}
+\newcommand{\resMutReportedBSix}{3{,}988}
+\newcommand{\resMutReportedSL}{4{,}179}
+\newcommand{\resMutReportedSLraw}{4{,}332}
+\newcommand{\resMutShrinkChecks}{29}
+\newcommand{\resMutShrinkExact}{99.2\%}
+\newcommand{\resMutShrinkExactNOneZero}{100.0\%}
+\newcommand{\resMutShrinkExactNSix}{100.0\%}
+\newcommand{\resMutShrinkExactNThreeZero}{97.9\%}
+\newcommand{\resMutShrinkExactNTwoZero}{98.9\%}
+\newcommand{\resMutShrinkMinimum}{93.3\%}
 \newcommand{\resMutSkipped}{0}
-\newcommand{\resMutTeams}{840}
-\newcommand{\resMutTeamsHiddenOnly}{105}
-\newcommand{\resMutTeamsWithHidden}{233}
-\newcommand{\resMutUnclean}{684}
-\newcommand{\resMutUnsafe}{638}
+\newcommand{\resMutTeams}{1{,}680}
+\newcommand{\resMutTeamsFewerOps}{0}
+\newcommand{\resMutTeamsHiddenOnly}{210}
+\newcommand{\resMutTeamsWithHidden}{502}
+\newcommand{\resMutTimeBOne}{0.3}
+\newcommand{\resMutTimeBSix}{0.1}
+\newcommand{\resMutTimeBTwo}{0.1}
+\newcommand{\resMutTimeSL}{2.0}
+\newcommand{\resMutTimeSLraw}{1.3}
+\newcommand{\resMutTimeShrink}{2.7}
+\newcommand{\resMutUnclean}{1{,}345}
+\newcommand{\resMutUnsafe}{1{,}220}
 \newcommand{\resMutants}{6}
 \newcommand{\resMutantsKilled}{6}
-\newcommand{\resPeakMemSL}{40}
+\newcommand{\resPeakMemSL}{54}
 \newcommand{\resPrecisionBFive}{18.5\%}
 \newcommand{\resPrecisionBOneraw}{100.0\%}
 \newcommand{\resPrecisionBSix}{100.0\%}
@@ -427,6 +467,8 @@
 \newcommand{\resProofSeconds}{0.02}
 \newcommand{\resProofSteps}{13}
 \newcommand{\resProofValid}{14}
+\newcommand{\resRawTimeTwoHundredfree}{0.06}
+\newcommand{\resRawTimeTwoHundredmixed}{0.80}
 \newcommand{\resRecallAllBFive}{45.5\%}
 \newcommand{\resRecallAllBFour}{36.4\%}
 \newcommand{\resRecallAllBOneraw}{54.5\%}
@@ -557,92 +599,92 @@
 \newcommand{\resSlicesKThree}{59}
 \newcommand{\resSlicesKTwo}{32}
 \newcommand{\resSlopeHiSLfree}{2.03}
-\newcommand{\resSlopeHiSLmixed}{2.45}
-\newcommand{\resSlopeHibandOnefree}{1.39}
-\newcommand{\resSlopeHibandOnemixed}{2.54}
+\newcommand{\resSlopeHiSLmixed}{2.46}
+\newcommand{\resSlopeHibandOnefree}{1.38}
+\newcommand{\resSlopeHibandOnemixed}{2.52}
 \newcommand{\resSlopeHigoalfree}{2.03}
-\newcommand{\resSlopeHigoalmixed}{2.59}
+\newcommand{\resSlopeHigoalmixed}{2.60}
 \newcommand{\resSlopeHimustfree}{1.96}
 \newcommand{\resSlopeHimustmixed}{2.10}
-\newcommand{\resSlopeHiregionfree}{2.03}
-\newcommand{\resSlopeHiregionmixed}{2.79}
+\newcommand{\resSlopeHiregionfree}{2.05}
+\newcommand{\resSlopeHiregionmixed}{2.78}
 \newcommand{\resSlopeHisingletonfree}{1.64}
-\newcommand{\resSlopeHisingletonmixed}{1.89}
+\newcommand{\resSlopeHisingletonmixed}{1.90}
 \newcommand{\resSlopeHiwholefree}{1.21}
-\newcommand{\resSlopeHiwholemixed}{3.25}
+\newcommand{\resSlopeHiwholemixed}{3.24}
 \newcommand{\resSlopeHiwindowTwofree}{1.87}
 \newcommand{\resSlopeHiwindowTwomixed}{2.05}
 \newcommand{\resSlopeSLfree}{1.94}
-\newcommand{\resSlopeSLmixed}{2.19}
-\newcommand{\resSlopeSurvSLfree}{1.86}
-\newcommand{\resSlopeSurvSLmixed}{2.90}
-\newcommand{\resSlopeSurvbandOnefree}{1.27}
-\newcommand{\resSlopeSurvbandOnemixed}{2.24}
-\newcommand{\resSlopeSurvgoalfree}{1.81}
-\newcommand{\resSlopeSurvgoalmixed}{2.66}
-\newcommand{\resSlopeSurvmustfree}{1.93}
+\newcommand{\resSlopeSLmixed}{2.20}
+\newcommand{\resSlopeSurvSLfree}{1.87}
+\newcommand{\resSlopeSurvSLmixed}{3.03}
+\newcommand{\resSlopeSurvbandOnefree}{1.26}
+\newcommand{\resSlopeSurvbandOnemixed}{2.20}
+\newcommand{\resSlopeSurvgoalfree}{1.82}
+\newcommand{\resSlopeSurvgoalmixed}{2.76}
+\newcommand{\resSlopeSurvmustfree}{1.94}
 \newcommand{\resSlopeSurvmustmixed}{2.02}
-\newcommand{\resSlopeSurvregionfree}{1.77}
-\newcommand{\resSlopeSurvregionmixed}{2.94}
+\newcommand{\resSlopeSurvregionfree}{1.76}
+\newcommand{\resSlopeSurvregionmixed}{2.93}
 \newcommand{\resSlopeSurvsingletonfree}{1.51}
-\newcommand{\resSlopeSurvsingletonmixed}{1.71}
+\newcommand{\resSlopeSurvsingletonmixed}{1.73}
 \newcommand{\resSlopeSurvwholefree}{1.14}
-\newcommand{\resSlopeSurvwholemixed}{4.30}
-\newcommand{\resSlopeSurvwindowTwofree}{1.68}
-\newcommand{\resSlopeSurvwindowTwomixed}{1.89}
-\newcommand{\resSlopebandOnefree}{1.27}
-\newcommand{\resSlopebandOnemixed}{2.36}
+\newcommand{\resSlopeSurvwholemixed}{4.38}
+\newcommand{\resSlopeSurvwindowTwofree}{1.70}
+\newcommand{\resSlopeSurvwindowTwomixed}{1.88}
+\newcommand{\resSlopebandOnefree}{1.26}
+\newcommand{\resSlopebandOnemixed}{2.33}
 \newcommand{\resSlopegoalfree}{1.91}
-\newcommand{\resSlopegoalmixed}{2.33}
-\newcommand{\resSlopemustfree}{1.93}
+\newcommand{\resSlopegoalmixed}{2.34}
+\newcommand{\resSlopemustfree}{1.94}
 \newcommand{\resSlopemustmixed}{2.02}
 \newcommand{\resSloperegionfree}{1.88}
-\newcommand{\resSloperegionmixed}{2.58}
+\newcommand{\resSloperegionmixed}{2.59}
 \newcommand{\resSlopesingletonfree}{1.51}
-\newcommand{\resSlopesingletonmixed}{1.71}
+\newcommand{\resSlopesingletonmixed}{1.73}
 \newcommand{\resSlopewholefree}{1.14}
-\newcommand{\resSlopewholemixed}{2.87}
+\newcommand{\resSlopewholemixed}{2.89}
 \newcommand{\resSlopewindowTwofree}{1.70}
-\newcommand{\resSlopewindowTwomixed}{1.89}
+\newcommand{\resSlopewindowTwomixed}{1.88}
 \newcommand{\resTeamsfree}{270}
 \newcommand{\resTeamsmixed}{90}
-\newcommand{\resTimeBigSLfree}{51.31}
+\newcommand{\resTimeBigSLfree}{46.82}
 \newcommand{\resTimeBigSLmixed}{60.00}
-\newcommand{\resTimeBigbandOnefree}{0.12}
-\newcommand{\resTimeBigbandOnemixed}{38.36}
-\newcommand{\resTimeBiggoalfree}{20.22}
+\newcommand{\resTimeBigbandOnefree}{0.09}
+\newcommand{\resTimeBigbandOnemixed}{24.18}
+\newcommand{\resTimeBiggoalfree}{19.30}
 \newcommand{\resTimeBiggoalmixed}{60.00}
 \newcommand{\resTimeBigmustfree}{1.18}
-\newcommand{\resTimeBigmustmixed}{2.33}
-\newcommand{\resTimeBigregionfree}{21.89}
+\newcommand{\resTimeBigmustmixed}{1.62}
+\newcommand{\resTimeBigregionfree}{19.44}
 \newcommand{\resTimeBigregionmixed}{60.00}
-\newcommand{\resTimeBigsingletonfree}{0.70}
-\newcommand{\resTimeBigsingletonmixed}{3.82}
+\newcommand{\resTimeBigsingletonfree}{0.64}
+\newcommand{\resTimeBigsingletonmixed}{2.78}
 \newcommand{\resTimeBigwholefree}{0.02}
 \newcommand{\resTimeBigwholemixed}{60.00}
-\newcommand{\resTimeBigwindowTwofree}{14.94}
-\newcommand{\resTimeBigwindowTwomixed}{9.77}
-\newcommand{\resTimeoutsSLfree}{15}
-\newcommand{\resTimeoutsSLmixed}{32}
+\newcommand{\resTimeBigwindowTwofree}{14.90}
+\newcommand{\resTimeBigwindowTwomixed}{7.92}
+\newcommand{\resTimeoutsSLfree}{13}
+\newcommand{\resTimeoutsSLmixed}{30}
 \newcommand{\resTimeoutsbandOnefree}{0}
 \newcommand{\resTimeoutsbandOnemixed}{4}
-\newcommand{\resTimeoutsgoalfree}{9}
-\newcommand{\resTimeoutsgoalmixed}{30}
+\newcommand{\resTimeoutsgoalfree}{8}
+\newcommand{\resTimeoutsgoalmixed}{29}
 \newcommand{\resTimeoutsmustfree}{0}
 \newcommand{\resTimeoutsmustmixed}{0}
-\newcommand{\resTimeoutsregionfree}{8}
+\newcommand{\resTimeoutsregionfree}{9}
 \newcommand{\resTimeoutsregionmixed}{12}
 \newcommand{\resTimeoutssingletonfree}{0}
 \newcommand{\resTimeoutssingletonmixed}{0}
 \newcommand{\resTimeoutswholefree}{0}
 \newcommand{\resTimeoutswholemixed}{36}
-\newcommand{\resTimeoutswindowTwofree}{1}
+\newcommand{\resTimeoutswindowTwofree}{0}
 \newcommand{\resTimeoutswindowTwomixed}{0}
-\newcommand{\resWildFAConfirmed}{556{,}375}
+\newcommand{\resWildFAConfirmed}{563{,}243}
 \newcommand{\resWildFAConfirmedFalse}{0}
 \newcommand{\resWildFAFalse}{16{,}510}
 \newcommand{\resWildFAFindings}{573{,}242}
-\newcommand{\resWildFALiftSeconds}{9.4}
+\newcommand{\resWildFALiftSeconds}{9.9}
 \newcommand{\resWildFARate}{2.9\%}
 \newcommand{\resWildFASliceRate}{8.6\%}
 \newcommand{\resWildFASlices}{140{,}625}
@@ -761,40 +803,45 @@ B2 witness lineage hull & 700 & 0.0 [0.0, 0.0] & 0.0 & 0.0 & 100.0 & 12.4 & 0.92
 B2 witness deviation set & 700 & 0.0 [0.0, 0.0] & 38.9 & 0.0 & 100.0 & 3.4 & 0.26 & 1 \\
 B2 + slice shrinking & 700 & 100.0 [100.0, 100.0] & 90.0 & 100.0 & 100.0 & 2.7 & 0.20 & 15 \\}
 \newcommand{\tabMutation}{%
-B1 agent (conf.) & 67.6 & 0.0 & 0/1128 & -- \\
-B1 agent (raw) & 67.6 & 0.2 & 84/1213 & 0.0 \\
-SL (conf.) & 100.0 & 100.0 & 0/1642 & 91.4 \\
-SL (raw) & 100.0 & 100.0 & 107/1749 & 91.2 \\
-B6 must & 99.9 & 100.0 & 45/1586 & -- \\
-B5 smells & 27.6 & 71.8 & 544/998 & 0.0 \\
-B4 lint & 36.4 & 0.0 & 22/691 & -- \\
-B2 + slice shrinking & 100.0 & 100.0 & -- & 100.0 \\
-B2 deviation set & 100.0 & 100.0 & -- & 1.8 \\}
+B1 agent (conf.) & 63.9 & 0.0 & 0/2720 & -- \\
+B1 agent (raw) & 63.9 & 0.1 & 201/2834 & 0.0 \\
+SL (conf.) & 99.9 & 99.9 & 0/4179 & 86.3 \\
+SL (raw) & 99.9 & 99.9 & 283/4332 & 86.0 \\
+B6 must & 99.9 & 100.0 & 129/3988 & -- \\
+B5 smells & 27.0 & 62.1 & 2107/3191 & 0.0 \\
+B4 lint & 31.0 & 0.0 & 59/1463 & -- \\
+B2 + slice shrinking & 100.0 & 100.0 & -- & 99.2 \\
+B2 deviation set & 100.0 & 100.0 & -- & 1.0 \\}
 \newcommand{\tabMutationByOp}{%
-add requirement & 204 & 690 & 26.8 \\
-drop guarantee & 175 & 465 & 21.1 \\
-fork to switch & 55 & 127 & 22.0 \\
-gate to agent & 151 & 297 & 29.0 \\
-relax join & 180 & 511 & 66.3 \\
-remove edge & 37 & 74 & 17.6 \\
-share oracle & 180 & 350 & 34.9 \\}
+add requirement & 501 & 1943 & 31.9 \\
+drop guarantee & 445 & 1501 & 24.2 \\
+fork to switch & 138 & 377 & 24.7 \\
+gate to agent & 415 & 1069 & 34.2 \\
+relax join & 369 & 1318 & 67.1 \\
+remove edge & 94 & 230 & 22.6 \\
+share oracle & 461 & 1071 & 36.3 \\}
 \newcommand{\tabMutationOps}{%
-add requirement (243), drop guarantee (218), fork to switch (172), gate to agent (193), relax join (196), remove edge (44), share oracle (230)}
+add requirement (617), drop guarantee (593), fork to switch (441), gate to agent (545), relax join (420), remove edge (118), share oracle (626)}
+\newcommand{\tabMutationSize}{%
+6 & 8--8 & 353 & 928 & 28.3 & 0.0 & 96.6 [92.7, 99.3] & 100.0 & 1.4 \\
+10 & 12--12 & 331 & 875 & 37.3 & 0.0 & 88.8 [83.5, 93.6] & 100.0 & 4.3 \\
+20 & 22--22 & 323 & 1107 & 40.8 & 0.0 & 83.4 [76.8, 89.2] & 98.9 & 2.9 \\
+30 & 32--32 & 338 & 953 & 37.3 & 0.0 & 77.7 [70.8, 83.6] & 97.9 & 4.4 \\}
 \newcommand{\tabProofs}{%
-L1 & transfer monotone & Lemma A, M & valid & \checkmark \\
-L2 & face value dominates & Lemma A & valid & \checkmark \\
-L3 & join subset & Lemma A, M & valid & \checkmark \\
-L4 & missing antitone & T4c, T5d, Lemma M & valid & \checkmark \\
-L5 & evidence monotone & Lemma W & valid & \checkmark \\
-L7 & env uniform & T1 & valid & \checkmark \\
-L8 & must sound & Generator & valid & \checkmark \\
-L9 & meet below choice & Generator & valid & \checkmark \\
+L1 & transfer monotone & Lem. 2, 4 & valid & \checkmark \\
+L2 & face value dominates & Lem. 4 & valid & \checkmark \\
+L3 & join subset & Lem. 2, 4 & valid & \checkmark \\
+L4 & missing antitone & Thm. 4, 5; Lem. 2 & valid & \checkmark \\
+L5 & evidence monotone & Lem. 1 & valid & \checkmark \\
+L7 & env uniform & Prop. 1 & valid & \checkmark \\
+L8 & must sound & B6, generator & valid & \checkmark \\
+L9 & meet below choice & B6, generator & valid & \checkmark \\
 L10 & fault antitone & Def. 3 & valid & \checkmark \\
 L11 & failed provides nothing & Def. 2 & valid & \checkmark \\
 L12 & decl enables & Def. 2 & valid & \checkmark \\
 L13 & decl local & Def. 2 & valid & \checkmark \\
 C1 & non distributive & B6 incompleteness & countermodel & \checkmark \\
-C2 & no exact single pair & T2(c) & valid & \checkmark \\}
+C2 & no exact single pair & Thm. 2c & valid & \checkmark \\}
 \newcommand{\tabRecall}{%
 A1 & 1 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 0.0 & 100.0 \\
 A2 & 1 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 0.0 & 100.0 \\
@@ -808,22 +855,22 @@ S4 & 2--4 & 0.0 & 100.0 & 34.6 & 0.0 & 0.0 & 100.0 & 100.0 & 98.2 & 0.0 & 100.0 
 S6a & 2--4 & 0.0 & 100.0 & 28.2 & 0.0 & 0.0 & 100.0 & 100.0 & 96.1 & 0.0 & 100.0 & 100.0 \\
 S6b & 2--4 & 0.0 & 100.0 & 34.6 & 0.0 & 0.0 & 100.0 & 100.0 & 98.9 & 0.0 & 0.0 & 100.0 \\}
 \newcommand{\tabScalability}{%
-singleton (B1) & free & 1.51 [1.38, 1.64] & 1.51 [1.37, 1.64] & 0.70 & 0/270 & 0/270 \\
-singleton (B1) & mixed & 1.71 [1.53, 1.89] & 1.71 [1.52, 1.89] & 3.82 & 0/90 & 0/90 \\
-window-2 & free & 1.68 [1.52, 1.85] & 1.70 [1.53, 1.87] & 14.94 & 1/270 & 198/270 \\
-window-2 & mixed & 1.89 [1.71, 2.07] & 1.89 [1.70, 2.05] & 9.77 & 0/90 & 64/90 \\
-band-1 & free & 1.27 [1.15, 1.38] & 1.27 [1.16, 1.39] & 0.12 & 0/270 & 0/270 \\
-band-1 & mixed & 2.24 [2.03, 2.42] & 2.36 [2.17, 2.54] & 38.36 & 4/90 & 0/90 \\
-region & free & 1.77 [1.59, 1.94] & 1.88 [1.69, 2.03] & 21.89 & 8/270 & 161/270 \\
-region & mixed & 2.94 [2.72, 3.16] & 2.58 [2.40, 2.79] & 60.00 & 12/90 & 46/90 \\
-goal-directed & free & 1.81 [1.70, 1.93] & 1.91 [1.78, 2.03] & 20.22 & 9/270 & 261/270 \\
-goal-directed & mixed & 2.66 [2.23, 3.08] & 2.33 [2.10, 2.59] & 60.00 & 30/90 & 60/90 \\
-SL (combined) & free & 1.86 [1.76, 1.97] & 1.94 [1.84, 2.03] & 51.31 & 15/270 & 255/270 \\
-SL (combined) & mixed & 2.90 [2.59, 3.24] & 2.19 [1.96, 2.45] & 60.00 & 32/90 & 58/90 \\
-B6 must & free & 1.93 [1.91, 1.96] & 1.93 [1.91, 1.96] & 1.18 & 0/270 & 270/270 \\
-B6 must & mixed & 2.02 [1.94, 2.10] & 2.02 [1.94, 2.10] & 2.33 & 0/90 & 90/90 \\
-B2 whole team & free & 1.14 [1.07, 1.20] & 1.14 [1.07, 1.21] & 0.02 & 0/270 & 270/270 \\
-B2 whole team & mixed & 4.30 [3.27, 5.50] & 2.87 [2.52, 3.25] & 60.00 & 36/90 & 54/90 \\}
+singleton (B1) & free & 1.51 [1.38, 1.64] & 1.51 [1.37, 1.64] & 0.64 & 0/270 & 0/270 \\
+singleton (B1) & mixed & 1.73 [1.56, 1.89] & 1.73 [1.55, 1.90] & 2.78 & 0/90 & 0/90 \\
+window-2 & free & 1.70 [1.54, 1.87] & 1.70 [1.53, 1.87] & 14.90 & 0/270 & 198/270 \\
+window-2 & mixed & 1.88 [1.71, 2.04] & 1.88 [1.70, 2.05] & 7.92 & 0/90 & 64/90 \\
+band-1 & free & 1.26 [1.14, 1.37] & 1.26 [1.15, 1.38] & 0.09 & 0/270 & 0/270 \\
+band-1 & mixed & 2.20 [2.01, 2.38] & 2.33 [2.15, 2.52] & 24.18 & 4/90 & 0/90 \\
+region & free & 1.76 [1.59, 1.92] & 1.88 [1.72, 2.05] & 19.44 & 9/270 & 161/270 \\
+region & mixed & 2.93 [2.74, 3.15] & 2.59 [2.40, 2.78] & 60.00 & 12/90 & 46/90 \\
+goal-directed & free & 1.82 [1.70, 1.94] & 1.91 [1.79, 2.03] & 19.30 & 8/270 & 262/270 \\
+goal-directed & mixed & 2.76 [2.35, 3.17] & 2.34 [2.13, 2.60] & 60.00 & 29/90 & 61/90 \\
+SL (combined) & free & 1.87 [1.77, 1.98] & 1.94 [1.85, 2.03] & 46.82 & 13/270 & 257/270 \\
+SL (combined) & mixed & 3.03 [2.74, 3.38] & 2.20 [1.97, 2.46] & 60.00 & 30/90 & 60/90 \\
+B6 must & free & 1.94 [1.92, 1.96] & 1.94 [1.92, 1.96] & 1.18 & 0/270 & 270/270 \\
+B6 must & mixed & 2.02 [1.95, 2.10] & 2.02 [1.95, 2.10] & 1.62 & 0/90 & 90/90 \\
+B2 whole team & free & 1.14 [1.07, 1.21] & 1.14 [1.07, 1.21] & 0.02 & 0/270 & 270/270 \\
+B2 whole team & mixed & 4.38 [3.39, 5.54] & 2.89 [2.55, 3.24] & 60.00 & 36/90 & 54/90 \\}
 \newcommand{\tabSensitivity}{%
 share of gates & 0.0 & 100.0 & 0.0 & 0.0 & 0 \\
 share of gates & 0.25 & 100.0 & 0.0 & 0.0 & 0 \\
@@ -861,57 +908,57 @@ mixed & 200 & 0.0 & 100.0 & 40.0 & 100.0 & 99.0 & 80.0 & 100.0 & 0.15 \\}
 \end{axis}\end{tikzpicture}}
 \newcommand{\figEvolution}{%
 \begin{tikzpicture}\begin{axis}[width=\columnwidth,height=5cm,ymin=0,ymax=1.05,xtick={0,1,2,3,4,5,6},xticklabels={kind,route,join,req,decl,gua,edge},x tick label style={rotate=30,anchor=north east,font=\footnotesize},xlabel={changed attribute},ylabel={fraction of slices re-verified},grid=major,grid style={gray!20},legend pos=north west,legend style={font=\scriptsize,draw=none,fill=none},tick label style={font=\footnotesize},label style={font=\footnotesize}]
-\addplot[fill=cA,fill opacity=0.15,draw=none,forget plot] coordinates {(0,0.112533) (1,0.113748) (2,0.113893) (3,0.522249) (4,0.513201) (5,0.643757) (6,0.918689) (6,0.983052) (5,0.782625) (4,0.689029) (3,0.696523) (2,0.152085) (1,0.159589) (0,0.142858)} -- cycle;
+\addplot[fill=cA,fill opacity=0.15,draw=none,forget plot] coordinates {(0,0.112803) (1,0.113636) (2,0.112857) (3,0.522376) (4,0.512022) (5,0.641209) (6,0.918016) (6,0.983502) (5,0.783629) (4,0.688901) (3,0.696935) (2,0.152374) (1,0.160421) (0,0.143045)} -- cycle;
 \addplot[cA,semithick,solid,mark=*,mark size=1.4pt,mark options={solid}] coordinates {(0,0.127657) (1,0.136491) (2,0.132616) (3,0.611777) (4,0.602782) (5,0.715277) (6,0.953787)};
 \addlegendentry{chain}
-\addplot[fill=cB,fill opacity=0.15,draw=none,forget plot] coordinates {(0,0.103981) (1,0.105449) (2,0.0916372) (3,0.414695) (4,0.43252) (5,0.506864) (6,0.754799) (6,0.818845) (5,0.584375) (4,0.500521) (3,0.482905) (2,0.10633) (1,0.120644) (0,0.115664)} -- cycle;
+\addplot[fill=cB,fill opacity=0.15,draw=none,forget plot] coordinates {(0,0.104038) (1,0.10562) (2,0.0919978) (3,0.415406) (4,0.432262) (5,0.506421) (6,0.754439) (6,0.818133) (5,0.585189) (4,0.500546) (3,0.483057) (2,0.10622) (1,0.120821) (0,0.115724)} -- cycle;
 \addplot[cB,semithick,dashed,mark=square*,mark size=1.4pt,mark options={solid}] coordinates {(0,0.109813) (1,0.113022) (2,0.0989767) (3,0.448614) (4,0.466247) (5,0.545069) (6,0.78703)};
 \addlegendentry{other topologies}
 \end{axis}\end{tikzpicture}}
 \newcommand{\figScalability}{%
 \begin{tikzpicture}
 \begin{axis}[width=0.37\textwidth,height=5.2cm,xmode=log,ymode=log,xlabel={team size (nodes)},title={switch-free topologies},grid=major,grid style={gray!20},tick label style={font=\footnotesize},label style={font=\footnotesize},title style={font=\footnotesize},ylabel={wall time per team (s)},name=left]
-\addplot[fill=cA,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,0.000115132) (27.0333,0.000164556) (57.3333,0.000407352) (106.967,0.000757648) (207.033,0.00163311) (507.1,0.00427098) (1007.23,0.00721385) (2007.03,0.0197891) (5007.3,0.0596627) (5007.3,4.28992) (2007.03,0.383449) (1007.23,0.142463) (507.1,0.0469002) (207.033,0.009991) (106.967,0.00302158) (57.3333,0.000965155) (27.0333,0.000340852) (16.9667,0.000187304)} -- cycle;
-\addplot[cA,semithick,solid,mark=*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.000123136) (27.0333,0.000281024) (57.3333,0.000786207) (106.967,0.00135545) (207.033,0.00530436) (507.1,0.0160054) (1007.23,0.0419221) (2007.03,0.11207) (5007.3,0.697767)};
-\addplot[fill=cB,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,0.00014324) (27.0333,0.000246868) (57.3333,0.000562167) (106.967,0.00106897) (207.033,0.00208542) (507.1,0.0056523) (1007.23,0.0124602) (2007.03,0.0265203) (5007.3,0.102219) (5007.3,25.2353) (2007.03,2.25582) (1007.23,0.390952) (507.1,0.115869) (207.033,0.012401) (106.967,0.0058404) (57.3333,0.00177457) (27.0333,0.000554864) (16.9667,0.000257556)} -- cycle;
-\addplot[cB,semithick,dashed,mark=square*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.00019784) (27.0333,0.000389479) (57.3333,0.00126457) (106.967,0.00353425) (207.033,0.00743725) (507.1,0.0436425) (1007.23,0.16449) (2007.03,1.08421) (5007.3,14.9355)};
-\addplot[fill=cC,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,8.7968e-05) (27.0333,0.000109547) (57.3333,0.000184212) (106.967,0.000322715) (207.033,0.000571692) (507.1,0.00136311) (1007.23,0.00255104) (2007.03,0.00617084) (5007.3,0.0278049) (5007.3,0.621448) (2007.03,0.10475) (1007.23,0.0417048) (507.1,0.0170092) (207.033,0.00479039) (106.967,0.00189509) (57.3333,0.0007196) (27.0333,0.000251548) (16.9667,0.000148424)} -- cycle;
-\addplot[cC,semithick,dashdotted,mark=triangle*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.000110768) (27.0333,0.0001598) (57.3333,0.000470024) (106.967,0.000745575) (207.033,0.00198543) (507.1,0.00538258) (1007.23,0.0102787) (2007.03,0.0279596) (5007.3,0.116264)};
-\addplot[fill=cD,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,7.742e-05) (27.0333,0.000174432) (57.3333,0.000855551) (106.967,0.00271361) (207.033,0.00703778) (507.1,0.0308239) (1007.23,0.165978) (2007.03,0.379865) (5007.3,3.78003) (5007.3,59.6785) (2007.03,6.88055) (1007.23,1.12619) (507.1,0.32705) (207.033,0.0476627) (106.967,0.0118282) (57.3333,0.00374626) (27.0333,0.000759007) (16.9667,0.000287892)} -- cycle;
-\addplot[cD,semithick,densely dotted,mark=diamond*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.000160816) (27.0333,0.000330639) (57.3333,0.00156158) (106.967,0.00354511) (207.033,0.012625) (507.1,0.0971364) (1007.23,0.23807) (2007.03,1.53468) (5007.3,21.8893)};
-\addplot[fill=cE,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,0.000144036) (27.0333,0.000252324) (57.3333,0.00101828) (106.967,0.00264708) (207.033,0.0101805) (507.1,0.0445145) (1007.23,0.0639509) (2007.03,0.799506) (5007.3,5.00858) (5007.3,60) (2007.03,3.23372) (1007.23,1.27236) (507.1,0.237878) (207.033,0.0520552) (106.967,0.0157444) (57.3333,0.00492951) (27.0333,0.000803039) (16.9667,0.000411928)} -- cycle;
-\addplot[cE,semithick,solid,mark=pentagon*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.000223887) (27.0333,0.000558112) (57.3333,0.00173792) (106.967,0.00471081) (207.033,0.0223657) (507.1,0.117656) (1007.23,0.433927) (2007.03,1.88207) (5007.3,20.2178)};
-\addplot[fill=cF,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,0.000473043) (27.0333,0.000892643) (57.3333,0.00315705) (106.967,0.00710435) (207.033,0.0241906) (507.1,0.105006) (1007.23,0.449128) (2007.03,2.66835) (5007.3,28.0007) (5007.3,60) (2007.03,11.4283) (1007.23,2.49225) (507.1,0.864475) (207.033,0.0951485) (106.967,0.0331458) (57.3333,0.00937373) (27.0333,0.00228938) (16.9667,0.000949079)} -- cycle;
-\addplot[cF,semithick,dashed,mark=+,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.000605375) (27.0333,0.0015605) (57.3333,0.00546165) (106.967,0.0128047) (207.033,0.0414717) (507.1,0.241777) (1007.23,0.955405) (2007.03,4.61001) (5007.3,51.3054)};
-\addplot[fill=cG,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,2.4116e-05) (27.0333,4.6764e-05) (57.3333,0.000177384) (106.967,0.000558308) (207.033,0.00201148) (507.1,0.0118045) (1007.23,0.0458298) (2007.03,0.181567) (5007.3,1.16079) (5007.3,1.1997) (2007.03,0.185875) (1007.23,0.0482513) (507.1,0.0188901) (207.033,0.00239557) (106.967,0.000702503) (57.3333,0.000293508) (27.0333,8.5428e-05) (16.9667,4.49717e-05)} -- cycle;
-\addplot[cG,semithick,dashdotted,mark=x,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,2.6472e-05) (27.0333,5.1496e-05) (57.3333,0.000245784) (106.967,0.0005782) (207.033,0.00213948) (507.1,0.0121777) (1007.23,0.0461963) (2007.03,0.183301) (5007.3,1.18172)};
-\addplot[fill=black,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,2.4608e-05) (27.0333,3.5772e-05) (57.3333,8.6644e-05) (106.967,0.000149988) (207.033,0.000298659) (507.1,0.000787587) (1007.23,0.00170126) (2007.03,0.00411229) (5007.3,0.0150857) (5007.3,0.0582666) (2007.03,0.014344) (1007.23,0.00767646) (507.1,0.00317061) (207.033,0.00127586) (106.967,0.000577555) (57.3333,0.000313668) (27.0333,0.000137391) (16.9667,8.1212e-05)} -- cycle;
-\addplot[black,semithick,solid,mark=*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,3.0968e-05) (27.0333,4.592e-05) (57.3333,0.000153255) (106.967,0.000174008) (207.033,0.00046056) (507.1,0.00123265) (1007.23,0.00186136) (2007.03,0.00445267) (5007.3,0.0239017)};
+\addplot[fill=cA,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,0.000120048) (27.0333,0.000166955) (57.3333,0.000392596) (106.967,0.000777994) (207.033,0.0018467) (507.1,0.00374541) (1007.23,0.00716551) (2007.03,0.0194066) (5007.3,0.0578473) (5007.3,3.02781) (2007.03,0.387911) (1007.23,0.139894) (507.1,0.0327347) (207.033,0.0105312) (106.967,0.00300478) (57.3333,0.000974985) (27.0333,0.000349333) (16.9667,0.000188046)} -- cycle;
+\addplot[cA,semithick,solid,mark=*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.00015729) (27.0333,0.000254816) (57.3333,0.000628252) (106.967,0.00136612) (207.033,0.00483464) (507.1,0.0142064) (1007.23,0.0422141) (2007.03,0.105046) (5007.3,0.643768)};
+\addplot[fill=cB,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,0.000143819) (27.0333,0.000237676) (57.3333,0.000582966) (106.967,0.000980023) (207.033,0.00371475) (507.1,0.00537092) (1007.23,0.0123311) (2007.03,0.0270928) (5007.3,0.10103) (5007.3,23.8108) (2007.03,2.23127) (1007.23,0.386551) (507.1,0.0793982) (207.033,0.0149007) (106.967,0.00483241) (57.3333,0.00186661) (27.0333,0.000533351) (16.9667,0.000250479)} -- cycle;
+\addplot[cB,semithick,dashed,mark=square*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.00020609) (27.0333,0.000334446) (57.3333,0.00139132) (106.967,0.00229154) (207.033,0.00765147) (507.1,0.0324548) (1007.23,0.161023) (2007.03,1.07588) (5007.3,14.9045)};
+\addplot[fill=cC,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,8.9753e-05) (27.0333,0.000108453) (57.3333,0.00019363) (106.967,0.00032679) (207.033,0.000623552) (507.1,0.00139833) (1007.23,0.00247237) (2007.03,0.00642686) (5007.3,0.0271199) (5007.3,0.536141) (2007.03,0.0972302) (1007.23,0.0428923) (507.1,0.0148582) (207.033,0.00503602) (106.967,0.0019189) (57.3333,0.000736984) (27.0333,0.000254508) (16.9667,0.000142563)} -- cycle;
+\addplot[cC,semithick,dashdotted,mark=triangle*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.000100853) (27.0333,0.000175682) (57.3333,0.00039418) (106.967,0.000763926) (207.033,0.00195937) (507.1,0.00425397) (1007.23,0.0101893) (2007.03,0.0267877) (5007.3,0.0869969)};
+\addplot[fill=cD,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,9.6209e-05) (27.0333,0.000169667) (57.3333,0.000863256) (106.967,0.00265774) (207.033,0.00855539) (507.1,0.0310307) (1007.23,0.164068) (2007.03,0.377455) (5007.3,3.92327) (5007.3,60) (2007.03,6.76566) (1007.23,1.11881) (507.1,0.269365) (207.033,0.0478197) (106.967,0.0118438) (57.3333,0.00368151) (27.0333,0.000676314) (16.9667,0.000290075)} -- cycle;
+\addplot[cD,semithick,densely dotted,mark=diamond*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.000164979) (27.0333,0.000350669) (57.3333,0.00130771) (106.967,0.00351796) (207.033,0.0159012) (507.1,0.0558113) (1007.23,0.23423) (2007.03,1.52556) (5007.3,19.4435)};
+\addplot[fill=cE,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,0.000144204) (27.0333,0.000253528) (57.3333,0.000823454) (106.967,0.00263922) (207.033,0.0101432) (507.1,0.043934) (1007.23,0.063031) (2007.03,0.806436) (5007.3,4.99308) (5007.3,54.4165) (2007.03,3.32442) (1007.23,1.2496) (507.1,0.19275) (207.033,0.0458144) (106.967,0.0157522) (57.3333,0.00493797) (27.0333,0.000808794) (16.9667,0.000394608)} -- cycle;
+\addplot[cE,semithick,solid,mark=pentagon*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.000202442) (27.0333,0.000584957) (57.3333,0.00174012) (106.967,0.004708) (207.033,0.0280934) (507.1,0.10683) (1007.23,0.427459) (2007.03,1.88829) (5007.3,19.3022)};
+\addplot[fill=cF,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,0.000493569) (27.0333,0.000835017) (57.3333,0.00269003) (106.967,0.00746663) (207.033,0.0218094) (507.1,0.0919288) (1007.23,0.445087) (2007.03,2.65424) (5007.3,30.4298) (5007.3,60) (2007.03,11.6051) (1007.23,2.48253) (507.1,0.651728) (207.033,0.0955993) (106.967,0.0329586) (57.3333,0.00981074) (27.0333,0.00230517) (16.9667,0.000941222)} -- cycle;
+\addplot[cF,semithick,dashed,mark=+,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,0.000588061) (27.0333,0.00125559) (57.3333,0.00478189) (106.967,0.0128729) (207.033,0.0575003) (507.1,0.241591) (1007.23,0.979675) (2007.03,4.69068) (5007.3,46.8205)};
+\addplot[fill=cG,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,2.3415e-05) (27.0333,4.62462e-05) (57.3333,0.000173514) (106.967,0.000560214) (207.033,0.00195677) (507.1,0.0115982) (1007.23,0.0454798) (2007.03,0.180767) (5007.3,1.16502) (5007.3,1.19979) (2007.03,0.185294) (1007.23,0.0478615) (507.1,0.0123403) (207.033,0.00239195) (106.967,0.000702508) (57.3333,0.000265055) (27.0333,8.4106e-05) (16.9667,4.1019e-05)} -- cycle;
+\addplot[cG,semithick,dashdotted,mark=x,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,2.5735e-05) (27.0333,4.9462e-05) (57.3333,0.000178498) (106.967,0.000567941) (207.033,0.00223053) (507.1,0.0116609) (1007.23,0.0458937) (2007.03,0.182258) (5007.3,1.17676)};
+\addplot[fill=black,fill opacity=0.15,draw=none,forget plot] coordinates {(16.9667,2.6099e-05) (27.0333,3.6711e-05) (57.3333,8.2781e-05) (106.967,0.000150603) (207.033,0.000303072) (507.1,0.000762835) (1007.23,0.0016025) (2007.03,0.0038419) (5007.3,0.0139452) (5007.3,0.0578302) (2007.03,0.0142184) (1007.23,0.00760897) (507.1,0.00289576) (207.033,0.00132662) (106.967,0.000579933) (57.3333,0.000313914) (27.0333,0.000140819) (16.9667,7.19092e-05)} -- cycle;
+\addplot[black,semithick,solid,mark=*,mark size=1.4pt,mark options={solid}] coordinates {(16.9667,3.1519e-05) (27.0333,4.6359e-05) (57.3333,9.2805e-05) (106.967,0.000170171) (207.033,0.000555448) (507.1,0.00091836) (1007.23,0.00181892) (2007.03,0.00443092) (5007.3,0.0174429)};
 \end{axis}
 \begin{axis}[width=0.37\textwidth,height=5.2cm,xmode=log,ymode=log,xlabel={team size (nodes)},title={mixed (switches and any-joins)},grid=major,grid style={gray!20},tick label style={font=\footnotesize},label style={font=\footnotesize},title style={font=\footnotesize},legend pos=outer north east,legend style={font=\scriptsize,draw=none,fill=none},at={(left.east)},anchor=west,xshift=1.2cm]
-\addplot[fill=cA,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,0.00012772) (27,0.000157684) (57.2,0.000525308) (107.7,0.00101981) (207.4,0.00195344) (507.2,0.0139537) (1006.7,0.0168463) (2006.8,0.171272) (5007.1,1.19564) (5007.1,4.2975) (2006.8,0.499332) (1006.7,0.133581) (507.2,0.0500044) (207.4,0.00612328) (107.7,0.00277097) (57.2,0.00117068) (27,0.000353092) (17.3,0.000218548)} -- cycle;
-\addplot[cA,semithick,solid,mark=*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,0.000167392) (27,0.0002812) (57.2,0.000914247) (107.7,0.00194914) (207.4,0.0056049) (507.2,0.0214753) (1006.7,0.0503732) (2006.8,0.337252) (5007.1,3.81757)};
+\addplot[fill=cA,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,0.000121572) (27,0.000185146) (57.2,0.000431122) (107.7,0.00100008) (207.4,0.00263949) (507.2,0.0134414) (1006.7,0.0169017) (2006.8,0.116719) (5007.1,1.16072) (5007.1,4.33078) (2006.8,0.491884) (1006.7,0.0959776) (507.2,0.0484253) (207.4,0.00867031) (107.7,0.00234411) (57.2,0.00105627) (27,0.000331573) (17.3,0.000213033)} -- cycle;
+\addplot[cA,semithick,solid,mark=*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,0.000154091) (27,0.000261128) (57.2,0.000711993) (107.7,0.00156663) (207.4,0.00455263) (507.2,0.0180262) (1006.7,0.0507408) (2006.8,0.33142) (5007.1,2.78201)};
 \addlegendentry{singleton (B1)}
-\addplot[fill=cB,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,0.00017516) (27,0.000240668) (57.2,0.000644183) (107.7,0.00181885) (207.4,0.00393168) (507.2,0.0424169) (1006.7,0.0453797) (2006.8,0.597342) (5007.1,4.52587) (5007.1,15.7352) (2006.8,1.16724) (1006.7,0.310516) (507.2,0.121995) (207.4,0.0159738) (107.7,0.00568093) (57.2,0.0019702) (27,0.000697019) (17.3,0.000377347)} -- cycle;
-\addplot[cB,semithick,dashed,mark=square*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,0.000229312) (27,0.000387359) (57.2,0.00156611) (107.7,0.00372024) (207.4,0.0121891) (507.2,0.0481263) (1006.7,0.124133) (2006.8,0.957893) (5007.1,9.77257)};
+\addplot[fill=cB,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,0.000176107) (27,0.000265712) (57.2,0.000640003) (107.7,0.00171463) (207.4,0.00541682) (507.2,0.0290629) (1006.7,0.0457185) (2006.8,0.407786) (5007.1,4.4199) (5007.1,14.7143) (2006.8,1.1598) (1006.7,0.210604) (507.2,0.112138) (207.4,0.0202843) (107.7,0.00495972) (57.2,0.00196482) (27,0.000617908) (17.3,0.000334161)} -- cycle;
+\addplot[cB,semithick,dashed,mark=square*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,0.000187954) (27,0.000412674) (57.2,0.00117127) (107.7,0.00303593) (207.4,0.0109777) (507.2,0.0451589) (1006.7,0.122926) (2006.8,0.942846) (5007.1,7.91836)};
 \addlegendentry{window-2}
-\addplot[fill=cC,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,9.5904e-05) (27,0.000123239) (57.2,0.000267723) (107.7,0.000669491) (207.4,0.00178399) (507.2,0.0125887) (1006.7,0.0875252) (2006.8,0.44353) (5007.1,17.4452) (5007.1,60) (2006.8,4.68214) (1006.7,0.539694) (507.2,0.085952) (207.4,0.0132015) (107.7,0.00261178) (57.2,0.000836676) (27,0.000328264) (17.3,0.000175056)} -- cycle;
-\addplot[cC,semithick,dashdotted,mark=triangle*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,0.000130696) (27,0.000236296) (57.2,0.000700767) (107.7,0.0013889) (207.4,0.00556215) (507.2,0.0392914) (1006.7,0.271584) (2006.8,0.682607) (5007.1,38.3581)};
+\addplot[fill=cC,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,8.4941e-05) (27,0.000121816) (57.2,0.00032031) (107.7,0.000655959) (207.4,0.00260104) (507.2,0.0119245) (1006.7,0.0881359) (2006.8,0.39004) (5007.1,11.0832) (5007.1,60) (2006.8,4.67392) (1006.7,0.327819) (507.2,0.0860516) (207.4,0.0133196) (107.7,0.00263147) (57.2,0.000860577) (27,0.000304634) (17.3,0.000172126)} -- cycle;
+\addplot[cC,semithick,dashdotted,mark=triangle*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,0.000100325) (27,0.000213313) (57.2,0.000598636) (107.7,0.00117523) (207.4,0.00651923) (507.2,0.0338071) (1006.7,0.267442) (2006.8,0.601596) (5007.1,24.1802)};
 \addlegendentry{band-1}
-\addplot[fill=cD,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,6.0804e-05) (27,0.00015262) (57.2,0.000519467) (107.7,0.00283211) (207.4,0.0308389) (507.2,2.06426) (1006.7,3.49983) (2006.8,24.1799) (5007.1,60) (5007.1,60) (2006.8,51.0248) (1006.7,9.2807) (507.2,3.70774) (207.4,0.651046) (107.7,0.00863084) (57.2,0.00157663) (27,0.00050634) (17.3,0.00017748)} -- cycle;
-\addplot[cD,semithick,densely dotted,mark=diamond*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,0.000105344) (27,0.000212072) (57.2,0.0010921) (107.7,0.00607017) (207.4,0.060309) (507.2,3.15748) (1006.7,5.97038) (2006.8,29.4253) (5007.1,60)};
+\addplot[fill=cD,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,5.7502e-05) (27,0.000154199) (57.2,0.000488284) (107.7,0.0027201) (207.4,0.0268087) (507.2,2.05295) (1006.7,3.47144) (2006.8,24.5861) (5007.1,60) (5007.1,60) (2006.8,31.5973) (1006.7,7.36887) (507.2,3.71785) (207.4,0.651038) (107.7,0.00854709) (57.2,0.00147837) (27,0.000413974) (17.3,0.000163522)} -- cycle;
+\addplot[cD,semithick,densely dotted,mark=diamond*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,6.7278e-05) (27,0.000235224) (57.2,0.000862861) (107.7,0.0060858) (207.4,0.0730611) (507.2,3.12323) (1006.7,5.81045) (2006.8,29.0479) (5007.1,60)};
 \addlegendentry{region}
-\addplot[fill=cE,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,0.000183955) (27,0.00031588) (57.2,0.00237208) (107.7,0.0115788) (207.4,0.0930357) (507.2,0.553794) (1006.7,38.8167) (2006.8,60) (5007.1,60) (5007.1,60) (2006.8,60) (1006.7,60) (507.2,60) (207.4,0.802849) (107.7,0.0449777) (57.2,0.0102977) (27,0.00144355) (17.3,0.000883519)} -- cycle;
-\addplot[cE,semithick,solid,mark=pentagon*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,0.000306648) (27,0.000920296) (57.2,0.00682489) (107.7,0.0126813) (207.4,0.240523) (507.2,60) (1006.7,57.2195) (2006.8,60) (5007.1,60)};
+\addplot[fill=cE,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,0.000194342) (27,0.000334557) (57.2,0.00237598) (107.7,0.0117868) (207.4,0.103844) (507.2,0.551529) (1006.7,30.2061) (2006.8,60) (5007.1,60) (5007.1,60) (2006.8,60) (1006.7,60) (507.2,60) (207.4,0.803908) (107.7,0.0351231) (57.2,0.00965705) (27,0.00152338) (17.3,0.000581985)} -- cycle;
+\addplot[cE,semithick,solid,mark=pentagon*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,0.000306102) (27,0.000600917) (57.2,0.00562597) (107.7,0.0125803) (207.4,0.287989) (507.2,50.4143) (1006.7,49.7176) (2006.8,60) (5007.1,60)};
 \addlegendentry{goal-directed}
-\addplot[fill=cF,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,0.000540284) (27,0.000847939) (57.2,0.00364598) (107.7,0.0201406) (207.4,0.294606) (507.2,3.41308) (1006.7,41.8608) (2006.8,60) (5007.1,60) (5007.1,60) (2006.8,60) (1006.7,60) (507.2,60) (207.4,1.03491) (107.7,0.061161) (57.2,0.01423) (27,0.00296685) (17.3,0.00143343)} -- cycle;
-\addplot[cF,semithick,dashed,mark=+,mark size=1.4pt,mark options={solid}] coordinates {(17.3,0.000675343) (27,0.00171201) (57.2,0.0100918) (107.7,0.0253602) (207.4,0.798198) (507.2,60) (1006.7,60) (2006.8,60) (5007.1,60)};
+\addplot[fill=cF,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,0.000493076) (27,0.000879115) (57.2,0.00370001) (107.7,0.0205619) (207.4,0.342036) (507.2,4.56517) (1006.7,36.6745) (2006.8,60) (5007.1,60) (5007.1,60) (2006.8,60) (1006.7,60) (507.2,60) (207.4,1.50041) (107.7,0.0546107) (57.2,0.0135201) (27,0.00280253) (17.3,0.00109144)} -- cycle;
+\addplot[cF,semithick,dashed,mark=+,mark size=1.4pt,mark options={solid}] coordinates {(17.3,0.000666011) (27,0.00140645) (57.2,0.00804486) (107.7,0.0250347) (207.4,0.804673) (507.2,52.428) (1006.7,53.5691) (2006.8,60) (5007.1,60)};
 \addlegendentry{SL (combined)}
-\addplot[fill=cG,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,2.654e-05) (27,4.546e-05) (57.2,0.000211356) (107.7,0.000733375) (207.4,0.00256424) (507.2,0.015092) (1006.7,0.0571734) (2006.8,0.245596) (5007.1,1.592) (5007.1,3.82299) (2006.8,0.532708) (1006.7,0.113077) (507.2,0.0266913) (207.4,0.00508787) (107.7,0.00118923) (57.2,0.000437723) (27,0.000126384) (17.3,4.7216e-05)} -- cycle;
-\addplot[cG,semithick,dashdotted,mark=x,mark size=1.4pt,mark options={solid}] coordinates {(17.3,3.6072e-05) (27,5.3568e-05) (57.2,0.00029164) (107.7,0.000869063) (207.4,0.00362243) (507.2,0.0261982) (1006.7,0.0601835) (2006.8,0.434442) (5007.1,2.32639)};
+\addplot[fill=cG,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,2.5399e-05) (27,4.5186e-05) (57.2,0.000201634) (107.7,0.000697594) (207.4,0.00249952) (507.2,0.014638) (1006.7,0.0566756) (2006.8,0.244117) (5007.1,1.58398) (5007.1,3.65541) (2006.8,0.536709) (1006.7,0.110983) (507.2,0.0262924) (207.4,0.00557297) (107.7,0.00105899) (57.2,0.00042075) (27,9.6757e-05) (17.3,4.57423e-05)} -- cycle;
+\addplot[cG,semithick,dashdotted,mark=x,mark size=1.4pt,mark options={solid}] coordinates {(17.3,2.85675e-05) (27,5.3494e-05) (57.2,0.000227353) (107.7,0.000775159) (207.4,0.00378522) (507.2,0.0205932) (1006.7,0.060237) (2006.8,0.336663) (5007.1,1.62042)};
 \addlegendentry{B6 must}
-\addplot[fill=black,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,3.7876e-05) (27,3.4192e-05) (57.2,0.000196772) (107.7,0.00114499) (207.4,0.0537879) (507.2,56.7204) (1006.7,60) (2006.8,60) (5007.1,60) (5007.1,60) (2006.8,60) (1006.7,60) (507.2,60) (207.4,0.76044) (107.7,0.00708778) (57.2,0.000932843) (27,0.000266623) (17.3,8.4388e-05)} -- cycle;
-\addplot[black,semithick,solid,mark=*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,6.1696e-05) (27,9.10875e-05) (57.2,0.000528359) (107.7,0.00441887) (207.4,0.136044) (507.2,60) (1006.7,60) (2006.8,60) (5007.1,60)};
+\addplot[fill=black,fill opacity=0.15,draw=none,forget plot] coordinates {(17.3,3.20547e-05) (27,3.6695e-05) (57.2,0.000163667) (107.7,0.00115923) (207.4,0.0792335) (507.2,56.1834) (1006.7,60) (2006.8,60) (5007.1,60) (5007.1,60) (2006.8,60) (1006.7,60) (507.2,60) (207.4,1.38403) (107.7,0.00703874) (57.2,0.000782739) (27,0.00016447) (17.3,8.23137e-05)} -- cycle;
+\addplot[black,semithick,solid,mark=*,mark size=1.4pt,mark options={solid}] coordinates {(17.3,4.49345e-05) (27,9.3925e-05) (57.2,0.000533815) (107.7,0.00338702) (207.4,0.136157) (507.2,60) (1006.7,60) (2006.8,60) (5007.1,60)};
 \addlegendentry{B2 whole team}
 \end{axis}
 \end{tikzpicture}}
@@ -930,7 +977,7 @@ mixed & 200 & 0.0 & 100.0 & 40.0 & 100.0 & 99.0 & 80.0 & 100.0 & 0.15 \\}
 \maketitle
 
 \begin{abstract}
-Software teams increasingly build systems in which several AI agents hand work to one another. Such a team can be unsafe even when every agent meets its own contract, because the defect lives in a relationship among agents: a join that releases on the first approval, two reviewers that share one model, a test gate whose tests were written by a fallible agent. We study this problem on \emph{declared-contract models} of agent teams: directed acyclic graphs of agents and deterministic gates with requirements, guarantees, fork, switch, join policies (all, any, quorum) and model failures. We introduce \emph{agent slicing}. A slice is a convex, possibly disconnected, set of agents analyzed exactly while the rest of the team is taken at face value. A slice reports a defect only when its witness \emph{lifts} to a run of the whole team, so reported findings are never false alarms. The size of the smallest slice that confirms a defect is its \emph{depth}; depth at least two means that checking agents one at a time cannot see it, and the smallest confirming slices localize it. We prove when slice abstraction is compositional (partitions with an acyclic quotient), that exact slice contracts are relations rather than assumption-guarantee pairs, that view-local agent checks cannot separate safe from unsafe teams on these defect classes, and that a change invalidates only a computable set of slices; we also give the complexity of each question. On \resMutTeams{} teams with naturally arising defects from random engineering changes, \resMutHiddenShare{} of the defect symptoms are hidden at agent level, and agent-level analysis finds none of them. A global must-analysis detects \resMutRecallHiddenBSix{} of them but reports \resMutFalseRateBSix{} false findings and names only the symptom node; confirmed slice analysis detects all of them with no false finding and returns an exact minimal slice for \resMutExactSL{} (\resMutShrinkExact{} when a whole-team witness is shrunk slice by slice). In encodings of nine published multi-agent designs under contracts we declared and one tolerated model failure, \resArchHiddenDocumented{} contain a defect that only multi-agent slices reveal. No language model is run; we make no claim that any model meets a contract.
+Software teams increasingly build systems in which several AI agents hand work to one another. Such a team can be unsafe even when every agent meets its own contract, because the defect lives in a relationship among agents: a join that releases on the first approval, two reviewers that share one model, a test gate whose input was written by a fallible agent. We study this problem on \emph{declared-contract models} of agent teams: directed acyclic graphs of agents and deterministic gates with requirements, guarantees, fork, switch, join policies (all, any, quorum) and model failures. We introduce \emph{agent slicing}. A slice is a convex, possibly disconnected, set of agents analyzed exactly while the rest of the team is taken at face value. A slice reports a defect only when its witness \emph{lifts} to a run of the whole team, so reported findings are never false alarms with respect to the model. The size of the smallest slice that confirms a defect is its \emph{depth}; the smallest confirming slices localize it, and depth at least two means that an agent-by-agent check does not report it. We prove that confirmed findings are sound and monotone in the slice, when slice abstraction is compositional (partitions with an acyclic quotient and a global failure set), and that a change invalidates only a computable set of slices, and we give the complexity of each question. On \resMutTeams{} teams with defects induced by random engineering changes, \resMutHiddenShare{} of the defect symptoms have depth at least two; for \resMutALDeclaredClean{} of the \resMutUnclean{} defective teams an agent-by-agent check reports nothing at all. A linear global must-analysis detects \resMutRecallHiddenBSix{} of the hidden symptoms but \resMutFalseRateBSix{} of its findings are false and it names only the symptom node. Confirmed slice analysis detects \resMutRecallHiddenSL{} of them with no false finding; shrinking a whole-team witness slice by slice returns an exact minimal slice for \resMutShrinkExact{} of them and the combined slicing strategy for \resMutExactSL. These rates depend on team size and on the mix of changes. No language model is run, and we make no claim that any model meets a contract.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -945,7 +992,7 @@ These teams are engineered artifacts, so we should be able to ask an engineering
 
 Consider a release gate that ships a change when either the code reviewer or the security tester approves. Each agent can meet its contract, and the gate's policy is legal, yet the team can ship code that was never security tested. Inspecting any single agent shows nothing wrong. A whole-team analysis shows that a property can be missing at the output, but not \emph{which} agents let it through.
 
-Assume-guarantee reasoning gives the vocabulary: each component assumes something about its inputs and guarantees something about its outputs, and a composition is justified when every assumption is discharged~\cite{misra1981proofs,jones1983tentative,abadi1993composing,benveniste2018contracts}. Applied to one agent at a time, with every other agent trusted to keep its contract, the check is not path-sensitive. It credits a fact to a consumer if some upstream agent claims it, even if a join may drop that branch, and it never sees two agents fail together. Classical whole-program analyses fix part of this: we show that a must-analysis in the style of monotone data-flow frameworks~\cite{kildall1973unified,kam1977monotone}, run once per failure set, detects most such defects. But it over-approximates, so it raises false alarms, and it names only the node where the symptom appears.
+Assume-guarantee reasoning gives the vocabulary: each component assumes something about its inputs and guarantees something about its outputs, and a composition is justified when every assumption is discharged~\cite{misra1981proofs,jones1983tentative,abadi1993composing,benveniste2018contracts}. Applied to one agent at a time, with every other agent assumed to keep its contract, the check is not path-sensitive. It credits a fact to a consumer if some upstream agent claims it, even if a join may drop that branch, and it never sees two agents fail together. Classical whole-program analyses fix part of this: we show that a must-analysis in the style of monotone data-flow frameworks~\cite{kildall1973unified,kam1977monotone}, run once per failure set, detects most such defects. But it over-approximates, so it raises false alarms, and it names only the node where the symptom appears.
 
 \textbf{This paper.} We propose \emph{agent slicing}: analyze \emph{parts of a team} exactly and the rest at face value. A slice is a set of agents that is convex in the team graph (every path between two members stays inside); it need not be connected. Within a slice, joins, routing choices and model failures are explored exactly; outside, every component is assumed to keep its contract. Face value is an approximation in both directions, so a slice can report a defect the team does not have. We therefore \emph{confirm} each slice finding by lifting its witness to a run of the whole team. The size of the smallest slice that confirms a defect is its \emph{depth}: depth one means the defect is visible to an agent-by-agent check, depth two or more means it is hidden. The smallest confirming slices \emph{localize} the defect: they name the agents whose relationship is wrong. Fig.~\ref{fig:overview} shows the idea.
 
@@ -1027,15 +1074,15 @@ We study three research questions.
 \textbf{Contributions.}
 \begin{itemize}
 \item A calculus of graph-shaped agent teams with fork, switch, join policies, conditional guarantees and model failures, with an exact semantics (Section~\ref{sec:background}).
-\item \emph{Slices as analyzable components}: convex slices, a hybrid semantics whose approximation we characterize, confirmation by lifting, derived per-exit slice contracts, emergent obligations as predicates over witnesses, and slicings with an explicit acyclic-quotient condition (Section~\ref{sec:approach}).
+\item \emph{Slices as analyzable components}: convex slices, a hybrid semantics whose approximation we characterize, confirmation by lifting, per-exit derived slice contracts, emergent obligations as predicates over witnesses, and slicings with an explicit acyclic-quotient condition (Section~\ref{sec:approach}).
 \item The notions of \emph{depth} and \emph{minimal confirming slice}, and a taxonomy of blind spots (A1--A4, S1--S6) defined by the mechanism of their witness.
-\item Results with full paper proofs: slice abstraction and partition composition (T2), soundness of confirmed findings (T3), separation from view-local agent checks (T4), localization (T5), complexity per question (T7), and incremental recertification (T8), together with two propositions (T1, T6). Per-node proof steps are SMT obligations; every theorem with a computational statement is checked against brute-force oracles on small teams.
-\item An implementation, three benchmarks (injected defects, defects from random engineering changes, encodings of nine published designs), seven baselines, and a replication package that regenerates every number in the paper.
+\item Eight results (Proposition~\ref{prop:al}, Theorems~\ref{thm:abs}--\ref{thm:loc}, Proposition~\ref{prop:overlap}, Theorems~\ref{thm:cx} and~\ref{thm:inc}) with paper proofs, some steps of which are sketched (Appendix~\ref{app:proofs}). Per-node steps are SMT obligations, and every result with a computational statement is checked against brute-force oracles on small teams.
+\item An implementation, three benchmarks (injected defects, defects induced by random engineering changes, encodings of nine published designs), seven baselines, and a replication package that regenerates every number in the paper.
 \end{itemize}
 
-\textbf{Main results.} On teams with naturally arising defects (random engineering changes to clean teams), \resMutHiddenShare{} of the \resMutKeys{} symptoms are hidden at agent level and an agent-by-agent check finds none of them. A global must-analysis finds \resMutRecallHiddenBSix{} of the hidden ones but \resMutFalseRateBSix{} of its findings are false, and it localizes only to the symptom node. Confirmed slice analysis finds all of them with no false finding. Its explanation is an exact minimal confirming slice in \resMutExactSL{} of cases with the combined strategy, and in \resMutShrinkExact{} of cases when a whole-team witness is shrunk slice by slice (about \resMutShrinkChecks{} slice checks per defect); the deviation set of a whole-team witness, which needs no slices, is exact in \resMutDevExact{}. The depth needed to see a defect grows with the number of hand-offs between the interacting agents ($\ell+2$ for $\ell$ hand-offs) and not with team size. Small slices scale to thousands of agents; on choice-rich teams both large slices and whole-team checking hit time limits.
+\textbf{Main results.} On teams with defects induced by random engineering changes (8--32 nodes), \resMutHiddenShare{} of the \resMutKeys{} symptoms have depth at least two. That an agent-by-agent check finds none of these is true by definition of depth; the measured part is how many there are, and that for \resMutALDeclaredClean{} of the \resMutUnclean{} defective teams (\resMutALDeclaredCleanUnsafe{} of them unsafe) such a check reports nothing at all. A global must-analysis finds \resMutRecallHiddenBSix{} of the hidden symptoms in linear time, but \resMutFalseRateBSix{} of its findings are false and it localizes only to the symptom node. Confirmed slice analysis finds \resMutRecallHiddenSL{} of them with no false finding. For localization, the best pipeline in our data is: detect (whole team or must-analysis), confirm, then shrink the witness slice by slice; it returns an exact minimal confirming slice for \resMutShrinkExact{} of hidden symptoms at about \resMutShrinkChecks{} slice checks each. The combined slicing strategy, which needs no whole-team run, is exact for \resMutExactSL{}, and the deviation set of a whole-team witness for \resMutDevExact. The hidden share and the strategy's exactness change with team size (Section~\ref{sec:rq2}). Depth equals the number of hand-offs between the interacting agents plus two for the injected defect families, independently of host size. Small slices scale to thousands of agents; on choice-rich teams both large slices and whole-team checking hit time limits.
 
-\textbf{Scope.} We ask whether a composition is justified \emph{given the declared contracts} of its parts. We do not claim that any LLM satisfies a contract, that our contracts describe the encoded systems faithfully, or that any deployed team became safer. No language model is run.
+\textbf{Scope.} We ask whether a composition is justified \emph{given the declared contracts} of its parts. We do not claim that any LLM satisfies a contract, that our contracts describe the encoded systems faithfully, or that any deployed team became safer. Compositional certification with declared contracts (Theorem~\ref{thm:abs}b) is proved only without model failures; with failures, composition uses exact boundary behaviors. Confirming a finding requires a search over runs of the whole team, so confirmed slice analysis is not a local check. No language model is run.
 
 The rest of the paper is organized as follows. Section~\ref{sec:background} defines teams and their semantics and introduces the running example. Section~\ref{sec:approach} presents agent slicing and its theory. Section~\ref{sec:eval} answers the research questions. Section~\ref{sec:related} discusses related work, and Section~\ref{sec:conclusion} concludes. The appendices contain the proofs, the specification grammar, and additional tables.
 
@@ -1076,7 +1123,7 @@ $\depth(\kappa),\MMS(\kappa)$ & depth; minimal confirming slices of key $\kappa$
 
 A team works on a shared artifact, for example a code change, and builds up facts about it: a design exists, adequate tests exist, the tests pass. We call such facts \emph{properties} and write $\Props$ for the finite set of properties a team mentions. A component \emph{requires} some properties before it can do its job, and it \emph{guarantees} others when it does its job. This is design by contract~\cite{meyer1992applying} applied to team members.
 
-Properties are semantic claims, not artifacts. ``\p{tests}'' means that an adequate test suite exists, not that a file named \texttt{tests} was produced. When an agent's model fails, the agent may still produce an artifact, for example a weak test suite, but the property it claims does not hold. A downstream test runner that requires \p{tests} then cannot establish \p{tests\_pass}, even if it executes and reports success. So the model covers errors of commission (a wrong artifact presented as right) as well as omission, at the level of properties.
+Properties are semantic claims, not artifacts. ``\p{tests}'' means that an adequate test suite exists, not that a file named \texttt{tests} was produced. When an agent's model fails, the agent may still produce an artifact, for example a weak test suite, but the property it claims does not hold. A downstream test runner that requires \p{tests} then cannot establish \p{tests\_pass}, even if it executes and reports success. So the model covers errors of commission (a wrong artifact presented as right) as well as omission, at the level of properties. What the model does not distinguish is what happens next. A symptom at the output says that the team can release without the property being established; it does not say whether the release is a false certification (the runner reports ``pass'' on weak tests) or a visible failure that a later step would catch (the runner reports ``fail'' and someone retries). Safety here is partial correctness: a run that never reaches the output produces no symptom, so a pipeline that blocks on a failed check is safe in the model only if the block is modeled as not reaching the output.
 
 Two kinds of components matter. An \emph{agent} is driven by a language model. Its guarantee is \emph{conditional}: it holds only when the agent's requirements are met and its model (its \emph{oracle}) does not fail. A \emph{gate} is a deterministic program, such as a test runner or a schema check. A gate's guarantee is conditional on its requirements but never on a model.
 
@@ -1140,11 +1187,11 @@ A \emph{model} of $T$ is a run $(W,C,F)$ together with evidence sets $E(v)\supse
 
 Models differ from runs only by extra evidence. This is a modeling choice: we let a component know more than it was told, but not less. The following lemmas show that runs, and only a few of them, suffice.
 
-\begin{lemma}[Worst case, W]\label{lem:w}
+\begin{lemma}[Worst case]\label{lem:w}
 A key is produced by some model if and only if it is produced by some run.
 \end{lemma}
 
-\begin{lemma}[Minimal choices, M]\label{lem:m}
+\begin{lemma}[Minimal choices]\label{lem:m}
 Content is monotone in the contributor sets and antitone in the failure set. To decide $\Sym(T)$ it suffices to enumerate runs whose quorum joins use exactly $q$ contributors and whose failure sets have size $\min(f,|\Orc|)$.
 \end{lemma}
 
@@ -1189,7 +1236,7 @@ We use two small software teams throughout (Fig.~\ref{fig:running}).
 \node[font=\tiny,below=0.3mm of rg2] {\texttt{any}};
 \node[font=\tiny,above=0.3mm of cr2] {$\to$\p{reviewed}};
 \node[font=\tiny,below=0.3mm of st2] {$\to$\p{sec\_tested}};
-\node[font=\scriptsize,above=7.5mm of ar2,anchor=south west,xshift=-12mm] {(b) fork-join: release on first approval};
+\node[font=\scriptsize,above=11mm of ar2,anchor=south west,xshift=-12mm] {(b) fork-join: release on first approval};
 \begin{scope}[on background layer]
 \node[slc,fit=(st2)(rg2)] {};
 \end{scope}
@@ -1231,12 +1278,12 @@ If $\sigma$ is convex, no node outside $\sigma$ is both an ancestor and a descen
 To analyze a slice in isolation we must say what the rest of the team does. We take it at \emph{face value}: every outside component is assumed to keep its contract and to deliver everywhere.
 
 \begin{definition}[Hybrid semantics]\label{def:hybrid}
-The hybrid semantics $H_\sigma$ is defined like Definition~\ref{def:run} with these changes. Runs choose only member switches, member contributor sets, and failures $F\subseteq\orc(\sigma)$ with $|F|\le f$. Every \emph{outside} node is reached if it is $\iota$ or at least one in-edge is delivered (whatever its policy), all its delivered in-edges contribute, it always applies, and it delivers to all successors. Every entry edge into a member $v$ is delivered and carries the same environment $\env_\sigma(v)=\bigcup_{u\in\pred(v)\setminus\sigma} o(u)$, the union of the face-value outputs of all outside predecessors. The \emph{raw findings} $\Fd{\sigma}$ are the keys of Definition~\ref{def:sym} evaluated in $H_\sigma$ at every node, where a robust key requires the goal key of the same property to be absent from $\Fd{\sigma}$.
+The hybrid semantics $H_\sigma$ is defined like Definition~\ref{def:run} with these changes. Runs choose only member switches, member contributor sets, and failures $F\subseteq\orc(\sigma)$ with $|F|\le f$. Every \emph{outside} node is reached if it is $\iota$ or at least one in-edge is delivered (whatever its policy), all its delivered in-edges contribute, it always applies, and it delivers to all successors. Every entry edge into a member $v$ is delivered and carries the same environment $\env_\sigma(v)=\bigcup_{u\in\pred(v)\setminus\sigma} o(u)$, the union of the face-value outputs of all outside predecessors. The \emph{raw findings} $\Fd{\sigma}$ are the keys of Definition~\ref{def:sym} evaluated in $H_\sigma$ at every node, where a robust key requires the goal key of the same property to be absent from $\Fd{\sigma}$, as in Definition~\ref{def:sym}. For confirmation (Definition~\ref{def:confirmed}) we use the \emph{unsuppressed} robust candidates: a robust key is a candidate whenever some run of $H_\sigma$ with failures misses a critical goal at $\omega$, whether or not the slice also shows the goal key.
 \end{definition}
 
 By Lemma~\ref{lem:convex}, the outside predecessors of a member are never influenced by members, so $\env_\sigma(v)$ is a fixed set. Outside nodes \emph{below} members are recomputed in each run; this is how an internal failure becomes visible at the output. With $\sigma=N$ nothing is outside, $H_N$ is the exact semantics, and $\Fd{N}=\Sym(T)$. With $\sigma=\emptyset$ every node applies; $\Fd{\emptyset}$ are the requirements and goals that no ancestor claims at all (\emph{static} keys).
 
-\begin{lemma}[Face value dominates content, A]\label{lem:face}
+\begin{lemma}[Face value dominates content]\label{lem:face}
 Let $\sigma\subseteq\sigma'$, let $\rho'$ be a run of $H_{\sigma'}$, and let $\rho$ be the run of $H_\sigma$ with the same choices on $\sigma$ and failures $F'\cap\orc(\sigma)$. Every node reached in $\rho'$ is reached in $\rho$, and its content in $\rho'$ is a subset of its content in $\rho$.
 \end{lemma}
 
@@ -1249,10 +1296,10 @@ Let a switch gate $s$ route either to a gate $a$ (which guarantees $x$) or to th
 We therefore never report a raw finding directly.
 
 \begin{definition}[Confirmed findings]\label{def:confirmed}
-A raw finding $\kappa\in\Fd{\sigma}$ with witness $\rho_\sigma$ \emph{lifts} if some run $\rho$ of $T$ exhibits $\kappa$ (for a robust key: misses the property at $\omega$ under $|F|\le f$), and the run of $H_\sigma$ that makes $\rho$'s choices on $\sigma$, with failures $F\cap\orc(\sigma)$, exhibits $\kappa$ as well. The \emph{confirmed findings} $\mathcal{C}(\sigma)$ are the raw findings with a witness that lifts.
+A raw finding or robust candidate $\kappa$ of $\sigma$ \emph{lifts} if some run $\rho$ of $T$ exhibits $\kappa$ (for a robust key: misses the property at $\omega$ with $1\le|F|\le f$), and the \emph{replay} of $\rho$ on $\sigma$ exhibits $\kappa$ as well. The replay is the run of $H_\sigma$ that makes $\rho$'s switch and contributor choices at members, fails $F\cap\orc(\sigma)$, and, at members that $\rho$ does not reach (but $H_\sigma$ does), uses all delivered inputs and delivers to all successors if a fork and to none if a switch. The \emph{confirmed findings} $\mathcal{C}(\sigma)$ are the keys that lift.
 \end{definition}
 
-The definition ties a finding to the slice: the team must show the symptom, \emph{and} the slice must show it for the same internal choices. The implementation searches team runs with the witness's member switch choices fixed and everything else free, and replays each candidate in $H_\sigma$; it explores all witnesses of a key, not only one, because the slice's minimal-choice enumeration (Lemma~\ref{lem:m}) may pick a representative that does not lift. In the worst case, lifting is as hard as whole-team checking (Theorem~\ref{thm:cx}); in our benchmarks a slice finding needed \resSLLifts{} lift searches on average and each took milliseconds.
+The definition ties a finding to the slice: the team must show the symptom, \emph{and} the slice must show it for the same internal choices. The implementation first searches team runs with the member switch choices of each recorded witness fixed (up to 64 witnesses per key), and then, if none lifts, searches all runs of the team; each candidate run is replayed in $H_\sigma$. The second search is complete; a search that exceeds its budget (200{,}000 runs) is counted and the key is treated as unconfirmed, which happened \resConfExhausted{} times in E5. In the worst case, lifting is as hard as whole-team checking (Theorem~\ref{thm:cx}); in our benchmarks a slice finding needed \resSLLifts{} lift searches on average and each took milliseconds.
 
 \subsection{Agent-Level Analysis}
 
@@ -1262,7 +1309,7 @@ What does it mean to check a team agent by agent? The natural reading is: check 
 The raw agent-level findings are $\bigcup_{v}\Fd{\{v\}}$; the (confirmed) agent-level findings are $\AL(T)=\bigcup_{v}\mathcal{C}(\{v\})$.
 \end{definition}
 
-\begin{proposition}[What agent level sees, T1]\label{prop:al}
+\begin{proposition}[What agent level sees]\label{prop:al}
 For every node $v$, $\Fd{\emptyset}\subseteq\Fd{\{v\}}$, and the keys located at $v$ in $\Fd{\{v\}}$ are exactly the static keys at $v$. Every key in $\Fd{\{v\}}\setminus\Fd{\emptyset}$ has a witness in which $v$ does not apply (its requirements are unclaimed upstream, or its oracle fails) or $v$ is a switch.
 \end{proposition}
 
@@ -1310,10 +1357,10 @@ A \emph{declared contract} of $\sigma$ is a pair $(A^d,G^d)$. It is \emph{valid}
 For a slice $\sigma$ and a failure set $F$, $\Beh_\sigma$ maps each delivery pattern of the entry edges and each assignment of contents to entry edges to the set of possible outcomes: which exits are delivered, with what content, and which keys arise at members. Contents are tracked symbolically: a member's content is the union of the contents of the entry edges in its \emph{flow} plus what members add.
 \end{definition}
 
-\begin{theorem}[Slice abstraction, T2]\label{thm:abs}
+\begin{theorem}[Slice abstraction]\label{thm:abs}
 \begin{enumerate}
 \item[(a)] Replacing a convex slice $\sigma$ by a macro component whose behavior is $\Beh_\sigma$ (evaluated with the run's global failure set) leaves every assume and goal key of $T$ unchanged, and leaves the set of properties missing at $\omega$ under each failure set unchanged; hence $\Sym(T)$ is unchanged.
-\item[(b)] Let $f=0$ and let every run of $T$ deliver either all or none of $\sigma$'s entry edges (as for single-entry slices). If $(A^d,G^d)$ is valid and the team in which $\sigma$ is replaced by a component that, when its entries carry $A^d$, delivers on any nonempty subset of its exits with content at least $A^d\cup G^d$, and otherwise delivers on any subset with any content, has no goal key, then $T$ has no goal key.
+\item[(b)] Let $f=0$ and let every run of $T$ deliver either all or none of $\sigma$'s entry edges (as for single-entry slices). If $(A^d,G^d)$ is valid and the team in which $\sigma$ is replaced by a component that, when its entries carry $A^d$, delivers on any subset of its exits (possibly none) with content at least $A^d\cup G^d$, and otherwise delivers on any subset with any content, has no goal key, then $T$ has no goal key.
 \item[(c)] An exit whose guarantee is $g$ if $r_1$ or $r_2$ enters (two members $r_1\to g$ and $r_2\to g$ feeding one exit node) has no exact single pair $(A,G)$, for any distinct $r_1,r_2,g$.
 \item[(d)] Let $\{\sigma_1,\ldots,\sigma_m\}$ partition $N$ (including $\iota$ and $\omega$) into convex parts whose quotient graph is acyclic. Composing the parts' boundary behaviors in the quotient's topological order, with one global failure set per run, yields $\Sym(T)$; robust keys are decided after composition. Convex parts alone do not suffice: $\{a,d\}$ and $\{b,c\}$ with edges $a\to b$ and $c\to d$ are convex and their quotient has a cycle. With a cyclic quotient, valid flat part contracts can certify an unsafe team.
 \end{enumerate}
@@ -1352,7 +1399,7 @@ Algorithm~\ref{alg:check} is the slice-level checker. For each slice it enumerat
 \end{algorithmic}
 \end{algorithm}
 
-\begin{theorem}[Soundness, T3]\label{thm:sound}
+\begin{theorem}[Soundness]\label{thm:sound}
 \begin{enumerate}
 \item[(a)] If the family contains $N$, or if certification composes a partition with an acyclic quotient (Theorem~\ref{thm:abs}d), the verdict ``safe'' implies that $T$ is safe, and each counterexample is a run of $T$.
 \item[(b)] Every confirmed finding is a symptom of $T$: $\kappa\in\mathcal{C}(\sigma)$ implies $\kappa\in\Sym(T)$, or, for a robust key, that $T$ loses the property at $\omega$ under at most $f$ failures (and $\Sym(T)$ then contains the robust key or the stronger goal key).
@@ -1398,28 +1445,28 @@ A slice $\sigma$ \emph{confirms} a key $\kappa$ if $\kappa\in\mathcal{C}(\sigma)
 
 Depth and minimal slices are semantic: they are defined over confirmed findings, so a slice whose face-value world shows a symptom the team does not have, or shows a true symptom for a reason the team does not have, does not count. In the running example, the chain's robust loss of \p{tests\_pass} has depth \resRexChainDepth{} with the unique minimal slice $\{$DV, SR, TS$\}$; SR is included because a slice must be convex. Each goal loss of the fork-join team has depth \resRexFjDepth{} with \resRexFjMinimal{} minimal slices, $\{$CR, RG$\}$ and $\{$ST, RG$\}$: the join together with the branch it may take alone.
 
-\begin{theorem}[Separation, T4]\label{thm:sep}
+\begin{theorem}[Separation]\label{thm:sep}
 \begin{enumerate}
 \item[(a)] For each class S2, S3, S4, S6a and S6b there is a family of teams, parametric in the number $\ell\ge 0$ of hand-offs between the interacting components (and, for S2 and S3, in the number $m\ge 2$ of branches), in which $\AL(T)$ contains no key of the defect (for S6b: not the goal key), the team is unsafe or unclean, and the defect has depth exactly $2$ (S2, S3) or exactly $\ell+2$ (S4, S6a, S6b).
 \item[(b)] Let a \emph{view} of node $v$ be its contract, kind, oracle, policies and the set of properties claimed by its ancestors. Call an analysis \emph{view-disjunctive} if it flags a team if and only if some node's view satisfies a fixed predicate. For S2, S4 and S6a there are safe teams whose views together contain every view of an unsafe team; so no view-disjunctive analysis is both sound and free of false alarms on these classes.
-\item[(c)] Recovery: every confirmed agent-level assume or goal finding is confirmed by every slice that contains its singleton, and every static key at a node $v$ is a raw finding of every slice in which $v$ is reached in some run.
+\item[(c)] Recovery: every confirmed agent-level finding is confirmed by every slice that contains its singleton, and every static key at a node $v$ is a raw finding of every slice in which $v$ is reached in some run.
 \end{enumerate}
 \end{theorem}
 
 Part (b) is a limit on agent-local methods, but only on those that decide one node at a time. An analysis that combines views, such as a check that two claimers share an oracle, escapes it; so does a global must-analysis, which propagates facts along paths. We compare against both in Section~\ref{sec:eval}. Part (c) follows from the monotonicity of confirmed findings (Theorem~\ref{thm:loc}c). It does not hold for raw findings: a raw agent-level finding can disappear in a larger slice, because the larger slice shows that the singleton's witness was impossible. Together, (a) and (c) make confirmed slice-level analysis strictly more expressive than confirmed agent-level analysis.
 
-\begin{theorem}[Localization, T5]\label{thm:loc}
+\begin{theorem}[Localization]\label{thm:loc}
 \begin{enumerate}
 \item[(a)] If $\kappa\in\Sym(T)$ then $\MMS(\kappa)\neq\emptyset$; in particular $N$ confirms $\kappa$.
 \item[(b)] $\MMS(\kappa)$ need not be a single slice. It is a single slice if and only if the intersection of the minimal confirming slices is nonempty and confirms $\kappa$.
-\item[(c)] Confirmed findings are monotone: if $\sigma\subseteq\sigma'$ are slices and $\kappa\in\mathcal{C}(\sigma)$ is an assume or goal key, then $\kappa\in\mathcal{C}(\sigma')$; for a robust key, $\kappa\in\mathcal{C}(\sigma')$ or the goal key of the same property is a raw finding of $\sigma'$. Hence the confirming slices of a key are closed upward, and $\depth(\kappa)\le k$ iff some slice of size at most $k$ confirms $\kappa$.
+\item[(c)] Confirmed findings are monotone: if $\sigma\subseteq\sigma'$ are slices, then $\mathcal{C}(\sigma)\subseteq\mathcal{C}(\sigma')$. Hence the confirming slices of a key are closed upward, and $\depth(\kappa)\le k$ iff some slice of size at most $k$ confirms $\kappa$.
 \item[(d)] Raw findings are not monotone: there are teams and slices $\sigma\subset\sigma'$ with $\kappa\in\Fd{\sigma}\setminus\Fd{\sigma'}$.
 \end{enumerate}
 \end{theorem}
 
 For (d), let a switch $s$ route either to a gate $x$ or to the output, let $x$ join $s$ and a provider $y$ of the goal $g$ with \texttt{any}, and let the output join $s$ and $x$ with \textsf{all}. The team is clean. In $\sigma=\{s,x,y\}$ the output is outside and reached on one input; the run in which $s$ routes to $x$ and $x$ uses only $s$'s input misses $g$. In $\sigma\cup\{\omega\}$ that run no longer reaches the output. Larger slices therefore remove raw false alarms as well as reveal deeper defects; confirmation makes the picture monotone.
 
-\begin{proposition}[Overlap, T6]\label{prop:overlap}
+\begin{proposition}[Overlap]\label{prop:overlap}
 Keys do not depend on the slice that produced them, so findings of overlapping slices merge by key without double counting; a slice only reports the presence of keys, so findings of different slices cannot contradict each other. The family of all convex slices of size at most $k$ confirms every key of depth at most $k$.
 \end{proposition}
 
@@ -1433,9 +1480,9 @@ We compare these strategies. \emph{Singleton} is agent level. \emph{Whole} is th
 
 \subsection{Complexity}
 
-\begin{theorem}[Complexity, T7]\label{thm:cx}
+\begin{theorem}[Complexity]\label{thm:cx}
 \begin{enumerate}
-\item[(a)] Deciding whether an assume or goal key is in $\Sym(T)$ is NP-complete, already for teams of gates only, without forks, and with $f=0$. Deciding whether a robust key is in $\Sym(T)$ is in $\mathrm{D}^p$ and both NP-hard and coNP-hard. Deciding safety is coNP-complete. Deciding whether a node is reached in some run is NP-complete.
+\item[(a)] Deciding whether an assume or goal key is in $\Sym(T)$ is NP-complete, already for teams of gates only, without forks, and with $f=0$. Deciding whether a robust key is in $\Sym(T)$ is in $\mathrm{D}^p$ and both NP-hard and coNP-hard. Deciding safety is coNP-complete. Deciding whether a node is reached in some run is NP-complete. Deciding $\depth(\kappa)\le k$ for an assume or goal key is NP-complete.
 \item[(b)] Computing $\Fd{\sigma}$ takes $O(R_\sigma\cdot(|N|+|E|)\cdot\lceil|\Props|/w\rceil + R'_\sigma)$ time, where $R_\sigma$ is the number of minimal internal runs, $w$ the machine word size, and $R'_\sigma$ the (quadratic) cost of filtering minimal contributor sets. $R_\sigma$ is bounded by the product of member switch fan-outs, binomial coefficients of member quorum joins, and $1+\binom{|\orc(\sigma)|}{f}$, so it is polynomial when the member choice points and $f$ are bounded. Confirming a finding can cost as much as whole-team checking.
 \item[(c)] A team can have $2^{\Theta(|N|)}$ convex slices; all convex slices of size at most $k$ are enumerated with $O(|N|^k)$ hull tests.
 \item[(d)] Singleton, window, band and region strategies produce $O(|N|)$ slices, computable in $O(|N|(|N|+|E|))$ total time; goal-directed produces at most $\sum_v|\req(v)|$ slices.
@@ -1448,7 +1495,7 @@ The hardness of assume and goal keys uses a CNF encoding: one switch per variabl
 
 Teams change: a prompt is rewritten, a model is swapped, a join policy is relaxed. Slices make re-verification local.
 
-\begin{theorem}[Incremental recertification, T8]\label{thm:inc}
+\begin{theorem}[Incremental recertification]\label{thm:inc}
 Let a change modify node $a$, and let $\Delta$ be the symmetric difference of $a$'s old and new guarantees. The dynamic raw findings $\Fd{\sigma}\setminus\Fd{\emptyset}$ of a slice $\sigma$ that is convex in both versions are unchanged unless $\sigma$ intersects $\mathit{Dep}$, where
 \begin{itemize}
 \item $\mathit{Dep}=\{a\}$ for a change of oracle, kind, routing or join policy;
@@ -1465,14 +1512,37 @@ For an edge change $(u,v)$, let $\Delta$ be $u$'s face-value output in either ve
 
 \subsection{Implementation}
 
-The library \texttt{slicing} (Python) implements the team model with property sets as bit masks, the exact and hybrid semantics, lifting and confirmation, slice enumeration and the strategies, derived and declared contracts, partition summaries (Theorem~\ref{thm:abs}d), the checkers and baselines, the classification of findings, incremental recertification, a topology generator, a defect injector, and a mutation operator set. Teams are written in a small JSON specification language (Appendix~\ref{app:grammar}). Three oracles serve as independent ground truth for conformance testing. The \emph{model oracle} enumerates contract-respecting models (Definition~\ref{def:model}) with all switch choices, all admissible contributor sets, all failure sets with $|F|\le f$, and every evidence assignment between the realized minimum and that minimum plus the requirements and goals of the node (the only properties evidence can affect). The \emph{replay oracle} enumerates all runs of $H_\sigma$ and replays each with an evaluator that shares no code with the checker's enumerator. The \emph{run oracle} enumerates every run of $T$ and decides confirmed findings directly from Definition~\ref{def:confirmed}, without the lifting search. Proof obligations use Z3~\cite{demoura2008z3} version \resZThreeVersion{}.
+The library \texttt{slicing} (Python) implements the team model with property sets as bit masks, the exact and hybrid semantics, lifting and confirmation, slice enumeration and the strategies, derived and declared contracts, partition summaries (Theorem~\ref{thm:abs}d), the checkers and baselines, the classification of findings, incremental recertification, a topology generator, a defect injector, and a mutation operator set. Teams are written in a small JSON specification language (Appendix~\ref{app:grammar}). Three oracles serve as independent ground truth for conformance testing. The \emph{model oracle} enumerates contract-respecting models (Definition~\ref{def:model}) with all switch choices, all admissible contributor sets, all failure sets with $|F|\le f$, and every evidence assignment between the realized minimum and that minimum plus the requirements and goals of the node (the only properties evidence can affect). The \emph{replay oracle} enumerates all runs of $H_\sigma$ and replays each with an evaluator that shares no code with the checker's enumerator. The \emph{run oracle} enumerates every run of $T$ and decides confirmed findings directly from Definition~\ref{def:confirmed}, without the lifting search. The replay and run oracles share one function with the implementation: the evaluator that replays a run in $H_\sigma$, which the lifting search also uses to verify candidates; they share no code with the checker's enumerator or with the lifting search. Proof obligations use Z3~\cite{demoura2008z3} version \resZThreeVersion{}.
 
 \subsection{Experimental Setup}\label{sec:setup}
 
 An experiment plan with hypotheses, metrics, tests and decision rules was written before the first experiment and is in the replication package, with a deviation log. The plan was not registered with an external service, so its timing cannot be verified independently. The revision after the first review round changed the method (confirmation), added baselines and benchmarks, and replaced some analyses; all changes are logged and summarized in Section~\ref{sec:threats}.
 
+Table~\ref{tab:hyp} lists the outcome of each planned hypothesis; E4b and E8 were added after the first review round and are exploratory.
+
+\begin{table}[!t]
+\caption{Planned Hypotheses and Their Outcome}
+\label{tab:hyp}
+\centering
+\footnotesize
+\begin{tabular}{@{}lp{3.6cm}p{3.0cm}@{}}
+\toprule
+H & Statement (abridged) & Outcome\\
+\midrule
+H1.1 & SMT obligations valid, mutants killed & supported\\
+H1.2 & no mismatch with brute-force oracles & supported (small teams)\\
+H2.1 & slicing beats agent level on S2--S6 & holds by construction (Thm.~\ref{thm:sep}a); reported as counts\\
+H2.2 & exact localization above B2, B3 & supported vs.\ B3 and B2 deviation set; not vs.\ B2+shrink\\
+H2.3 & false alarms $\le 5\%$ on clean/decoy & supported (0 alarms)\\
+H3.1 & strategies polynomial, whole team not & not supported\\
+H3.2 & recall saturates in $k$ & follows from the injector; see E4b\\
+H3.3 & recertification re-verifies $<50\%$ & supported for slices; small time saving\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \textbf{Benchmarks.} We use three.
-\emph{(i) Mutation benchmark (E8).} The generator builds clean teams in seven topologies: chain, tree, fork-join, layered DAG, series-parallel, random DAG, and \emph{mixed} (series-parallel with switches and \texttt{any}-joins). It assigns contracts in topological order, drawing each requirement from a sound lower bound on the node's content, so teams are clean by construction (the exact semantics confirms this). One goal is critical and $f=1$. Each team then receives one to three random engineering changes: relax a join from \textsf{all} to a quorum, let two agents share a model, drop a guarantee, turn a gate into an agent, add a requirement, turn a fork into a switch, or remove an edge. Whatever symptoms result are the ground truth, computed with the exact semantics and cross-checked with the replay oracle on teams of up to 12 nodes. Neither the class nor the depth of a defect is chosen by us. We build \resMutTeams{} teams (7 topologies, 6 and 10 inner nodes, 20 seeds, 1--3 changes).
+\emph{(i) Mutation benchmark (E8).} The generator builds clean teams in seven topologies: chain, tree, fork-join, layered DAG, series-parallel, random DAG, and \emph{mixed} (series-parallel with switches and \texttt{any}-joins). It assigns contracts in topological order, drawing each requirement from a sound lower bound on the node's content, so teams are clean by construction (the exact semantics confirms this). One goal is critical and $f=1$. Each team then receives one to three random engineering changes (retried until that many apply): relax a join from \textsf{all} to a quorum, let two agents share a model, drop a guarantee, turn a gate into an agent, add a requirement, turn a fork into a switch, or remove an edge. Whatever symptoms result are the ground truth, computed with the exact semantics and cross-checked with the replay oracle on teams of up to 12 nodes. Neither the class nor the depth of a defect is chosen by us. We build \resMutTeams{} teams (7 topologies; 6, 10, 20 and 30 inner nodes; 20 seeds; 1--3 changes). Symptoms deeper than the enumeration bound (\resMutDeepKeys{} keys) count as hidden; their localization is not scored. E8 was added after the first review round and is exploratory.
 \emph{(ii) Injected benchmark (E2).} The injector adds exactly one defect of a chosen class to a clean team, as a small gadget with fresh property names, and records the class, the root-cause nodes and the symptom keys (verified with the exact semantics). It also builds \emph{clean} teams and four \emph{decoys}: structures that look suspicious but are safe (an \texttt{any}-join whose branches claim all goals; shared-model reviewers backed by a gate; a switch whose both branches provide the fact; a fallible provider backed by an independent gate). For each of 7 topologies, 2 host sizes, 10 seeds and 16 classes we build one team, in a \emph{small} benchmark (\resBenchNodesSmallMin--\resBenchNodesSmallMax{} nodes) and a \emph{medium} one (\resBenchNodesMediumMin--\resBenchNodesMediumMax{} nodes). Because each gadget is fixed per class and cannot interact with its host, this benchmark tests per-class behavior; its class mix, not nature, decides prevalence, and we report no prevalence from it.
 \emph{(iii) Published designs (E3)}, encoded with a written protocol (Section~\ref{sec:rq2}).
 
@@ -1522,7 +1592,7 @@ Check & Wild & Inj. & Mism.\\
 
 Conformance testing found two real bugs, both logged in the replication package. A switch with one successor was treated as choosing nothing; every evaluator read the same field the same way, so the oracles agreed with the checker until a theorem check exposed it. And the first version of lifting fixed the witness's contributor sets, which missed liftable witnesses that differ only in which entry edge or which non-minimal contributor set they use; the run oracle exposed it. Oracles that share a data model can share a misreading of it; we return to this in Section~\ref{sec:threats}.
 
-\answer{RQ1}{Yes, with qualifications. A slice is a convex set of agents with a hybrid semantics, per-exit derived contracts and emergent obligations defined over witnesses. Raw slice findings are approximations in both directions; confirmed findings are sound (T3b) and monotone in the slice (T5c). The singleton slicing is agent-level analysis, every confirmed agent-level finding is recovered by larger slices, and some defect families are invisible to it (T4a), so confirmed slice-level analysis is strictly more expressive. View-disjunctive agent checks cannot separate safe from unsafe teams on S2, S4 and S6a (T4b). Slice abstraction is compositional over partitions with an acyclic quotient and a global failure set (T2d); exact contracts are relations, not pairs (T2c). Per-node steps are SMT-checked; proofs of the inductions are on paper; \resConformanceComparisons{} oracle comparisons on small teams show no mismatch.}
+\answer{RQ1}{Yes, with qualifications. A slice is a convex set of agents with a hybrid semantics, per-exit derived contracts, and emergent obligations defined over witnesses. Raw slice findings approximate in both directions; confirmed findings are sound (Theorem~\ref{thm:sound}b) and monotone in the slice (Theorem~\ref{thm:loc}c). The singleton slicing is agent-level analysis; larger slices recover every confirmed agent-level finding and reveal defect families that it misses (Theorem~\ref{thm:sep}a,c), so confirmed slice-level analysis is strictly more expressive. Analyses that judge one agent's view at a time cannot separate safe from unsafe teams on S2, S4 and S6a (Theorem~\ref{thm:sep}b); analyses that combine views, such as a global must-analysis, are not covered. Slice abstraction is compositional over partitions with an acyclic quotient and a global failure set (Theorem~\ref{thm:abs}d); exact slice contracts are not single set-valued assumption-guarantee pairs (Theorem~\ref{thm:abs}c). Confirmation needs a whole-team search, so confirmed analysis is not local (Theorem~\ref{thm:cx}b). Per-node steps are SMT-checked; the inductions are proved on paper, some steps in sketch form; \resConformanceComparisons{} oracle comparisons on small teams show no mismatch.}
 
 \subsection{RQ2: Detection and Localization Power}\label{sec:rq2}
 
@@ -1530,7 +1600,7 @@ Conformance testing found two real bugs, both logged in the replication package.
 
 Of the \resMutTeams{} mutated teams, \resMutUnclean{} have at least one symptom and \resMutUnsafe{} are unsafe; together they have \resMutKeys{} symptom keys. The replay oracle agrees with the exact semantics on all \resMutOracleTeams{} teams it checked (\resMutOracleDisagree{} disagreements).
 
-\textbf{How often are defects hidden?} Most symptoms are visible to an agent-by-agent check: \resMutDepthOne{} keys have depth~1. But \resMutHiddenKeys{} keys (\resMutHiddenShare) have depth at least two: \resMutDepthTwo{} of depth 2, \resMutDepthThree{} of depth 3, \resMutDepthFour{} of depth 4, \resMutDepthFive{} of depth 5 and \resMutDepthSix{} of depth 6. \resMutTeamsWithHidden{} teams have at least one hidden key, and in \resMutTeamsHiddenOnly{} teams every symptom is hidden, so an agent-level check would report the team as clean. Table~\ref{tab:mutop} shows which changes produce hidden defects: relaxing a join is the most dangerous change, followed by letting two agents share a model.
+\textbf{How often are defects hidden?} Most symptoms are visible to an agent-by-agent check: \resMutDepthOne{} keys have depth~1. But \resMutHiddenKeys{} keys (\resMutHiddenShare) have depth at least two: \resMutDepthTwo{} of depth 2, \resMutDepthThree{} of depth 3, \resMutDepthFour{} of depth 4, \resMutDepthFive{} of depth 5 and \resMutDepthSix{} of depth 6. \resMutDeepKeys{} of the hidden keys are deeper than the enumeration bound. \resMutTeamsWithHidden{} teams have at least one hidden key, and in \resMutALDeclaredClean{} of the \resMutUnclean{} defective teams (\resMutALDeclaredCleanUnsafe{} of them unsafe) the confirmed agent-level check reports nothing, so it would declare the team clean. The hidden share depends on team size: \resMutHiddenShareNSix{} at 8 nodes, \resMutHiddenShareNOneZero{} at 12, \resMutHiddenShareNTwoZero{} at 22 and \resMutHiddenShareNThreeZero{} at 32 (Table~\ref{tab:mutsize}). Table~\ref{tab:mutop} shows which changes produce hidden defects: relaxing a join is the most dangerous change, followed by letting two agents share a model.
 
 \begin{table}[!t]
 \caption{Mutation Benchmark: Detection (\% of All and of Hidden Keys), False Findings, and Exact Localization of Hidden Keys}
@@ -1561,9 +1631,23 @@ Operator & Teams & Keys & Hidden (\%)\\
 \end{tabular}
 \end{table}
 
-\textbf{Detection and false findings.} Table~\ref{tab:mutation} compares the checkers. Confirmed agent-level analysis (B1) finds \resMutRecallBOne{} of all keys and \resMutRecallHiddenBOne{} of the hidden ones. Confirmed SL finds all keys (\resMutRecallSL) with no false finding (\resMutFalseSL{} false keys). Without confirmation, SL would report \resMutFalseSLraw{} false keys (\resMutFalseRateSLraw{} of its findings), and agent-level analysis \resMutFalseRateBOneraw. The global must-analysis B6 is a strong detector: it finds \resMutRecallBSix{} of all keys and \resMutRecallHiddenBSix{} of the hidden ones in linear time per failure set, but \resMutFalseBSix{} of its \resMutReportedBSix{} findings (\resMutFalseRateBSix) are false, because a lower bound on content does not know which nodes are reachable together. The smell detector B5 flags \resMutRecallHiddenBFive{} of the hidden keys but \resMutFalseRateBFive{} of its findings are false, and the lint B4 finds no hidden key.
+\begin{table}[!t]
+\caption{Mutation Benchmark by Team Size: Unclean Teams, Keys, Share of Hidden Keys, B1 Recall on Hidden Keys, Exact Localization of SL [95\% Cluster-Bootstrap CI] and of Shrinking, and B6 False Rate (\%)}
+\label{tab:mutsize}
+\centering
+\scriptsize\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}rlrrrrlrr@{}}
+\toprule
+Inner & Nodes & Teams & Keys & Hidden & B1 & SL exact & Shrink & B6 false\\
+\midrule
+\tabMutationSize
+\bottomrule
+\end{tabular}
+\end{table}
 
-\textbf{Localization.} For hidden keys, B6 names only the symptom node, which is never a minimal confirming slice of a hidden key. SL's top slice is an exact minimal slice in \resMutExactSL{} of cases. Shrinking a whole-team witness slice by slice is exact in \resMutShrinkExact{} of cases and minimum-size in \resMutShrinkMinimum, at about \resMutShrinkChecks{} slice checks per key. The deviation set of the whole-team witness, which needs no slices, is exact in only \resMutDevExact{} of cases and covers \resMutDevRatio{} of the team on average: it names every agent that deviated in the run, including those whose deviation does not matter for the symptom.
+\textbf{Detection and false findings.} Table~\ref{tab:mutation} compares the checkers. Confirmed agent-level analysis (B1) finds \resMutRecallBOne{} of all keys and \resMutRecallHiddenBOne{} of the hidden ones. Confirmed SL finds \resMutRecallSL{} of all keys and \resMutRecallHiddenSL{} of the hidden ones with no false finding (\resMutFalseSL{} false keys); the few it misses are deeper than any of its slices. Without confirmation, SL would report \resMutFalseSLraw{} false keys (\resMutFalseRateSLraw{} of its findings), and agent-level analysis \resMutFalseRateBOneraw. The global must-analysis B6 is a strong detector: it finds \resMutRecallBSix{} of all keys and \resMutRecallHiddenBSix{} of the hidden ones in linear time per failure set, but \resMutFalseBSix{} of its \resMutReportedBSix{} findings (\resMutFalseRateBSix) are false, because a lower bound on content does not know which nodes are reachable together. The smell detector B5 flags \resMutRecallHiddenBFive{} of the hidden keys but \resMutFalseRateBFive{} of its findings are false, and the lint B4 finds no hidden key.
+
+\textbf{Localization.} For hidden keys, B6 names only the symptom node, which is never a minimal confirming slice of a hidden key. SL's top slice is an exact minimal slice in \resMutExactSL{} of cases, falling from \resMutExactSLNSix{} at 8 nodes to \resMutExactSLNThreeZero{} at 32 nodes: on larger teams its fixed strategies more often return a confirming slice that is not minimal. Shrinking a whole-team witness slice by slice is exact in \resMutShrinkExact{} of cases and minimum-size in \resMutShrinkMinimum, at about \resMutShrinkChecks{} slice checks per key (median \resMutTimeShrink~ms), and it stays above \resMutShrinkExactNThreeZero{} at every size. Combined with the must-analysis as detector, the pipeline detect--confirm--shrink is exact for \resMutPipeExact{} of the hidden keys it detects. Median times per team are \resMutTimeBSix~ms for B6, \resMutTimeBTwo~ms for the exact whole-team check, and \resMutTimeSL~ms for confirmed SL. The deviation set of the whole-team witness, which needs no slices, is exact in only \resMutDevExact{} of cases and covers \resMutDevRatio{} of the team on average: it names every agent that deviated in the run, including those whose deviation does not matter for the symptom.
 
 \subsubsection{Injected defects by class (E2)}
 
@@ -1670,13 +1754,13 @@ Design & doc. & shared & distinct & $f=0$ & alt.\ join\\
 \end{tabular}
 \end{table}
 
-Under the documented configuration, all \resArchUnsafeDocumented{} designs have a symptom, and \resArchHiddenDocumented{} have one that agent-level analysis does not report. With $f=0$, \resArchSafeFZero{} of the nine are safe: the findings are about robustness to one model failure, which P3 deliberately asks about. The recurring pattern is S6a: a deterministic gate (MetaGPT's test run, AgentCoder's executor, MapCoder's sample input/output check, Agentless's validation runs) certifies a critical property using tests or code written by an LLM agent, so the gate's guarantee is only as robust as that agent's model. The minimal slice \{writer, gate\} says exactly that. The repair is to back the gate's input with an independent source, as AgentCoder does for its tests but not for its code; in the running example, an independent test designer on another model makes the chain safe (\resRexIndepSymptoms{} symptoms). In multi-agent debate, the three revisers run on one backbone (S4, depth 3); with distinct models the finding changes to S6a (the vote rests on the round-one answers). ChatDev's critical claim rests on one LLM tester (A4, visible at agent level). The AutoGen group-chat encoding loses \p{runs} when the manager routes to the critic (S6b, depth 3, together with depth-one bypass findings); this finding depends on unrolling the chat once. The smell detector reports the hidden finding in \resArchHiddenSmell{} and the must-analysis in \resArchHiddenMust{} of the \resArchHiddenDocumented{} designs, but neither says which agents form the defect. These are findings about our encodings; whether the real systems mitigate them, for example by repeated sampling or human review, is outside our model.
+Under the documented configuration, all \resArchUnsafeDocumented{} designs have a symptom, and \resArchHiddenDocumented{} have one that agent-level analysis does not report. With $f=0$, \resArchSafeFZero{} of the nine are safe: the findings are about robustness to one model failure, which P3 deliberately asks about. The recurring pattern is S6a: a deterministic gate (MetaGPT's test run, AgentCoder's executor, MapCoder's sample input/output check, Agentless's validation runs) certifies a critical property using tests or code written by an LLM agent, so the gate's guarantee is only as robust as that agent's model. The minimal slice \{writer, gate\} says exactly that. The repair is to back the gate's input with an independent source, as AgentCoder does for its tests but not for its code; in the running example, an independent test designer on another model makes the chain safe (\resRexIndepSymptoms{} symptoms). In multi-agent debate, the three revisers run on one backbone (S4, depth 3); with distinct models the finding changes to S6a (the vote rests on the round-one answers). ChatDev's critical claim rests on one LLM tester (A4, visible at agent level). The AutoGen group-chat encoding loses \p{runs} when the manager routes to the critic (S6b, depth 3, together with depth-one bypass findings); this finding depends on unrolling the chat once. The smell detector reports the hidden finding in \resArchHiddenSmell{} and the must-analysis in \resArchHiddenMust{} of the \resArchHiddenDocumented{} designs, but neither says which agents form the defect. These are findings about our encodings. In particular, a robust symptom says only that the critical claim is not established when one model fails; it does not distinguish a gate that would then falsely certify (weak LLM-written tests that pass) from one that would visibly fail (MapCoder's sample check uses input/output pairs from the problem statement, so a wrong program fails it). Whether the real systems mitigate the findings, for example by retries, repeated sampling or human review, is outside our model.
 
-\answer{RQ2}{On defects produced by random engineering changes, \resMutHiddenShare{} of symptoms are hidden at agent level, and confirmed agent-level analysis finds none of them; in \resMutTeamsHiddenOnly{} of \resMutUnclean{} unclean teams it would report nothing at all. Confirmed slice analysis finds every symptom with no false finding. A global must-analysis detects almost as much but \resMutFalseRateBSix{} of its findings are false and it cannot say where the defect lives; raw slice findings without confirmation are \resMutFalseRateSLraw{} false. The value of slicing is therefore precise detection plus localization: SL returns an exact minimal slice for \resMutExactSL{} of hidden symptoms, and shrinking a whole-team witness for \resMutShrinkExact{}, against \resMutDevExact{} for the witness's deviation set. In \resArchHiddenDocumented{} of nine encoded designs, our declared contracts admit a defect that only multi-agent slices reveal, mostly a test gate resting on LLM-written tests.}
+\answer{RQ2}{On defects induced by random engineering changes, \resMutHiddenShare{} of the symptoms have depth at least two, a share that is higher on larger teams; an agent-by-agent check reports none of them by definition, and for \resMutALDeclaredClean{} of \resMutUnclean{} defective teams it reports nothing at all. Confirmed slice analysis finds \resMutRecallHiddenSL{} of the hidden symptoms with no false finding; raw slice findings are \resMutFalseRateSLraw{} false. A global must-analysis detects \resMutRecallHiddenBSix{} of the hidden symptoms but \resMutFalseRateBSix{} of its findings are false and it names only the symptom node. For localization, shrinking a whole-team witness slice by slice is exact for \resMutShrinkExact{} of hidden symptoms, the combined slicing strategy for \resMutExactSL{} (less on larger teams), and the witness's deviation set for \resMutDevExact. In \resArchHiddenDocumented{} of nine encoded designs, our declared contracts admit a defect that agent-level analysis does not report (the must-analysis reports it); mostly, a gate's critical claim rests on an artifact written by one model.}
 
 \subsection{RQ3: Cost, Slicing Strategy, and Evolution}\label{sec:rq3}
 
-\textbf{Slice size and hand-off distance (E4).} How large must slices be? On the injected benchmark, recall of exhaustive-$k$ rises from \resRecallKOne{} at $k=1$ to \resRecallKTwo{} at $k=2$, \resRecallKThree{} at $k=3$ and \resRecallKFour{} at $k=4$; but this curve only restates the injector, which draws the number of hand-offs $\ell$ between interacting components from $\{0,1,2\}$. We therefore ran a dedicated sweep (E4b, \resDepthSweepTeams{} teams) with $\ell=0,\ldots,5$ and confirmed exhaustive slices up to $k=\resDepthSweepKmax$. Fig.~\ref{fig:depthsweep} shows the result: for S4, S6a and S6b the depth is exactly $\ell+2$ (in \resDepthIsEllPlusTwo{} of teams), and for S2 and S3 it is always $2$ (\resDepthTwoForJoins), whatever the length of the branches. Depth is set by the distance between the components whose relationship is wrong, not by the size of the team. The number of slices grows with $k$ (\resDepthSweepSlicesKTwo{} slices per team at $k=2$, \resDepthSweepSlicesKMax{} at $k=\resDepthSweepKmax$), and no clean or decoy team raised an alarm at any $k$ (\resAlarmKFive). On the mutation benchmark, \resMutDepthOne{} of \resMutKeys{} symptoms have depth one and only \resMutDepthFive{} and \resMutDepthSix{} have depth five and six.
+\textbf{Slice size and hand-off distance (E4).} How large must slices be? On the injected benchmark, recall of exhaustive-$k$ rises from \resRecallKOne{} at $k=1$ to \resRecallKTwo{} at $k=2$, \resRecallKThree{} at $k=3$ and \resRecallKFour{} at $k=4$; but this curve only restates the injector, which draws the number of hand-offs $\ell$ between interacting components from $\{0,1,2\}$. We therefore ran a dedicated sweep (E4b, \resDepthSweepTeams{} teams) with $\ell=0,\ldots,5$ and confirmed exhaustive slices up to $k=\resDepthSweepKmax$. Fig.~\ref{fig:depthsweep} shows the result: for S4, S6a and S6b the depth is exactly $\ell+2$ (in \resDepthIsEllPlusTwo{} of teams), and for S2 and S3 it is always $2$ (\resDepthTwoForJoins), whatever the length of the branches. This is what Theorem~\ref{thm:sep}a predicts from the gadget shape and convexity, so E4b confirms the implementation rather than discovering a law. To check that depth does not grow with the rest of the team, we repeated the sweep with a 12-node host (\resDepthSweepBigNodesMin--\resDepthSweepBigNodesMax{} nodes, enumerating slices up to size $\ell+2$): the depth is again $\ell+2$ (\resDepthBigIsEllPlusTwo) and $2$ for joins (\resDepthBigTwoForJoins). The number of slices grows with $k$ (\resDepthSweepSlicesKTwo{} slices per team at $k=2$, \resDepthSweepSlicesKMax{} at $k=\resDepthSweepKmax$), and no clean or decoy team raised an alarm at any $k$ (\resAlarmKFive). On the mutation benchmark, \resMutDepthOne{} of \resMutKeys{} symptoms have depth one and only \resMutDepthFive{} and \resMutDepthSix{} have depth five and six.
 
 \begin{figure}[!t]
 \centering
@@ -1685,7 +1769,7 @@ Under the documented configuration, all \resArchUnsafeDocumented{} designs have 
 \label{fig:depthsweep}
 \end{figure}
 
-\textbf{Scalability (E5).} We generate teams of 10 to 5{,}000 nodes in four topologies, inject one hidden defect, and run each strategy with a budget of \resScaleBudget{}~s per team (\resScaleTeams{} teams). E5 measures raw slice analysis; confirmation adds one lift search per finding. Time-outs are censored at the budget, and a defect counts as detected only when the run finished. Fig.~\ref{fig:scale} and Table~\ref{tab:scale} report wall time. On the three switch-free topologies every strategy finishes on almost every team and the censored log-log slopes stay close to 2 (SL: \resSlopeSLfree, upper bound \resSlopeHiSLfree; window-2: \resSlopewindowTwofree; band-1: \resSlopebandOnefree). But on these teams the exact whole-team checker is the cheapest method of all (slope \resSlopewholefree; \resTimeBigwholefree~s at 5{,}000 nodes): without switches and with \textsf{all}-joins a team has one fault-free run plus one run per failure set, and checking it is a linear pass. The global must-analysis is also cheap (\resTimeBigmustfree~s at 5{,}000 nodes) and detects every defect. On the \emph{mixed} topology the picture changes. The whole-team checker's cost grows with the number of choice points and it exceeds the budget on \resTimeoutswholemixed{} of \resTeamsmixed{} teams; singleton and window-2 slices never time out; but SL also times out on \resTimeoutsSLmixed{} teams, because its goal-directed and region slices are hulls that grow with the team and contain many choice points (\resLimitedSL{} slices exceeded the per-slice run budget and were skipped). Counted over all teams, SL detects the defect in \resDetectSLmixed{} of \resTeamsmixed{} mixed teams and the whole-team checker in \resDetectwholemixed. Under the pre-registered decision rule, H3.1 is \emph{not supported}: the polynomial strategies exceed slope 2 on mixed teams, and whole-team checking is not super-polynomial on switch-free teams. The refined reading, that cost is driven by the choice points inside a slice rather than by the number of members, is exploratory. Peak memory of SL stayed below \resPeakMemSL~MB.
+\textbf{Scalability (E5).} Published agent teams have tens of agents, a range that E8 covers with confirmed analysis; E5 asks how the methods behave far beyond it, to see where each one breaks. We generate teams of 10 to 5{,}000 nodes in four topologies, inject one hidden defect, and run each strategy with a budget of \resScaleBudget{}~s per team (\resScaleTeams{} teams). E5 measures raw slice analysis; confirmation adds one lift search per finding. Time-outs are censored at the budget, and a defect counts as detected only when the run finished. Fig.~\ref{fig:scale} and Table~\ref{tab:scale} report wall time. On the three switch-free topologies every strategy finishes on almost every team and the censored log-log slopes stay close to 2 (SL: \resSlopeSLfree, upper bound \resSlopeHiSLfree; window-2: \resSlopewindowTwofree; band-1: \resSlopebandOnefree). But on these teams the exact whole-team checker is the cheapest method of all (slope \resSlopewholefree; \resTimeBigwholefree~s at 5{,}000 nodes): without switches and with \textsf{all}-joins a team has one fault-free run plus one run per failure set, and checking it is a linear pass. The global must-analysis is also cheap (\resTimeBigmustfree~s at 5{,}000 nodes) and detects every defect. On the \emph{mixed} topology the picture changes. The whole-team checker's cost grows with the number of choice points and it exceeds the budget on \resTimeoutswholemixed{} of \resTeamsmixed{} teams; singleton and window-2 slices time out on \resTimeoutssingletonmixed{} and \resTimeoutswindowTwomixed{} of them; but SL times out on \resTimeoutsSLmixed{} teams, because its goal-directed and region slices are hulls that grow with the team and contain many choice points (\resLimitedSL{} slices exceeded the per-slice run budget and were skipped). Counted over all teams, SL detects the defect in \resDetectSLmixed{} of \resTeamsmixed{} mixed teams and the whole-team checker in \resDetectwholemixed. Under the pre-registered decision rule, H3.1 is \emph{not supported}: the polynomial strategies exceed slope 2 on mixed teams, and whole-team checking is not super-polynomial on switch-free teams. The refined reading, that cost is driven by the choice points inside a slice rather than by the number of members, is exploratory. Peak memory of SL stayed below \resPeakMemSL~MB. Confirmation adds cost on top of raw slicing. On teams of up to 200 nodes we also ran confirmed SL: at 200 nodes its median time is \resConfTimeTwoHundredfree~s on switch-free teams and \resConfTimeTwoHundredmixed~s on mixed teams (raw SL: \resRawTimeTwoHundredfree~s and \resRawTimeTwoHundredmixed~s), it times out on \resConfTimeoutsfree{} of \resConfTeamsfree{} switch-free and \resConfTimeoutsmixed{} of \resConfTeamsmixed{} mixed teams of at most 200 nodes, and \resConfExhausted{} lift searches exceeded their budget.
 
 \begin{figure*}[!t]
 \centering
@@ -1747,7 +1831,7 @@ Class & full & joins as \textsf{all} & no faults & non-convex false keys\\
 \end{tabular}
 \end{table}
 
-\answer{RQ3}{Slices must be as large as the distance between the interacting agents plus two: depth is $\ell+2$ for $\ell$ hand-offs and $2$ for joins, independent of team size. Small slices (singleton, window-2, band) scale polynomially to \resScaleMaxNodes{} nodes and never time out on mixed teams. Large slices pay for the choice points they contain: on choice-rich teams SL times out on \resTimeoutsSLmixed{} of \resTeamsmixed{} teams and whole-team checking on \resTimeoutswholemixed; on switch-free teams whole-team checking and the must-analysis are cheaper than any slicing. The pre-registered scalability hypothesis is therefore not supported. Incremental recertification is always correct and re-verifies \resEvoRedoneNonChain{} of the slices on non-chain topologies, but saves little wall time on small slices (median \resEvoSpeedup$\times$). Raw slice findings are \resWildFARate{} false on unstructured teams; confirmation removes them all.}
+\answer{RQ3}{Slices must be as large as the distance between the interacting agents plus two: depth is $\ell+2$ for $\ell$ hand-offs and $2$ for joins, independently of the host's size. Small slices (singleton, window-2, band) scale polynomially to \resScaleMaxNodes{} nodes; on mixed teams singleton and window-2 time out on \resTimeoutssingletonmixed{} and \resTimeoutswindowTwomixed{} of \resTeamsmixed{} teams and band-1 on \resTimeoutsbandOnemixed. Confirmed SL on teams of up to 200 nodes never exceeded the budget (\resConfTimeoutsmixed{} time-outs on mixed teams). Large slices pay for the choice points they contain: on choice-rich teams SL times out on \resTimeoutsSLmixed{} of \resTeamsmixed{} teams and whole-team checking on \resTimeoutswholemixed; on switch-free teams whole-team checking and the must-analysis are cheaper than any slicing. The pre-registered scalability hypothesis is therefore not supported. Incremental recertification is always correct and re-verifies \resEvoRedoneNonChain{} of the slices on non-chain topologies, but saves little wall time on small slices (median \resEvoSpeedup$\times$). Raw slice findings are \resWildFARate{} false on unstructured teams; confirmation removes them all.}
 
 \subsection{Discussion}\label{sec:discussion}
 
@@ -1757,7 +1841,7 @@ Class & full & joins as \textsf{all} & no faults & non-convex false keys\\
 
 \textbf{How large should slices be?} As large as the distance between the interacting agents, plus two. For joins this is two, whatever the branch length. For conditional and correlated claims it grows by one per hand-off. Larger slices only enlarge explanations.
 
-\textbf{Choosing a strategy.} For certification, use the whole team when it has few switches and quorum joins: it is exact and cheap. For choice-rich teams, a partition with an acyclic quotient keeps each part's choices local (Theorem~\ref{thm:abs}d); we did not measure its cost. For diagnosis, the most precise localization in our experiments came from a whole-team witness shrunk slice by slice. The combined strategy (singleton, window-2, region, goal-directed) is cheaper per defect when many defects are present and needs no whole-team run. Goal-directed slices are the best single strategy for detection; window-2 gives the smallest explanations and never timed out; region slices give the most readable ones. On large choice-rich teams, slices should be capped by their number of choice points rather than their number of members, since choice points drive the cost (Theorem~\ref{thm:cx}b).
+\textbf{Choosing a strategy.} For certification, use the whole team when it has few switches and quorum joins: it is exact and cheap. For choice-rich teams, a partition with an acyclic quotient keeps each part's choices local (Theorem~\ref{thm:abs}d); we did not measure its cost. For diagnosis, the most precise localization in our experiments came from the pipeline \emph{detect, confirm, shrink}: detect with the whole team or with the must-analysis, confirm each finding against the team, and shrink the slice of each confirmed finding until no member can be removed. The slicing strategies are then useful as candidate generators when a whole-team run is too expensive, as on choice-rich teams: the combined strategy (singleton, window-2, region, goal-directed) needs no whole-team run. Goal-directed slices are the best single strategy for detection; window-2 gives the smallest explanations and timed out on \resTimeoutswindowTwofree{} of \resTeamsfree{} switch-free and \resTimeoutswindowTwomixed{} of \resTeamsmixed{} mixed teams in E5; region slices give the most readable ones. On large choice-rich teams, slices should be capped by their number of choice points rather than their number of members, since choice points drive the cost (Theorem~\ref{thm:cx}b).
 
 \textbf{Using the findings.} A practitioner obtains contracts from the artifacts each role reads and writes (prompts, tool schemas, orchestration code) and from the checks the pipeline runs. A finding then suggests a repair through its obligation: a joint-coverage gap suggests an \textsf{all} or quorum policy, or claims on every branch; correlated evidence suggests distinct models for redundant claimers; a conditional collapse suggests an independent source for the gate's input; a bypass suggests a check after the merge. The running example shows that a plausible repair can fail: a deterministic test generator placed after the developer still depends on the developer's model (depth \resRexDownDepth{} instead of \resRexChainDepth), while an independent test designer on another model makes the chain safe.
 
@@ -1780,7 +1864,7 @@ Class & full & joins as \textsf{all} & no faults & non-convex false keys\\
 
 \textbf{Evaluating, testing and guarding agents.} Benchmarks evaluate run outputs~\cite{jimenez2024swebench,liu2024agentbench,yehudai2025survey}; ToolEmu emulates tools to expose risky actions~\cite{ruan2024toolemu}; AgentDojo and indirect prompt injection attack single agents~\cite{debenedetti2024agentdojo,greshake2023not}. Failure taxonomies and attribution~\cite{cemri2025why,zhang2025which} analyze executions after the fact. Guardrails filter one model's inputs and outputs~\cite{inan2023llamaguard,rebedea2023nemo}, and AgentSpec enforces rules on one agent's actions at run time~\cite{wang2026agentspec}. In our model a guardrail is a gate or an agent with a contract; slicing asks whether the guardrails, placed where they are, justify the team's goals.
 
-\textbf{Contracts and compositional reasoning.} Design by contract~\cite{meyer1992applying}, assume-guarantee reasoning for networks of processes~\cite{misra1981proofs}, rely-guarantee~\cite{jones1983tentative}, composition of specifications~\cite{abadi1993composing}, interface automata~\cite{dealfaro2001interface} and contract theories~\cite{benveniste2018contracts} provide the foundation. Hierarchical contract-based design checks refinement level by level over a component hierarchy, as in OCRA~\cite{cimatti2015contracts} and AGREE~\cite{cofer2012compositional}. There, the decomposition is given by the architecture; we choose sub-structures by strategy or by shrinking, allow non-connected ones, and measure defects by the size of the smallest sub-structure that exposes them. Circular assume-guarantee rules are sound only under side conditions~\cite{mcmillan1999circular,namjoshi2010completeness}; our acyclic-quotient condition is a simple instance for dataflow teams. Learning assumptions~\cite{cobleigh2003learning} computes a component's weakest assumption; our derived entry assumptions are the analogue for a slice, and our observation that exact slice contracts are relations echoes that interfaces need input-dependent guarantees.
+\textbf{Contracts and compositional reasoning.} Design by contract~\cite{meyer1992applying}, assume-guarantee reasoning for networks of processes~\cite{misra1981proofs}, rely-guarantee~\cite{jones1983tentative}, composition of specifications~\cite{abadi1993composing}, interface automata~\cite{dealfaro2001interface} and contract theories~\cite{benveniste2018contracts} provide the foundation. Hierarchical contract-based design checks refinement level by level over a component hierarchy, as in OCRA~\cite{cimatti2015contracts} and AGREE~\cite{cofer2012compositional}. There, the decomposition is given by the architecture; we choose sub-structures by strategy or by shrinking, allow non-connected ones, and measure defects by the size of the smallest sub-structure that exposes them. Circular assume-guarantee rules are sound only under side conditions~\cite{mcmillan1999circular,namjoshi2010completeness}; our acyclic-quotient condition is a simple instance for dataflow teams. Learning assumptions~\cite{cobleigh2003learning} computes a component's weakest assumption; our derived entry assumptions are the analogue for a slice, and our observation that exact slice contracts are not single set-valued pairs echoes that interfaces need input-dependent guarantees; predicate-based contracts, as in OCRA and AGREE, can state the disjunctive guarantee of Theorem~\ref{thm:abs}c directly.
 
 \textbf{Abstraction and counterexample explanation.} Analyzing some components exactly and abstracting the rest is localization abstraction, refined in CEGAR when an abstract counterexample is spurious~\cite{clarke2003cegar}. Our confirmation step plays the role of the spuriousness check, and shrinking plays the role of a search for the smallest precise sub-model; unlike CEGAR, we use the size of that sub-model as the result. Counterexample explanation localizes errors in traces by comparing them with correct traces~\cite{ball2003symptom,groce2006error}; our witness deviation set is a simple instance, which our experiments show to be imprecise for relational defects. Fault localization ranks program elements~\cite{wong2016survey,jones2005empirical}, and delta debugging isolates failure-inducing changes~\cite{zeller2002simplifying}; shrinking is delta debugging over slices.
 
@@ -1791,9 +1875,9 @@ Class & full & joins as \textsf{all} & no faults & non-convex false keys\\
 % =====================================================================
 \section{Conclusion and Future Work}\label{sec:conclusion}
 
-A team of AI agents can fail even when every agent keeps its contract, and the failure lives in a relationship among a few agents. Agent slicing makes such relationships analyzable: a slice is a convex set of agents analyzed exactly while the rest is taken at face value, and a finding counts only when its witness lifts to a run of the team. The theory gives sound, monotone confirmed findings, compositional abstraction over acyclic partitions, a separation from view-local agent checks, and local recertification. On defects from random engineering changes, about a third of the symptoms are hidden from agent-by-agent checks; slices find them without false findings and name the few agents involved, which neither a whole-team witness nor a global must-analysis does.
+A team of AI agents can fail even when every agent keeps its contract, and the failure lives in a relationship among a few agents. Agent slicing makes such relationships analyzable: a slice is a convex set of agents analyzed exactly while the rest is taken at face value, and a finding counts only when its witness lifts to a run of the team. The theory gives sound, monotone confirmed findings, compositional abstraction over acyclic partitions with a global failure set (with declared contracts, only without failures), a separation from analyses that judge one agent's view at a time, and local recertification of raw findings. On defects induced by random engineering changes, \resMutHiddenShare{} of the symptoms are not reported by an agent-by-agent check, a share that is higher on larger teams in our data. Confirmed slices find them without false findings. A global must-analysis detects them cheaply but imprecisely; a whole-team witness alone names too many agents; shrinking that witness slice by slice names the few agents involved. Confirmation and shrinking need whole-team searches, so the method is a diagnosis aid, not a local check.
 
-Future work includes validating findings against executions and failure traces of real agent pipelines, independent encodings, cycles and retries beyond bounded unrolling, shared mutable state, graded and probabilistic contracts, strategies bounded by choice points, and contract discovery from orchestration code.
+Future work includes validating findings against executions and failure traces of real agent pipelines, extracting team graphs and contracts mechanically from orchestration code, independent encodings, distinguishing a gate that rejects from one that falsely certifies, cycles and retries beyond bounded unrolling, shared mutable state, graded and probabilistic contracts, strategies bounded by choice points, and contract discovery from orchestration code.
 
 % =====================================================================
 \appendices
@@ -1810,26 +1894,26 @@ Throughout, contents, outputs and keys refer to Definitions~\ref{def:run}--\ref{
 
 \textbf{Lemma~\ref{lem:face} (face value dominates content).} By induction we show, for every node $v$: if $v$ is reached in $\rho'$ then it is reached in $\rho$, $c_{\rho'}(v)\subseteq c_\rho(v)$ and $o_{\rho'}(v)\subseteq o_\rho(v)$. \emph{Delivery:} if $(u,v)$ is delivered in $\rho'$, then $u$ is reached in $\rho$; if $u\in\sigma$ the switch choice is the same, and if $u\notin\sigma$ it delivers to all successors in $H_\sigma$. \emph{Reachability:} for $v\in\sigma$, entry edges are always delivered in $H_\sigma$ and member edges are delivered in $\rho$ whenever in $\rho'$, so $v$'s policy is met in $\rho$; for $v\notin\sigma$, reachability in $H_\sigma$ needs one delivered edge. \emph{Content:} for $v\in\sigma$ with contributor set $C$ in $\rho'$, the same $C$ is admissible in $\rho$. Its member contributors have larger outputs in $\rho$ by induction. Its entry contributors carry $\env_\sigma(v)$, the union of the face-value outputs of all outside predecessors; each such output dominates the predecessor's output in $\rho'$ (by induction applied with $\emptyset\subseteq\sigma'$, the face-value output is the largest). L3 and L7 give the claim. For $v\notin\sigma$, all delivered in-edges contribute in $\rho$, a superset of $\rho'$'s contributors. \emph{Output:} for $v\in\sigma$, $\orc(v)\in F'$ iff $\orc(v)\in F'\cap\orc(\sigma)$, so L1 applies; for $v\notin\sigma$, L2 applies. \qed
 
-\textbf{Proposition~\ref{prop:al} (T1).} By Lemma~\ref{lem:face} with $\emptyset\subseteq\{v\}$, contents in $H_{\{v\}}$ are below face-value contents. Every node is reached in some run of $H_{\{v\}}$: $v$ is reached (all its in-edges are entries) and every other node is reached when $v$'s switch, if any, picks a successor on a path to it; so every static key persists (L4). All of $v$'s in-edges are entries, so its content is $\env_{\{v\}}(v)=\cone(v)$ for every contributor choice (L7): keys at $v$ are static keys. If $v$ applies and is not a switch, its output is the face-value output and the run equals the face-value run, which has only static keys. \qed
+\textbf{Proposition~\ref{prop:al}.} By Lemma~\ref{lem:face} with $\emptyset\subseteq\{v\}$, contents in $H_{\{v\}}$ are below face-value contents. Every node is reached in some run of $H_{\{v\}}$: $v$ is reached (all its in-edges are entries) and every other node is reached when $v$'s switch, if any, picks a successor on a path to it; so every static key persists (L4). All of $v$'s in-edges are entries, so its content is $\env_{\{v\}}(v)=\cone(v)$ for every contributor choice (L7): keys at $v$ are static keys. If $v$ applies and is not a switch, its output is the face-value output and the run equals the face-value run, which has only static keys. \qed
 
-\textbf{Theorem~\ref{thm:abs} (T2).} (a) Let $T'$ be $T$ with $\sigma$ contracted to a macro node $M$ with the same entry and exit edges; $T'$ is a DAG by Lemma~\ref{lem:convex}. Fix a global failure set $F$. A run of $T$ restricts to an entry pattern of $\sigma$ (delivered entry edges and their contents), an internal run of $\sigma$ with failures $F\cap\orc(\sigma)$, and outside choices. By definition of $\Beh_\sigma$, the exit outcome and the member keys of the internal run are an outcome of $\Beh_\sigma$ for that pattern. Conversely, an outcome of $\Beh_\sigma$ for the pattern produced by a run of $T'$ comes from an internal run of $\sigma$; combined with the outside choices it is a run of $T$, with the same outside contents, because outside contents depend on $\sigma$ only through the exits. Content is tracked symbolically as the set of entry edges whose content reaches a member (its flow) plus the properties members add, so each member's content is a function of the entry contents. Hence fault-free runs of $T$ and $T'$ produce the same assume and goal keys (outside keys from outside contents, member keys from the macro), and runs with failures produce the same missing properties at $\omega$; so the robust keys, which are defined from these, coincide.
+\textbf{Theorem~\ref{thm:abs}.} (a) Let $T'$ be $T$ with $\sigma$ contracted to a macro node $M$ with the same entry and exit edges; $T'$ is a DAG by Lemma~\ref{lem:convex}. Fix a global failure set $F$. A run of $T$ restricts to an entry pattern of $\sigma$ (delivered entry edges and their contents), an internal run of $\sigma$ with failures $F\cap\orc(\sigma)$, and outside choices. By definition of $\Beh_\sigma$, the exit outcome and the member keys of the internal run are an outcome of $\Beh_\sigma$ for that pattern. Conversely, an outcome of $\Beh_\sigma$ for the pattern produced by a run of $T'$ comes from an internal run of $\sigma$; combined with the outside choices it is a run of $T$, with the same outside contents, because outside contents depend on $\sigma$ only through the exits. Content is tracked symbolically as the set of entry edges whose content reaches a member (its flow) plus the properties members add, so each member's content is a function of the entry contents. Hence fault-free runs of $T$ and $T'$ produce the same assume and goal keys (outside keys from outside contents, member keys from the macro), and runs with failures produce the same missing properties at $\omega$; so the robust keys, which are defined from these, coincide.
 (b) Under the delivery condition, every entry pattern of a run of $T$ delivers all entries or none. If all are delivered and carry at least $A^d$, validity gives that every member requirement holds and every delivered exit carries at least $A^d\cup G^d$; with smaller entry contents, the replacement component may behave arbitrarily. So every outcome of $\Beh_\sigma$ is an outcome of the replacement, up to larger contents on exits, which can only remove keys downstream (L1, L4). If $T$ had a goal key, the run exhibiting it would map to a run of the abstracted team with the same choices and no larger contents at $\omega$, which is a goal key there.
 (c) Obligation C2 shows, over an uninterpreted sort with distinct $r_1,r_2,g$, that no sets $A,G$ make the exit guarantee $X\cup(\{g\}\text{ if } r_1\in X\text{ or } r_2\in X)$ equal to $X\cup G$ for $A\subseteq X$ and to $X$ otherwise on the three environments $\emptyset,\{r_1\},\{r_2\}$: equality at $\{r_1\}$ and $\{r_2\}$ forces $A\subseteq\{r_1\}\cap\{r_2\}=\emptyset$ and $g\in G$, and then equality at $\emptyset$ fails.
 (d) Induction over the quotient's topological order, applying (a) to one part at a time, with the same global failure set for all parts; each part's entries come from parts already evaluated. Robust keys are decided after composition, from the missing properties at $\omega$ and the presence of goal keys. The cyclic example is in Section~\ref{sec:approach}. Each flat contract is valid in isolation, and each part's assumption is the other's guarantee, but in $T$ neither $a$ nor $c$ ever receives what it requires, and $\omega$ misses both goals. \qed
 
-\textbf{Theorem~\ref{thm:sound} (T3).} (a) $H_N$ has no outside node, so $\Fd{N}=\Sym(T)$ and its witnesses are runs of $T$. Partition certification computes $\Sym(T)$ by Theorem~\ref{thm:abs}d. (b) By Definition~\ref{def:confirmed}, a confirmed finding comes with a run of $T$ that exhibits the key (for a robust key: misses the property under at most $f$ failures, which is a robust or goal key of $T$ by Definition~\ref{def:sym}). (c) Example~\ref{ex:falsealarm}. \qed
+\textbf{Theorem~\ref{thm:sound}.} (a) $H_N$ has no outside node, so $\Fd{N}=\Sym(T)$ and its witnesses are runs of $T$. Partition certification computes $\Sym(T)$ by Theorem~\ref{thm:abs}d. (b) By Definition~\ref{def:confirmed}, a confirmed finding comes with a run of $T$ that exhibits the key (for a robust key: misses the property under at most $f$ failures, which is a robust or goal key of $T$ by Definition~\ref{def:sym}). (c) Example~\ref{ex:falsealarm}. \qed
 
-\textbf{Theorem~\ref{thm:sep} (T4).} (a) We give the families and show that every slice smaller than the claimed depth fails to confirm; a slice of the claimed size confirms. \emph{S2}: a fork into $m\ge 2$ branches, branch $i$ a chain of $\ell_i\ge 1$ agents whose first agent claims goal $g_i$, joined by a gate $J$ with quorum $q<m$. Static findings are empty (every goal is claimed upstream, no requirements). In a singleton $\{v\}$ every entry carries $\cone(v)$; $J$'s singleton sees the union of its inputs, and no other node is a switch or fails, so $\AL=\emptyset$ (Proposition~\ref{prop:al}). The run in which $J$ uses $q$ branches other than $i$ misses $g_i$; in the slice $\{b_i,J\}$ of the last agent of branch $i$ and the join, $b_i$'s entry carries $g_i$ at face value and $J$ can choose the other entries, and the team run with the same choice at $J$ lifts it. So the depth is $2$. \emph{S3}: as S2 with a fact and a consumer after the join. \emph{S4}: two agents $r_1,r_2$ on one oracle, both claiming a critical goal, separated by $\ell$ agents on other oracles, with $f=1$. A slice that contains only one of $r_1,r_2$ can fail only that one; the other is outside and applies at face value, so the critical goal arrives. A slice containing both contains their hull, of size $\ell+2$; failing the shared oracle removes both claims, and the team run with the same failure lifts it. \emph{S6a}: an agent $a$ providing $x$, $\ell$ hand-offs, a gate $G$ requiring $x$ and guaranteeing a critical goal. A slice without $a$ sees $x$ at face value; a slice without $G$ has $G$ outside, applying at face value. The hull of $\{a,G\}$ has $\ell+2$ nodes and confirms the robust key. \emph{S6b}: a gate $y$ that fails to provide $p$, an agent $a$ requiring $p$ and guaranteeing $z$, $\ell$ hand-offs, a gate $G$ requiring $z$ and guaranteeing a goal. $\key{assume}{a}{p}$ is static, but a slice without $G$ has $G$ applying at face value, and a slice without $a$ sees $z$ at face value; the hull of $\{a,G\}$ confirms the goal key. The test suite and the depth sweep (E4b) check these families for $\ell\le 5$.
+\textbf{Theorem~\ref{thm:sep}.} (a) We give the families and show that every slice smaller than the claimed depth fails to confirm; a slice of the claimed size confirms. \emph{S2}: a fork into $m\ge 2$ branches, branch $i$ a chain of $\ell_i\ge 1$ agents whose first agent claims goal $g_i$, joined by a gate $J$ with quorum $q<m$. Static findings are empty (every goal is claimed upstream, no requirements). In a singleton $\{v\}$ every entry carries $\cone(v)$; $J$'s singleton sees the union of its inputs, and no other node is a switch or fails, so $\AL=\emptyset$ (Proposition~\ref{prop:al}). The run in which $J$ uses $q$ branches other than $i$ misses $g_i$; in the slice $\{b_i,J\}$ of the last agent of branch $i$ and the join, $b_i$'s entry carries $g_i$ at face value and $J$ can choose the other entries, and the team run with the same choice at $J$ lifts it. So the depth is $2$. \emph{S3}: as S2 with a fact and a consumer after the join. In all families, the $\ell$ intermediate nodes are agents with empty requirements and guarantees, each on its own oracle, so they create no symptom of their own, and any slice that contains neither of the two interacting nodes sees both claims at face value. \emph{S4}: two agents $r_1,r_2$ on one oracle, both claiming a critical goal, separated by $\ell$ such agents, with $f=1$. A slice that contains only one of $r_1,r_2$ can fail only that one; the other is outside and applies at face value, so the critical goal arrives. A slice containing both contains their hull, of size $\ell+2$; failing the shared oracle removes both claims, and the team run with the same failure lifts it. \emph{S6a}: an agent $a$ providing $x$, $\ell$ hand-offs, a gate $G$ requiring $x$ and guaranteeing a critical goal. A slice without $a$ sees $x$ at face value; a slice without $G$ has $G$ outside, applying at face value. The hull of $\{a,G\}$ has $\ell+2$ nodes and confirms the robust key. \emph{S6b}: a gate $y$ that fails to provide $p$, an agent $a$ requiring $p$ and guaranteeing $z$, $\ell$ hand-offs, a gate $G$ requiring $z$ and guaranteeing a goal. $\key{assume}{a}{p}$ is static, but a slice without $G$ has $G$ applying at face value, and a slice without $a$ sees $z$ at face value; the hull of $\{a,G\}$ confirms the goal key. The test suite and the depth sweep (E4b) check these families for $\ell\le 5$.
 (b) Let $P$ be a view predicate and let the analysis flag a team iff some view satisfies $P$. If the analysis is sound, the unsafe team is flagged, so some view $u$ of it satisfies $P$. By construction $u$ is also a view of one of the safe teams, which is then flagged: a false alarm. The constructions (S4: reviewers on oracles $(o_1,o_2)$ and $(o_2,o_1)$ versus $(o_1,o_1)$; S2: an \textsf{all}-join with split claims and an \texttt{any}-join whose branches claim both goals, versus an \texttt{any}-join with split claims; S6a: a gate provider, and a fallible provider with a backup gate, versus a fallible provider alone) are in the replication package and checked by E1.
 (c) Static persistence: in a run of $H_\sigma$ that reaches $v$, its content is below its face-value content (Lemma~\ref{lem:face} with $\emptyset\subseteq\sigma$), so the static requirement is still unmet (L4). Recovery of confirmed findings is Theorem~\ref{thm:loc}c with $\{v\}\subseteq\sigma$. \qed
 
-\textbf{Theorem~\ref{thm:loc} (T5).} (a) $N$ confirms every symptom (Theorem~\ref{thm:sound}a); confirming slices form a finite nonempty family, which has inclusion-minimal elements. (b) The fork-join example has two minimal slices. If $\MMS(\kappa)=\{\sigma\}$, the intersection is $\sigma$. Conversely, a nonempty intersection of convex sets is convex; if it confirms $\kappa$, it is a confirming subset of each minimal slice, so all minimal slices equal it. (c) Let $\rho$ be the lifted run of $T$ for $\kappa\in\mathcal{C}(\sigma)$, $\rho_\sigma$ its replay in $H_\sigma$ (which exhibits $\kappa$), and $\rho_{\sigma'}$ its replay in $H_{\sigma'}$ (choices of $\rho$ on $\sigma'$, failures $F\cap\orc(\sigma')$). Apply Lemma~\ref{lem:face} twice. With $\sigma'\subseteq N$: the symptom node $x$ is reached in $\rho$, so it is reached in $\rho_{\sigma'}$. With $\sigma\subseteq\sigma'$: $\rho_\sigma$ is the restriction of $\rho_{\sigma'}$ (its failures are $(F\cap\orc(\sigma'))\cap\orc(\sigma)=F\cap\orc(\sigma)$), so $x$'s content in $\rho_{\sigma'}$ is below its content in $\rho_\sigma$, and the property is still missing (L4). Hence $\rho_{\sigma'}$ exhibits the same missing property at $x$, and $\rho$ lifts it. For assume and goal keys this is $\kappa\in\mathcal{C}(\sigma')$. For a robust key, the raw finding of $\sigma'$ is $\kappa$ unless the goal key of the same property is a raw finding of $\sigma'$ (Definition~\ref{def:hybrid}). Upward closure and the depth characterization follow. (d) The team of Section~\ref{sec:approach}: in $\sigma=\{s,x,y\}$ the output is outside and reached on one input, which gives a raw goal key; in $\sigma\cup\{\omega\}$ the output requires both inputs and no run of $H_{\sigma\cup\{\omega\}}$ reaches it without $g$. \qed
+\textbf{Theorem~\ref{thm:loc}.} (a) $N$ confirms every symptom (Theorem~\ref{thm:sound}a); confirming slices form a finite nonempty family, which has inclusion-minimal elements. (b) The fork-join example has two minimal slices. If $\MMS(\kappa)=\{\sigma\}$, the intersection is $\sigma$. Conversely, a nonempty intersection of convex sets is convex; if it confirms $\kappa$, it is a confirming subset of each minimal slice, so all minimal slices equal it. (c) Let $\rho$ be the lifted run of $T$ for $\kappa\in\mathcal{C}(\sigma)$, $\rho_\sigma$ its replay in $H_\sigma$ (which exhibits $\kappa$), and $\rho_{\sigma'}$ its replay in $H_{\sigma'}$ (choices of $\rho$ on $\sigma'$, failures $F\cap\orc(\sigma')$). Apply Lemma~\ref{lem:face} twice. With $\sigma'\subseteq N$: the symptom node $x$ is reached in $\rho$, so it is reached in $\rho_{\sigma'}$. With $\sigma\subseteq\sigma'$: $\rho_\sigma$ is the restriction of $\rho_{\sigma'}$ (its failures are $(F\cap\orc(\sigma'))\cap\orc(\sigma)=F\cap\orc(\sigma)$), so $x$'s content in $\rho_{\sigma'}$ is below its content in $\rho_\sigma$, and the property is still missing (L4). Hence $\rho_{\sigma'}$ exhibits the same missing property at $x$, and $\rho$ lifts it. For a robust key, the replay on $\sigma$ has failures $F\cap\orc(\sigma)\neq\emptyset$, so the replay on $\sigma'$ has failures $F\cap\orc(\sigma')\supseteq F\cap\orc(\sigma)$, and the key is an (unsuppressed) robust candidate of $\sigma'$. In all cases $\rho$ lifts $\kappa$ for $\sigma'$. Upward closure and the depth characterization follow. (d) The team of Section~\ref{sec:approach}: in $\sigma=\{s,x,y\}$ the output is outside and reached on one input, which gives a raw goal key; in $\sigma\cup\{\omega\}$ the output requires both inputs and no run of $H_{\sigma\cup\{\omega\}}$ reaches it without $g$. \qed
 
-\textbf{Proposition~\ref{prop:overlap} (T6).} Keys are triples of kind, node and property, defined independently of $\sigma$; merging is set union, and the localization keeps, per key, the list of confirming slices. The last claim is Definition~\ref{def:depth} with Theorem~\ref{thm:loc}c. \qed
+\textbf{Proposition~\ref{prop:overlap}.} Keys are triples of kind, node and property, defined independently of $\sigma$; merging is set union, and the localization keeps, per key, the list of confirming slices. The last claim is Definition~\ref{def:depth} with Theorem~\ref{thm:loc}c. \qed
 
-\textbf{Theorem~\ref{thm:cx} (T7).} (a) Assume and goal keys: a run is a polynomial certificate, evaluated in linear time; Lemma~\ref{lem:w} shows that runs suffice. Hardness is the CNF encoding in Section~\ref{sec:approach}: for each assignment there is exactly one run (the switches), in which variable $i$ contributes exactly one of $t_i,f_i$; clause gate $j$ applies iff all its literals are false; so $\omega$ misses \p{bad} iff no clause is false, i.e.\ iff the assignment satisfies the formula. Robust keys: ``some run with at most $f$ failures misses $\varphi$'' is in NP and ``no fault-free run misses $\varphi$'' is in coNP, so membership is in $\mathrm{D}^p$. NP-hardness: after the clause chain, add a gate $P$ that requires \p{bad} and guarantees the critical goal $\varphi$, followed by an agent $A$ (on its own oracle) that also guarantees $\varphi$, with $f=1$. Fault-free, $A$ always provides $\varphi$, so the goal key is absent; failing $A$'s oracle misses $\varphi$ iff no clause is falsified, i.e.\ iff the formula is satisfiable. CoNP-hardness: the token construction of Section~\ref{sec:approach}, where the robust key is present iff the formula is unsatisfiable. Safety: $T$ is unsafe iff some fault-free run misses a goal or some run with at most $f$ failures misses a critical goal, which is in NP, with hardness from the goal reduction. Reachability: a run is a certificate; for hardness, let one switch per variable choose a literal node, let one \texttt{any}-join per clause receive the literal nodes that satisfy it, and let an \textsf{all}-join $R$ receive all clause nodes; $R$ is reached iff the formula is satisfiable. E1 checks all four constructions against a SAT oracle. (b) Each internal run evaluates members once and propagates to outside descendants once, each in $O(|N|+|E|)$ word operations on property bit sets; filtering minimal contributor sets is quadratic in their number. Lifting searches runs of $T$ with member switches fixed, which in the worst case is whole-team checking. (c) An antichain of $w$ nodes has $2^w$ convex subsets; for fixed $k$, enumerating subsets of size $\le k$ and testing $\hull(U)=U$ with bit sets gives $O(|N|^k)$ tests. (d) Each strategy emits at most a constant number of slices per node (window, band, region) or per requirement (goal-directed), each a hull computed in $O(|N|+|E|)$. \qed
+\textbf{Theorem~\ref{thm:cx}.} (a) Assume and goal keys: a run is a polynomial certificate, evaluated in linear time; Lemma~\ref{lem:w} shows that runs suffice. Hardness is the CNF encoding in Section~\ref{sec:approach}: for each assignment there is exactly one run (the switches), in which variable $i$ contributes exactly one of $t_i,f_i$; clause gate $j$ applies iff all its literals are false; so $\omega$ misses \p{bad} iff no clause is false, i.e.\ iff the assignment satisfies the formula. Robust keys: ``some run with at most $f$ failures misses $\varphi$'' is in NP and ``no fault-free run misses $\varphi$'' is in coNP, so membership is in $\mathrm{D}^p$. NP-hardness: after the clause chain, add a gate $P$ that requires \p{bad} and guarantees the critical goal $\varphi$, followed by an agent $A$ (on its own oracle) that also guarantees $\varphi$, with $f=1$. Fault-free, $A$ always provides $\varphi$, so the goal key is absent; failing $A$'s oracle misses $\varphi$ iff no clause is falsified, i.e.\ iff the formula is satisfiable. CoNP-hardness: the token construction of Section~\ref{sec:approach}, where the robust key is present iff the formula is unsatisfiable. Safety: $T$ is unsafe iff some fault-free run misses a goal or some run with at most $f$ failures misses a critical goal, which is in NP, with hardness from the goal reduction. Reachability: a run is a certificate; for hardness, let one switch per variable choose a literal node, let one \texttt{any}-join per clause receive the literal nodes that satisfy it, and let an \textsf{all}-join $R$ receive all clause nodes; $R$ is reached iff the formula is satisfiable. E1 checks all four constructions against a SAT oracle. Depth: a certificate for $\depth(\kappa)\le k$ is a convex slice $\sigma$ with $|\sigma|\le k$ and a run $\rho$ of $T$; checking that $\rho$ exhibits $\kappa$ and that its replay on $\sigma$ exhibits $\kappa$ takes polynomial time. Hardness: $N$ confirms every symptom, so $\depth(\kappa)\le|N|$ iff $\kappa\in\Sym(T)$, which is NP-hard for assume and goal keys. (b) Each internal run evaluates members once and propagates to outside descendants once, each in $O(|N|+|E|)$ word operations on property bit sets; filtering minimal contributor sets is quadratic in their number. Lifting searches runs of $T$ with member switches fixed, which in the worst case is whole-team checking. (c) An antichain of $w$ nodes has $2^w$ convex subsets; for fixed $k$, enumerating subsets of size $\le k$ and testing $\hull(U)=U$ with bit sets gives $O(|N|^k)$ tests. (d) Each strategy emits at most a constant number of slices per node (window, band, region) or per requirement (goal-directed), each a hull computed in $O(|N|+|E|)$. \qed
 
-\textbf{Theorem~\ref{thm:inc} (T8).} (i) Oracle, kind, routing and policy of $a$ enter $H_\sigma$ only if $a\in\sigma$, since outside nodes are at face value. (ii) $\req(a)$ and $\decl(a)$ enter the applicability of $a$ (only if $a\in\sigma$) and the keys at $a$; keys at $a$ are dynamic findings of $\sigma$ only if $a$ is a member or below a member, i.e.\ if $\sigma\cap\anc^*(a)\neq\emptyset$. (iii) A change of $\gua(a)$ changes face-value outputs and run contents only in the bits of $\Delta$. These bits affect applicability and keys only at nodes $y$ with $\req(y)\cap\Delta\neq\emptyset$ (for $\omega$: goals), all in $\desc(a)$, and at $a$ through its output. If $\sigma$ contains no ancestor-or-self of a node of $Y$, no member applies differently, no key at a node of $Y$ is a dynamic finding of $\sigma$ (it would lie below a member), and all other contents differ only in irrelevant bits. (iv) An edge change $(u,v)$ changes the predecessors of $v$ and the successors of $u$; the content of $v$ and of its descendants changes only in bits of $u$'s face-value output, and ancestor relations change only for $v$'s descendants and $u$'s ancestors. Taking $Y$ as stated and ancestors in both versions covers every member whose behavior or environment can change and every node whose keys can change. The conformance experiment compares incremental and full re-verification after random node and edge changes on every wild and injected team. \qed
+\textbf{Theorem~\ref{thm:inc}.} (i) Oracle, kind, routing and policy of $a$ enter $H_\sigma$ only if $a\in\sigma$, since outside nodes are at face value. (ii) $\req(a)$ and $\decl(a)$ enter the applicability of $a$ (only if $a\in\sigma$) and the keys at $a$; keys at $a$ are dynamic findings of $\sigma$ only if $a$ is a member or below a member, i.e.\ if $\sigma\cap\anc^*(a)\neq\emptyset$. (iii) A change of $\gua(a)$ changes face-value outputs and run contents only in the bits of $\Delta$. These bits affect applicability and keys only at nodes $y$ with $\req(y)\cap\Delta\neq\emptyset$ (for $\omega$: goals), all in $\desc(a)$, and at $a$ through its output. If $\sigma$ contains no ancestor-or-self of a node of $Y$, no member applies differently, no key at a node of $Y$ is a dynamic finding of $\sigma$ (it would lie below a member), and all other contents differ only in irrelevant bits. (iv) An edge change $(u,v)$ changes the predecessors of $v$ and the successors of $u$; the content of $v$ and of its descendants changes only in bits of $u$'s face-value output, and ancestor relations change only for $v$'s descendants and $u$'s ancestors. Taking $Y$ as stated and ancestors in both versions covers every member whose behavior or environment can change and every node whose keys can change. The conformance experiment compares incremental and full re-verification after random node and edge changes on every wild and injected team. \qed
 
 \section{Team Specification Language}\label{app:grammar}
 

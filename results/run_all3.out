@@ -1,0 +1,12 @@
+proofs             ok      0.1 s
+mutants            ok      0.8 s
+tests              ok      1.4 s
+running_example    ok      0.1 s
+e1_conformance     ok     31.7 s
+e2_detection       ok      5.9 s
+e3_architectures   ok      0.2 s
+e4_depth_sweep     ok     12.1 s
+e8_mutation        ok    273.8 s
+e7_ablation        ok      1.7 s
+process            ok      2.2 s
+EXIT 0

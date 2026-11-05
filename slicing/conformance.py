@@ -23,7 +23,7 @@ def _subsets(items, q):
         yield from combinations(items, r)
 
 
-def hybrid_oracle(team: Team, sigma: int) -> set:
+def hybrid_oracle(team: Team, sigma: int, robust_always: bool = False) -> set:
     members = [n for n in team.order if sigma & team.nbit[n]]
     orcs = sorted({team.nodes[n].oracle for n in members if team.nodes[n].kind == 'agent'})
     fsets = [frozenset(c) for r in range(min(team.f, len(orcs)) + 1) for c in combinations(orcs, r)] \
@@ -66,6 +66,8 @@ def hybrid_oracle(team: Team, sigma: int) -> set:
                 for s in sw:
                     rec(i + 1, choices + [x for x in (o, s) if x is not None])
         rec(0, [])
+    if robust_always:
+        return found
     goal = {k[2] for k in found if k[0] == 'goal'}
     return {k for k in found if not (k[0] == 'robust' and k[2] in goal)}
 
@@ -130,7 +132,7 @@ def _run_keys(team: Team, reached, content, faulty: bool) -> set:
 def confirmed_oracle(team: Team, sigma: int) -> set:
     """Keys of F(sigma) (replay oracle) exhibited by some run of T whose member choices and
     member failures, replayed in H_sigma, exhibit the same key."""
-    raw = hybrid_oracle(team, sigma)
+    raw = hybrid_oracle(team, sigma, robust_always=True)
     static = set(sem.static_findings(team))
     orc_s = {team.nodes[n].oracle for n in team.nodes_of(sigma) if team.nodes[n].kind == 'agent'}
     out = set()
@@ -179,11 +181,6 @@ def wild_team(seed: int, n: int = 5, props: int = 4) -> Team:
     return Team(nodes, edges, goals, crit, rng.choice([0, 1, 1]), f'wild{seed}')
 
 
-def lifts(team: Team, sigma: int, key, witness) -> bool:
-    """T3(b): is there an exact run agreeing inside sigma that exhibits the key?"""
-    return key in sem.symptoms(team)
-
-
 def check_team(team: Team, kmax: int = 3) -> dict:
     """Run all theorem checks on one small team; return mismatch counts per check."""
     out = {}
@@ -215,7 +212,7 @@ def check_team(team: Team, kmax: int = 3) -> dict:
                 rec += 1
     out['recovery'] = rec
     # confirmed findings (lifting, T3b) vs. an independent run-enumeration oracle; and soundness
-    small = [s for s in slices if sl.size(s) <= 2]
+    small = [s for s in slices if sl.size(s) <= 3]
     out['confirmed_vs_oracle'] = sum(1 for s in small if set(an.confirmed_findings(team, s)) != confirmed_oracle(team, s))
     out['confirmed_sound'] = sum(1 for s in small for k in an.confirmed_findings(team, s) if not an.correct(sym, k))
     # T5(c): confirmed findings are monotone under slice growth (robust keys: or the goal key is raw-found)
@@ -224,9 +221,7 @@ def check_team(team: Team, kmax: int = 3) -> dict:
     for s in slices:
         for s2 in slices:
             if s != s2 and s & s2 == s:
-                for k in conf[s] - conf[s2]:
-                    if k[0] != 'robust' or ('goal', k[1], k[2]) not in fam[s2]:
-                        mono += 1
+                mono += len(conf[s] - conf[s2])
     out['confirmed_monotone'] = mono
     # T5(a)/T3(a): every symptom of T is found by the whole slice; whole-slice findings are exact
     out['whole_exact'] = int(set(sem.findings(team, full)) != set(sym))

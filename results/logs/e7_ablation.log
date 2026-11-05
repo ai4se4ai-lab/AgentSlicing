@@ -1,1 +1,1 @@
-done 2 s {'teams': 3000, 'findings': 573242, 'false': 16510, 'slices': 140625, 'slices_false': 12048, 'confirmed': 556375, 'confirmed_false': 0, 'true_lost': 357, 'lift_seconds': 9.419745863771823, 'nc_slices': 15580, 'nc_findings': 59721, 'nc_false': 1891}
+done 2 s {'teams': 3000, 'findings': 573242, 'false': 16510, 'slices': 140625, 'slices_false': 12048, 'confirmed': 563243, 'confirmed_false': 0, 'true_lost': 357, 'lift_seconds': 9.86029546870759, 'nc_slices': 15580, 'nc_findings': 59721, 'nc_false': 1891}

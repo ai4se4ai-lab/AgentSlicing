@@ -88,11 +88,13 @@ def _minimal(masks):
 
 
 def findings(team: Team, sigma: int, max_runs: int | None = 200_000, stats: dict | None = None, deadline: float | None = None,
-             all_witnesses: dict | None = None, cap: int = 64) -> dict:
+             all_witnesses: dict | None = None, cap: int = 64, robust_always: bool = False) -> dict:
     """Symptom keys of H_sigma -> one witness. `sigma` is a node bitmask (Team.nbit).
 
     With `all_witnesses` (a dict), every distinct witness of each dynamic key is also
-    collected there (at most `cap` per key); confirmation by lifting needs them."""
+    collected there (at most `cap` per key); confirmation by lifting needs them.
+    With `robust_always`, a robust key is reported whenever some run with failures misses a
+    critical goal, even if the slice also shows the goal key (used for confirmed findings)."""
     static = static_findings(team)
     if sigma == 0:
         return dict(static)
@@ -158,6 +160,10 @@ def findings(team: Team, sigma: int, max_runs: int | None = 200_000, stats: dict
                     heapq.heappush(heap, (team.index[s], s))
             if reached:
                 found.append((n, content))
+        if robust_always and not fault_free and not sigma & nbit[OUTPUT] and OUTPUT not in changed_out:
+            # the output keeps its face-value content in this run: a critical goal missing there is lost
+            for p in team.names(team.crit_mask & ~fv_content[OUTPUT]):
+                record(robust_candidates, ('robust', OUTPUT, p), witness)
         unreached = {n for n, r in changed_reached.items() if not r}
         always_unreached[0] = unreached if always_unreached[0] is None else always_unreached[0] & unreached
         for n, content in found:
@@ -275,7 +281,7 @@ def findings(team: Team, sigma: int, max_runs: int | None = 200_000, stats: dict
         if region_mask & nbit[k[1]] and not sigma & nbit[k[1]] and always_unreached[0] is not None and k[1] not in always_unreached[0]:
             result.setdefault(k, w)
     for k, w in robust_candidates.items():
-        if ('goal', OUTPUT, k[2]) not in result:
+        if robust_always or ('goal', OUTPUT, k[2]) not in result:
             result.setdefault(k, w)
     if stats is not None:
         stats['runs'] = stats.get('runs', 0) + runs

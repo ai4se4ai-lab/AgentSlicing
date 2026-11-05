@@ -405,27 +405,46 @@ def lift(team: Team, sigma: int, key, witness: dict, max_runs: int = 200_000) ->
     return {'lifted': False, 'choices': None, 'exhausted': False}
 
 
-def confirmed_findings(team: Team, sigma: int, max_runs=200_000, lift_runs=200_000, include_static=True) -> dict:
-    """Keys of F(sigma) with a witness that lifts to a run of T (Def. 'confirmed finding').
-    key -> {'witness': hybrid witness, 'run': lifted run of T}."""
+def confirm(team: Team, sigma: int, key, witnesses: list, lift_runs: int = 200_000, stats: dict | None = None) -> bool:
+    """Does some run of T lift `key` for `sigma` (Def. 7)? Witness-guided searches first (member
+    switch choices fixed), then a direct search over all runs of T, which is complete up to the
+    budget. Budget exhaustion is counted in stats['exhausted'] (the key then counts as unconfirmed)."""
+    exhausted = False
+    for w in witnesses:
+        r = lift(team, sigma, key, w, lift_runs)
+        if stats is not None:
+            stats['lifts'] = stats.get('lifts', 0) + 1
+        if r['lifted']:
+            return True
+        exhausted |= r['exhausted']
+    if sigma:
+        r = lift(team, sigma, key, {'choices': [], 'faults': []}, lift_runs)
+        if stats is not None:
+            stats['lifts'] = stats.get('lifts', 0) + 1
+            stats['direct'] = stats.get('direct', 0) + 1
+        if r['lifted']:
+            return True
+        exhausted |= r['exhausted']
+    if exhausted and stats is not None:
+        stats['exhausted'] = stats.get('exhausted', 0) + 1
+    return False
+
+
+def confirmed_findings(team: Team, sigma: int, max_runs=200_000, lift_runs=200_000, include_static=True,
+                       stats: dict | None = None) -> dict:
+    """Keys of F(sigma) (robust keys reported independently of goal keys) with a lift to T.
+    key -> {'witness': a hybrid witness}."""
     allw: dict = {}
-    raw = sem.findings(team, sigma, max_runs, all_witnesses=allw)
+    raw = sem.findings(team, sigma, max_runs, all_witnesses=allw, robust_always=True)
     static = sem.static_findings(team)
     out = {}
     for k, w in raw.items():
         if k in static:
-            if not include_static:
-                continue
-            ws = [w]
-            s = 0
-        else:
-            ws = allw.get(k) or [w]
-            s = sigma
-        for cand in ws:
-            r = lift(team, s, k, cand, lift_runs)
-            if r['lifted']:
-                out[k] = {'witness': cand, 'run': r['choices']}
-                break
+            if include_static and confirm(team, 0, k, [w], lift_runs, stats):
+                out[k] = {'witness': w}
+            continue
+        if confirm(team, sigma, k, allw.get(k) or [w], lift_runs, stats):
+            out[k] = {'witness': w}
     return out
 
 
@@ -436,48 +455,45 @@ def correct(sym: dict, key) -> bool:
 
 
 def manifests(team: Team, sigma: int, key, max_runs=200_000, lift_runs=200_000) -> bool:
-    """Does sigma confirm `key` (some witness of key in H_sigma lifts to T)?"""
+    """Does sigma confirm `key`?"""
     allw: dict = {}
-    raw = sem.findings(team, sigma, max_runs, all_witnesses=allw)
+    raw = sem.findings(team, sigma, max_runs, all_witnesses=allw, robust_always=True)
     if key not in raw:
         return False
     if key in sem.static_findings(team):
-        return lift(team, 0, key, raw[key], lift_runs)['lifted']
-    return any(lift(team, sigma, key, w, lift_runs)['lifted'] for w in allw.get(key) or [raw[key]])
+        return confirm(team, 0, key, [raw[key]], lift_runs)
+    return confirm(team, sigma, key, allw.get(key) or [raw[key]], lift_runs)
 
 
-def check_confirmed(team: Team, family: list[int], max_runs=200_000, lift_runs=200_000) -> dict:
+def check_confirmed(team: Team, family: list[int], max_runs=200_000, lift_runs=200_000, time_budget=None) -> dict:
     """Slice-level checking with confirmation: like `check`, but a slice manifests a key only
-    if one of its witnesses lifts to a run of T. Static keys are confirmed once."""
+    if the key lifts to a run of T (Def. 7). Static keys are confirmed once."""
     static = sem.static_findings(team)
     manifest: dict = {}
-    stats = {'slices': 0, 'lifts': 0, 'unconfirmed': 0, 'limited': 0}
+    stats = {'slices': 0, 'lifts': 0, 'unconfirmed': 0, 'limited': 0, 'direct': 0, 'exhausted': 0, 'timeout': False}
     t0 = time.perf_counter()
     for k, w in static.items():
-        stats['lifts'] += 1
-        if lift(team, 0, k, w, lift_runs)['lifted']:
+        if confirm(team, 0, k, [w], lift_runs, stats):
             manifest[k] = [(None, w)]
         else:
             stats['unconfirmed'] += 1
     for s in dict.fromkeys(family):
+        if time_budget is not None and time.perf_counter() - t0 > time_budget:
+            stats['timeout'] = True
+            break
         stats['slices'] += 1
         allw: dict = {}
         try:
-            raw = sem.findings(team, s, max_runs, all_witnesses=allw)
+            raw = sem.findings(team, s, max_runs, all_witnesses=allw, robust_always=True)
         except sem.RunLimit:
             stats['limited'] += 1
             continue
         for k, w in raw.items():
             if k in static:
                 continue
-            ok = False
-            for cand in allw.get(k) or [w]:
-                stats['lifts'] += 1
-                if lift(team, s, k, cand, lift_runs)['lifted']:
-                    manifest.setdefault(k, []).append((s, cand))
-                    ok = True
-                    break
-            if not ok:
+            if confirm(team, s, k, allw.get(k) or [w], lift_runs, stats):
+                manifest.setdefault(k, []).append((s, w))
+            else:
                 stats['unconfirmed'] += 1
     loc = localize(team, manifest)
     for k, v in loc.items():

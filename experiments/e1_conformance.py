@@ -34,6 +34,22 @@ def bench(args):
     return cf.check_team(t, kmax=2)
 
 
+def switch_team(K):
+    """Many independent switches in one slice: more witnesses than the witness cap."""
+    from slicing.model import build
+    nodes, edges = [], []
+    for i in range(1, K + 1):
+        nodes.append((f's{i}', 'gate', ['q'] if i == 1 else [], ['p'] if i == 1 else [], None, 'switch'))
+        nodes += [(f'a{i}', 'gate', [], []), (f'b{i}', 'gate', [], [])]
+        edges += [('IN', f's{i}'), (f's{i}', f'a{i}'), (f's{i}', f'b{i}'), (f'a{i}', 'OUT'), (f'b{i}', 'J')]
+    nodes.append(('J', 'gate', ['p'], []))
+    edges.append(('J', 'OUT'))
+    t = build(nodes, edges, goals=[], out_join='any')
+    m = t.nmask([f's{i}' for i in range(1, K + 1)])
+    from slicing import analysis as an
+    return int(set(an.confirmed_findings(t, m)) != cf.confirmed_oracle(t, m))
+
+
 def cnf_team(clauses, nvars):
     nodes, edges = [Node(INPUT, 'gate')], []
     prev = INPUT
@@ -183,6 +199,7 @@ def main():
             btried[k] += 1
             bagg[k] += int(v > 0)
     red = pmap(reduction, range(500), chunksize=20)
+    many_switch = {K: switch_team(K) for K in range(2, 9)}
     payload = {'env': env, 'seconds': time.time() - t0,
                'wild': {'teams': N_WILD, 'checked': dict(tried), 'mismatching_teams': dict(agg)},
                'bench': {'teams': sum(1 for r in bench_rows if r), 'checked': dict(btried), 'mismatching_teams': dict(bagg)},
@@ -191,7 +208,7 @@ def main():
                              'robust_disagreements': sum(r['sat'] == r['robust'] for r in red),
                              'robust_np_disagreements': sum(r['sat'] != r['robust_np'] for r in red),
                              'reach_disagreements': sum(r['sat'] != r['reach'] for r in red)},
-               'fooling': fooling()}
+               'fooling': fooling(), 'many_switch_mismatches': sum(many_switch.values())}
     save('e1_conformance', payload)
     print(payload['wild'], payload['bench'], payload['reduction'], payload['fooling'], round(payload['seconds']), 's')
 

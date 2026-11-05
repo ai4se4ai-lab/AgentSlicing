@@ -77,7 +77,9 @@ def run(args):
     rng = random.Random(f'e8/{topo}/{n}/{seed}/{m}')
     t = gen.generate(topo, n, seed, Params(n_critical=1))
     ops = []
-    for _ in range(m):
+    tries = 0
+    while len(ops) < m and tries < 50:            # retry until m changes were actually applied
+        tries += 1
         new, op = mutate(t, rng)
         if new is not None and not new.validate():
             t = new
@@ -100,13 +102,24 @@ def run(args):
     gt = an.check_confirmed(t, sl.exhaustive(t, K))['findings']
     depth = {k: (1 if gt[k]['static'] else min(sl.size(s) for s in gt[k]['minimal'])) if k in gt else None for k in sym}
     rec['depth'] = {str(k): d for k, d in depth.items()}
-    checkers = {
-        'B1': an.check_confirmed(t, sl.singleton(t))['findings'],
-        'B1raw': an.check(t, sl.singleton(t))['findings'],
-        'SL': an.check_confirmed(t, list(dict.fromkeys(sl.singleton(t) + sl.window(t, 2) + sl.region(t) + sl.goal_directed(t))))['findings'],
-        'SLraw': an.check(t, list(dict.fromkeys(sl.singleton(t) + sl.window(t, 2) + sl.region(t) + sl.goal_directed(t))))['findings'],
-        'B4': an.lint(t)['findings'], 'B5': an.smells(t)['findings'], 'B6': an.must_analysis(t)['findings'],
+    slf = list(dict.fromkeys(sl.singleton(t) + sl.window(t, 2) + sl.region(t) + sl.goal_directed(t)))
+    runners = {
+        'B1': lambda: an.check_confirmed(t, sl.singleton(t))['findings'],
+        'B1raw': lambda: an.check(t, sl.singleton(t))['findings'],
+        'SL': lambda: an.check_confirmed(t, slf)['findings'],
+        'SLraw': lambda: an.check(t, slf)['findings'],
+        'B4': lambda: an.lint(t)['findings'], 'B5': lambda: an.smells(t)['findings'],
+        'B6': lambda: an.must_analysis(t)['findings'],
     }
+    checkers, times = {}, {}
+    for name, fn in runners.items():
+        t0 = time.perf_counter()
+        checkers[name] = fn()
+        times[name] = time.perf_counter() - t0
+    t0 = time.perf_counter()
+    sem.symptoms(t, 500_000)
+    times['B2'] = time.perf_counter() - t0
+    rec['times'] = times
     rec['checkers'] = {}
     for name, f in checkers.items():
         keys = set(f)
@@ -123,7 +136,9 @@ def run(args):
     shr = {}
     for k, w in sym.items():
         if depth[k] and depth[k] >= 2 and w.get('slice'):
+            t0 = time.perf_counter()
             s, c = an.shrink(t, k)
+            rec.setdefault('shrink_seconds', []).append(time.perf_counter() - t0)
             dev = an.deviation_hull(t, k, w)
             shr[str(k)] = {'shrink_exact': s in set(gt[k]['minimal']), 'shrink_minimum': sl.size(s) == depth[k],
                            'shrink_checks': c, 'dev_exact': dev in set(gt[k]['minimal']), 'dev_size': sl.size(dev),
@@ -135,7 +150,7 @@ def run(args):
 def main():
     env = environment()
     t0 = time.time()
-    jobs = [(topo, n, s, m) for topo in gen.TOPOLOGIES for n in (6, 10) for s in range(20) for m in (1, 2, 3)]
+    jobs = [(topo, n, s, m) for topo in gen.TOPOLOGIES for n in (6, 10, 20, 30) for s in range(20) for m in (1, 2, 3)]
     rows = pmap(run, jobs, chunksize=2)
     save('e8_mutation', {'env': env, 'seconds': time.time() - t0, 'rows': rows})
     print('done', len(rows), round(time.time() - t0), 's')

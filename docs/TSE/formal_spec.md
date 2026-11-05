@@ -1,5 +1,15 @@
 # Formal specification: agent slicing (Phase 1 gate)
 
+> **Status after two review rounds (2026-11-04).** The paper (`main.tex`, Section III and Appendix A)
+> is now the authoritative statement. Main changes against this Phase-1 note: findings count only when
+> *confirmed* by lifting a witness to a run of the team (Def. 7); depth and minimal slices are defined
+> over confirmed findings, which are monotone in the slice (Thm 5c, incl. robust keys via
+> unsuppressed robust candidates); derived guarantees are per exit and T2(c) concerns a disjunctive
+> exit; T5(c) (witness hull) was removed as vacuous; T7 states complexity per key kind (robust keys
+> in D^p, NP- and coNP-hard) and adds depth (NP-complete); T4(b) covers only view-disjunctive analyses;
+> T1 and T6 are propositions; liveness is no longer part of Definition 1.
+
+
 Status: definitions and theorem statements are final for the implementation; full
 proofs are in the paper appendix (`main.tex`, Appendix A). Every definition has a
 code counterpart, listed in brackets.

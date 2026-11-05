@@ -26,9 +26,7 @@ S.~Hong, M.~Zhuge, J.~Chen, X.~Zheng, Y.~Cheng, C.~Zhang, J.~Wang, Z.~Wang, S.~K
 \BIBentrySTDinterwordspacing
 
 \bibitem{qian2024chatdev}
-\BIBentryALTinterwordspacing
-C.~Qian, W.~Liu, H.~Liu, N.~Chen, Y.~Dang, J.~Li, C.~Yang, W.~Chen, Y.~Su, X.~Cong, J.~Xu, D.~Li, Z.~Liu, and M.~Sun, ``{ChatDev}: Communicative agents for software development,'' arXiv:2307.07924, 2023. [Online]. Available: \url{https://arxiv.org/abs/2307.07924}
-\BIBentrySTDinterwordspacing
+C.~Qian, W.~Liu, H.~Liu, N.~Chen, Y.~Dang, J.~Li, C.~Yang, W.~Chen, Y.~Su, X.~Cong, J.~Xu, D.~Li, Z.~Liu, and M.~Sun, ``{ChatDev}: Communicative agents for software development,'' in \emph{Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (ACL)}, 2024, pp. 15\,174--15\,186.
 
 \bibitem{huang2023agentcoder}
 \BIBentryALTinterwordspacing
@@ -39,9 +37,7 @@ D.~Huang, J.~M. Zhang, M.~Luck, Q.~Bu, Y.~Qing, and H.~Cui, ``{AgentCoder}: Mult
 C.~S. Xia, Y.~Deng, S.~Dunn, and L.~Zhang, ``Demystifying {LLM}-based software engineering agents,'' \emph{Proceedings of the ACM on Software Engineering}, vol.~2, no. FSE, pp. 801--824, 2025.
 
 \bibitem{tao2024magis}
-\BIBentryALTinterwordspacing
-W.~Tao, Y.~Zhou, Y.~Wang, W.~Zhang, H.~Zhang, and Y.~Cheng, ``{MAGIS}: {LLM}-based multi-agent framework for {GitHub} issue resolution,'' arXiv:2403.17927, 2024. [Online]. Available: \url{https://arxiv.org/abs/2403.17927}
-\BIBentrySTDinterwordspacing
+W.~Tao, Y.~Zhou, Y.~Wang, W.~Zhang, H.~Zhang, and Y.~Cheng, ``{MAGIS}: {LLM}-based multi-agent framework for {GitHub} issue resolution,'' in \emph{Advances in Neural Information Processing Systems 37 (NeurIPS)}, 2024, pp. 51\,963--51\,993.
 
 \bibitem{he2025llmmas}
 J.~He, C.~Treude, and D.~Lo, ``{LLM}-based multi-agent systems for software engineering: Literature review, vision, and the road ahead,'' \emph{ACM Transactions on Software Engineering and Methodology}, vol.~34, no.~5, pp. 1--30, 2025.
@@ -162,9 +158,7 @@ B.~Efron and R.~Tibshirani, \emph{An Introduction to the Bootstrap}.\hskip 1em p
 A.~Arcuri and L.~Briand, ``A practical guide for using statistical tests to assess randomized algorithms in software engineering,'' in \emph{Proceedings of the 33rd International Conference on Software Engineering}, 2011, pp. 1--10.
 
 \bibitem{islam2024mapcoder}
-\BIBentryALTinterwordspacing
-M.~A. Islam, M.~E. Ali, and M.~R. Parvez, ``{MapCoder}: Multi-agent code generation for competitive problem solving,'' arXiv:2405.11403, 2024. [Online]. Available: \url{https://arxiv.org/abs/2405.11403}
-\BIBentrySTDinterwordspacing
+M.~A. Islam, M.~E. Ali, and M.~R. Parvez, ``{MapCoder}: Multi-agent code generation for competitive problem solving,'' in \emph{Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (ACL)}, 2024, pp. 4912--4944.
 
 \bibitem{dong2024selfcollab}
 Y.~Dong, X.~Jiang, Z.~Jin, and G.~Li, ``Self-collaboration code generation via {ChatGPT},'' \emph{ACM Transactions on Software Engineering and Methodology}, vol.~33, no.~7, pp. 1--38, 2024.
@@ -200,7 +194,7 @@ K.~L. McMillan, ``Circular compositional reasoning about liveness,'' in \emph{Co
 K.~S. Namjoshi and R.~J. Trefler, ``On the completeness of compositional reasoning methods,'' \emph{ACM Transactions on Computational Logic}, vol.~11, no.~3, pp. 1--22, 2010.
 
 \bibitem{cobleigh2003learning}
-J.~M. Cobleigh, D.~Giannakopoulou, and C.~S. PĂsĂreanu, ``Learning assumptions for compositional verification,'' in \emph{Lecture Notes in Computer Science}, 2003, pp. 331--346.
+J.~M. Cobleigh, D.~Giannakopoulou, and C.~S. P{\u{a}}s{\u{a}}reanu, ``Learning assumptions for compositional verification,'' in \emph{Lecture Notes in Computer Science}, 2003, pp. 331--346.
 
 \bibitem{clarke2003cegar}
 E.~Clarke, O.~Grumberg, S.~Jha, Y.~Lu, and H.~Veith, ``Counterexample-guided abstraction refinement for symbolic model checking,'' \emph{Journal of the ACM}, vol.~50, no.~5, pp. 752--794, 2003.
@@ -227,7 +221,7 @@ S.~Horwitz, T.~Reps, and D.~Binkley, ``Interprocedural slicing using dependence 
 J.~Ferrante, K.~J. Ottenstein, and J.~D. Warren, ``The program dependence graph and its use in optimization,'' \emph{ACM Transactions on Programming Languages and Systems}, vol.~9, no.~3, pp. 319--349, 1987.
 
 \bibitem{vanderaalst1998application}
-W.~M.~P. VAN DER~AALST, ``{THE} {APPLICATION} {OF} {PETRI} {NETS} {TO} {WORKFLOW} {MANAGEMENT},'' \emph{Journal of Circuits, Systems and Computers}, vol.~08, no.~01, pp. 21--66, 1998.
+W.~M.~P. van~der Aalst, ``The application of {Petri} nets to workflow management,'' \emph{Journal of Circuits, Systems and Computers}, vol.~08, no.~01, pp. 21--66, 1998.
 
 \bibitem{pozzi2006exact}
 L.~Pozzi, K.~Atasu, and P.~Ienne, ``Exact and approximate algorithms for the extension of embedded processor instruction sets,'' \emph{IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems}, vol.~25, no.~7, pp. 1209--1229, 2006.

@@ -13,22 +13,25 @@ KMAX = 8
 
 
 def run(args):
-    topo, cls, ell, seed = args
-    t, gt = inj.inject(gen.generate(topo, 5, seed), cls, seed, depth=ell)
+    topo, cls, ell, seed, host = args
+    t, gt = inj.inject(gen.generate(topo, host, seed), cls, seed, depth=ell)
     prim = gt['primary']
-    ex = sl.exhaustive(t, KMAX)
+    kmax = KMAX if host <= 5 else ell + 2          # larger hosts: enough to decide depth <= l+2
+    ex = sl.exhaustive(t, kmax)
     r = an.check_confirmed(t, ex)
     f = r['findings'].get(prim)
     depth = None if f is None else (1 if f['static'] else min(sl.size(s) for s in f['minimal']))
-    return {'topo': topo, 'cls': cls, 'ell': ell, 'seed': seed, 'nodes': len(t.order), 'depth': depth,
-            'detected_by_k': {k: depth is not None and depth <= k for k in range(1, KMAX + 1)},
-            'slices_by_k': {k: sum(1 for s in ex if sl.size(s) <= k) for k in range(1, KMAX + 1)}}
+    return {'topo': topo, 'cls': cls, 'ell': ell, 'seed': seed, 'host': host, 'kmax': kmax, 'nodes': len(t.order),
+            'depth': depth,
+            'detected_by_k': {k: depth is not None and depth <= k for k in range(1, kmax + 1)},
+            'slices_by_k': {k: sum(1 for s in ex if sl.size(s) <= k) for k in range(1, kmax + 1)}}
 
 
 def main():
     env = environment()
     t0 = time.time()
-    jobs = [(topo, c, ell, s) for topo in ('chain', 'forkjoin') for c in CLS for ell in range(6) for s in range(10)]
+    jobs = [(topo, c, ell, s, host) for host in (5, 12) for topo in ('chain', 'forkjoin') for c in CLS for ell in range(6)
+            for s in range(10)]
     rows = pmap(run, jobs, chunksize=2)
     save('e4_depth_sweep', {'env': env, 'kmax': KMAX, 'seconds': time.time() - t0, 'rows': rows})
     print('done', len(rows), round(time.time() - t0), 's')

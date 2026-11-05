@@ -188,3 +188,32 @@ def test_running_example_baselines():
     assert k in an.must_analysis(t)['findings']           # a global must-analysis detects it ...
     s, _ = an.shrink(t, k)
     assert t.nodes_of(s) == ['DV', 'SR', 'TS']            # ... slices localize it
+
+
+def test_robust_confirmation_is_monotone():
+    """Round-2 counterexample: a spurious raw goal key in a larger slice must not hide a robust
+    finding; confirmed robust findings are reported independently of goal keys."""
+    t = build([('s', 'gate', [], [], None, 'switch'), ('y', 'agent', [], ['g'], 'o'),
+               ('x', 'gate', [], [], None, 'fork', 'any')],
+              [('IN', 's'), ('IN', 'y'), ('s', 'x'), ('s', 'OUT'), ('y', 'x'), ('x', 'OUT')],
+              goals=['g'], critical=['g'], f=1)
+    k = ('robust', 'OUT', 'g')
+    for members in (['y'], ['x', 'y'], ['s', 'x', 'y'], ['s', 'x', 'y', 'OUT']):
+        assert k in an.confirmed_findings(t, t.nmask(members))
+    assert t.nodes_of(an.shrink(t, k)[0]) == ['y']
+
+
+def test_lifting_is_complete_beyond_witness_cap():
+    """Round-2 counterexample: 7 independent switches exceed the witness cap; the direct search
+    still confirms the finding."""
+    K = 7
+    nodes, edges = [], []
+    for i in range(1, K + 1):
+        nodes.append((f's{i}', 'gate', ['q'] if i == 1 else [], ['p'] if i == 1 else [], None, 'switch'))
+        nodes += [(f'a{i}', 'gate', [], []), (f'b{i}', 'gate', [], [])]
+        edges += [('IN', f's{i}'), (f's{i}', f'a{i}'), (f's{i}', f'b{i}'), (f'a{i}', 'OUT'), (f'b{i}', 'J')]
+    nodes.append(('J', 'gate', ['p'], []))
+    edges.append(('J', 'OUT'))
+    t = build(nodes, edges, goals=[], out_join='any')
+    m = t.nmask([f's{i}' for i in range(1, K + 1)])
+    assert set(an.confirmed_findings(t, m)) == cf.confirmed_oracle(t, m)

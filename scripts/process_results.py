@@ -175,6 +175,7 @@ def e1():
         macro('ReductionRobustNPDisagreements', r.get('robust_np_disagreements', 0))
         macro('ReductionReachDisagreements', r.get('reach_disagreements', 0))
         macro('FoolingAllHold', 'all' if all(all(v.values()) for v in d['fooling'].values()) else 'not all')
+        macro('ManySwitchMismatches', d.get('many_switch_mismatches', 0))
         names = {'HN_equals_T': 'Exact semantics vs.\\ independent replay ($H_N=T$)',
                  'hybrid_vs_oracle': 'Hybrid semantics vs.\\ exhaustive replay (all slices $\\le 3$)',
                  'static_in_singletons': 'Lemma~\\ref{lem:face} at singletons ($F(\\emptyset)\\subseteq F(\\{v\\})$)',
@@ -412,11 +413,20 @@ def e4b():
     d = load('e4_depth_sweep')
     if not d:
         return
-    rows = d['rows']
+    allrows = d['rows']
+    rows = [r for r in allrows if r.get('host', 5) == 5]
+    big = [r for r in allrows if r.get('host', 5) != 5]
     K = d['kmax']
     ks = list(range(1, K + 1))
     chainy = [r for r in rows if r['cls'] in ('S4', 'S6a', 'S6b')]
-    macro('DepthSweepTeams', len(rows))
+    if big:
+        macro('DepthSweepBigTeams', len(big))
+        macro('DepthSweepBigNodesMax', max(r['nodes'] for r in big))
+        macro('DepthSweepBigNodesMin', min(r['nodes'] for r in big))
+        macro('DepthBigIsEllPlusTwo', np.mean([r['depth'] == r['ell'] + 2 for r in big if r['cls'] in ('S4', 'S6a', 'S6b')]), 'pct')
+        macro('DepthBigTwoForJoins', np.mean([r['depth'] == 2 for r in big if r['cls'] in ('S2', 'S3')]), 'pct')
+    macro('DepthSweepTeams', len(allrows))
+    macro('DepthSweepSmallTeams', len(rows))
     macro('DepthSweepKmax', K)
     macro('DepthIsEllPlusTwo', np.mean([r['depth'] == r['ell'] + 2 for r in chainy]), 'pct')
     macro('DepthTwoForJoins', np.mean([r['depth'] == 2 for r in rows if r['cls'] in ('S2', 'S3')]), 'pct')
@@ -506,6 +516,48 @@ def e8():
         macro('MutDevExact', np.mean([s['dev_exact'] for s in shr]), 'pct')
         macro('MutDevRatio', np.mean([s['dev_precise_size_ratio'] for s in shr]), '.2f')
     write_table('mutation', '\n'.join(lines))
+    # pipeline: B6 detects, the exact semantics confirms, shrinking localizes
+    pipe = [(r, k) for r, k in hid if r['checkers']['B6']['per_key'][k]['found'] and k in r.get('shrink', {})]
+    if pipe:
+        macro('MutPipeRecallHidden', len(pipe) / max(1, len(hid)), 'pct')
+        macro('MutPipeExact', np.mean([r['shrink'][k]['shrink_exact'] for r, k in pipe]), 'pct')
+    # teams that confirmed agent-level analysis would declare clean / safe
+    al_clean = [r for r in unclean if not any(v['found'] for v in r['checkers']['B1']['per_key'].values())]
+    macro('MutALDeclaredClean', len(al_clean))
+    macro('MutALDeclaredCleanUnsafe', sum(1 for r in al_clean if r.get('unsafe')))
+    macro('MutDeepKeys', sum(1 for _, _, dd in keys if dd is None))
+    macro('MutTeamsFewerOps', sum(1 for r in rows if len(r['ops']) < r['m']))
+    # by team size
+    size_lines = []
+    for n in sorted({r['n'] for r in rows}):
+        rs = [r for r in unclean if r['n'] == n]
+        kk = [(r, k, dd) for r in rs for k, dd in r['depth'].items()]
+        hk = [(r, k) for r, k, dd in kk if dd is None or dd >= 2]
+        node_rng = f"{min(r['nodes'] for r in rs)}--{max(r['nodes'] for r in rs)}" if rs else '--'
+        ex_rows = [{'topo': r['topo'], 'n': r['n'], 'seed': r['seed'], 'v': r['checkers']['SL']['per_key'][k].get('exact')}
+                   for r, k in hk if r['checkers']['SL']['per_key'][k]['found'] and r['checkers']['SL']['per_key'][k].get('exact') is not None]
+        m_, lo_, hi_ = cluster_ci(ex_rows, lambda x: x['v'])
+        sh = [r['shrink'][k]['shrink_exact'] for r, k in hk if k in r.get('shrink', {})]
+        b6f = sum(r['checkers']['B6']['false_keys'] for r in rs)
+        b6r = sum(r['checkers']['B6']['reported'] for r in rs)
+        size_lines.append(f"{n} & {node_rng} & {len(rs)} & {len(kk)} & {pct(len(hk) / max(1, len(kk)))} & "
+                          f"{pct(np.mean([r['checkers']['B1']['per_key'][k]['found'] for r, k in hk])) if hk else '--'} & "
+                          f"{pct(m_) if not math.isnan(m_) else '--'} [{pct(lo_) if not math.isnan(lo_) else '--'}, {pct(hi_) if not math.isnan(hi_) else '--'}] & "
+                          f"{pct(np.mean(sh)) if sh else '--'} & {pct(b6f / max(1, b6r))} \\\\")
+        macro(f'MutHiddenShareN{n}', len(hk) / max(1, len(kk)), 'pct')
+        if not math.isnan(m_):
+            macro(f'MutExactSLN{n}', m_, 'pct')
+        if sh:
+            macro(f'MutShrinkExactN{n}', np.mean(sh), 'pct')
+    write_table('mutation_size', '\n'.join(size_lines))
+    # timing (seconds per team): medians
+    for c in ['B1', 'SL', 'SLraw', 'B6', 'B2']:
+        v = [r['times'][c] for r in unclean if 'times' in r]
+        if v:
+            macro(f'MutTime{c}', float(np.median(v)) * 1000, '.1f')
+    sv = [x for r in unclean for x in r.get('shrink_seconds', [])]
+    if sv:
+        macro('MutTimeShrink', float(np.median(sv)) * 1000, '.1f')
     ops = defaultdict(int)
     for r in rows:
         for o in r['ops']:
@@ -644,6 +696,18 @@ def e5():
         macro('PeakMemSL', max(mem), '.0f')
     lim = sum(r['strategies']['SL']['limited'] for r in rows)
     macro('LimitedSL', lim)
+    conf = [r for r in rows if 'SLconf' in r]
+    if conf:
+        for grp, topo_set in [('free', ['layered', 'sp', 'random']), ('mixed', ['mixed'])]:
+            cs = [r for r in conf if r['topo'] in topo_set]
+            macro(f'ConfTimeouts{grp}', sum(r['SLconf']['timeout'] for r in cs))
+            macro(f'ConfTeams{grp}', len(cs))
+            macro(f'ConfDetect{grp}', sum(1 for r in cs if r['SLconf']['detected']))
+            big = [r for r in cs if r['n'] == 200]
+            if big:
+                macro(f'ConfTimeTwoHundred{grp}', float(np.median([B if r['SLconf']['timeout'] else r['SLconf']['seconds'] for r in big])), '.2f')
+                macro(f'RawTimeTwoHundred{grp}', float(np.median([B if r['strategies']['SL']['timeout'] else r['strategies']['SL']['seconds'] for r in big])), '.2f')
+        macro('ConfExhausted', sum(r['SLconf']['exhausted'] for r in conf))
     cc = d['convex_counts']
     lines = []
     for n in sorted({c['n'] for c in cc}):

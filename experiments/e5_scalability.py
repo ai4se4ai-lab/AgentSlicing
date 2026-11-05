@@ -62,6 +62,14 @@ def run(args):
             r['peak_mb'] = tracemalloc.get_traced_memory()[1] / 2**20
             tracemalloc.stop()
         rec['strategies'][name] = r
+    # confirmed SL (raw slice analysis plus lifting), on teams of up to 200 nodes
+    if n <= 200:
+        from slicing import analysis as an
+        c0 = time.perf_counter()
+        rc = an.check_confirmed(t, list(dict.fromkeys(family(t, 'SL'))), max_runs=20_000, lift_runs=200_000, time_budget=BUDGET)
+        rec['SLconf'] = {'seconds': time.perf_counter() - c0, 'timeout': rc['stats']['timeout'],
+                         'detected': bool(set(rc['findings']) & keys) and not rc['stats']['timeout'],
+                         'lifts': rc['stats']['lifts'], 'exhausted': rc['stats']['exhausted']}
     # B6 must-analysis (global, path-insensitive, linear per failure set)
     from slicing import analysis as an
     m0 = time.perf_counter()

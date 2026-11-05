@@ -4,67 +4,67 @@
  "obligations": [
   {
    "obligation": "L1-transfer-monotone",
-   "theorem": "Lemma A, M",
+   "theorem": "Lem. 2, 4",
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0018
+   "seconds": 0.0016
   },
   {
    "obligation": "L2-face-value-dominates",
-   "theorem": "Lemma A",
+   "theorem": "Lem. 4",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0009
+  },
+  {
+   "obligation": "L3-join-subset",
+   "theorem": "Lem. 2, 4",
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
    "seconds": 0.0008
   },
   {
-   "obligation": "L3-join-subset",
-   "theorem": "Lemma A, M",
-   "expect": "unsat",
-   "z3": "unsat",
-   "ok": true,
-   "seconds": 0.0007
-  },
-  {
    "obligation": "L4-missing-antitone",
-   "theorem": "T4c, T5d, Lemma M",
+   "theorem": "Thm. 4, 5; Lem. 2",
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0006
+   "seconds": 0.0008
   },
   {
    "obligation": "L5-evidence-monotone",
-   "theorem": "Lemma W",
+   "theorem": "Lem. 1",
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0014
+   "seconds": 0.0008
   },
   {
    "obligation": "L7-env-uniform",
-   "theorem": "T1",
+   "theorem": "Prop. 1",
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0007
+   "seconds": 0.0003
   },
   {
    "obligation": "L8-must-sound",
-   "theorem": "Generator",
+   "theorem": "B6, generator",
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0015
+   "seconds": 0.0008
   },
   {
    "obligation": "L9-meet-below-choice",
-   "theorem": "Generator",
+   "theorem": "B6, generator",
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0005
+   "seconds": 0.0003
   },
   {
    "obligation": "L10-fault-antitone",
@@ -80,7 +80,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0006
+   "seconds": 0.0
   },
   {
    "obligation": "L12-decl-enables",
@@ -88,7 +88,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0007
+   "seconds": 0.0008
   },
   {
    "obligation": "L13-decl-local",
@@ -96,7 +96,7 @@
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,
-   "seconds": 0.0007
+   "seconds": 0.0008
   },
   {
    "obligation": "C1-non-distributive",
@@ -104,11 +104,11 @@
    "expect": "sat",
    "z3": "sat",
    "ok": true,
-   "seconds": 0.0068
+   "seconds": 0.0064
   },
   {
    "obligation": "C2-no-exact-single-pair",
-   "theorem": "T2(c)",
+   "theorem": "Thm. 2c",
    "expect": "unsat",
    "z3": "unsat",
    "ok": true,

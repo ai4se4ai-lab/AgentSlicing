@@ -83,10 +83,10 @@ ok1, ok2 = Bool('ok1'), Bool('ok2')
 
 # L1: transfer is monotone in content and antitone in failures (Lemma M, Lemma A)
 ob('L1-transfer-monotone', Implies(And(sub(c1, c2), Implies(ok1, ok2), out_is(o1, c1, req, gua, decl, ok1),
-                                       out_is(o2, c2, req, gua, decl, ok2)), sub(o1, o2)), theorem='Lemma A, M')
+                                       out_is(o2, c2, req, gua, decl, ok2)), sub(o1, o2)), theorem='Lem. 2, 4')
 # L2: face value dominates the exact transfer (Lemma A step)
 ob('L2-face-value-dominates', Implies(And(sub(c1, c2), out_is(o1, c1, req, gua, decl, ok1), fv_out_is(o2, c2, gua)),
-                                      sub(o1, o2)), theorem='Lemma A')
+                                      sub(o1, o2)), theorem='Lem. 4')
 # L3: join step: contents of a contributor subset are below the union of all delivered outputs
 a1, a2, a3, b1, b2, b3, u, w = Consts('a1 a2 a3 b1 b2 b3 u w', Set)
 s1, s2, s3 = Bool('s1'), Bool('s2'), Bool('s3')
@@ -99,24 +99,24 @@ def chosen_union(r, xs, sel):
 join_ok = (lambda: chosen_union(w, [b1, b2, b3], [BoolVal(True)] * 3)) if MUTANT != 'join-intersection' else \
     (lambda: ForAll(x, Select(w, x) == And(Select(b1, x), Select(b2, x), Select(b3, x))))
 ob('L3-join-subset', Implies(And(sub(a1, b1), sub(a2, b2), sub(a3, b3), chosen_union(u, [a1, a2, a3], [s1, s2, s3]),
-                                 join_ok()), sub(u, w)), theorem='Lemma A, M')
+                                 join_ok()), sub(u, w)), theorem='Lem. 2, 4')
 # L4: missing requirements are antitone in content (symptom persistence: T4c, T5d)
 ob('L4-missing-antitone', Implies(And(sub(c1, c2), missing_is(m1, req, c1, decl), missing_is(m2, req, c2, decl)),
-                                  sub(m2, m1)), theorem='T4c, T5d, Lemma M')
+                                  sub(m2, m1)), theorem='Thm. 4, 5; Lem. 2')
 # L5: Lemma W: larger evidence gives larger output; the realized minimum is the worst case
 ob('L5-evidence-monotone', Implies(And(sub(E1, E2), Implies(ok1, ok2),
                                        ForAll(x, Select(o1, x) == Or(Select(c1, x), And(sub(req, E1), ok1, Select(gua, x)))),
                                        ForAll(x, Select(o2, x) == Or(Select(c1, x), And(sub(req, E2), ok2, Select(gua, x))))),
-                                   sub(o1, o2)), theorem='Lemma W')
+                                   sub(o1, o2)), theorem='Lem. 1')
 # L7: entry edges of a member carry the same environment, so any nonempty choice among them gives env
 env = Const('env', Set)
-ob('L7-env-uniform', Implies(And(Or(s1, s2), chosen_union(u, [env, env], [s1, s2])), eq(u, env)), theorem='T1')
+ob('L7-env-uniform', Implies(And(Or(s1, s2), chosen_union(u, [env, env], [s1, s2])), eq(u, env)), theorem='Prop. 1')
 # L8: the must-analysis transfer is sound: a lower bound stays below the exact output
 L, Lo = Consts('L Lo', Set)
 ob('L8-must-sound', Implies(And(sub(L, c1), out_is(Lo, L, req, gua, decl, BoolVal(True)),
-                                out_is(o1, c1, req, gua, decl, BoolVal(True))), sub(Lo, o1)), theorem='Generator')
+                                out_is(o1, c1, req, gua, decl, BoolVal(True))), sub(Lo, o1)), theorem='B6, generator')
 # L9: an any-join lower bound (intersection) is below every single contributor
-ob('L9-meet-below-choice', Implies(inter_is(u, a1, a2), And(sub(u, a1), sub(u, a2))), theorem='Generator')
+ob('L9-meet-below-choice', Implies(inter_is(u, a1, a2), And(sub(u, a1), sub(u, a2))), theorem='B6, generator')
 # L10: robust implies fault-free: content under failures is below the fault-free content (same choices)
 ob('L10-fault-antitone', Implies(And(out_is(o1, c1, req, gua, decl, BoolVal(False)), out_is(o2, c1, req, gua, decl, BoolVal(True))),
                                  sub(o1, o2)), theorem='Def. 3')
@@ -153,7 +153,7 @@ def derived_exit(X):
 
 
 exact = And(*[ForAll(x, derived_exit(X)(x) == Or(Select(X, x), And(sub(Ac, X), Select(Gc, x)))) for X in envs])
-ob('C2-no-exact-single-pair', Not(And(Distinct(r1, r2, gq), exact)), theorem='T2(c)')
+ob('C2-no-exact-single-pair', Not(And(Distinct(r1, r2, gq), exact)), theorem='Thm. 2c')
 
 
 def check_one(formula, expect, timeout_ms=60_000):
