@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+docs/TSE/*.aux
+docs/TSE/*.log
+docs/TSE/*.blg
+docs/TSE/*.out
+docs/TSE/*.fls
+docs/TSE/*.fdb_latexmk
+docs/TSE/*.synctex.gz
+
+# TOSEM LaTeX build intermediates (retain sources, PDFs, and .bbl files,
+# consistent with the TSE paper artifacts tracked in this repository).
+docs/TOSEM/*.aux
+docs/TOSEM/*.log
+docs/TOSEM/*.blg
+docs/TOSEM/*.out
+docs/TOSEM/*.fls
+docs/TOSEM/*.fdb_latexmk
+docs/TOSEM/*.synctex.gz

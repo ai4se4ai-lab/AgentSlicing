@@ -1,0 +1,5 @@
+chain False [(['robust', 'OUT', 'tests_pass'], 'S6a', 3, [['DV', 'SR', 'TS']])] AL []
+chain_repair_downstream False [(['robust', 'OUT', 'tests_pass'], 'S6a', 4, [['DV', 'TG', 'SR', 'TS']])] AL []
+chain_repair_independent True [] AL []
+forkjoin False [(['goal', 'OUT', 'reviewed'], 'S2', 2, [['CR', 'RG'], ['ST', 'RG']]), (['goal', 'OUT', 'sec_tested'], 'S2', 2, [['CR', 'RG'], ['ST', 'RG']])] AL []
+forkjoin_all True [] AL []

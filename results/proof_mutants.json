@@ -1,0 +1,52 @@
+[
+ {
+  "mutant": "applies-ignores-oracle",
+  "expected": "L11-failed-provides-nothing",
+  "failed": [
+   "L11-failed-provides-nothing"
+  ],
+  "killed": true
+ },
+ {
+  "mutant": "face-value-conditional",
+  "expected": "L2-face-value-dominates",
+  "failed": [
+   "L2-face-value-dominates"
+  ],
+  "killed": true
+ },
+ {
+  "mutant": "join-intersection",
+  "expected": "L3-join-subset",
+  "failed": [
+   "L3-join-subset"
+  ],
+  "killed": true
+ },
+ {
+  "mutant": "applies-ignores-decl",
+  "expected": "L12-decl-enables",
+  "failed": [
+   "L12-decl-enables"
+  ],
+  "killed": true
+ },
+ {
+  "mutant": "decl-inherited",
+  "expected": "L13-decl-local",
+  "failed": [
+   "L2-face-value-dominates",
+   "L11-failed-provides-nothing",
+   "L13-decl-local"
+  ],
+  "killed": true
+ },
+ {
+  "mutant": "single-pair-ok",
+  "expected": "C2-no-exact-single-pair",
+  "failed": [
+   "C2-no-exact-single-pair"
+  ],
+  "killed": true
+ }
+]

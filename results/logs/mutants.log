@@ -1,0 +1,6 @@
+applies-ignores-oracle killed ['L11-failed-provides-nothing']
+face-value-conditional killed ['L2-face-value-dominates']
+join-intersection killed ['L3-join-subset']
+applies-ignores-decl killed ['L12-decl-enables']
+decl-inherited killed ['L2-face-value-dominates', 'L11-failed-provides-nothing', 'L13-decl-local']
+single-pair-ok killed ['C2-no-exact-single-pair']

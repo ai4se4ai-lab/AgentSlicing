@@ -1,0 +1,571 @@
+{
+ "env": {
+  "commit": "b5ae7c8886cb2c574a37776c22fce0f16bc975b7",
+  "dirty_worktree": true,
+  "python": "3.12.3",
+  "platform": "Linux-6.17.0-1029-nvidia-aarch64-with-glibc2.39",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "z3": "5.3.3",
+  "cpus": 20,
+  "started": "2026-11-04T22:05:44"
+ },
+ "chain": {
+  "nodes": 7,
+  "convex_slices": 28,
+  "slices_checked": 28,
+  "safe": false,
+  "symptoms": [
+   {
+    "key": [
+     "robust",
+     "OUT",
+     "tests_pass"
+    ],
+    "class": "S6a",
+    "depth": 3,
+    "minimal": [
+     [
+      "DV",
+      "SR",
+      "TS"
+     ]
+    ],
+    "witness": {
+     "slice": [
+      "IN",
+      "RA",
+      "AR",
+      "DV",
+      "SR",
+      "TS",
+      "OUT"
+     ],
+     "faults": [
+      "g"
+     ],
+     "choices": []
+    }
+   }
+  ],
+  "agent_level": [],
+  "lint": [],
+  "smells": [
+   [
+    "robust",
+    "OUT",
+    "tests_pass"
+   ]
+  ],
+  "must": [
+   [
+    "robust",
+    "OUT",
+    "tests_pass"
+   ]
+  ],
+  "shrink": {
+   "('robust', 'OUT', 'tests_pass')": [
+    "DV",
+    "SR",
+    "TS"
+   ]
+  }
+ },
+ "chain_repair_downstream": {
+  "nodes": 8,
+  "convex_slices": 36,
+  "slices_checked": 35,
+  "safe": false,
+  "symptoms": [
+   {
+    "key": [
+     "robust",
+     "OUT",
+     "tests_pass"
+    ],
+    "class": "S6a",
+    "depth": 4,
+    "minimal": [
+     [
+      "DV",
+      "TG",
+      "SR",
+      "TS"
+     ]
+    ],
+    "witness": {
+     "slice": [
+      "IN",
+      "RA",
+      "AR",
+      "DV",
+      "TG",
+      "SR",
+      "TS",
+      "OUT"
+     ],
+     "faults": [
+      "g"
+     ],
+     "choices": []
+    }
+   }
+  ],
+  "agent_level": [],
+  "lint": [],
+  "smells": [],
+  "must": [
+   [
+    "robust",
+    "OUT",
+    "tests_pass"
+   ]
+  ],
+  "shrink": {
+   "('robust', 'OUT', 'tests_pass')": [
+    "DV",
+    "TG",
+    "SR",
+    "TS"
+   ]
+  }
+ },
+ "chain_repair_independent": {
+  "nodes": 8,
+  "convex_slices": 54,
+  "slices_checked": 53,
+  "safe": true,
+  "symptoms": [],
+  "agent_level": [],
+  "lint": [],
+  "smells": [
+   [
+    "robust",
+    "OUT",
+    "tests_pass"
+   ]
+  ],
+  "must": [],
+  "shrink": {}
+ },
+ "forkjoin": {
+  "nodes": 8,
+  "convex_slices": 42,
+  "slices_checked": 42,
+  "safe": false,
+  "symptoms": [
+   {
+    "key": [
+     "goal",
+     "OUT",
+     "reviewed"
+    ],
+    "class": "S2",
+    "depth": 2,
+    "minimal": [
+     [
+      "CR",
+      "RG"
+     ],
+     [
+      "ST",
+      "RG"
+     ]
+    ],
+    "witness": {
+     "slice": [
+      "IN",
+      "RA",
+      "AR",
+      "DV",
+      "CR",
+      "ST",
+      "RG",
+      "OUT"
+     ],
+     "faults": [],
+     "choices": [
+      [
+       "contrib",
+       "RG",
+       [
+        "ST"
+       ]
+      ]
+     ]
+    }
+   },
+   {
+    "key": [
+     "goal",
+     "OUT",
+     "sec_tested"
+    ],
+    "class": "S2",
+    "depth": 2,
+    "minimal": [
+     [
+      "CR",
+      "RG"
+     ],
+     [
+      "ST",
+      "RG"
+     ]
+    ],
+    "witness": {
+     "slice": [
+      "IN",
+      "RA",
+      "AR",
+      "DV",
+      "CR",
+      "ST",
+      "RG",
+      "OUT"
+     ],
+     "faults": [],
+     "choices": [
+      [
+       "contrib",
+       "RG",
+       [
+        "CR"
+       ]
+      ]
+     ]
+    }
+   }
+  ],
+  "agent_level": [],
+  "lint": [],
+  "smells": [
+   [
+    "goal",
+    "OUT",
+    "reviewed"
+   ],
+   [
+    "goal",
+    "OUT",
+    "sec_tested"
+   ]
+  ],
+  "must": [
+   [
+    "goal",
+    "OUT",
+    "reviewed"
+   ],
+   [
+    "goal",
+    "OUT",
+    "sec_tested"
+   ]
+  ],
+  "shrink": {
+   "('goal', 'OUT', 'reviewed')": [
+    "ST",
+    "RG"
+   ],
+   "('goal', 'OUT', 'sec_tested')": [
+    "ST",
+    "RG"
+   ]
+  }
+ },
+ "forkjoin_all": {
+  "nodes": 8,
+  "convex_slices": 42,
+  "slices_checked": 31,
+  "safe": true,
+  "symptoms": [],
+  "agent_level": [],
+  "lint": [],
+  "smells": [],
+  "must": [],
+  "shrink": {}
+ },
+ "contracts": {
+  "chain_DV_SR_TS": {
+   "slice": [
+    "DV",
+    "SR",
+    "TS"
+   ],
+   "env": [
+    "req_spec",
+    "design"
+   ],
+   "assume": [
+    [
+     "DV",
+     "design"
+    ],
+    [
+     "SR",
+     "code"
+    ],
+    [
+     "TS",
+     "tests"
+    ]
+   ],
+   "guarantee": [
+    "code",
+    "design",
+    "req_spec",
+    "sec_reviewed",
+    "tests",
+    "tests_pass"
+   ],
+   "naive": [
+    "code",
+    "design",
+    "req_spec",
+    "sec_reviewed",
+    "tests",
+    "tests_pass"
+   ],
+   "robust": [
+    "design",
+    "req_spec"
+   ]
+  },
+  "chain_SR_TS": {
+   "slice": [
+    "SR",
+    "TS"
+   ],
+   "env": [
+    "req_spec",
+    "design",
+    "code",
+    "tests"
+   ],
+   "assume": [
+    [
+     "SR",
+     "code"
+    ],
+    [
+     "TS",
+     "tests"
+    ]
+   ],
+   "guarantee": [
+    "code",
+    "design",
+    "req_spec",
+    "sec_reviewed",
+    "tests",
+    "tests_pass"
+   ],
+   "naive": [
+    "code",
+    "design",
+    "req_spec",
+    "sec_reviewed",
+    "tests",
+    "tests_pass"
+   ],
+   "robust": [
+    "code",
+    "design",
+    "req_spec",
+    "tests",
+    "tests_pass"
+   ]
+  },
+  "fj_CR_RG": {
+   "slice": [
+    "CR",
+    "RG"
+   ],
+   "env": [
+    "spec",
+    "design",
+    "code"
+   ],
+   "assume": [
+    [
+     "CR",
+     "code"
+    ]
+   ],
+   "guarantee": [
+    "code",
+    "design",
+    "spec"
+   ],
+   "naive": [
+    "code",
+    "design",
+    "reviewed",
+    "spec"
+   ]
+  },
+  "fj_ST_RG": {
+   "slice": [
+    "ST",
+    "RG"
+   ],
+   "env": [
+    "spec",
+    "design",
+    "code"
+   ],
+   "assume": [
+    [
+     "ST",
+     "code"
+    ]
+   ],
+   "guarantee": [
+    "code",
+    "design",
+    "spec"
+   ],
+   "naive": [
+    "code",
+    "design",
+    "sec_tested",
+    "spec"
+   ]
+  },
+  "fj_CR_ST": {
+   "slice": [
+    "CR",
+    "ST"
+   ],
+   "env": [
+    "spec",
+    "design",
+    "code"
+   ],
+   "assume": [
+    [
+     "CR",
+     "code"
+    ],
+    [
+     "ST",
+     "code"
+    ]
+   ],
+   "guarantee": [
+    "code",
+    "design",
+    "spec"
+   ],
+   "naive": [
+    "code",
+    "design",
+    "spec"
+   ]
+  }
+ },
+ "strategies": {
+  "band1": [
+   [
+    "IN"
+   ],
+   [
+    "RA"
+   ],
+   [
+    "AR"
+   ],
+   [
+    "DV"
+   ],
+   [
+    "CR",
+    "ST"
+   ],
+   [
+    "RG"
+   ],
+   [
+    "OUT"
+   ]
+  ],
+  "region": [
+   [
+    "CR",
+    "ST",
+    "RG"
+   ],
+   [
+    "DV",
+    "CR",
+    "ST",
+    "RG"
+   ]
+  ],
+  "goal": [
+   [
+    "RA",
+    "AR"
+   ],
+   [
+    "RA",
+    "AR",
+    "DV"
+   ],
+   [
+    "AR",
+    "DV",
+    "CR"
+   ],
+   [
+    "AR",
+    "DV",
+    "ST"
+   ],
+   [
+    "DV",
+    "CR",
+    "ST",
+    "RG",
+    "OUT"
+   ]
+  ],
+  "window2": [
+   [
+    "IN",
+    "RA"
+   ],
+   [
+    "RA",
+    "AR"
+   ],
+   [
+    "AR",
+    "DV"
+   ],
+   [
+    "DV",
+    "CR",
+    "ST"
+   ],
+   [
+    "CR",
+    "RG"
+   ],
+   [
+    "ST",
+    "RG"
+   ],
+   [
+    "OUT"
+   ],
+   [
+    "RG",
+    "OUT"
+   ]
+  ]
+ },
+ "seconds": 0.009718894958496094
+}

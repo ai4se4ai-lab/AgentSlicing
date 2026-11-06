@@ -1,0 +1,118 @@
+{
+ "solver": "z3 5.3.3",
+ "mutant": null,
+ "obligations": [
+  {
+   "obligation": "L1-transfer-monotone",
+   "theorem": "Lem. 2, 4",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0016
+  },
+  {
+   "obligation": "L2-face-value-dominates",
+   "theorem": "Lem. 4",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0009
+  },
+  {
+   "obligation": "L3-join-subset",
+   "theorem": "Lem. 2, 4",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0008
+  },
+  {
+   "obligation": "L4-missing-antitone",
+   "theorem": "Thm. 4, 5; Lem. 2",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0008
+  },
+  {
+   "obligation": "L5-evidence-monotone",
+   "theorem": "Lem. 1",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0008
+  },
+  {
+   "obligation": "L7-env-uniform",
+   "theorem": "Prop. 1",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0003
+  },
+  {
+   "obligation": "L8-must-sound",
+   "theorem": "B6, generator",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0008
+  },
+  {
+   "obligation": "L9-meet-below-choice",
+   "theorem": "B6, generator",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0003
+  },
+  {
+   "obligation": "L10-fault-antitone",
+   "theorem": "Def. 3",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0007
+  },
+  {
+   "obligation": "L11-failed-provides-nothing",
+   "theorem": "Def. 2",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0
+  },
+  {
+   "obligation": "L12-decl-enables",
+   "theorem": "Def. 2",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0008
+  },
+  {
+   "obligation": "L13-decl-local",
+   "theorem": "Def. 2",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0008
+  },
+  {
+   "obligation": "C1-non-distributive",
+   "theorem": "B6 incompleteness",
+   "expect": "sat",
+   "z3": "sat",
+   "ok": true,
+   "seconds": 0.0064
+  },
+  {
+   "obligation": "C2-no-exact-single-pair",
+   "theorem": "Thm. 2c",
+   "expect": "unsat",
+   "z3": "unsat",
+   "ok": true,
+   "seconds": 0.0014
+  }
+ ]
+}
